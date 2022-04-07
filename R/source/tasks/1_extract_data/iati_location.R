@@ -1,11 +1,11 @@
-
+iati_location <- function(xml_iati) {
 # xml subset --------------------------------------------------------------
 notesets_location <- xml_iati %>% 
   xml_find_all('.//iati-activity/location')
 
 
 # extract data ------------------------------------------------------------
-df_location <- future_map_dfr(notesets_location, function(i) {
+df_location <- map_dfr(notesets_location, function(i) {
   tibble(
     iati_identifier = tryCatch(i |> xml_parent() |> xml_find_all("iati-identifier") |> xml_text(), error = function(e){ NA_character_}),
     location_ref = i |> xml_attr("ref"),
@@ -24,7 +24,7 @@ df_location <- future_map_dfr(notesets_location, function(i) {
     location_feature_designation_code = xml_attr_by_name(i, ".//feature-designation", "feature-designation", "code")
   )
   
-}, .progress = TRUE)
+})
 
 
 # remove unwanted objects -------------------------------------------------
@@ -38,5 +38,5 @@ write_xlsx(
   paste0("data_wrangle/", "iati_location", ".xlsx")
   )
 
-
-
+df_location
+}

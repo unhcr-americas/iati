@@ -1,66 +1,39 @@
 # A workflow to pull and tidy IATI data for UNHCR - https://reporting.unhcr.org/iati
 # ==============================================================================
 t1 <- Sys.time() 
-setup_files <- sprintf(
-  here::here("R/source/%s.R"), c("requirements", "funs")
-)
 
-purrr::walk(setup_files, source)
-
+fs::dir_ls("R/source/", recurse = TRUE, type = "file") |> purrr::walk(source)
 
 # create folder -----------------------------------------------------------
-
 dir_create("data_wrangle") 
 
 # read data ---------------------------------------------------------------
+iati_file <- file_temp()
 
-xml_iati <- read_xml('https://reporting.unhcr.org/sites/default/files/IATI/UNHCR-Activities-2022.xml')
-
+download.file('https://reporting.unhcr.org/sites/default/files/IATI/UNHCR-Activities-2022.xml', 
+              iati_file, 
+              quiet = TRUE)
 
 # list tasks --------------------------------------------------------------
+iati_extractors <- list(iati_activity = iati_activity,
+                        iati_budget = iati_budget,
+                        iati_default_aid_type = iati_default_aid_type,
+                        iati_document_link = iati_document_link,
+                        iati_humanitarian_scope = iati_humanitarian_scope,
+                        iati_location = iati_location,
+                        iati_participating_org = iati_participating_org,
+                        iati_related_activity = iati_related_activity,
+                        iati_result = iati_result,
+                        iati_sector = iati_sector,
+                        iati_transaction = iati_transaction)
 
-# run each one of the tasks
-# tasks_folder <- here("R/source/tasks/")
+# run each one of the tasks ------------
+plan(multisession)
 
-# names such as 1_extract_data denote the folder
-# the string is the particular task within each folder
+iati_extractors |> 
+  future_map(~rlang::exec(., read_xml(iati_file))) |> 
+  iwalk(~assign(.y, .x, envir = .GlobalEnv))
 
-task_iati <- c(
-  "1_extract_data" = "iati_activity",
-  "1_extract_data" = "iati_budget",            
-  "1_extract_data" = "iati_default_aid_type",   
-  "1_extract_data" = "iati_document_link",
-  "1_extract_data" = "iati_humanitarian_scope",
-  "1_extract_data" = "iati_location",
-  "1_extract_data" = "iati_participating_org",
-  "1_extract_data" = "iati_related_activity",
-  "1_extract_data" = "iati_result",
-  "1_extract_data" = "iati_sector",
-  "1_extract_data" = "iati_transaction"
-  )
-              
-domain_iati <- names(task_iati)
-
-setup_iati_tasks <- sprintf(
-  here::here("R/source/tasks/%s.R"), paste(domain_iati, task_iati, sep = "/")
-)
-
-walk(
-  setup_iati_tasks,
-  source_utf8
-)
-
-# remove unwanted objects -------------------------------------------------
-rm(domain_iati,
-   setup_files,
-   setup_iati_tasks,
-   task_iati,
-   source_utf8,
-   xml_iati,
-   xml_attr_by_name,
-   xml_child_attr_by_name,
-   xml_text_by_lang,
-   xml_text_by_name
-   )
+rm(list = ls(pattern = "(iati|xml)"))
 
 Sys.time() - t1

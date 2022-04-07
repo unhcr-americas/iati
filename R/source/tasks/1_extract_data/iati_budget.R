@@ -1,4 +1,4 @@
-# Time difference of 6.329129 secs
+iati_budget <- function(xml_iati) {
 # xml subset --------------------------------------------------------------
 
 notesets_budget <- xml_iati %>% 
@@ -26,3 +26,7 @@ rm(notesets_budget)
 # write data --------------------------------------------------------------
 write_xlsx(df_budget,
            paste0("data_wrangle/", "iati_budget", ".xlsx"))
+
+
+df_budget
+}

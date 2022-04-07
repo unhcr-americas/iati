@@ -1,4 +1,4 @@
-
+iati_transaction <- function(xml_iati) {
 # xml subset --------------------------------------------------------------
 
 notesets_location <- xml_iati %>% 
@@ -7,7 +7,7 @@ notesets_location <- xml_iati %>%
 
 
 # extract data ------------------------------------------------------------
-df_transaction <- future_map_dfr(notesets_location, function(i) {
+df_transaction <- map_dfr(notesets_location, function(i) {
   tibble(
     iati_identifier = tryCatch(i |> xml_parent() |> xml_parent() |> xml_find_all("iati-identifier") |> xml_text(), error = function(e){ NA_character_}),
     transaction_ref = tryCatch(i |> xml_parent() |> xml_attr("ref"), error = function(e){ NA_character_}),
@@ -28,7 +28,7 @@ df_transaction <- future_map_dfr(notesets_location, function(i) {
     transaction_value_USD = xml_text_by_name(i, ".", "value-USD")
     )
   
-}, .progress = TRUE)
+})
 
 
 # remove unwanted objects -------------------------------------------------
@@ -42,3 +42,5 @@ write_xlsx(
   paste0("data_wrangle/", "iati_transaction", ".xlsx")
   )
 
+df_transaction
+}

@@ -1,11 +1,11 @@
-
+iati_participating_org <- function(xml_iati) {
 # xml subset --------------------------------------------------------------
 notesets_part_org <- xml_iati %>% 
   xml_find_all('.//iati-activity/participating-org')
 
 
 # extract data ------------------------------------------------------------
-df_participating_org <- future_map_dfr(notesets_part_org, function(i) {
+df_participating_org <- map_dfr(notesets_part_org, function(i) {
   tibble(
     iati_identifier = tryCatch(i |> xml_parent() |> xml_find_all("iati-identifier") |> xml_text(), error = function(e){ NA_character_}),
     participating_org_eng = xml_text_by_name(i, 'narrative', "narrative", 1),
@@ -15,7 +15,7 @@ df_participating_org <- future_map_dfr(notesets_part_org, function(i) {
     participating_org_activity_id =  i |> xml_attr("activity-id"), 
     participating_org_crs_channel_code =  i |> xml_attr("crs-channel-code")
     )
-}, .progress = TRUE)
+})
 
 
 # remove unwanted objects -------------------------------------------------
@@ -28,3 +28,5 @@ write_xlsx(
   paste0("data_wrangle/", "iati_participating_org", ".xlsx")
   )
 
+df_participating_org
+}

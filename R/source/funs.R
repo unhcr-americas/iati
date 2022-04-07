@@ -1,12 +1,3 @@
-
-
-source_utf8 <- function(f) {
-  l <- readLines(f, encoding="UTF-8")
-  eval(parse(text=l),envir=.GlobalEnv)
-}
-
-
-
 xml_attr_by_name <-
   function(i, parent_name, node_name, attr_name, attr_position = 1L) {
     i =  i |> 
@@ -99,5 +90,3 @@ xml_text_by_lang <-
     }
     return(x)
   }
-
-

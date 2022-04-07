@@ -1,11 +1,11 @@
-
+iati_document_link <- function(xml_iati) {
 # xml subset --------------------------------------------------------------
 notesets_document_link <- xml_iati %>% 
   xml_find_all('.//iati-activity/document-link')
 
 
 # extract data ------------------------------------------------------------
-df_document_link <- future_map_dfr(notesets_document_link, function(i) {
+df_document_link <- map_dfr(notesets_document_link, function(i) {
   tibble(
     iati_identifier = tryCatch(i |> xml_parent() |> xml_find_all("iati-identifier") |> xml_text(), error = function(e){ NA_character_}),
     document_url = xml_attr_by_name(i, ".", "document-link", "url"),
@@ -16,7 +16,7 @@ df_document_link <- future_map_dfr(notesets_document_link, function(i) {
     document_date = xml_attr_by_name(i, "./document-date", "document-date", "iso-date")
   )
   
-}, .progress = TRUE)
+})
 
 # remove unwanted objects -------------------------------------------------
 rm(notesets_document_link)
@@ -29,4 +29,5 @@ write_xlsx(
   paste0("data_wrangle/", "iati_document_link", ".xlsx")
   )
 
-
+df_document_link
+}

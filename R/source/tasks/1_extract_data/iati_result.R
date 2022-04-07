@@ -1,4 +1,4 @@
-
+iati_result <- function(xml_iati) {
 # xml subset --------------------------------------------------------------
 
 notesets_indicator <- xml_iati %>% 
@@ -7,7 +7,7 @@ notesets_indicator <- xml_iati %>%
 
 
 # extract data ------------------------------------------------------------
-df_result <- future_map_dfr(notesets_indicator, function(i) {
+df_result <- map_dfr(notesets_indicator, function(i) {
   tibble(
     iati_identifier = tryCatch(i|> xml_parent() |> xml_parent() |> xml_parent() |> xml_find_all("iati-identifier") |> xml_text(), error = function(e){ NA_character_}),
     result_type = tryCatch(i |> xml_parent() |> xml_parent() |> xml_attr("type"), error = function(e){ NA_character_}),
@@ -35,7 +35,7 @@ df_result <- future_map_dfr(notesets_indicator, function(i) {
     result_indicator_target_value_2 = xml_attr_by_name(i, "./target/dimension", "dimension", "value", 2)
   )
   
-}, .progress = TRUE)
+})
 
 
 # remove unwanted objects -------------------------------------------------
@@ -49,4 +49,5 @@ write_xlsx(
   paste0("data_wrangle/", "iati_result", ".xlsx")
   )
 
-
+df_result
+}

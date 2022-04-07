@@ -1,4 +1,4 @@
-
+iati_sector <- function(xml_iati) {
 # xml subset --------------------------------------------------------------
 
 notesets_sector <- xml_iati %>% 
@@ -6,7 +6,7 @@ notesets_sector <- xml_iati %>%
 
 
 # extract data ------------------------------------------------------------
-df_sector <- future_map_dfr(notesets_sector, function(i) {
+df_sector <- map_dfr(notesets_sector, function(i) {
   tibble(
     iati_identifier = tryCatch(i |> xml_parent() |> xml_find_all("iati-identifier") |> xml_text(), error = function(e){ NA_character_}),
     sector_vocabulary = i |> xml_attr("vocabulary"),
@@ -16,7 +16,7 @@ df_sector <- future_map_dfr(notesets_sector, function(i) {
     sector_desc = i |> xml_text()
   )
   
-}, .progress = TRUE)
+})
 
 
 # remove unwanted objects -------------------------------------------------
@@ -29,6 +29,6 @@ write_xlsx(
   paste0("data_wrangle/", "iati_sector", ".xlsx")
   )
 
-
-
+df_sector
+}
 

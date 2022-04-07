@@ -1,11 +1,11 @@
-
+iati_activity <- function(xml_iati) {
 # xml subset --------------------------------------------------------------
 nodeset_activity <- xml_iati %>% 
   xml_find_all('.//iati-activity')
 
 
 # extract data ------------------------------------------------------------
-df_activity <- future_map_dfr(nodeset_activity, function(i) {
+df_activity <- map_dfr(nodeset_activity, function(i) {
   tibble(
     iati_identifier = tryCatch(i  |> xml_find_all("iati-identifier") |> xml_text(), error = function(e){ NA_character_}),
     reporting_org =  xml_text_by_name(i, "reporting-org", "reporting-org"),
@@ -63,7 +63,7 @@ df_activity <- future_map_dfr(nodeset_activity, function(i) {
     capital_spend = xml_attr_by_name(i, "capital-spend", "capital-spend", "percentage")
   )
   
-}, .progress = TRUE)
+})
 
 
 # remove unwanted objects -------------------------------------------------
@@ -74,3 +74,5 @@ rm(nodeset_activity)
 write_xlsx(df_activity,
            paste0("data_wrangle/", "iati_activity", ".xlsx"))
 
+df_activity
+}

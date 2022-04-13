@@ -1,0 +1,25 @@
+Type: Package
+Package: iati
+Title: UNHCR IATI Data Crunching
+Version: 0.1.1
+Author: Edouard Legoupil, Matheus Soldi Hardt, Hisham Galal
+Maintainer: Edouard Legoupil <legoupil@unhcr.org>
+Description: This is a data package with all frame organised and reshapped
+    for easy consumptions in R Please see
+    https://reporting.unhcr.org/iati
+License: Creative Commons Attribution 4.0 International Public License
+URL: https://unhcr-americas.github.io/iati/docs/
+BugReports: https://github.com/unhcr-americas/iati/issues
+Imports: 
+    ggplot2,
+    tidyverse
+Suggests: 
+    broom,
+    classInt
+Remotes:
+    github::unhcr-americas/iati
+VignetteBuilder: 
+    knitr
+Encoding: UTF-8
+LazyData: TRUE
+RoxygenNote: 7.1.2

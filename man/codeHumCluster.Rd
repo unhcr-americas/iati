@@ -38,7 +38,7 @@ Global Clusters and Areas of Responsibility (AoR) were defined to enable more
 }
 \examples{
 {
-head(codeHumCluster,10)
+knitr::kable(head(codeHumCluster, 10))
 }
 }
 \keyword{datasets}

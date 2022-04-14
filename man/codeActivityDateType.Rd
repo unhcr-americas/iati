@@ -30,7 +30,7 @@ There are many different business models and dates that can be used to describe
 }
 \examples{
 {
-head(codeActivityDateType,10)
+knitr::kable(head(codeActivityDateType, 10))
 }
 }
 \keyword{datasets}

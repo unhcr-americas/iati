@@ -28,7 +28,7 @@ IATI codes for the role of an organisation within an activity.
 }
 \examples{
 {
-head(codeOrganisationRole,10)
+knitr::kable(head(codeOrganisationRole, 10))
 }
 }
 \keyword{datasets}

@@ -28,7 +28,7 @@ into sectors. It is not used as a codelist in its own right.
 }
 \examples{
 {
-head(codeBudgetIdentifierSector,10)
+knitr::kable(head(codeBudgetIdentifierSector, 10))
 }
 }
 \keyword{datasets}

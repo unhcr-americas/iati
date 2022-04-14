@@ -28,7 +28,7 @@ DATASET_DESCRIPTION
 }
 \examples{
 {
-head(humanitarian_scope,10)
+knitr::kable(head(humanitarian_scope, 10))
 }
 }
 \keyword{datasets}

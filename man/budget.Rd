@@ -28,7 +28,7 @@ DATASET_DESCRIPTION
 }
 \examples{
 {
-head(budget,10)
+knitr::kable(head(budget, 10))
 }
 }
 \keyword{datasets}

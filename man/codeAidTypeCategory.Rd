@@ -28,7 +28,7 @@ External URL: http://www.oecd.org/dac/stats/dacandcrscodelists.htm
 }
 \examples{
 {
-head(codeAidTypeCategory,10)
+knitr::kable(head(codeAidTypeCategory, 10))
 }
 }
 \keyword{datasets}

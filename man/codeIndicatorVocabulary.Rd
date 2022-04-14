@@ -28,7 +28,7 @@ for example to specify results.
 }
 \examples{
 {
-head(codeIndicatorVocabulary,10)
+knitr::kable(head(codeIndicatorVocabulary, 10))
 }
 }
 \keyword{datasets}

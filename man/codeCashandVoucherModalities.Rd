@@ -30,7 +30,7 @@ CaLP Glossary:http://www.cashlearning.org/resources/glossary.
 }
 \examples{
 {
-head(codeCashandVoucherModalities,10)
+knitr::kable(head(codeCashandVoucherModalities, 10))
 }
 }
 \keyword{datasets}

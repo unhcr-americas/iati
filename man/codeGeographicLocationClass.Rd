@@ -26,7 +26,7 @@ This is a Non-Core codelist.
 }
 \examples{
 {
-head(codeGeographicLocationClass,10)
+knitr::kable(head(codeGeographicLocationClass, 10))
 }
 }
 \keyword{datasets}

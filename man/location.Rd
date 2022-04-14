@@ -35,7 +35,7 @@ DATASET_DESCRIPTION
 }
 \examples{
 {
-head(location,10)
+knitr::kable(head(location, 10))
 }
 }
 \keyword{datasets}

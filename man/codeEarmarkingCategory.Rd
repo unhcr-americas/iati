@@ -28,7 +28,7 @@ See: https://reliefweb.int/sites/reliefweb.int/files/resources/Grand_Bargain_fin
 }
 \examples{
 {
-head(codeEarmarkingCategory,10)
+knitr::kable(head(codeEarmarkingCategory, 10))
 }
 }
 \keyword{datasets}

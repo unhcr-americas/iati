@@ -28,7 +28,7 @@ This is a Non-Core codelist.
 }
 \examples{
 {
-head(codeAidTypeVocabulary,10)
+knitr::kable(head(codeAidTypeVocabulary, 10))
 }
 }
 \keyword{datasets}

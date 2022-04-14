@@ -38,7 +38,7 @@ This is a list of organisation identifiers that is maintained by
 }
 \examples{
 {
-head(codeIATIOrganisationIdentifier,10)
+knitr::kable(head(codeIATIOrganisationIdentifier, 10))
 }
 }
 \keyword{datasets}

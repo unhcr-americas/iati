@@ -29,7 +29,7 @@ As of version 2.03 this codelist has been deprecated.
 }
 \examples{
 {
-head(codeBudgetIdentifier,10)
+knitr::kable(head(codeBudgetIdentifier, 10))
 }
 }
 \keyword{datasets}

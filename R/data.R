@@ -25,39 +25,39 @@
 #'   \item{\code{description_type_2}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{description_eng_2}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{descriptionv_fr_2}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{activity_status_code}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{activity_status_code}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{activity_date_1}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{activity_date_type_1}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{activity_date_type_1}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{activity_date_2}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{activity_date_type_2}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{activity_date_type_2}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{activity_date_3}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{activity_date_type_3}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{activity_date_type_3}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{activity_date_4}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{activity_date_type_4}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{activity_date_type_4}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{contact_info_type}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{contact_info_org}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{contact_info_email}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{contact_info_website}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{contact_info_mailing_address}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{activity_scope_code}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{recipient_country_code}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{activity_scope_code}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{recipient_country_code}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{recipient_country_pct}}{logical COLUMN_DESCRIPTION}
 #'   \item{\code{recipient_country}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{recipient_region_code}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{recipient_region_vocabulary}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{recipient_region_code}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{recipient_region_vocabulary}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{recipient_region_vocabulary_url}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{recipient_region_pct}}{logical COLUMN_DESCRIPTION}
 #'   \item{\code{recipient_region}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{collaboration_type_code}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{default_flow_type_code}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{default_finance_type_code}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{default_tied_status_code}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{capital_spend}}{character COLUMN_DESCRIPTION} 
+#'   \item{\code{collaboration_type_code}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{default_flow_type_code}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{default_finance_type_code}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{default_tied_status_code}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{capital_spend}}{double COLUMN_DESCRIPTION} 
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
 #' {
-#' head(activity,10)
+#' knitr::kable(head(activity, 10))
 #'}
 "activity"
 
@@ -79,7 +79,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
 #' {
-#' head(budget,10)
+#' knitr::kable(head(budget, 10))
 #'}
 "budget"
 
@@ -96,7 +96,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
 #' {
-#' head(default_aid_type,10)
+#' knitr::kable(head(default_aid_type, 10))
 #'}
 "default_aid_type"
 
@@ -117,7 +117,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
 #' {
-#' head(document_link,10)
+#' knitr::kable(head(document_link, 10))
 #'}
 "document_link"
 
@@ -139,7 +139,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
 #' {
-#' head(humanitarian_scope,10)
+#' knitr::kable(head(humanitarian_scope, 10))
 #'}
 "humanitarian_scope"
 
@@ -168,28 +168,30 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
 #' {
-#' head(location,10)
+#' knitr::kable(head(location, 10))
 #'}
 "location"
 
 
 ## iati_participating_org ##########
-#' @title DATASET_TITLE
-#' @description DATASET_DESCRIPTION
+#' @title participating_org
+#' @description An organisation involved with the activity. May be a donor, fund, agency, etc.
+#'  Specifying the ref identifier is strongly recommended. May contain the organisation name as narrative. 
+#' If the reporting organisation plays a role in the activity it should be repeated here. One organisation may play more than one role (eg, funding and implementing): in such a case each role should be reported and the name of the organisation repeated.
 #' @format A data frame with 13990 rows and 7 variables:
 #' \describe{
 #'   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
 #'   \item{\code{participating_org_eng}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{participating_org_ref}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{participating_org_type}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{participating_org_role}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{participating_org_activity_id}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{participating_org_crs_channel_code}}{logical COLUMN_DESCRIPTION} 
+#'   \item{\code{participating_org_ref}}{character Machine-readable identification string for the organisation issuing the report. Must be in the format {RegistrationAgency}-{RegistrationNumber} where {RegistrationAgency} is a valid code in the Organisation Registration Agency code list and {RegistrationNumber} is a valid identifier issued by the {RegistrationAgency}. If this is not present then the narrative MUST contain the name of the organisation.}
+#'   \item{\code{participating_org_type}}{double The type of organisation issuing the report. See IATI codelist codeOrganisationType for values.}
+#'   \item{\code{participating_org_role}}{double An IATI code describing the organisation’s role in the activity (donor, agency, etc.). see codeOrganisationRole}
+#'   \item{\code{participating_org_activity_id}}{logical A valid activity identifier published by the participating organisation which points to the activity that it has published to IATI that describes its role in this activity.}
+#'   \item{\code{participating_org_crs_channel_code}}{logical Under CRS++ Reporting Directives this code identifies the implementing agency. Codes ending in ‘00’ are generic and are similar to the OrganisationType code.} 
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
 #' {
-#' head(participating_org,10)
+#' knitr::kable(head(participating_org, 10))
 #'}
 "participating_org"
 
@@ -205,7 +207,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
 #' {
-#' head(related_activity,10)
+#' knitr::kable(head(related_activity, 10))
 #'}
 "related_activity"
 
@@ -244,7 +246,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
 #' {
-#' head(result,10)
+#' knitr::kable(head(result, 10))
 #'}
 "result"
 
@@ -264,24 +266,24 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
 #' {
-#' head(sector,10)
+#' knitr::kable(head(sector, 10))
 #'}
 "sector"
 
 ## iati_transaction ##########
-#' @title DATASET_TITLE
-#' @description DATASET_DESCRIPTION
+#' @title transaction
+#' @description Transactions recording committed or actual funds flowing in or out of an aid activity.
 #' @format A data frame with 30752 rows and 17 variables:
 #' \describe{
 #'   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
 #'   \item{\code{transaction_ref}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_humanitarian}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_type_code}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_type_code}}{character The type of the transaction (e.g. commitment, disbursement, expenditure, etc.).}
 #'   \item{\code{transaction_date}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_value_currency}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_value_date}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_value}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_description}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_description}}{character A human-readable description of the transaction.}
 #'   \item{\code{transaction_provider_org_type}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_provider_org_ref}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_provider_org}}{character COLUMN_DESCRIPTION}
@@ -294,7 +296,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
 #' {
-#' head(transaction,10)
+#' knitr::kable(head(transaction, 10))
 #'}
 "transaction"
 
@@ -319,7 +321,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeActivityDateType,10)
+#' knitr::kable(head(codeActivityDateType, 10))
 #'}
 "codeActivityDateType"
 
@@ -338,7 +340,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeActivityScope,10)
+#' knitr::kable(head(codeActivityScope, 10))
 #'}
 "codeActivityScope"
 
@@ -357,7 +359,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeActivityStatus,10)
+#' knitr::kable(head(codeActivityStatus, 10))
 #'}
 "codeActivityStatus"
 
@@ -376,7 +378,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeAidType,10)
+#' knitr::kable(head(codeAidType, 10))
 #'}
 "codeAidType"
 
@@ -396,7 +398,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeAidTypeCategory,10)
+#' knitr::kable(head(codeAidTypeCategory, 10))
 #'}
 "codeAidTypeCategory"
 
@@ -416,7 +418,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeAidTypeVocabulary,10)
+#' knitr::kable(head(codeAidTypeVocabulary, 10))
 #'}
 "codeAidTypeVocabulary"
 
@@ -438,7 +440,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeBudgetIdentifier,10)
+#' knitr::kable(head(codeBudgetIdentifier, 10))
 #'}
 "codeBudgetIdentifier"
 
@@ -459,7 +461,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeBudgetIdentifierSector,10)
+#' knitr::kable(head(codeBudgetIdentifierSector, 10))
 #'}
 "codeBudgetIdentifierSector"
 
@@ -478,7 +480,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeSectorCategory,10)
+#' knitr::kable(head(codeSectorCategory, 10))
 #'}
 "codeSectorCategory"
 
@@ -497,7 +499,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeSector,10)
+#' knitr::kable(head(codeSector, 10))
 #'}
 "codeSector"
 
@@ -520,7 +522,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeCashandVoucherModalities,10)
+#' knitr::kable(head(codeCashandVoucherModalities, 10))
 #'}
 "codeCashandVoucherModalities"
 
@@ -544,7 +546,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeCountry,10)
+#' knitr::kable(head(codeCountry, 10))
 #'}
 "codeCountry"
 
@@ -562,7 +564,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeRegion,10)
+#' knitr::kable(head(codeRegion, 10))
 #'}
 "codeRegion"
 
@@ -582,7 +584,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeCurrency,10)
+#' knitr::kable(head(codeCurrency, 10))
 #'}
 "codeCurrency"
 
@@ -600,7 +602,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeDescriptionType,10)
+#' knitr::kable(head(codeDescriptionType, 10))
 #'}
 "codeDescriptionType"
 
@@ -620,7 +622,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeEarmarkingCategory,10)
+#' knitr::kable(head(codeEarmarkingCategory, 10))
 #'}
 "codeEarmarkingCategory"
 
@@ -641,7 +643,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeFlowType,10)
+#' knitr::kable(head(codeFlowType, 10))
 #'}
 "codeFlowType"
 
@@ -660,7 +662,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeGeographicLocationClass,10)
+#' knitr::kable(head(codeGeographicLocationClass, 10))
 #'}
 "codeGeographicLocationClass"
 
@@ -680,7 +682,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeHumanitarianScopeType,10)
+#' knitr::kable(head(codeHumanitarianScopeType, 10))
 #'}
 "codeHumanitarianScopeType"
 
@@ -701,7 +703,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeHumanitarianScopeVocabulary,10)
+#' knitr::kable(head(codeHumanitarianScopeVocabulary, 10))
 #'}
 "codeHumanitarianScopeVocabulary"
 
@@ -732,7 +734,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeIATIOrganisationIdentifier,10)
+#' knitr::kable(head(codeIATIOrganisationIdentifier, 10))
 #'}
 "codeIATIOrganisationIdentifier"
 
@@ -752,7 +754,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeIndicatorMeasure,10)
+#' knitr::kable(head(codeIndicatorMeasure, 10))
 #'}
 "codeIndicatorMeasure"
 
@@ -773,7 +775,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeIndicatorVocabulary,10)
+#' knitr::kable(head(codeIndicatorVocabulary, 10))
 #'}
 "codeIndicatorVocabulary"
 
@@ -795,7 +797,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeOrganisationIdentifier,10)
+#' knitr::kable(head(codeOrganisationIdentifier, 10))
 #'}
 "codeOrganisationIdentifier"
 
@@ -836,7 +838,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeOrganisationRegistrationAgency,10)
+#' knitr::kable(head(codeOrganisationRegistrationAgency, 10))
 #'}
 "codeOrganisationRegistrationAgency"
 
@@ -857,7 +859,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeOrganisationRole,10)
+#' knitr::kable(head(codeOrganisationRole, 10))
 #'}
 "codeOrganisationRole"  
 
@@ -875,7 +877,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeOrganisationType,10)
+#' knitr::kable(head(codeOrganisationType, 10))
 #'}
 "codeOrganisationType"
 
@@ -895,7 +897,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codePolicyMarker,10)
+#' knitr::kable(head(codePolicyMarker, 10))
 #'}
 "codePolicyMarker"
 
@@ -916,7 +918,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeUNSDGGoals,10)
+#' knitr::kable(head(codeUNSDGGoals, 10))
 #'}
 "codeUNSDGGoals"
 
@@ -937,7 +939,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeUNSDGTargets,10)
+#' knitr::kable(head(codeUNSDGTargets, 10))
 #'}
 "codeUNSDGTargets"
 
@@ -956,7 +958,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeTransactionType,10)
+#' knitr::kable(head(codeTransactionType, 10))
 #'}
 "codeTransactionType"
 
@@ -975,7 +977,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeSectorVocabulary,10)
+#' knitr::kable(head(codeSectorVocabulary, 10))
 #'}
 "codeSectorVocabulary"
 
@@ -1006,7 +1008,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeHumCluster,10)
+#' knitr::kable(head(codeHumCluster, 10))
 #'}
 "codeHumCluster"
 
@@ -1025,7 +1027,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeResultType,10)
+#' knitr::kable(head(codeResultType, 10))
 #'}
 "codeResultType"
 
@@ -1044,7 +1046,7 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
 #' {
-#' head(codeTransactionType,10)
+#' knitr::kable(head(codeTransactionType, 10))
 #'}
 "codeTransactionType"
 

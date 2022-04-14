@@ -28,7 +28,7 @@ humanitarian events and actions.
 }
 \examples{
 {
-head(codeHumanitarianScopeVocabulary,10)
+knitr::kable(head(codeHumanitarianScopeVocabulary, 10))
 }
 }
 \keyword{datasets}

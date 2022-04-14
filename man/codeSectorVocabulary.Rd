@@ -26,7 +26,7 @@ This is a Non-Core codelist.
 }
 \examples{
 {
-head(codeSectorVocabulary,10)
+knitr::kable(head(codeSectorVocabulary, 10))
 }
 }
 \keyword{datasets}

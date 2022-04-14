@@ -42,10 +42,10 @@ This is a Core codelist.
 }
 \examples{
 {
-head(codeTransactionType,10)
+knitr::kable(head(codeTransactionType, 10))
 }
 {
-head(codeTransactionType,10)
+knitr::kable(head(codeTransactionType, 10))
 }
 }
 \keyword{datasets}

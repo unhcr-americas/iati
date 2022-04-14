@@ -28,7 +28,7 @@ The Policy Marker codelist is derived from the policy markers
 }
 \examples{
 {
-head(codePolicyMarker,10)
+knitr::kable(head(codePolicyMarker, 10))
 }
 }
 \keyword{datasets}

@@ -23,7 +23,7 @@ DATASET_DESCRIPTION
 }
 \examples{
 {
-head(default_aid_type,10)
+knitr::kable(head(default_aid_type, 10))
 }
 }
 \keyword{datasets}

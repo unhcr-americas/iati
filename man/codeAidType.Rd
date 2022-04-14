@@ -26,7 +26,7 @@ See: http://www.oecd.org/dac/stats/dacandcrscodelists.htm
 }
 \examples{
 {
-head(codeAidType,10)
+knitr::kable(head(codeAidType, 10))
 }
 }
 \keyword{datasets}

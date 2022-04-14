@@ -27,7 +27,7 @@ This includes qualitative and quantitative values.
 }
 \examples{
 {
-head(codeIndicatorMeasure,10)
+knitr::kable(head(codeIndicatorMeasure, 10))
 }
 }
 \keyword{datasets}

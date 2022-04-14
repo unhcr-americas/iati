@@ -26,7 +26,7 @@ Lifecycle status of the activity from pipeline to completion
 }
 \examples{
 {
-head(codeActivityStatus,10)
+knitr::kable(head(codeActivityStatus, 10))
 }
 }
 \keyword{datasets}

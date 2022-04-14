@@ -28,7 +28,7 @@ goals (SDGs) (e.g. ‘1’)
 }
 \examples{
 {
-head(codeUNSDGGoals,10)
+knitr::kable(head(codeUNSDGGoals, 10))
 }
 }
 \keyword{datasets}

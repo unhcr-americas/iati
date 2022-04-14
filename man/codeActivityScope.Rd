@@ -26,7 +26,7 @@ Geographic scope of activity
 }
 \examples{
 {
-head(codeActivityScope,10)
+knitr::kable(head(codeActivityScope, 10))
 }
 }
 \keyword{datasets}

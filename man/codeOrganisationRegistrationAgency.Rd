@@ -47,7 +47,7 @@ The values from this codelist are used to identify the particular
 }
 \examples{
 {
-head(codeOrganisationRegistrationAgency,10)
+knitr::kable(head(codeOrganisationRegistrationAgency, 10))
 }
 }
 \keyword{datasets}

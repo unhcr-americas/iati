@@ -23,7 +23,7 @@ DATASET_DESCRIPTION
 }
 \examples{
 {
-head(related_activity,10)
+knitr::kable(head(related_activity, 10))
 }
 }
 \keyword{datasets}

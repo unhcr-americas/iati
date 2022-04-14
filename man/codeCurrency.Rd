@@ -27,7 +27,7 @@ ISO 4217 Currency used for all transactions and budgets
 }
 \examples{
 {
-head(codeCurrency,10)
+knitr::kable(head(codeCurrency, 10))
 }
 }
 \keyword{datasets}

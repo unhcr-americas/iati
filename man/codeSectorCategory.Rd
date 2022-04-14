@@ -27,7 +27,7 @@ DAC 3 Digit Sector
 }
 \examples{
 {
-head(codeSectorCategory,10)
+knitr::kable(head(codeSectorCategory, 10))
 }
 }
 \keyword{datasets}

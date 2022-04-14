@@ -27,7 +27,7 @@ DATASET_DESCRIPTION
 }
 \examples{
 {
-head(document_link,10)
+knitr::kable(head(document_link, 10))
 }
 }
 \keyword{datasets}

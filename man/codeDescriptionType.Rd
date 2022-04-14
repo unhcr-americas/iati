@@ -26,7 +26,7 @@ Activity decription types. (General, objectives, etc)
 }
 \examples{
 {
-head(codeDescriptionType,10)
+knitr::kable(head(codeDescriptionType, 10))
 }
 }
 \keyword{datasets}

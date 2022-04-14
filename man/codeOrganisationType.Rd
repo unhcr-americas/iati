@@ -26,7 +26,7 @@ This is a Non-Core codelist
 }
 \examples{
 {
-head(codeOrganisationType,10)
+knitr::kable(head(codeOrganisationType, 10))
 }
 }
 \keyword{datasets}

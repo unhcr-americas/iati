@@ -31,7 +31,7 @@ The Country codelist is generated from the ISO 3166-1 part
 }
 \examples{
 {
-head(codeCountry,10)
+knitr::kable(head(codeCountry, 10))
 }
 }
 \keyword{datasets}

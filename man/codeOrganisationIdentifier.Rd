@@ -29,7 +29,7 @@ As of 1.04 this list is no longer maintained.
 }
 \examples{
 {
-head(codeOrganisationIdentifier,10)
+knitr::kable(head(codeOrganisationIdentifier, 10))
 }
 }
 \keyword{datasets}

@@ -3,19 +3,19 @@
 \docType{data}
 \name{transaction}
 \alias{transaction}
-\title{DATASET_TITLE}
+\title{transaction}
 \format{
 A data frame with 30752 rows and 17 variables:
 \describe{
   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
   \item{\code{transaction_ref}}{character COLUMN_DESCRIPTION}
   \item{\code{transaction_humanitarian}}{logical COLUMN_DESCRIPTION}
-  \item{\code{transaction_type_code}}{character COLUMN_DESCRIPTION}
+  \item{\code{transaction_type_code}}{character The type of the transaction (e.g. commitment, disbursement, expenditure, etc.).}
   \item{\code{transaction_date}}{character COLUMN_DESCRIPTION}
   \item{\code{transaction_value_currency}}{character COLUMN_DESCRIPTION}
   \item{\code{transaction_value_date}}{character COLUMN_DESCRIPTION}
   \item{\code{transaction_value}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_description}}{character COLUMN_DESCRIPTION}
+  \item{\code{transaction_description}}{character A human-readable description of the transaction.}
   \item{\code{transaction_provider_org_type}}{character COLUMN_DESCRIPTION}
   \item{\code{transaction_provider_org_ref}}{character COLUMN_DESCRIPTION}
   \item{\code{transaction_provider_org}}{character COLUMN_DESCRIPTION}
@@ -33,11 +33,11 @@ A data frame with 30752 rows and 17 variables:
 transaction
 }
 \description{
-DATASET_DESCRIPTION
+Transactions recording committed or actual funds flowing in or out of an aid activity.
 }
 \examples{
 {
-head(transaction,10)
+knitr::kable(head(transaction, 10))
 }
 }
 \keyword{datasets}

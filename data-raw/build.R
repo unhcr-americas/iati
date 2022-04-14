@@ -38,6 +38,29 @@ activity <- rbind(
   readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_activity.xlsx"), sheet = "Sheet1"))
 
 names(activity)
+str(activity)
+
+## Cleaning a bit to match with code.. 
+activity$reporting_org_type  <- as.numeric(activity$reporting_org_type)
+activity$description_type_1  <- as.numeric(activity$description_type_1)
+activity$description_type_2  <- as.numeric(activity$description_type_2)
+activity$activity_status_code  <- as.numeric(activity$activity_status_code)
+activity$activity_date_type_1 <- as.numeric(activity$activity_date_type_1)
+activity$activity_date_type_2 <- as.numeric(activity$activity_date_type_2)
+activity$activity_date_type_3 <- as.numeric(activity$activity_date_type_3)
+activity$activity_date_type_4 <- as.numeric(activity$activity_date_type_4)
+
+activity$activity_scope_code <- as.numeric(activity$activity_scope_code)
+activity$recipient_country_code <- as.numeric(activity$recipient_country_code)
+activity$recipient_region_code <- as.numeric(activity$recipient_region_code)
+activity$collaboration_type_code <- as.numeric(activity$collaboration_type_code)
+activity$recipient_region_vocabulary <- as.numeric(activity$recipient_region_vocabulary)
+activity$default_flow_type_code <- as.numeric(activity$default_flow_type_code)
+activity$default_finance_type_code <- as.numeric(activity$default_finance_type_code)
+activity$default_tied_status_code <- as.numeric(activity$default_tied_status_code)
+activity$capital_spend <- as.numeric(activity$capital_spend)
+
+str(activity)
 sinew::makeOxygen(activity, add_fields = "source")
 save(activity, file =  "data/activity.RData")
 
@@ -122,6 +145,11 @@ participating_org <- rbind(
   readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_participating_org.xlsx"), sheet = "Sheet1"))
 
 names(participating_org)
+str(participating_org)
+
+participating_org$participating_org_type <- as.numeric(participating_org$participating_org_type )
+participating_org$participating_org_role  <- as.numeric(participating_org$participating_org_role )
+
 sinew::makeOxygen(participating_org, add_fields = "source")
 save(participating_org, file =  "data/participating_org.RData")
 

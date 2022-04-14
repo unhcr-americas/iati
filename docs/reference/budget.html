@@ -96,23 +96,22 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">budget</span>,<span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">budget</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    iati_identifier   budget_type budget_status budget_period_s… budget_period_e…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> XM-DAC-41121-201… <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            2016-01-01       2016-12-31      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> XM-DAC-41121-201… <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            2016-01-01       2016-12-31      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> XM-DAC-41121-201… <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            2016-01-01       2016-12-31      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> XM-DAC-41121-201… <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            2016-01-01       2016-12-31      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> XM-DAC-41121-201… <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            2016-01-01       2016-12-31      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> XM-DAC-41121-201… <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            2016-01-01       2016-12-31      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> XM-DAC-41121-201… <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            2016-01-01       2016-12-31      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> XM-DAC-41121-201… <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            2016-01-01       2016-12-31      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> XM-DAC-41121-201… <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            2016-01-01       2016-12-31      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> XM-DAC-41121-201… <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>            2016-01-01       2016-12-31      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 3 more variables: budget_currency &lt;chr&gt;, budget_value_date &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   budget_value &lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |iati_identifier             |budget_type |budget_status |budget_period_start |budget_period_end |budget_currency |budget_value_date |budget_value |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:---------------------------|:-----------|:-------------|:-------------------|:-----------------|:---------------|:-----------------|:------------|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-AGO   |NA          |NA            |2016-01-01          |2016-12-31        |USD             |2017-06-15        |3721489.92   |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-BDI   |NA          |NA            |2016-01-01          |2016-12-31        |USD             |2017-06-15        |34538841.62  |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-BFA   |NA          |NA            |2016-01-01          |2016-12-31        |USD             |2017-06-15        |21679175.82  |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-BWA   |NA          |NA            |2016-01-01          |2016-12-31        |USD             |2017-06-15        |3333214.59   |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-CAF   |NA          |NA            |2016-01-01          |2016-12-31        |USD             |2017-06-15        |57558703.669 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-CIV   |NA          |NA            |2016-01-01          |2016-12-31        |USD             |2017-06-15        |30785019.55  |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-CMR   |NA          |NA            |2016-01-01          |2016-12-31        |USD             |2017-06-15        |98624602.509 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-CODRO |NA          |NA            |2016-01-01          |2016-12-31        |USD             |2017-06-15        |209710336.16 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-COG   |NA          |NA            |2016-01-01          |2016-12-31        |USD             |2017-06-15        |32000000.31  |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-DJI   |NA          |NA            |2016-01-01          |2016-12-31        |USD             |2017-06-15        |31987830.36  |</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

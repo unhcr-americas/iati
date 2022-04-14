@@ -28,7 +28,7 @@ DAC/CRS distinction between ODA (official development assistance)
 }
 \examples{
 {
-head(codeFlowType,10)
+knitr::kable(head(codeFlowType, 10))
 }
 }
 \keyword{datasets}

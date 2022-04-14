@@ -24,34 +24,34 @@ A data frame with 825 rows and 45 variables:
   \item{\code{description_type_2}}{character COLUMN_DESCRIPTION}
   \item{\code{description_eng_2}}{character COLUMN_DESCRIPTION}
   \item{\code{descriptionv_fr_2}}{character COLUMN_DESCRIPTION}
-  \item{\code{activity_status_code}}{character COLUMN_DESCRIPTION}
+  \item{\code{activity_status_code}}{double COLUMN_DESCRIPTION}
   \item{\code{activity_date_1}}{character COLUMN_DESCRIPTION}
-  \item{\code{activity_date_type_1}}{character COLUMN_DESCRIPTION}
+  \item{\code{activity_date_type_1}}{double COLUMN_DESCRIPTION}
   \item{\code{activity_date_2}}{character COLUMN_DESCRIPTION}
-  \item{\code{activity_date_type_2}}{character COLUMN_DESCRIPTION}
+  \item{\code{activity_date_type_2}}{double COLUMN_DESCRIPTION}
   \item{\code{activity_date_3}}{character COLUMN_DESCRIPTION}
-  \item{\code{activity_date_type_3}}{character COLUMN_DESCRIPTION}
+  \item{\code{activity_date_type_3}}{double COLUMN_DESCRIPTION}
   \item{\code{activity_date_4}}{character COLUMN_DESCRIPTION}
-  \item{\code{activity_date_type_4}}{character COLUMN_DESCRIPTION}
+  \item{\code{activity_date_type_4}}{double COLUMN_DESCRIPTION}
   \item{\code{contact_info_type}}{character COLUMN_DESCRIPTION}
   \item{\code{contact_info_org}}{character COLUMN_DESCRIPTION}
   \item{\code{contact_info_email}}{character COLUMN_DESCRIPTION}
   \item{\code{contact_info_website}}{character COLUMN_DESCRIPTION}
   \item{\code{contact_info_mailing_address}}{character COLUMN_DESCRIPTION}
-  \item{\code{activity_scope_code}}{character COLUMN_DESCRIPTION}
-  \item{\code{recipient_country_code}}{character COLUMN_DESCRIPTION}
+  \item{\code{activity_scope_code}}{double COLUMN_DESCRIPTION}
+  \item{\code{recipient_country_code}}{double COLUMN_DESCRIPTION}
   \item{\code{recipient_country_pct}}{logical COLUMN_DESCRIPTION}
   \item{\code{recipient_country}}{logical COLUMN_DESCRIPTION}
-  \item{\code{recipient_region_code}}{character COLUMN_DESCRIPTION}
-  \item{\code{recipient_region_vocabulary}}{character COLUMN_DESCRIPTION}
+  \item{\code{recipient_region_code}}{double COLUMN_DESCRIPTION}
+  \item{\code{recipient_region_vocabulary}}{double COLUMN_DESCRIPTION}
   \item{\code{recipient_region_vocabulary_url}}{character COLUMN_DESCRIPTION}
   \item{\code{recipient_region_pct}}{logical COLUMN_DESCRIPTION}
   \item{\code{recipient_region}}{character COLUMN_DESCRIPTION}
-  \item{\code{collaboration_type_code}}{character COLUMN_DESCRIPTION}
-  \item{\code{default_flow_type_code}}{character COLUMN_DESCRIPTION}
-  \item{\code{default_finance_type_code}}{character COLUMN_DESCRIPTION}
-  \item{\code{default_tied_status_code}}{character COLUMN_DESCRIPTION}
-  \item{\code{capital_spend}}{character COLUMN_DESCRIPTION} 
+  \item{\code{collaboration_type_code}}{double COLUMN_DESCRIPTION}
+  \item{\code{default_flow_type_code}}{double COLUMN_DESCRIPTION}
+  \item{\code{default_finance_type_code}}{double COLUMN_DESCRIPTION}
+  \item{\code{default_tied_status_code}}{double COLUMN_DESCRIPTION}
+  \item{\code{capital_spend}}{double COLUMN_DESCRIPTION} 
 }
 }
 \source{
@@ -65,7 +65,7 @@ Records of all activities since UNHCR Programme 2016 in IATI format
 }
 \examples{
 {
-head(activity,10)
+knitr::kable(head(activity, 10))
 }
 }
 \keyword{datasets}

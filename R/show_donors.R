@@ -16,7 +16,6 @@
 #'
 #' @examples
 #' show_donors(1:12)
-show_donors <- function(x, na.rm = TRUE) {
-  if (!is.numeric(x)) {stop("x should be numeric")}
-  stats::median(x, na.rm = na.rm)
+show_donors <- function(year, geo, sector, metric) {
+  1
 }

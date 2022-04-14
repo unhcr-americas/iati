@@ -63,46 +63,46 @@
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
     <p>A data frame with 825 rows and 45 variables:</p><dl><dt><code>iati_identifier</code></dt>
-<dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dd><p>character A globally unique identifier for the activity.</p></dd>
 
   <dt><code>reporting_org</code></dt>
-<dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dd><p>character The organisation issuing the report. May be a primary source (reporting on its own activity as donor, implementing agency, etc) or a secondary source (reporting on the activities of another organisation).</p></dd>
 
   <dt><code>reporting_org_ref</code></dt>
-<dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dd><p>character Machine-readable identification string for the organisation issuing the report. Must be in the format RegistrationAgency-RegistrationNumber where RegistrationAgency is a valid code in the Organisation Registration Agency code list and RegistrationNumber is a valid identifier issued by the RegistrationAgency.</p></dd>
 
   <dt><code>reporting_org_type</code></dt>
-<dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dd><p>character The type of organisation issuing the report. See IATI codelist for values.</p></dd>
 
   <dt><code>reporting_org_secondary_reporter</code></dt>
-<dd><p>logical COLUMN_DESCRIPTION</p></dd>
+<dd><p>logical A flag indicating that the reporting organisation of this activity is acting as a secondary reporter. A secondary reporter is one that reproduces data on the activities of an organisation for which it is not directly responsible. This does not include a publisher officially assigned as a proxy to report on behalf of another.</p></dd>
 
   <dt><code>title_eng</code></dt>
-<dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dd><p>character A short, human-readable title that contains a meaningful summary of the activity. English</p></dd>
 
   <dt><code>title_fr</code></dt>
-<dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dd><p>character A short, human-readable title that contains a meaningful summary of the activity. French</p></dd>
 
   <dt><code>title_es</code></dt>
-<dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dd><p>character A short, human-readable title that contains a meaningful summary of the activity. Spanish</p></dd>
 
   <dt><code>title_zh</code></dt>
-<dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dd><p>character A short, human-readable title that contains a meaningful summary of the activity. Chinese</p></dd>
 
   <dt><code>title_ru</code></dt>
-<dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dd><p>character A short, human-readable title that contains a meaningful summary of the activity. Russian</p></dd>
 
   <dt><code>title_ar</code></dt>
-<dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dd><p>character A short, human-readable title that contains a meaningful summary of the activity. Arabic</p></dd>
 
   <dt><code>description_type_1</code></dt>
-<dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dd><p>character The type of description being provided. This is not required if only one general description of the activity is reported.</p></dd>
 
   <dt><code>description_eng_1</code></dt>
-<dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dd><p>character Description type 1 - English</p></dd>
 
   <dt><code>descriptionv_fr_1</code></dt>
-<dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dd><p>character Description type 1 - French</p></dd>
 
   <dt><code>description_type_2</code></dt>
 <dd><p>character COLUMN_DESCRIPTION</p></dd>
@@ -201,9 +201,36 @@
 </dl></div>
     <div class="section level2">
     <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
-    <p><a href="http://somewhere.important.com/" class="external-link">http://somewhere.important.com/</a></p>
+    <p><a href="https://iatistandard.org/en/iati-standard/203/" class="external-link">https://iatistandard.org/en/iati-standard/203/</a></p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="op">{</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">activity</span>,<span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 45</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    iati_identifier           reporting_org     reporting_org_r… reporting_org_t…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> XM-DAC-41121-2016         United Nations H… XM-DAC-41121     40              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> XM-DAC-41121-2016-AFR     United Nations H… XM-DAC-41121     40              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> XM-DAC-41121-2016-AME     United Nations H… XM-DAC-41121     40              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> XM-DAC-41121-2016-ASO     United Nations H… XM-DAC-41121     40              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> XM-DAC-41121-2016-EUR     United Nations H… XM-DAC-41121     40              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> XM-DAC-41121-2016-MENA    United Nations H… XM-DAC-41121     40              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> XM-DAC-41121-2016-AFR-AGO United Nations H… XM-DAC-41121     40              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> XM-DAC-41121-2016-AFR-BDI United Nations H… XM-DAC-41121     40              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> XM-DAC-41121-2016-AFR-BFA United Nations H… XM-DAC-41121     40              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> XM-DAC-41121-2016-AFR-BWA United Nations H… XM-DAC-41121     40              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 41 more variables: reporting_org_secondary_reporter &lt;lgl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   title_eng &lt;chr&gt;, title_fr &lt;chr&gt;, title_es &lt;chr&gt;, title_zh &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   title_ru &lt;chr&gt;, title_ar &lt;chr&gt;, description_type_1 &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   description_eng_1 &lt;chr&gt;, descriptionv_fr_1 &lt;chr&gt;, description_type_2 &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   description_eng_2 &lt;chr&gt;, descriptionv_fr_2 &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   activity_status_code &lt;chr&gt;, activity_date_1 &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   activity_date_type_1 &lt;chr&gt;, activity_date_2 &lt;chr&gt;, …</span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

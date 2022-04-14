@@ -63,7 +63,7 @@
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
     <p>A data frame with 30752 rows and 17 variables:</p><dl><dt><code>iati_identifier</code></dt>
-<dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dd><p>character A globally unique identifier for the activity.</p></dd>
 
   <dt><code>transaction_ref</code></dt>
 <dd><p>character COLUMN_DESCRIPTION</p></dd>
@@ -117,9 +117,36 @@
 </dl></div>
     <div class="section level2">
     <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
-    <p><a href="https://reporting.unhcr.org/iati" class="external-link">https://reporting.unhcr.org/iati</a></p>
+    <p><a href="https://iatistandard.org/en/iati-standard/203/" class="external-link">https://iatistandard.org/en/iati-standard/203/</a></p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="op">{</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">transaction</span>,<span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 17</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    iati_identifier   transaction_ref transaction_humanitarian transaction_type_…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> XM-DAC-41121-2016 65337           <span style="color: #BB0000;">NA</span>                       11                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> XM-DAC-41121-2016 65737           <span style="color: #BB0000;">NA</span>                       11                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> XM-DAC-41121-2016 65228           <span style="color: #BB0000;">NA</span>                       11                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> XM-DAC-41121-2016 65677           <span style="color: #BB0000;">NA</span>                       11                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> XM-DAC-41121-2016 65476           <span style="color: #BB0000;">NA</span>                       11                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> XM-DAC-41121-2016 65055           <span style="color: #BB0000;">NA</span>                       11                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> XM-DAC-41121-2016 65544           <span style="color: #BB0000;">NA</span>                       11                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> XM-DAC-41121-2016 65461           <span style="color: #BB0000;">NA</span>                       11                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> XM-DAC-41121-2016 65476           <span style="color: #BB0000;">NA</span>                       11                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> XM-DAC-41121-2016 65387           <span style="color: #BB0000;">NA</span>                       11                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 13 more variables: transaction_date &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   transaction_value_currency &lt;chr&gt;, transaction_value_date &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   transaction_value &lt;chr&gt;, transaction_description &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   transaction_provider_org_type &lt;chr&gt;, transaction_provider_org_ref &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   transaction_provider_org &lt;chr&gt;, transaction_aid_type_code_1 &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   transaction_aid_type_vocabulary_1 &lt;chr&gt;, transaction_aid_type_code_2 &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   transaction_aid_type_vocabulary_2 &lt;chr&gt;, transaction_value_USD &lt;chr&gt;</span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

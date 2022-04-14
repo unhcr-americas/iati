@@ -7,18 +7,23 @@
 \format{
 A data frame with 825 rows and 3 variables:
 \describe{
-  \item{\code{iati_identifier}}{character COLUMN_DESCRIPTION}
+  \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
   \item{\code{default_aid_type_code}}{character COLUMN_DESCRIPTION}
   \item{\code{default_aid_type_vocabulary}}{logical COLUMN_DESCRIPTION} 
 }
 }
 \source{
-\url{https://reporting.unhcr.org/iati}
+\url{https://iatistandard.org/en/iati-standard/203/}
 }
 \usage{
 default_aid_type
 }
 \description{
 DATASET_DESCRIPTION
+}
+\examples{
+{
+head(default_aid_type,10)
+}
 }
 \keyword{datasets}

@@ -4,7 +4,16 @@
 \alias{show_implementers}
 \title{show_implementers Title}
 \usage{
-show_implementers()
+show_implementers(year, geo, sector, metric)
+}
+\arguments{
+\item{year}{year to select starting from 2016 - could be one year or a list}
+
+\item{geo}{Region or Country or Site}
+
+\item{sector}{Sectors}
+
+\item{metric}{Metrics could be USD or Number of project}
 }
 \value{
 1

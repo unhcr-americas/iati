@@ -51,9 +51,8 @@ After inflating the template
 #' @export
 #'
 #' @examples
-show_donors <- function(x, na.rm = TRUE) {
-  if (!is.numeric(x)) {stop("x should be numeric")}
-  stats::median(x, na.rm = na.rm)
+show_donors <- function(year, geo, sector, metric) {
+  1
 }
 ```
 
@@ -100,12 +99,17 @@ test_that("is_testing_possible", {
 
 ```{r function-show_implementers}
 #' show_implementers Title
-#'
+#' @param year year to select starting from 2016 - could be one year or a list
+#' @param geo Region or Country or Site
+#' @param sector Sectors
+#' @param metric Metrics could be USD or Number of project
+#' 
+#' @inheritParams ggplot2::ggplot
 #' @return 1
 #' @export
 #'
 #' @examples
-show_implementers <- function() {
+show_implementers <- function(year, geo, sector, metric) {
   1
 }
 ```

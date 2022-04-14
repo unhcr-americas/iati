@@ -181,4 +181,178 @@ names(transaction)
 sinew::makeOxygen(transaction, add_fields = "source")
 save(transaction, file =  "data/transaction.RData")
 
+## code table need to change name... 
+
+
+# load("data/codeActivityDateType.RData")
+# codeActivityDateType <- ActivityDateType
+# save(codeActivityDateType, file =  "data/codeActivityDateType.RData")
+# 
+# 
+# load("data/codeActivityScope.RData")
+# codeActivityScope <- ActivityScope
+# save(codeActivityScope, file =  "data/codeActivityScope.RData")
+# 
+# 
+# load("data/codeActivityStatus.RData")
+# codeActivityStatus <- ActivityStatus
+# save(codeActivityStatus, file =  "data/codeActivityStatus.RData")
+# 
+# 
+# load("data/codeAidType.RData")
+# codeAidType <- AidType
+# save(codeAidType, file =  "data/codeAidType.RData")
+# 
+# 
+# load("data/codeAidTypeCategory.RData")
+# codeAidTypeCategory <- AidTypeCategory
+# save(codeAidTypeCategory, file =  "data/codeAidTypeCategory.RData")
+# 
+# 
+# load("data/codeAidTypeVocabulary.RData")
+# codeAidTypeVocabulary <- AidTypeVocabulary
+# save(codeAidTypeVocabulary, file =  "data/codeAidTypeVocabulary.RData")
+# 
+# 
+# load("data/codeBudgetIdentifier.RData")
+# codeBudgetIdentifier <- BudgetIdentifier
+# save(codeBudgetIdentifier, file =  "data/codeBudgetIdentifier.RData")
+
+# 
+# load("data/codeBudgetIdentifierSector.RData")
+# codeBudgetIdentifierSector <- BudgetIdentifierSector
+# save(codeBudgetIdentifierSector, file =  "data/codeBudgetIdentifierSector.RData")
+# 
+# 
+# load("data/codeSectorCategory.RData")
+# codeSectorCategory <- SectorCategory
+# save(codeSectorCategory, file =  "data/codeSectorCategory.RData")
+# 
+# 
+# load("data/codeSector.RData")
+# codeSector <- Sector
+# save(codeSector, file =  "data/codeSector.RData")
+# 
+# 
+# load("data/codeCashandVoucherModalities.RData")
+# codeCashandVoucherModalities <- CashandVoucherModalities
+# save(codeCashandVoucherModalities, file =  "data/codeCashandVoucherModalities.RData")
+# 
+# 
+# load("data/codeCountry.RData")
+# codeCountry <- Country
+# save(codeCountry, file =  "data/codeCountry.RData")
+# 
+# 
+# load("data/codeRegion.RData")
+# codeRegion <- Region
+# save(codeRegion, file =  "data/codeRegion.RData")
+# 
+# 
+# load("data/codeCurrency.RData")
+# codeCurrency <- Currency
+# save(codeCurrency, file =  "data/codeCurrency.RData")
+# 
+# 
+# load("data/codeDescriptionType.RData")
+# codeDescriptionType <- DescriptionType
+# save(codeDescriptionType, file =  "data/codeDescriptionType.RData")
+# 
+# 
+# load("data/codeEarmarkingCategory.RData")
+# codeEarmarkingCategory <- EarmarkingCategory
+# save(codeEarmarkingCategory, file =  "data/codeEarmarkingCategory.RData")
+# 
+# load("data/codeFlowType.RData")
+# codeFlowType <- FlowType
+# save(codeFlowType, file =  "data/codeFlowType.RData")
+# 
+# 
+# load("data/codeGeographicLocationClass.RData")
+# codeGeographicLocationClass <- GeographicLocationClass
+# save(codeGeographicLocationClass, file =  "data/codeGeographicLocationClass.RData")
+
+# 
+# load("data/codeHumanitarianScopeType.RData")
+# codeHumanitarianScopeType <- HumanitarianScopeType
+# save(codeHumanitarianScopeType, file =  "data/codeHumanitarianScopeType.RData")
+# 
+# 
+# load("data/codeHumanitarianScopeVocabulary.RData")
+# codeHumanitarianScopeVocabulary <- HumanitarianScopeVocabulary
+# save(codeHumanitarianScopeVocabulary, file =  "data/codeHumanitarianScopeVocabulary.RData")
+# 
+# 
+# load("data/codeIATIOrganisationIdentifier.RData")
+# codeIATIOrganisationIdentifier <- IATIOrganisationIdentifier
+# save(codeIATIOrganisationIdentifier, file =  "data/codeIATIOrganisationIdentifier.RData")
+# 
+# 
+# 
+# load("data/codeIndicatorMeasure.RData")
+# codeIndicatorMeasure <- IndicatorMeasure
+# save(codeIndicatorMeasure, file =  "data/codeIndicatorMeasure.RData")
+# 
+# 
+# 
+# load("data/codeIndicatorVocabulary.RData")
+# codeIndicatorVocabulary <- IndicatorVocabulary
+# save(codeIndicatorVocabulary, file =  "data/codeIndicatorVocabulary.RData")
+# 
+# 
+# load("data/codeOrganisationIdentifier.RData")
+# codeOrganisationIdentifier <- OrganisationIdentifier
+# save(codeOrganisationIdentifier, file =  "data/codeOrganisationIdentifier.RData")
+# 
+# 
+# load("data/codeOrganisationRegistrationAgency.RData")
+# codeOrganisationRegistrationAgency <- OrganisationRegistrationAgency
+# save(codeOrganisationRegistrationAgency, file =  "data/codeOrganisationRegistrationAgency.RData")
+
+# 
+# load("data/codeOrganisationRole.RData")
+# codeOrganisationRole <- OrganisationRole
+# save(codeOrganisationRole, file =  "data/codeOrganisationRole.RData")
+# 
+# 
+# load("data/codeOrganisationType.RData")
+# codeOrganisationType <- OrganisationType
+# save(codeOrganisationType, file =  "data/codeOrganisationType.RData")
+# 
+# load("data/codePolicyMarker.RData")
+# codePolicyMarker <- PolicyMarker
+# save(codePolicyMarker, file =  "data/codePolicyMarker.RData")
+# 
+# 
+# load("data/codeUNSDGGoals.RData")
+# codeUNSDGGoals <- UNSDGGoals
+# save(codeUNSDGGoals, file =  "data/codeUNSDGGoals.RData")
+# 
+# 
+# load("data/codeUNSDGTargets.RData")
+# codeUNSDGTargets <- UNSDGTargets
+# save(codeUNSDGTargets, file =  "data/codeUNSDGTargets.RData")
+# 
+# 
+# load("data/codeTransactionType.RData")
+# codeTransactionType <- TransactionType
+# save(codeTransactionType, file =  "data/codeTransactionType.RData")
+# 
+# 
+# load("data/codeSectorVocabulary.RData")
+# codeSectorVocabulary <- SectorVocabulary
+# save(codeSectorVocabulary, file =  "data/codeSectorVocabulary.RData")
+# 
+# load("data/codeHumCluster.RData")
+# codeHumCluster <- HumCluster
+# save(codeHumCluster, file =  "data/codeHumCluster.RData")
+# 
+# load("data/codeResultType.RData")
+# codeResultType <- ResultType
+# save(codeResultType, file =  "data/codeResultType.RData")
+# 
+# load("data/codeTransactionType.RData")
+# codeTransactionType <- TransactionType
+# save(codeTransactionType, file =  "data/codeTransactionType.RData")
+ 
 

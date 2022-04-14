@@ -7,7 +7,7 @@
 \format{
 A data frame with 30752 rows and 17 variables:
 \describe{
-  \item{\code{iati_identifier}}{character COLUMN_DESCRIPTION}
+  \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
   \item{\code{transaction_ref}}{character COLUMN_DESCRIPTION}
   \item{\code{transaction_humanitarian}}{logical COLUMN_DESCRIPTION}
   \item{\code{transaction_type_code}}{character COLUMN_DESCRIPTION}
@@ -27,12 +27,17 @@ A data frame with 30752 rows and 17 variables:
 }
 }
 \source{
-\url{https://reporting.unhcr.org/iati}
+\url{https://iatistandard.org/en/iati-standard/203/}
 }
 \usage{
 transaction
 }
 \description{
 DATASET_DESCRIPTION
+}
+\examples{
+{
+head(transaction,10)
+}
 }
 \keyword{datasets}

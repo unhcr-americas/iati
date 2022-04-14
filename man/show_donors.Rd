@@ -4,7 +4,7 @@
 \alias{show_donors}
 \title{Ploting Donors}
 \usage{
-show_donors(x, na.rm = TRUE)
+show_donors(year, geo, sector, metric)
 }
 \arguments{
 \item{year}{year to select starting from 2016 - could be one year or a list}

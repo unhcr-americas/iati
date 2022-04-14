@@ -7,7 +7,7 @@
 \format{
 A data frame with 1578 rows and 8 variables:
 \describe{
-  \item{\code{iati_identifier}}{character COLUMN_DESCRIPTION}
+  \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
   \item{\code{humanitarian_scope_type}}{character COLUMN_DESCRIPTION}
   \item{\code{humanitarian_scope_vocabulary}}{character COLUMN_DESCRIPTION}
   \item{\code{humanitarian_scope_vocabulary_uri}}{character COLUMN_DESCRIPTION}
@@ -18,12 +18,17 @@ A data frame with 1578 rows and 8 variables:
 }
 }
 \source{
-\url{https://reporting.unhcr.org/iati}
+\url{https://iatistandard.org/en/iati-standard/203/}
 }
 \usage{
 humanitarian_scope
 }
 \description{
 DATASET_DESCRIPTION
+}
+\examples{
+{
+head(humanitarian_scope,10)
+}
 }
 \keyword{datasets}

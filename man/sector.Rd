@@ -3,11 +3,11 @@
 \docType{data}
 \name{sector}
 \alias{sector}
-\title{DATASET_TITLE}
+\title{sector}
 \format{
 A data frame with 23793 rows and 6 variables:
 \describe{
-  \item{\code{iati_identifier}}{character COLUMN_DESCRIPTION}
+  \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
   \item{\code{sector_vocabulary}}{character COLUMN_DESCRIPTION}
   \item{\code{sector_vocabulary_uri}}{logical COLUMN_DESCRIPTION}
   \item{\code{sector_code}}{character COLUMN_DESCRIPTION}
@@ -16,12 +16,17 @@ A data frame with 23793 rows and 6 variables:
 }
 }
 \source{
-\url{https://reporting.unhcr.org/iati}
+\url{https://iatistandard.org/en/iati-standard/203/}
 }
 \usage{
 sector
 }
 \description{
 DATASET_DESCRIPTION
+}
+\examples{
+{
+head(sector,10)
+}
 }
 \keyword{datasets}

@@ -7,7 +7,7 @@
 \format{
 A data frame with 840 rows and 8 variables:
 \describe{
-  \item{\code{iati_identifier}}{character COLUMN_DESCRIPTION}
+  \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
   \item{\code{budget_type}}{character COLUMN_DESCRIPTION}
   \item{\code{budget_status}}{character COLUMN_DESCRIPTION}
   \item{\code{budget_period_start}}{character COLUMN_DESCRIPTION}
@@ -18,12 +18,17 @@ A data frame with 840 rows and 8 variables:
 }
 }
 \source{
-\url{https://reporting.unhcr.org/iati}
+\url{https://iatistandard.org/en/iati-standard/203/}
 }
 \usage{
 budget
 }
 \description{
 DATASET_DESCRIPTION
+}
+\examples{
+{
+head(budget,10)
+}
 }
 \keyword{datasets}

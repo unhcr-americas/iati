@@ -1,3 +1,10 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 usethis::use_data_raw()
+^dev$
+^LICENSE\.md$
+^\.github$
+^iati\.Rproj$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

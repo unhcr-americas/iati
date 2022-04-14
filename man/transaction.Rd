@@ -3,29 +3,8 @@
 \docType{data}
 \name{transaction}
 \alias{transaction}
-\title{Transaction}
+\title{DATASET_TITLE}
 \format{
-A data frame with 30752 rows and 17 variables:
-\describe{
-  \item{\code{iati_identifier}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_ref}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_humanitarian}}{logical COLUMN_DESCRIPTION}
-  \item{\code{transaction_type_code}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_date}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_value_currency}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_value_date}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_value}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_description}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_provider_org_type}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_provider_org_ref}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_provider_org}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_aid_type_code_1}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_aid_type_vocabulary_1}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_aid_type_code_2}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_aid_type_vocabulary_2}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_value_USD}}{character COLUMN_DESCRIPTION} 
-}
-
 A data frame with 30752 rows and 17 variables:
 \describe{
   \item{\code{iati_identifier}}{character COLUMN_DESCRIPTION}
@@ -49,17 +28,11 @@ A data frame with 30752 rows and 17 variables:
 }
 \source{
 \url{https://reporting.unhcr.org/iati}
-
-\url{https://reporting.unhcr.org/iati}
 }
 \usage{
 transaction
-
-transaction
 }
 \description{
-Records of all transaction since UNHCR Programme 2016 in IATI format
-
 DATASET_DESCRIPTION
 }
 \keyword{datasets}

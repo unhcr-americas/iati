@@ -90,15 +90,16 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">codeDescriptionType</span>,<span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">codeDescriptionType</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    code name          description                          category url   status</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1 General       Unstructured, long description of t… <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     2 Objectives    Specific objectives for the activit… <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     3 Target Groups Details of groups that are intended… <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     4 Other         For miscellaneous use. A further cl… <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | code|name          |description                                                                                   |category |url |status |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |----:|:-------------|:---------------------------------------------------------------------------------------------|:--------|:---|:------|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |    1|General       |Unstructured, long description of the activity                                                |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |    2|Objectives    |Specific objectives for the activity, e.g. taken from logical framework                       |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |    3|Target Groups |Details of groups that are intended to benefit from the activity                              |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |    4|Other         |For miscellaneous use. A further classification or breakdown may be included in the narrative |NA       |NA  |active |</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

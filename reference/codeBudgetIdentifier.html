@@ -99,21 +99,22 @@ As of version 2.03 this codelist has been deprecated.
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">codeBudgetIdentifier</span>,<span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">codeBudgetIdentifier</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    code  name                                  description category url   status</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                 <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 1.1.1 Executive - executive                 <span style="color: #BB0000;">NA</span>               1.1 <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 1.2.1 Legislative - legislative             <span style="color: #BB0000;">NA</span>               1.2 <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 1.3.1 Accountability - macroeconomic policy <span style="color: #BB0000;">NA</span>               1.3 <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 1.3.2 Accountability - budgeting            <span style="color: #BB0000;">NA</span>               1.3 <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 1.3.3 Accountability - planning             <span style="color: #BB0000;">NA</span>               1.3 <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 1.3.4 Accountability - Treasury/Accounts    <span style="color: #BB0000;">NA</span>               1.3 <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 1.3.5 Accountability - debt and aid manage… <span style="color: #BB0000;">NA</span>               1.3 <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 1.3.6 Accountability - tax policy           <span style="color: #BB0000;">NA</span>               1.3 <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 1.3.7 Accountability - tax collection       <span style="color: #BB0000;">NA</span>               1.3 <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 1.3.8 Accountability - local government fi… <span style="color: #BB0000;">NA</span>               1.3 <span style="color: #BB0000;">NA</span>    active</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |code  |name                                      |description | category|url |status |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:-----|:-----------------------------------------|:-----------|--------:|:---|:------|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |1.1.1 |Executive - executive                     |NA          |      1.1|NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |1.2.1 |Legislative - legislative                 |NA          |      1.2|NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |1.3.1 |Accountability - macroeconomic policy     |NA          |      1.3|NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |1.3.2 |Accountability - budgeting                |NA          |      1.3|NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |1.3.3 |Accountability - planning                 |NA          |      1.3|NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |1.3.4 |Accountability - Treasury/Accounts        |NA          |      1.3|NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |1.3.5 |Accountability - debt and aid management  |NA          |      1.3|NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |1.3.6 |Accountability - tax policy               |NA          |      1.3|NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |1.3.7 |Accountability - tax collection           |NA          |      1.3|NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |1.3.8 |Accountability - local government finance |NA          |      1.3|NA  |active |</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

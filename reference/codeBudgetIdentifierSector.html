@@ -96,21 +96,22 @@ into sectors. It is not used as a codelist in its own right.
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">codeBudgetIdentifierSector</span>,<span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">codeBudgetIdentifierSector</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     code name                       description category url   status</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>   1.1 Executive                  <span style="color: #BB0000;">NA</span>                 1 <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>   1.2 Legislative                <span style="color: #BB0000;">NA</span>                 1 <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>   1.3 Accountability             <span style="color: #BB0000;">NA</span>                 1 <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>   1.4 External Affairs           <span style="color: #BB0000;">NA</span>                 1 <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>   1.5 General Personnel Services <span style="color: #BB0000;">NA</span>                 1 <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>   1.6 Statistics                 <span style="color: #BB0000;">NA</span>                 1 <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>   1.7 Other General Services     <span style="color: #BB0000;">NA</span>                 1 <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>   1.8 Elections                  <span style="color: #BB0000;">NA</span>                 1 <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>   2.1 Justice, Law and Order     <span style="color: #BB0000;">NA</span>                 2 <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>   2.2 Defence                    <span style="color: #BB0000;">NA</span>                 2 <span style="color: #BB0000;">NA</span>    active</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | code|name                       |description | category|url |status |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |----:|:--------------------------|:-----------|--------:|:---|:------|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |  1.1|Executive                  |NA          |        1|NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |  1.2|Legislative                |NA          |        1|NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |  1.3|Accountability             |NA          |        1|NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |  1.4|External Affairs           |NA          |        1|NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |  1.5|General Personnel Services |NA          |        1|NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |  1.6|Statistics                 |NA          |        1|NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |  1.7|Other General Services     |NA          |        1|NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |  1.8|Elections                  |NA          |        1|NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |  2.1|Justice, Law and Order     |NA          |        2|NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |  2.2|Defence                    |NA          |        2|NA  |active |</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

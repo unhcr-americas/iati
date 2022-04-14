@@ -99,21 +99,22 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">codeOrganisationIdentifier</span>,<span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">codeOrganisationIdentifier</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    code  name                                  description category url   status</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                 <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> AT-1  Federal Ministry of Finance           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> AT-10 Ministry for Agriculture and Environ… <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> AT-11 Ministry of Defense                   <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> AT-12 Ministry of Interior                  <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> AT-2  Various ministries                    <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> AT-3  Federal Government of Austria         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> AT-4  Oesterreichische Kontrollbank AG      <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> AT-5  Federal Ministry of Foreign Affairs   <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> AT-6  Provincial governments, local commun… <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> AT-8  Austrian Development Agency           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |code  |name                                      |description |category |url |status |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:-----|:-----------------------------------------|:-----------|:--------|:---|:------|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |AT-1  |Federal Ministry of Finance               |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |AT-10 |Ministry for Agriculture and Environment  |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |AT-11 |Ministry of Defense                       |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |AT-12 |Ministry of Interior                      |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |AT-2  |Various ministries                        |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |AT-3  |Federal Government of Austria             |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |AT-4  |Oesterreichische Kontrollbank AG          |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |AT-5  |Federal Ministry of Foreign Affairs       |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |AT-6  |Provincial governments, local communities |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |AT-8  |Austrian Development Agency               |NA          |NA       |NA  |active |</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

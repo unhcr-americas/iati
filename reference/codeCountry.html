@@ -105,21 +105,22 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">codeCountry</span>,<span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">codeCountry</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    code  name                description category url   status</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> AF    Afghanistan         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> AX    Åland Islands       <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> AL    Albania             <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> DZ    Algeria             <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> AS    American Samoa      <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> AD    Andorra             <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> AO    Angola              <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> AI    Anguilla            <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> AQ    Antarctica          <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> AG    Antigua and Barbuda <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |code |name                |description |category |url |status |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:----|:-------------------|:-----------|:--------|:---|:------|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |AF   |Afghanistan         |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |AX   |Åland Islands       |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |AL   |Albania             |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |DZ   |Algeria             |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |AS   |American Samoa      |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |AD   |Andorra             |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |AO   |Angola              |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |AI   |Anguilla            |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |AQ   |Antarctica          |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |AG   |Antigua and Barbuda |NA          |NA       |NA  |active |</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

@@ -90,22 +90,22 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sector</span>,<span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sector</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    iati_identifier      sector_vocabula… sector_vocabula… sector_code sector_pct</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> XM-DAC-41121-2016    99               <span style="color: #BB0000;">NA</span>               1           76.93     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> XM-DAC-41121-2016    99               <span style="color: #BB0000;">NA</span>               2           .82       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> XM-DAC-41121-2016    99               <span style="color: #BB0000;">NA</span>               3           3.69      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> XM-DAC-41121-2016    99               <span style="color: #BB0000;">NA</span>               4           18.56     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> XM-DAC-41121-2016    1                <span style="color: #BB0000;">NA</span>               72010       65.52     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> XM-DAC-41121-2016    1                <span style="color: #BB0000;">NA</span>               72011       6.24      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> XM-DAC-41121-2016    1                <span style="color: #BB0000;">NA</span>               72012       3.9       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> XM-DAC-41121-2016    1                <span style="color: #BB0000;">NA</span>               72040       .91       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> XM-DAC-41121-2016    1                <span style="color: #BB0000;">NA</span>               72050       23.43     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> XM-DAC-41121-2016-A… 99               <span style="color: #BB0000;">NA</span>               1           81.64     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 1 more variable: sector_desc &lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |iati_identifier       |sector_vocabulary |sector_vocabulary_uri |sector_code |sector_pct |sector_desc                               |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:---------------------|:-----------------|:---------------------|:-----------|:----------|:-----------------------------------------|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016     |99                |NA                    |1           |76.93      |Refugee programme                         |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016     |99                |NA                    |2           |.82        |Stateless programme                       |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016     |99                |NA                    |3           |3.69       |Reintegration projects                    |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016     |99                |NA                    |4           |18.56      |Internally Displaced Person projects      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016     |1                 |NA                    |72010       |65.52      |Material relief assistance and services   |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016     |1                 |NA                    |72011       |6.24       |Basic Health Care Services in Emergencies |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016     |1                 |NA                    |72012       |3.9        |Education in emergencies                  |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016     |1                 |NA                    |72040       |.91        |Emergency food aid                        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016     |1                 |NA                    |72050       |23.43      |Relief co-ordination and support services |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR |99                |NA                    |1           |81.64      |Refugee programme                         |</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

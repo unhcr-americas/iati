@@ -90,21 +90,22 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">codeRegion</span>,<span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">codeRegion</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     code name                              description category url   status   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                             <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    88 States Ex-Yugoslavia unspecified  <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    89 Europe, regional                  <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>   189 North of Sahara, regional         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>   289 South of Sahara, regional         <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>   298 Africa, regional                  <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>   380 West Indies, regional             <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    withdrawn</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>   389 North &amp; Central America, regional <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>   489 South America, regional           <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>   498 America, regional                 <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>   589 Middle East, regional             <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | code|name                              |description |category |url |status    |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |----:|:---------------------------------|:-----------|:--------|:---|:---------|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |   88|States Ex-Yugoslavia unspecified  |NA          |NA       |NA  |active    |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |   89|Europe, regional                  |NA          |NA       |NA  |active    |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |  189|North of Sahara, regional         |NA          |NA       |NA  |active    |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |  289|South of Sahara, regional         |NA          |NA       |NA  |active    |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |  298|Africa, regional                  |NA          |NA       |NA  |active    |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |  380|West Indies, regional             |NA          |NA       |NA  |withdrawn |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |  389|North &amp; Central America, regional |NA          |NA       |NA  |active    |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |  489|South America, regional           |NA          |NA       |NA  |active    |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |  498|America, regional                 |NA          |NA       |NA  |active    |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |  589|Middle East, regional             |NA          |NA       |NA  |active    |</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

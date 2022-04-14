@@ -96,21 +96,22 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">codePolicyMarker</span>,<span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">codePolicyMarker</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     code name                                  description category url   status</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                 <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>     1 Gender Equality                       <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>     2 Aid to Environment                    <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>     3 Participatory Development/Good Gover… <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>     4 Trade Development                     <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>     5 Aid Targeting the Objectives of the … <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>     6 Aid Targeting the Objectives of the … <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>     7 Aid Targeting the Objectives of the … <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>     8 Aid Targeting the Objectives of the … <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>     9 Reproductive, Maternal, Newborn and … <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    10 Disaster Risk Reduction(DRR)          <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    active</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> | code|name                                                                                    |description |category |url |status |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |----:|:---------------------------------------------------------------------------------------|:-----------|:--------|:---|:------|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |    1|Gender Equality                                                                         |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |    2|Aid to Environment                                                                      |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |    3|Participatory Development/Good Governance                                               |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |    4|Trade Development                                                                       |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |    5|Aid Targeting the Objectives of the Convention on Biological Diversity                  |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |    6|Aid Targeting the Objectives of the Framework Convention on Climate Change - Mitigation |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |    7|Aid Targeting the Objectives of the Framework Convention on Climate Change - Adaptation |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |    8|Aid Targeting the Objectives of the Convention to Combat Desertification                |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |    9|Reproductive, Maternal, Newborn and Child Health (RMNCH)                                |NA          |NA       |NA  |active |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |   10|Disaster Risk Reduction(DRR)                                                            |NA          |NA       |NA  |active |</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

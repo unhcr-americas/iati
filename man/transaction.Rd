@@ -10,24 +10,24 @@ A data frame with 30752 rows and 17 variables:
   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
   \item{\code{transaction_ref}}{character COLUMN_DESCRIPTION}
   \item{\code{transaction_humanitarian}}{logical COLUMN_DESCRIPTION}
-  \item{\code{transaction_type_code}}{character The type of the transaction (e.g. commitment, disbursement, expenditure, etc.).}
-  \item{\code{transaction_date}}{character COLUMN_DESCRIPTION}
+  \item{\code{transaction_type_code}}{double The type of the transaction (e.g. commitment, disbursement, expenditure, etc.).}
+  \item{\code{transaction_date}}{date COLUMN_DESCRIPTION}
   \item{\code{transaction_value_currency}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_value_date}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_value}}{character COLUMN_DESCRIPTION}
+  \item{\code{transaction_value_date}}{date COLUMN_DESCRIPTION}
+  \item{\code{transaction_value}}{double COLUMN_DESCRIPTION}
   \item{\code{transaction_description}}{character A human-readable description of the transaction.}
-  \item{\code{transaction_provider_org_type}}{character COLUMN_DESCRIPTION}
+  \item{\code{transaction_provider_org_type}}{double COLUMN_DESCRIPTION}
   \item{\code{transaction_provider_org_ref}}{character COLUMN_DESCRIPTION}
   \item{\code{transaction_provider_org}}{character COLUMN_DESCRIPTION}
   \item{\code{transaction_aid_type_code_1}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_aid_type_vocabulary_1}}{character COLUMN_DESCRIPTION}
+  \item{\code{transaction_aid_type_vocabulary_1}}{double COLUMN_DESCRIPTION}
   \item{\code{transaction_aid_type_code_2}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_aid_type_vocabulary_2}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_value_USD}}{character COLUMN_DESCRIPTION} 
+  \item{\code{transaction_aid_type_vocabulary_2}}{double COLUMN_DESCRIPTION}
+  \item{\code{transaction_value_USD}}{double COLUMN_DESCRIPTION} 
 }
 }
 \source{
-\url{https://iatistandard.org/en/iati-standard/203/}
+\url{https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/transaction/}
 }
 \usage{
 transaction

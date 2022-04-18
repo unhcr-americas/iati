@@ -27,7 +27,7 @@ library(docthis)
 
 ### Build each frame documentation 
 
-## iati_transaction ##########
+## iati_activity ##########
 activity <- rbind( 
   readxl::read_excel( here::here("data-raw/unhcr_2016", "iati_activity.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2017", "iati_activity.xlsx"), sheet = "Sheet1"),
@@ -37,8 +37,8 @@ activity <- rbind(
   readxl::read_excel( here::here("data-raw/unhcr_2021", "iati_activity.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_activity.xlsx"), sheet = "Sheet1"))
 
-names(activity)
-str(activity)
+#names(activity)
+#str(activity)
 
 ## Cleaning a bit to match with code.. 
 activity$reporting_org_type  <- as.numeric(activity$reporting_org_type)
@@ -59,6 +59,12 @@ activity$default_flow_type_code <- as.numeric(activity$default_flow_type_code)
 activity$default_finance_type_code <- as.numeric(activity$default_finance_type_code)
 activity$default_tied_status_code <- as.numeric(activity$default_tied_status_code)
 activity$capital_spend <- as.numeric(activity$capital_spend)
+
+activity$activity_date_1  <- lubridate::as_date(activity$activity_date_1)
+activity$activity_date_2  <- lubridate::as_date(activity$activity_date_2)
+activity$activity_date_3  <- lubridate::as_date(activity$activity_date_3)
+activity$activity_date_4  <- lubridate::as_date(activity$activity_date_4)
+
 
 str(activity)
 sinew::makeOxygen(activity, add_fields = "source")
@@ -204,6 +210,17 @@ transaction <- rbind(
   readxl::read_excel( here::here("data-raw/unhcr_2020", "iati_transaction.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2021", "iati_transaction.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_transaction.xlsx"), sheet = "Sheet1"))
+
+str(transaction)
+## Cleaning a bit to match with code.. 
+transaction$transaction_provider_org_type  <- as.numeric(transaction$transaction_provider_org_type)
+transaction$transaction_type_code   <- as.numeric(transaction$transaction_type_code )
+transaction$transaction_aid_type_vocabulary_1  <- as.numeric(transaction$transaction_aid_type_vocabulary_1)
+transaction$transaction_aid_type_vocabulary_2  <- as.numeric(transaction$transaction_aid_type_vocabulary_2)
+transaction$transaction_value  <- as.numeric(transaction$transaction_value)
+transaction$transaction_value_USD  <- as.numeric(transaction$transaction_value_USD)
+transaction$transaction_value_date  <- lubridate::as_date(transaction$transaction_value_date)
+transaction$transaction_date  <- lubridate::as_date(transaction$transaction_date)
 
 names(transaction)
 sinew::makeOxygen(transaction, add_fields = "source")

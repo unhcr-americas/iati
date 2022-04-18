@@ -14,36 +14,17 @@ A data frame with 13 rows and 6 variables:
   \item{\code{url}}{logical COLUMN_DESCRIPTION}
   \item{\code{status}}{character COLUMN_DESCRIPTION}
 }
-
-A data frame with 13 rows and 6 variables:
-\describe{
-  \item{\code{code}}{double COLUMN_DESCRIPTION}
-  \item{\code{name}}{character COLUMN_DESCRIPTION}
-  \item{\code{description}}{character COLUMN_DESCRIPTION}
-  \item{\code{category}}{logical COLUMN_DESCRIPTION}
-  \item{\code{url}}{logical COLUMN_DESCRIPTION}
-  \item{\code{status}}{character COLUMN_DESCRIPTION}
-}
 }
 \source{
-\url{https://iatistandard.org/en/iati-standard/203/codelists/}
-
 \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 }
 \usage{
 codeTransactionType
-
-codeTransactionType
 }
 \description{
 Transaction Type -   This is a Core codelist.
-
-This is a Core codelist.
 }
 \examples{
-{
-knitr::kable(head(codeTransactionType, 10))
-}
 {
 knitr::kable(head(codeTransactionType, 10))
 }

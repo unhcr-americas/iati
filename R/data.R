@@ -26,13 +26,13 @@
 #'   \item{\code{description_eng_2}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{descriptionv_fr_2}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{activity_status_code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{activity_date_1}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{activity_date_1}}{date COLUMN_DESCRIPTION}
 #'   \item{\code{activity_date_type_1}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{activity_date_2}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{activity_date_2}}{date COLUMN_DESCRIPTION}
 #'   \item{\code{activity_date_type_2}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{activity_date_3}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{activity_date_3}}{date COLUMN_DESCRIPTION}
 #'   \item{\code{activity_date_type_3}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{activity_date_4}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{activity_date_4}}{date COLUMN_DESCRIPTION}
 #'   \item{\code{activity_date_type_4}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{contact_info_type}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{contact_info_org}}{character COLUMN_DESCRIPTION}
@@ -278,22 +278,22 @@
 #'   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
 #'   \item{\code{transaction_ref}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_humanitarian}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_type_code}}{character The type of the transaction (e.g. commitment, disbursement, expenditure, etc.).}
-#'   \item{\code{transaction_date}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_type_code}}{double The type of the transaction (e.g. commitment, disbursement, expenditure, etc.).}
+#'   \item{\code{transaction_date}}{date COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_value_currency}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_value_date}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_value}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_value_date}}{date COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_value}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_description}}{character A human-readable description of the transaction.}
-#'   \item{\code{transaction_provider_org_type}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_provider_org_type}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_provider_org_ref}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_provider_org}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_aid_type_code_1}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_aid_type_vocabulary_1}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_aid_type_vocabulary_1}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_aid_type_code_2}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_aid_type_vocabulary_2}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_value_USD}}{character COLUMN_DESCRIPTION} 
+#'   \item{\code{transaction_aid_type_vocabulary_2}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_value_USD}}{double COLUMN_DESCRIPTION} 
 #'}
-#' @source \url{https://iatistandard.org/en/iati-standard/203/}
+#' @source \url{https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/transaction/}
 #' @examples
 #' {
 #' knitr::kable(head(transaction, 10))
@@ -1031,22 +1031,4 @@
 #'}
 "codeResultType"
 
-
-#' @title codeTransactionType
-#' @description This is a Core codelist.
-#' @format A data frame with 13 rows and 6 variables:
-#' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
-#'}
-#' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
-#' @examples
-#' {
-#' knitr::kable(head(codeTransactionType, 10))
-#'}
-"codeTransactionType"
 

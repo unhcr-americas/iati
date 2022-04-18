@@ -25,13 +25,13 @@ A data frame with 825 rows and 45 variables:
   \item{\code{description_eng_2}}{character COLUMN_DESCRIPTION}
   \item{\code{descriptionv_fr_2}}{character COLUMN_DESCRIPTION}
   \item{\code{activity_status_code}}{double COLUMN_DESCRIPTION}
-  \item{\code{activity_date_1}}{character COLUMN_DESCRIPTION}
+  \item{\code{activity_date_1}}{date COLUMN_DESCRIPTION}
   \item{\code{activity_date_type_1}}{double COLUMN_DESCRIPTION}
-  \item{\code{activity_date_2}}{character COLUMN_DESCRIPTION}
+  \item{\code{activity_date_2}}{date COLUMN_DESCRIPTION}
   \item{\code{activity_date_type_2}}{double COLUMN_DESCRIPTION}
-  \item{\code{activity_date_3}}{character COLUMN_DESCRIPTION}
+  \item{\code{activity_date_3}}{date COLUMN_DESCRIPTION}
   \item{\code{activity_date_type_3}}{double COLUMN_DESCRIPTION}
-  \item{\code{activity_date_4}}{character COLUMN_DESCRIPTION}
+  \item{\code{activity_date_4}}{date COLUMN_DESCRIPTION}
   \item{\code{activity_date_type_4}}{double COLUMN_DESCRIPTION}
   \item{\code{contact_info_type}}{character COLUMN_DESCRIPTION}
   \item{\code{contact_info_org}}{character COLUMN_DESCRIPTION}

@@ -72,25 +72,25 @@
 <dd><p>logical COLUMN_DESCRIPTION</p></dd>
 
   <dt><code>transaction_type_code</code></dt>
-<dd><p>character The type of the transaction (e.g. commitment, disbursement, expenditure, etc.).</p></dd>
+<dd><p>double The type of the transaction (e.g. commitment, disbursement, expenditure, etc.).</p></dd>
 
   <dt><code>transaction_date</code></dt>
-<dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dd><p>date COLUMN_DESCRIPTION</p></dd>
 
   <dt><code>transaction_value_currency</code></dt>
 <dd><p>character COLUMN_DESCRIPTION</p></dd>
 
   <dt><code>transaction_value_date</code></dt>
-<dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dd><p>date COLUMN_DESCRIPTION</p></dd>
 
   <dt><code>transaction_value</code></dt>
-<dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dd><p>double COLUMN_DESCRIPTION</p></dd>
 
   <dt><code>transaction_description</code></dt>
 <dd><p>character A human-readable description of the transaction.</p></dd>
 
   <dt><code>transaction_provider_org_type</code></dt>
-<dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dd><p>double COLUMN_DESCRIPTION</p></dd>
 
   <dt><code>transaction_provider_org_ref</code></dt>
 <dd><p>character COLUMN_DESCRIPTION</p></dd>
@@ -102,22 +102,22 @@
 <dd><p>character COLUMN_DESCRIPTION</p></dd>
 
   <dt><code>transaction_aid_type_vocabulary_1</code></dt>
-<dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dd><p>double COLUMN_DESCRIPTION</p></dd>
 
   <dt><code>transaction_aid_type_code_2</code></dt>
 <dd><p>character COLUMN_DESCRIPTION</p></dd>
 
   <dt><code>transaction_aid_type_vocabulary_2</code></dt>
-<dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dd><p>double COLUMN_DESCRIPTION</p></dd>
 
   <dt><code>transaction_value_USD</code></dt>
-<dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dd><p>double COLUMN_DESCRIPTION</p></dd>
  
 
 </dl></div>
     <div class="section level2">
     <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
-    <p><a href="https://iatistandard.org/en/iati-standard/203/" class="external-link">https://iatistandard.org/en/iati-standard/203/</a></p>
+    <p><a href="https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/transaction/" class="external-link">https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/transaction/</a></p>
     </div>
 
     <div class="section level2">
@@ -127,18 +127,18 @@
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |iati_identifier   |transaction_ref |transaction_humanitarian |transaction_type_code |transaction_date |transaction_value_currency |transaction_value_date |transaction_value |transaction_description      |transaction_provider_org_type |transaction_provider_org_ref |transaction_provider_org |transaction_aid_type_code_1 |transaction_aid_type_vocabulary_1 |transaction_aid_type_code_2 |transaction_aid_type_vocabulary_2 |transaction_value_USD |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |:-----------------|:---------------|:------------------------|:---------------------|:----------------|:--------------------------|:----------------------|:-----------------|:----------------------------|:-----------------------------|:----------------------------|:------------------------|:---------------------------|:---------------------------------|:---------------------------|:---------------------------------|:---------------------|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |65337           |NA                       |11                    |2016-06-30       |USD                        |2016-06-30             |995603            |Monthly contribution summary |70                            |NA                           |Private donors           |B02                         |1                                 |1                           |2                                 |995603.365            |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |65737           |NA                       |11                    |2016-07-31       |USD                        |2016-07-31             |99558             |Monthly contribution summary |70                            |NA                           |Private donors           |B02                         |1                                 |1                           |2                                 |99557.52              |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |65228           |NA                       |11                    |2016-04-30       |USD                        |2016-04-30             |100               |Monthly contribution summary |70                            |NA                           |Private donors           |B03                         |1                                 |2                           |2                                 |99.66                 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |65677           |NA                       |11                    |2016-12-31       |USD                        |2016-12-31             |9847              |Monthly contribution summary |70                            |NA                           |Private donors           |B03                         |1                                 |2                           |2                                 |9847.02               |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |65476           |NA                       |11                    |2016-08-31       |USD                        |2016-08-31             |97088             |Monthly contribution summary |70                            |NA                           |Private donors           |B02                         |1                                 |1                           |2                                 |97088.412             |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |65055           |NA                       |11                    |2016-01-31       |USD                        |2016-01-31             |960637            |Monthly contribution summary |70                            |NA                           |Private donors           |B02                         |1                                 |1                           |2                                 |960637.301            |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |65544           |NA                       |11                    |2016-05-31       |USD                        |2016-05-31             |953705            |Monthly contribution summary |70                            |NA                           |Private donors           |B02                         |1                                 |1                           |2                                 |953705.31             |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |65461           |NA                       |11                    |2016-08-31       |USD                        |2016-08-31             |9492              |Monthly contribution summary |70                            |NA                           |Private donors           |B02                         |1                                 |1                           |2                                 |9491.715              |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |65476           |NA                       |11                    |2016-08-31       |USD                        |2016-08-31             |9437              |Monthly contribution summary |70                            |NA                           |Private donors           |B03                         |1                                 |2                           |2                                 |9437.292              |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |65387           |NA                       |11                    |2016-07-31       |USD                        |2016-07-31             |941500            |Monthly contribution summary |70                            |NA                           |Private donors           |B02                         |1                                 |1                           |2                                 |941499.647            |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |iati_identifier   |transaction_ref |transaction_humanitarian | transaction_type_code|transaction_date |transaction_value_currency |transaction_value_date | transaction_value|transaction_description      | transaction_provider_org_type|transaction_provider_org_ref |transaction_provider_org |transaction_aid_type_code_1 | transaction_aid_type_vocabulary_1|transaction_aid_type_code_2 | transaction_aid_type_vocabulary_2| transaction_value_USD|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:-----------------|:---------------|:------------------------|---------------------:|:----------------|:--------------------------|:----------------------|-----------------:|:----------------------------|-----------------------------:|:----------------------------|:------------------------|:---------------------------|---------------------------------:|:---------------------------|---------------------------------:|---------------------:|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |65337           |NA                       |                    11|2016-06-30       |USD                        |2016-06-30             |            995603|Monthly contribution summary |                            70|NA                           |Private donors           |B02                         |                                 1|1                           |                                 2|            995603.365|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |65737           |NA                       |                    11|2016-07-31       |USD                        |2016-07-31             |             99558|Monthly contribution summary |                            70|NA                           |Private donors           |B02                         |                                 1|1                           |                                 2|             99557.520|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |65228           |NA                       |                    11|2016-04-30       |USD                        |2016-04-30             |               100|Monthly contribution summary |                            70|NA                           |Private donors           |B03                         |                                 1|2                           |                                 2|                99.660|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |65677           |NA                       |                    11|2016-12-31       |USD                        |2016-12-31             |              9847|Monthly contribution summary |                            70|NA                           |Private donors           |B03                         |                                 1|2                           |                                 2|              9847.020|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |65476           |NA                       |                    11|2016-08-31       |USD                        |2016-08-31             |             97088|Monthly contribution summary |                            70|NA                           |Private donors           |B02                         |                                 1|1                           |                                 2|             97088.412|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |65055           |NA                       |                    11|2016-01-31       |USD                        |2016-01-31             |            960637|Monthly contribution summary |                            70|NA                           |Private donors           |B02                         |                                 1|1                           |                                 2|            960637.301|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |65544           |NA                       |                    11|2016-05-31       |USD                        |2016-05-31             |            953705|Monthly contribution summary |                            70|NA                           |Private donors           |B02                         |                                 1|1                           |                                 2|            953705.310|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |65461           |NA                       |                    11|2016-08-31       |USD                        |2016-08-31             |              9492|Monthly contribution summary |                            70|NA                           |Private donors           |B02                         |                                 1|1                           |                                 2|              9491.715|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |65476           |NA                       |                    11|2016-08-31       |USD                        |2016-08-31             |              9437|Monthly contribution summary |                            70|NA                           |Private donors           |B03                         |                                 1|2                           |                                 2|              9437.292|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |65387           |NA                       |                    11|2016-07-31       |USD                        |2016-07-31             |            941500|Monthly contribution summary |                            70|NA                           |Private donors           |B02                         |                                 1|1                           |                                 2|            941499.647|</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

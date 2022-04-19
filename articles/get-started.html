@@ -119,8 +119,12 @@ After inflating the template
 - This example will be added in the vignette created from this Rmd template
 -->
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/show_donors.html">show_donors</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">)</span>
-<span class="co">#&gt; [1] 1</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/show_donors.html">show_donors</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2020</span>,
+            geo <span class="op">=</span> <span class="st">"The Americas"</span>,
+            transtype <span class="op">=</span> <span class="st">"11"</span> <span class="op">)</span></code></pre></div>
+<p><img src="get-started_files/figure-html/examples-show_donors-1.png" width="700"></p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># ,  ## "3"  "4"  "11"           metric = "USD"</span></code></pre></div>
 <!--
 Create a chunk with a test of use for your function
 
@@ -132,14 +136,26 @@ correctly when inflated as a vignette
 After inflating the template
 
 -  This test code will be added in the "tests/testthat/" directory
--->
+
+
+ tests-show_donors,echo=FALSE,  message=FALSE, warning=FALSE}
+
+# test_that("is_testing_possible", {
+
+# 
+
+# })
+
+```-->
 </div>
 <div class="section level2">
 <h2 id="show-implementers---show_implementers">Show implementers - <code>show_implementers</code><a class="anchor" aria-label="anchor" href="#show-implementers---show_implementers"></a>
 </h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/show_implementers.html">show_implementers</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] 1</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/show_implementers.html">show_implementers</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2020</span>,
+            geo <span class="op">=</span> <span class="st">"The Americas"</span>,
+            transtype <span class="op">=</span> <span class="st">"11"</span> <span class="op">)</span> </code></pre></div>
+<p><img src="get-started_files/figure-html/examples-show_implementers-1.png" width="700"></p>
 <!--
 
 # There can be development actions

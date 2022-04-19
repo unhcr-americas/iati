@@ -2,7 +2,19 @@ Type: Package
 Package: iati
 Title: UNHCR IATI Data Crunching
 Version: 0.1.1
-Author: Edouard Legoupil, Matheus Soldi Hardt, Hisham Galal
+Authors@R: 
+    c(person(given = "Edouard",
+             family = "Legoupil",
+             role = c("aut", "cre"),
+             email = "legoupil@unhcr.org"),
+      person(given = "Matheus",
+             family = "Soldi Hardt",
+             role = c("aut"),
+             email = "matheus@unhcr.org"),
+      person(given = "Hisham",
+             family = "Galal",
+             role = "aut",
+             email = "galalh@unhcr.org"))
 Maintainer: Edouard Legoupil <legoupil@unhcr.org>
 Description: This is a data package with all frame organised and reshapped
     for easy consumptions in R Please see https://reporting.unhcr.org/iati

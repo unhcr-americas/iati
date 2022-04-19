@@ -40,6 +40,21 @@ The main concept are nicely summarised in the table below from [IFRC IATI Feasib
 
 ![Overview of traceability in IATI](man/figures/iatifig3.png) 
 
+## Key Visualisation in the library
+
+ *  Comparison of UNHCR budget and expenditure.
+ *  Comparison of UNHCR budget and expenditure weighted by # PoCs / GPP in the country.
+ *  Expenditure and its evolution per sector, impact /outcome area
+ *  Comparison of funds received by different UN Agencies (UNICEF, WFP, IOM, UNDP, UNOCHA)
+ *  Comparison showing resources devoted by donors to different humanitarian crisis.
+ *  Comparison showing donors’ humanitarian budget vs development budget devoted to displacement crisis by key donors/region
+ * Comparison showing how much of donors funding goes to migratory / refugee issues
+ * Evolution of indicators against thresholds
+ 
+## Country Factsheet
+
+All the key visualizations are easily created for any single country through a dedicated template for country fact sheet generated a slide deck ready for data interpretation and inclusion in existing Situation analysis for program design or Protection Monitoring Analysis for advocacy.
+
 ## Install  
 
 ``` 

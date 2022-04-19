@@ -19,7 +19,7 @@ If it is the first time you use {fusen}, after 'description', you can directly r
 --> 
 
 
-# Show donors  - `show_donors`
+# Show donors 
 
 <!--
 Create a chunk for the core of the function
@@ -186,7 +186,7 @@ After inflating the template
 
  
 
-# Show implementers  - `show_implementers`
+# Show implementers 
 
 ```{r function-show_implementers, echo=FALSE, message=FALSE, warning=FALSE}
 #' Ploting implementers

@@ -10,12 +10,15 @@ License: Creative Commons Attribution 4.0 International Public License
 URL: https://unhcr-americas.github.io/iati/docs/
 BugReports: https://github.com/unhcr-americas/iati/issues
 Imports: 
+    dplyr,
+    ggplot2,
+    lubridate,
     magrittr,
-    stats
+    scales,
+    tidyverse
 Suggests: 
     knitr,
-    rmarkdown,
-    testthat
+    rmarkdown
 VignetteBuilder: 
     knitr
 Remotes:

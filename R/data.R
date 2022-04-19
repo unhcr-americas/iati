@@ -40,7 +40,7 @@
 #'   \item{\code{contact_info_website}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{contact_info_mailing_address}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{activity_scope_code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{recipient_country_code}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{recipient_country_code}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{recipient_country_pct}}{logical COLUMN_DESCRIPTION}
 #'   \item{\code{recipient_country}}{logical COLUMN_DESCRIPTION}
 #'   \item{\code{recipient_region_code}}{double COLUMN_DESCRIPTION}
@@ -48,13 +48,13 @@
 #'   \item{\code{recipient_region_vocabulary_url}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{recipient_region_pct}}{logical COLUMN_DESCRIPTION}
 #'   \item{\code{recipient_region}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{collaboration_type_code}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{collaboration_type_code}}{double The type of collaboration involved in the activity’s disbursements, e.g. “bilateral” or “multilateral”.}
 #'   \item{\code{default_flow_type_code}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{default_finance_type_code}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{default_tied_status_code}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{capital_spend}}{double COLUMN_DESCRIPTION} 
 #'}
-#' @source \url{https://iatistandard.org/en/iati-standard/203/}
+#' @source \url{https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/}
 #' @examples
 #' {
 #' knitr::kable(head(activity, 10))
@@ -303,6 +303,74 @@
 
 
 #### All code list doc ############
+
+
+## Reference ##########
+#' @title reference
+#' @description Code Mapping table
+#' @format A data frame with 267 rows and 34 variables:
+#' \describe{
+#'   \item{\code{iso_3}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{UNHCRcode}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{ctryname}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{namepostat}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{namepostat2}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{gis_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{UNHCRBureau}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{main_office}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{hcr_region}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{hcr_subregion}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code_op}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{Latitude}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{Longitude}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{scalerank}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{LABELRANK}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{SOVEREIGNT}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{SOV_A3}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{ADM0_DIF}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{LEVEL}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{TYPE}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{ADMIN}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{ADM0_A3}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{CONTINENT}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{REGION_UN}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{SUBREGION}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{REGION_WB}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{ECONOMY}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{INCOME_GRP}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{POP_EST}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{POP_RANK}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{GDP_MD_EST}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{POP_YEAR}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{LASTCENSUS}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{M49_code}}{double COLUMN_DESCRIPTION} 
+#'}
+#' @source \url{http://somewhere.important.com/}
+"reference"
+
+
+
+
+#' @title codeCollaborationType
+#' @description DATASET_DESCRIPTION
+#' @format A data frame with 7 rows and 6 variables:
+#' \describe{
+#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
+#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
+#'   \item{\code{status}}{character COLUMN_DESCRIPTION} 
+#'}
+#' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
+#' @examples
+#' {
+#' knitr::kable(head(codeCollaborationType, 10))
+#'}
+"codeCollaborationType"
+
+
+
 #' @title codeActivityDateType
 #' @description Types of date for activities.
 #' There are many different business models and dates that can be used to describe

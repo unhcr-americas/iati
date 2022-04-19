@@ -4,23 +4,21 @@
 \alias{show_donors}
 \title{Ploting Donors}
 \usage{
-show_donors(year, geo, sector, metric)
+show_donors(year, geo, transtype)
 }
 \arguments{
 \item{year}{year to select starting from 2016 - could be one year or a list}
 
 \item{geo}{Region or Country or Site}
 
-\item{sector}{Sectors}
-
-\item{metric}{Metrics could be USD or Number of project}
-}
-\value{
-Median of vector x
+\item{transtype}{Transaction type}
 }
 \description{
 Ploting Donors
 }
 \examples{
-show_donors(1:12)
+show_donors(year = 2020,
+            geo = "The Americas",
+            transtype = "11" )
+# ,  ## "3"  "4"  "11"           metric = "USD"
 }

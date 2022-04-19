@@ -64,8 +64,11 @@ After inflating the template
 -->
 
 
-```{r examples-show_donors}
-show_donors(1:12)
+```{r examples-show_donors, message = FALSE, warning = FALSE}
+show_donors(year = 2020,
+            geo = "The Americas",
+            transtype = "11" )
+# ,  ## "3"  "4"  "11"           metric = "USD"
 ```
 
 <!--
@@ -79,15 +82,31 @@ correctly when inflated as a vignette
 After inflating the template
 
 -  This test code will be added in the "tests/testthat/" directory
--->
+
+
+ tests-show_donors,echo=FALSE,  message=FALSE, warning=FALSE}
+
+# test_that("is_testing_possible", {
+
+# 
+
+# })
+
+```-->
+
 
 
  
 
-# Show implementers - `show_implementers`
 
-```{r examples-show_implementers}
-show_implementers()
+# Show implementers  - `show_implementers`
+
+ 
+
+```{r examples-show_implementers, message = FALSE, warning = FALSE}
+show_implementers(year = 2020,
+            geo = "The Americas",
+            transtype = "11" ) 
 ```
 
 <!--

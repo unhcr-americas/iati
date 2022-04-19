@@ -51,7 +51,7 @@ activity$activity_date_type_3 <- as.numeric(activity$activity_date_type_3)
 activity$activity_date_type_4 <- as.numeric(activity$activity_date_type_4)
 
 activity$activity_scope_code <- as.numeric(activity$activity_scope_code)
-activity$recipient_country_code <- as.numeric(activity$recipient_country_code)
+#activity$recipient_country_code <- as.numeric(activity$recipient_country_code)
 activity$recipient_region_code <- as.numeric(activity$recipient_region_code)
 activity$collaboration_type_code <- as.numeric(activity$collaboration_type_code)
 activity$recipient_region_vocabulary <- as.numeric(activity$recipient_region_vocabulary)
@@ -228,6 +228,11 @@ save(transaction, file =  "data/transaction.RData")
 
 ## code table need to change name... 
 
+
+library(readr)
+codeCollaborationType <- read_csv("data-raw/code/CollaborationType.csv")
+sinew::makeOxygen(codeCollaborationType, add_fields = "source")
+save(codeCollaborationType, file =  "data/codeCollaborationType.RData")
 
 # load("data/codeActivityDateType.RData")
 # codeActivityDateType <- ActivityDateType

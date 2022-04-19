@@ -39,7 +39,7 @@ A data frame with 825 rows and 45 variables:
   \item{\code{contact_info_website}}{character COLUMN_DESCRIPTION}
   \item{\code{contact_info_mailing_address}}{character COLUMN_DESCRIPTION}
   \item{\code{activity_scope_code}}{double COLUMN_DESCRIPTION}
-  \item{\code{recipient_country_code}}{double COLUMN_DESCRIPTION}
+  \item{\code{recipient_country_code}}{character COLUMN_DESCRIPTION}
   \item{\code{recipient_country_pct}}{logical COLUMN_DESCRIPTION}
   \item{\code{recipient_country}}{logical COLUMN_DESCRIPTION}
   \item{\code{recipient_region_code}}{double COLUMN_DESCRIPTION}
@@ -47,7 +47,7 @@ A data frame with 825 rows and 45 variables:
   \item{\code{recipient_region_vocabulary_url}}{character COLUMN_DESCRIPTION}
   \item{\code{recipient_region_pct}}{logical COLUMN_DESCRIPTION}
   \item{\code{recipient_region}}{character COLUMN_DESCRIPTION}
-  \item{\code{collaboration_type_code}}{double COLUMN_DESCRIPTION}
+  \item{\code{collaboration_type_code}}{double The type of collaboration involved in the activity’s disbursements, e.g. “bilateral” or “multilateral”.}
   \item{\code{default_flow_type_code}}{double COLUMN_DESCRIPTION}
   \item{\code{default_finance_type_code}}{double COLUMN_DESCRIPTION}
   \item{\code{default_tied_status_code}}{double COLUMN_DESCRIPTION}
@@ -55,7 +55,7 @@ A data frame with 825 rows and 45 variables:
 }
 }
 \source{
-\url{https://iatistandard.org/en/iati-standard/203/}
+\url{https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/}
 }
 \usage{
 activity

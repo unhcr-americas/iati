@@ -4,10 +4,10 @@
     <loc>/404.html</loc>
   </url>
   <url>
-    <loc>/articles/get-started.html</loc>
+    <loc>/articles/index.html</loc>
   </url>
   <url>
-    <loc>/articles/index.html</loc>
+    <loc>/articles/unhcr-programme.html</loc>
   </url>
   <url>
     <loc>/authors.html</loc>
@@ -17,12 +17,6 @@
   </url>
   <url>
     <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/activity.html</loc>
-  </url>
-  <url>
-    <loc>/reference/budget.html</loc>
   </url>
   <url>
     <loc>/reference/codeActivityDateType.html</loc>
@@ -130,13 +124,37 @@
     <loc>/reference/codeUNSDGTargets.html</loc>
   </url>
   <url>
-    <loc>/reference/default_aid_type.html</loc>
+    <loc>/reference/dataActivity.html</loc>
   </url>
   <url>
-    <loc>/reference/document_link.html</loc>
+    <loc>/reference/dataBudget.html</loc>
   </url>
   <url>
-    <loc>/reference/humanitarian_scope.html</loc>
+    <loc>/reference/dataDefault_aid_type.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dataDocument_link.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dataHumanitarian_scope.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dataLocation.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dataParticipating_org.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dataRelated_activity.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dataResult.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dataSector.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dataTransaction.html</loc>
   </url>
   <url>
     <loc>/reference/iati-package.html</loc>
@@ -145,33 +163,15 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/location.html</loc>
-  </url>
-  <url>
-    <loc>/reference/participating_org.html</loc>
-  </url>
-  <url>
     <loc>/reference/pipe.html</loc>
   </url>
   <url>
     <loc>/reference/reference.html</loc>
   </url>
   <url>
-    <loc>/reference/related_activity.html</loc>
-  </url>
-  <url>
-    <loc>/reference/result.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sector.html</loc>
-  </url>
-  <url>
     <loc>/reference/show_donors.html</loc>
   </url>
   <url>
     <loc>/reference/show_implementers.html</loc>
-  </url>
-  <url>
-    <loc>/reference/transaction.html</loc>
   </url>
 </urlset>

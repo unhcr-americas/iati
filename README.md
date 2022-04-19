@@ -40,16 +40,34 @@ The main concept are nicely summarised in the table below from [IFRC IATI Feasib
 
 ![Overview of traceability in IATI](man/figures/iatifig3.png) 
 
-## Key Visualisation in the library
+## Key Visualisation in the library (work-in-progress)
 
- *  Comparison of UNHCR budget and expenditure.
- *  Comparison of UNHCR budget and expenditure weighted by # PoCs / GPP in the country.
- *  Expenditure and its evolution per sector, impact /outcome area
- *  Comparison of funds received by different UN Agencies (UNICEF, WFP, IOM, UNDP, UNOCHA)
- *  Comparison showing resources devoted by donors to different humanitarian crisis.
- *  Comparison showing donors’ humanitarian budget vs development budget devoted to displacement crisis by key donors/region
- * Comparison showing how much of donors funding goes to migratory / refugee issues
- * Evolution of indicators against thresholds
+### UNHCR Programme
+
+ *  What are the __most funded sectors__ per country (Expenditure evolution per impact /outcome area)?    
+ *  Who are the __main donors by country__ in terms of number of
+    projects and/or total budget?   
+ *  Who are the __main implementing partners by country__ in terms of number of projects and/or total budget?  
+ *  What’s the breakdown of __Earmarking Type__ (Un-earmarked, Tightly
+    earmarked, etc.) from Donor Funds by Year?  
+ *  What’s the level of __partnership between organisations__ when implementing projects?  
+ *  How much __expenditures compare to the initial budget__ (weighted by # PoCs / GPP in the country)?   
+ *  How much __indicators__ evolve over time against thresholds?
+
+
+### Humanitarian Funding at large 
+ *  What is the __share of funds received by different UN Agencies__ (UNICEF, WFP, IOM, UNDP, UNOCHA)?
+ *  How much donors __balance resources between different humanitarian crisis__?
+ *  How much donors allocate budget between __humanitarian and development programmes__ devoted to displacement crisis by key donors/region
+ *  How much of donors funding goes to __migratory vs refugee issues__?
+ *  What’s the __share of ODA__ (Official Development Assistance) among
+    the total flow of foreign aid per country?
+ *  What’s the share of ODA going to __benefit of refugees__? (this can
+    complement the measurement of [Global Refugee Compact Indicators
+    related to ODA](https://www.unhcr.org/5cf907854.pdf#page=13) )  
+ *  What is the share of ODA allocated to __national actors__?  
+ *  What’s the __share of Humanitarian assistance__ within the total
+    ODA? 
  
 ## Country Factsheet
 
@@ -65,10 +83,12 @@ remotes::install_github("unhcr-americas/iati")
 
 ## Contribute
 
+The package includes different tables (`data`, `code` & `reference`) together with a series of visualization functions, aka a "chart library"", (`show`) based on ggplot2
+
 This package is built with the help of [fusen package](https://thinkr-open.github.io/fusen/index.html) which allow to easily maintain consistent documentation through a single notebook. 
 
 ``` 
-fusen::inflate(flat_file = "dev/flat_full.Rmd", vignette_name = "Get started")
+fusen::inflate(flat_file = "dev/dev_unhcr_programme.Rmd", vignette_name = "UNHCR Programme")
 ```
 
 

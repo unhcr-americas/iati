@@ -21,7 +21,7 @@ show_implementers <- function(year,
   #require(ggplot2)
   require(tidyverse)
   require(scales)
-p<- iati::transaction %>%
+p<- iati::dataTransaction %>%
   dplyr::left_join(iati::codeOrganisationType %>%
                      dplyr::mutate(transorg_type = name) %>%
                      dplyr::select(code, transorg_type) ,
@@ -52,7 +52,7 @@ p<- iati::transaction %>%
                      dplyr::select(code, AidType2,AidTypeDescr2  ) ,
                    by= c("transaction_aid_type_code_2" = "code")) %>%
   
-  dplyr::left_join(iati::activity %>%
+  dplyr::left_join(iati::dataActivity %>%
                      dplyr::left_join(iati::codeOrganisationType %>%
                                         dplyr::mutate(report_org_type = name) %>%
                                         dplyr::select(code, report_org_type) ,

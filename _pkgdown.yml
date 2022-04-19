@@ -1,4 +1,23 @@
 url: ~
 template:
   bootstrap: 5
+  params:
+    bootswatch: yeti
 
+reference:
+- title: Chart Library
+  desc: Crafted visualisation charts in line with key questions
+- contents:
+  - starts_with("show_")
+- title: Data
+  desc: Main Data tables
+  contents:
+  - starts_with("data")
+- title: Code
+  desc: Lookup tables
+  contents:
+  - starts_with("code")
+- title: Reference
+  desc: UNHCR Geographci Referential
+  contents:
+  - starts_with("reference")

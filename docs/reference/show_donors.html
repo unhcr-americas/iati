@@ -6,7 +6,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">iati</a>
 
@@ -24,7 +24,7 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/get-started.html">Get started</a>
+    <a class="dropdown-item" href="../articles/unhcr-programme.html">UNHCR Programme</a>
   </div>
 </li>
 <li class="nav-item">
@@ -74,7 +74,15 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">show_donors</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2020</span>,</span>
 <span class="r-in">            geo <span class="op">=</span> <span class="st">"The Americas"</span>,</span>
-<span class="r-in">            transtype <span class="op">=</span> <span class="st">"11"</span> <span class="op">)</span></span>
+<span class="r-in">            transtype <span class="op">=</span> <span class="st">"11"</span> <span class="op">)</span> <span class="op">+</span></span>
+<span class="r-in">  <span class="co">#unhcRstyle::unhcr_theme(base_size = 12) +</span></span>
+<span class="r-in">  <span class="fu">labs</span><span class="op">(</span></span>
+<span class="r-in">    title <span class="op">=</span> <span class="st">"Donations received by UNHCR"</span>,</span>
+<span class="r-in">    subtitle <span class="op">=</span> <span class="st">"Between 2014 and 2022"</span>,</span>
+<span class="r-in">    x <span class="op">=</span> <span class="st">""</span>,</span>
+<span class="r-in">    y <span class="op">=</span> <span class="st">""</span>,</span>
+<span class="r-in">    caption <span class="op">=</span> <span class="st">"IATI Package - github.com/unhcr-americas/iati"</span></span>
+<span class="r-in">  <span class="op">)</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: tidyverse</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Attaching packages</span> ─────────────────────────────────────── tidyverse 1.3.1 ──</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">ggplot2</span> 3.3.5     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">purrr  </span> 0.3.4</span>
@@ -94,7 +102,6 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     col_factor</span>
 <span class="r-plt img"><img src="show_donors-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="co"># ,  ## "3"  "4"  "11"           metric = "USD"</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

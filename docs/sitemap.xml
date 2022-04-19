@@ -10,6 +10,9 @@
     <loc>/articles/index.html</loc>
   </url>
   <url>
+    <loc>/articles/unhcr-programme.html</loc>
+  </url>
+  <url>
     <loc>/authors.html</loc>
   </url>
   <url>
@@ -128,6 +131,39 @@
   </url>
   <url>
     <loc>/reference/codeUNSDGTargets.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dataActivity.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dataBudget.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dataDefault_aid_type.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dataDocument_link.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dataHumanitarian_scope.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dataLocation.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dataParticipating_org.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dataRelated_activity.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dataResult.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dataSector.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dataTransaction.html</loc>
   </url>
   <url>
     <loc>/reference/default_aid_type.html</loc>

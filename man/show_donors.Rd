@@ -19,6 +19,13 @@ Ploting Donors
 \examples{
 show_donors(year = 2020,
             geo = "The Americas",
-            transtype = "11" )
-# ,  ## "3"  "4"  "11"           metric = "USD"
+            transtype = "11" ) +
+  #unhcRstyle::unhcr_theme(base_size = 12) +
+  labs(
+    title = "Donations received by UNHCR",
+    subtitle = "Between 2014 and 2022",
+    x = "",
+    y = "",
+    caption = "IATI Package - github.com/unhcr-americas/iati"
+  ) 
 }

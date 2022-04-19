@@ -68,7 +68,8 @@ activity$activity_date_4  <- lubridate::as_date(activity$activity_date_4)
 
 str(activity)
 sinew::makeOxygen(activity, add_fields = "source")
-save(activity, file =  "data/activity.RData")
+dataActivity <- activity
+save(dataActivity, file =  "data/dataActivity.RData")
 
 ## iati_budget ##########
 budget <- rbind( 
@@ -82,7 +83,8 @@ budget <- rbind(
 
 names(budget)
 sinew::makeOxygen(budget, add_fields = "source")
-save(budget, file =  "data/budget.RData")
+dataBudget <- budget
+save(dataBudget, file =  "data/dataBudget.RData")
 
 ## iati_default_aid_type ##########
 default_aid_type <- rbind( 
@@ -96,7 +98,8 @@ default_aid_type <- rbind(
 
 names(default_aid_type)
 sinew::makeOxygen(default_aid_type, add_fields = "source")
-save(default_aid_type, file =  "data/default_aid_type.RData")
+dataDefault_aid_type <- default_aid_type
+save(dataDefault_aid_type, file =  "data/dataDefault_aid_type.RData")
 
 ## iati_document_link ##########
 document_link <- rbind( 
@@ -110,7 +113,8 @@ document_link <- rbind(
 
 names(document_link)
 sinew::makeOxygen(document_link, add_fields = "source")
-save(document_link, file =  "data/document_link.RData")
+dataDocument_link <- document_link
+save(dataDocument_link, file =  "data/dataDocument_link.RData")
 
 ## iati_humanitarian_scope ##########
 humanitarian_scope <- rbind( 
@@ -124,7 +128,8 @@ humanitarian_scope <- rbind(
 
 names(humanitarian_scope)
 sinew::makeOxygen(humanitarian_scope, add_fields = "source")
-save(humanitarian_scope, file =  "data/humanitarian_scope.RData")
+dataHumanitarian_scope <- humanitarian_scope
+save(dataHumanitarian_scope, file =  "data/dataHumanitarian_scope.RData")
 
 ## iati_location ##########
 location <- rbind( 
@@ -138,7 +143,8 @@ location <- rbind(
 
 names(location)
 sinew::makeOxygen(location, add_fields = "source")
-save(location, file =  "data/location.RData")
+dataLocation <- location
+save(dataLocation, file =  "data/dataLocation.RData")
 
 ## iati_participating_org ##########
 participating_org <- rbind( 
@@ -157,7 +163,8 @@ participating_org$participating_org_type <- as.numeric(participating_org$partici
 participating_org$participating_org_role  <- as.numeric(participating_org$participating_org_role )
 
 sinew::makeOxygen(participating_org, add_fields = "source")
-save(participating_org, file =  "data/participating_org.RData")
+dataParticipating_org <- participating_org
+save(dataParticipating_org, file =  "data/dataParticipating_org.RData")
 
 ## iati_related_activity ##########
 related_activity <- rbind( 
@@ -171,7 +178,8 @@ related_activity <- rbind(
 
 names(related_activity)
 sinew::makeOxygen(related_activity, add_fields = "source")
-save(related_activity, file =  "data/related_activity.RData")
+dataRelated_activity <- related_activity
+save(dataRelated_activity, file =  "data/dataRelated_activity.RData")
 
 ## iati_result ##########
 result <- rbind( 
@@ -185,7 +193,8 @@ result <- rbind(
 
 names(result)
 sinew::makeOxygen(result, add_fields = "source")
-save(result, file =  "data/result.RData")
+dataResult <- result
+save(dataResult, file =  "data/dataResult.RData")
 
 ## iati_sector ##########
 sector <- rbind( 
@@ -199,7 +208,8 @@ sector <- rbind(
 
 names(sector)
 sinew::makeOxygen(sector, add_fields = "source")
-save(sector, file =  "data/sector.RData")
+dataSector <- sector
+save(dataSector, file =  "data/dataSector.RData")
 
 ## iati_transaction ##########
 transaction <- rbind( 
@@ -224,15 +234,16 @@ transaction$transaction_date  <- lubridate::as_date(transaction$transaction_date
 
 names(transaction)
 sinew::makeOxygen(transaction, add_fields = "source")
-save(transaction, file =  "data/transaction.RData")
+dataTransaction <- transaction
+save(dataTransaction, file =  "data/dataTransaction.RData")
 
 ## code table need to change name... 
 
-
-library(readr)
-codeCollaborationType <- read_csv("data-raw/code/CollaborationType.csv")
-sinew::makeOxygen(codeCollaborationType, add_fields = "source")
-save(codeCollaborationType, file =  "data/codeCollaborationType.RData")
+# 
+# library(readr)
+# codeCollaborationType <- read_csv("data-raw/code/CollaborationType.csv")
+# sinew::makeOxygen(codeCollaborationType, add_fields = "source")
+# save(codeCollaborationType, file =  "data/codeCollaborationType.RData")
 
 # load("data/codeActivityDateType.RData")
 # codeActivityDateType <- ActivityDateType

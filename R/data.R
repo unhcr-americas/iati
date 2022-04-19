@@ -4,7 +4,7 @@
 #### Data Table ###############
 
 ## iati_activity ##########
-#' @title activity
+#' @title dataActivity
 #' @description Records of all activities since UNHCR Programme 2016 in IATI format
 #' @format A data frame with 825 rows and 45 variables:
 #' \describe{
@@ -57,13 +57,13 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/}
 #' @examples
 #' {
-#' knitr::kable(head(activity, 10))
+#' knitr::kable(head(dataActivity, 10))
 #'}
-"activity"
+"dataActivity"
 
 
 ## iati_budget ##########
-#' @title Budget
+#' @title dataBudget
 #' @description DATASET_DESCRIPTION
 #' @format A data frame with 840 rows and 8 variables:
 #' \describe{
@@ -79,13 +79,13 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
 #' {
-#' knitr::kable(head(budget, 10))
+#' knitr::kable(head(dataBudget, 10))
 #'}
-"budget"
+"dataBudget"
 
 
 ## iati_document_link ##########
-#' @title DATASET_TITLE
+#' @title dataDefault_aid_type
 #' @description DATASET_DESCRIPTION
 #' @format A data frame with 825 rows and 3 variables:
 #' \describe{
@@ -96,13 +96,13 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
 #' {
-#' knitr::kable(head(default_aid_type, 10))
+#' knitr::kable(head(dataDefault_aid_type, 10))
 #'}
-"default_aid_type"
+"dataDefault_aid_type"
 
 
 ## iati_document_link ##########
-#' @title DATASET_TITLE
+#' @title dataDocument_link
 #' @description DATASET_DESCRIPTION
 #' @format A data frame with 4722 rows and 7 variables:
 #' \describe{
@@ -117,13 +117,13 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
 #' {
-#' knitr::kable(head(document_link, 10))
+#' knitr::kable(head(dataDocument_link, 10))
 #'}
-"document_link"
+"dataDocument_link"
 
 
 ## iati_humanitarian_scope ##########
-#' @title DATASET_TITLE
+#' @title dataHumanitarian_scope
 #' @description DATASET_DESCRIPTION
 #' @format A data frame with 1578 rows and 8 variables:
 #' \describe{
@@ -139,13 +139,13 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
 #' {
-#' knitr::kable(head(humanitarian_scope, 10))
+#' knitr::kable(head(dataHumanitarian_scope, 10))
 #'}
-"humanitarian_scope"
+"dataHumanitarian_scope"
 
 
 ## iati_location ##########
-#' @title DATASET_TITLE
+#' @title dataLocation 
 #' @description DATASET_DESCRIPTION
 #' @format A data frame with 3664 rows and 15 variables:
 #' \describe{
@@ -168,9 +168,9 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
 #' {
-#' knitr::kable(head(location, 10))
+#' knitr::kable(head(dataLocation, 10))
 #'}
-"location"
+"dataLocation"
 
 
 ## iati_participating_org ##########
@@ -191,12 +191,12 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
 #' {
-#' knitr::kable(head(participating_org, 10))
+#' knitr::kable(head(dataParticipating_org, 10))
 #'}
-"participating_org"
+"dataParticipating_org"
 
 ## iati_related_activity ##########
-#' @title DATASET_TITLE
+#' @title dataRelated_activity
 #' @description DATASET_DESCRIPTION
 #' @format A data frame with 2950 rows and 3 variables:
 #' \describe{
@@ -207,14 +207,14 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
 #' {
-#' knitr::kable(head(related_activity, 10))
+#' knitr::kable(head(dataRelated_activity, 10))
 #'}
-"related_activity"
+"dataRelated_activity"
 
 
 ## iati_result ##########
 
-#' @title DATASET_TITLE
+#' @title dataResult
 #' @description DATASET_DESCRIPTION
 #' @format A data frame with 26667 rows and 24 variables:
 #' \describe{
@@ -246,9 +246,9 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
 #' {
-#' knitr::kable(head(result, 10))
+#' knitr::kable(head(dataResult, 10))
 #'}
-"result"
+"dataResult"
 
 
 ## iati_sector ##########
@@ -266,9 +266,9 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
 #' {
-#' knitr::kable(head(sector, 10))
+#' knitr::kable(head(dataSector, 10))
 #'}
-"sector"
+"dataSector"
 
 ## iati_transaction ##########
 #' @title transaction
@@ -296,9 +296,9 @@
 #' @source \url{https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/transaction/}
 #' @examples
 #' {
-#' knitr::kable(head(transaction, 10))
+#' knitr::kable(head(dataTransaction, 10))
 #'}
-"transaction"
+"dataTransaction"
 
 
 

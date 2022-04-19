@@ -24,7 +24,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
     
     <a class="navbar-brand me-2" href="index.html">iati</a>
 
@@ -43,7 +43,7 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="articles/get-started.html">Get started</a>
+    <a class="dropdown-item" href="articles/unhcr-programme.html">UNHCR Programme</a>
   </div>
 </li>
 <li class="nav-item">
@@ -105,18 +105,43 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="key-visualisation-in-the-library">Key Visualisation in the library<a class="anchor" aria-label="anchor" href="#key-visualisation-in-the-library"></a>
+<h2 id="key-visualisation-in-the-library-work-in-progress">Key Visualisation in the library (work-in-progress)<a class="anchor" aria-label="anchor" href="#key-visualisation-in-the-library-work-in-progress"></a>
 </h2>
+<div class="section level3">
+<h3 id="unhcr-programme">UNHCR Programme<a class="anchor" aria-label="anchor" href="#unhcr-programme"></a>
+</h3>
 <ul>
-<li>Comparison of UNHCR budget and expenditure.</li>
-<li>Comparison of UNHCR budget and expenditure weighted by # PoCs / GPP in the country.</li>
-<li>Expenditure and its evolution per sector, impact /outcome area</li>
-<li>Comparison of funds received by different UN Agencies (UNICEF, WFP, IOM, UNDP, UNOCHA)</li>
-<li>Comparison showing resources devoted by donors to different humanitarian crisis.</li>
-<li>Comparison showing donors’ humanitarian budget vs development budget devoted to displacement crisis by key donors/region</li>
-<li>Comparison showing how much of donors funding goes to migratory / refugee issues</li>
-<li>Evolution of indicators against thresholds</li>
+<li>What are the <strong>most funded sectors</strong> per country (Expenditure evolution per impact /outcome area)?<br>
+</li>
+<li>Who are the <strong>main donors by country</strong> in terms of number of projects and/or total budget?<br>
+</li>
+<li>Who are the <strong>main implementing partners by country</strong> in terms of number of projects and/or total budget?<br>
+</li>
+<li>What’s the breakdown of <strong>Earmarking Type</strong> (Un-earmarked, Tightly earmarked, etc.) from Donor Funds by Year?<br>
+</li>
+<li>What’s the level of <strong>partnership between organisations</strong> when implementing projects?<br>
+</li>
+<li>How much <strong>expenditures compare to the initial budget</strong> (weighted by # PoCs / GPP in the country)?<br>
+</li>
+<li>How much <strong>indicators</strong> evolve over time against thresholds?</li>
 </ul>
+</div>
+<div class="section level3">
+<h3 id="humanitarian-funding-at-large">Humanitarian Funding at large<a class="anchor" aria-label="anchor" href="#humanitarian-funding-at-large"></a>
+</h3>
+<ul>
+<li>What is the <strong>share of funds received by different UN Agencies</strong> (UNICEF, WFP, IOM, UNDP, UNOCHA)?</li>
+<li>How much donors <strong>balance resources between different humanitarian crisis</strong>?</li>
+<li>How much donors allocate budget between <strong>humanitarian and development programmes</strong> devoted to displacement crisis by key donors/region</li>
+<li>How much of donors funding goes to <strong>migratory vs refugee issues</strong>?</li>
+<li>What’s the <strong>share of ODA</strong> (Official Development Assistance) among the total flow of foreign aid per country?</li>
+<li>What’s the share of ODA going to <strong>benefit of refugees</strong>? (this can complement the measurement of <a href="https://www.unhcr.org/5cf907854.pdf#page=13" class="external-link">Global Refugee Compact Indicators related to ODA</a> )<br>
+</li>
+<li>What is the share of ODA allocated to <strong>national actors</strong>?<br>
+</li>
+<li>What’s the <strong>share of Humanitarian assistance</strong> within the total ODA?</li>
+</ul>
+</div>
 </div>
 <div class="section level2">
 <h2 id="country-factsheet">Country Factsheet<a class="anchor" aria-label="anchor" href="#country-factsheet"></a>
@@ -133,8 +158,9 @@
 <div class="section level2">
 <h2 id="contribute">Contribute<a class="anchor" aria-label="anchor" href="#contribute"></a>
 </h2>
+<p>The package includes different tables (<code>data</code>, <code>code</code> &amp; <code>reference</code>) together with a series of visualization functions, aka a “chart library”“, (<code>show</code>) based on ggplot2</p>
 <p>This package is built with the help of <a href="https://thinkr-open.github.io/fusen/index.html" class="external-link">fusen package</a> which allow to easily maintain consistent documentation through a single notebook.</p>
-<pre><code><span class="fu">fusen</span><span class="fu">::</span><span class="fu"><a href="https://thinkr-open.github.io/fusen/reference/inflate.html" class="external-link">inflate</a></span><span class="op">(</span>flat_file <span class="op">=</span> <span class="st">"dev/flat_full.Rmd"</span>, vignette_name <span class="op">=</span> <span class="st">"Get started"</span><span class="op">)</span></code></pre>
+<pre><code><span class="fu">fusen</span><span class="fu">::</span><span class="fu"><a href="https://thinkr-open.github.io/fusen/reference/inflate.html" class="external-link">inflate</a></span><span class="op">(</span>flat_file <span class="op">=</span> <span class="st">"dev/dev_unhcr_programme.Rmd"</span>, vignette_name <span class="op">=</span> <span class="st">"UNHCR Programme"</span><span class="op">)</span></code></pre>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

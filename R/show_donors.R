@@ -14,15 +14,22 @@
 #' @examples
 #' show_donors(year = 2020,
 #'             geo = "The Americas",
-#'             transtype = "11" )
-#' # ,  ## "3"  "4"  "11"           metric = "USD"
+#'             transtype = "11" ) +
+#'   #unhcRstyle::unhcr_theme(base_size = 12) +
+#'   labs(
+#'     title = "Donations received by UNHCR",
+#'     subtitle = "Between 2014 and 2022",
+#'     x = "",
+#'     y = "",
+#'     caption = "IATI Package - github.com/unhcr-americas/iati"
+#'   ) 
 show_donors <- function(year, 
                         geo,
                         transtype  ) {
   #require(ggplot2)
   require(tidyverse)
   require(scales)
-p<- iati::transaction %>%
+p<- iati::dataTransaction %>%
   dplyr::left_join(iati::codeOrganisationType %>%
                      dplyr::mutate(transorg_type = name) %>%
                      dplyr::select(code, transorg_type) ,
@@ -53,7 +60,7 @@ p<- iati::transaction %>%
                      dplyr::select(code, AidType2,AidTypeDescr2  ) ,
                    by= c("transaction_aid_type_code_2" = "code")) %>%
   
-  dplyr::left_join(iati::activity %>%
+  dplyr::left_join(iati::dataActivity %>%
                      dplyr::left_join(iati::codeOrganisationType %>%
                                         dplyr::mutate(report_org_type = name) %>%
                                         dplyr::select(code, report_org_type) ,
@@ -96,15 +103,15 @@ p<- iati::transaction %>%
              x = month_trans )) +
   geom_bar(alpha = 0.9, stat = "identity") +
 #  scale_x_continuous(labels = scales::label_number(scale_cut = cut_short_scale())) +
-  facet_wrap(~ trans_year) +
-  #theme_minimal() +
-  #unhcRstyle::unhcr_theme() +
-  labs(
-    title = "Donations received by UNHCR",
-    subtitle = "Between 2014 and 2022",
-    x = "",
-    y = "",
-    caption = "IATI Package - github.com/unhcr-americas/iati"
-  ) 
+  facet_wrap(~ trans_year) #+
+  # #theme_minimal() +
+  # #unhcRstyle::unhcr_theme() +
+  # labs(
+  #   title = "Donations received by UNHCR",
+  #   subtitle = "Between 2014 and 2022",
+  #   x = "",
+  #   y = "",
+  #   caption = "IATI Package - github.com/unhcr-americas/iati"
+  # ) 
   p
 }

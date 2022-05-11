@@ -26,8 +26,8 @@ rm(notesets_sector)
 # write data --------------------------------------------------------------
 write_xlsx(
   df_sector,
-  paste0("data_wrangle/", "iati_sector", ".xlsx")
-  )
+  paste0(folder_name, "/", "iati_sector", ".xlsx")
+)
 
 df_sector
 }

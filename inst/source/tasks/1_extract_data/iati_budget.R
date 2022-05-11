@@ -25,7 +25,7 @@ rm(notesets_budget)
 
 # write data --------------------------------------------------------------
 write_xlsx(df_budget,
-           paste0("data_wrangle/", "iati_budget", ".xlsx"))
+           paste0(folder_name, "/", "iati_budget", ".xlsx"))
 
 
 df_budget

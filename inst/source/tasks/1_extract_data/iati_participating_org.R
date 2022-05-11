@@ -25,8 +25,8 @@ rm(notesets_part_org)
 # write data --------------------------------------------------------------
 write_xlsx(
   df_participating_org,
-  paste0("data_wrangle/", "iati_participating_org", ".xlsx")
-  )
+  paste0(folder_name, "/", "iati_participating_org", ".xlsx")
+)
 
 df_participating_org
 }

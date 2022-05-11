@@ -43,11 +43,10 @@ rm(notesets_indicator)
 
 
 # write data --------------------------------------------------------------
-
 write_xlsx(
   df_result,
-  paste0("data_wrangle/", "iati_result", ".xlsx")
-  )
+  paste0(folder_name, "/", "iati_result", ".xlsx")
+)
 
 df_result
 }

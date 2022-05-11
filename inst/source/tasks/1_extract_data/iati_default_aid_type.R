@@ -23,8 +23,8 @@ rm(notesets_default_aid_type)
 # write data --------------------------------------------------------------
 write_xlsx(
   df_default_aid_type,
-  paste0("data_wrangle/", "iati_default_aid_type", ".xlsx")
-  )
+  paste0(folder_name, "/", "iati_default_aid_type", ".xlsx")
+)
 
 df_default_aid_type
 }

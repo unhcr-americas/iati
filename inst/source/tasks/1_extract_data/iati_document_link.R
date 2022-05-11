@@ -23,11 +23,10 @@ rm(notesets_document_link)
 
 
 # write data --------------------------------------------------------------
-
 write_xlsx(
   df_document_link,
-  paste0("data_wrangle/", "iati_document_link", ".xlsx")
-  )
+  paste0(folder_name, "/", "iati_document_link", ".xlsx")
+)
 
 df_document_link
 }

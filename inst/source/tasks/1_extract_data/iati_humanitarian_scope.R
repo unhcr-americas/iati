@@ -24,11 +24,10 @@ df_humanitarian_scope <- map_dfr(notesets_humanitarian_scope, function(i) {
 rm(notesets_humanitarian_scope)
 
 # write data --------------------------------------------------------------
-
 write_xlsx(
   df_humanitarian_scope,
-  paste0("data_wrangle/", "iati_humanitarian_scope", ".xlsx")
-  )
+  paste0(folder_name, "/", "iati_humanitarian_scope", ".xlsx")
+)
 
 df_humanitarian_scope
 }

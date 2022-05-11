@@ -72,7 +72,7 @@ rm(nodeset_activity)
 
 # write data --------------------------------------------------------------
 write_xlsx(df_activity,
-           paste0("data_wrangle/", "iati_activity", ".xlsx"))
+           paste0(folder_name, "/", "iati_activity", ".xlsx"))
 
 df_activity
 }

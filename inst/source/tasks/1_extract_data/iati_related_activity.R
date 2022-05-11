@@ -23,8 +23,8 @@ rm(notesets_related_activity)
 # write data --------------------------------------------------------------
 write_xlsx(
   df_related_activity,
-  paste0("data_wrangle/", "iati_related_activity", ".xlsx")
-  )
+  paste0(folder_name, "/", "iati_related_activity", ".xlsx")
+)
 
 df_related_activity
 }

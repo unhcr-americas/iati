@@ -5,7 +5,8 @@ t1 <- Sys.time()
 fs::dir_ls("inst/source/", recurse = TRUE, type = "file") |> purrr::walk(source)
 
 # create folder -----------------------------------------------------------
-dir_create("data_wrangle") 
+folder_name = "data-raw-iom"
+dir_create(folder_name) 
 
 # read data ---------------------------------------------------------------
 iati_file <- file_temp()

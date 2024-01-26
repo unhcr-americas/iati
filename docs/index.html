@@ -9,10 +9,12 @@
     for easy consumptions in R Please see https://reporting.unhcr.org/iati">
 <title>UNHCR IATI Data Crunching • iati</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/Lato-0.4.8/font.css" rel="stylesheet">
+<link href="deps/Source_Code_Pro-0.4.8/font.css" rel="stylesheet">
+<!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="UNHCR IATI Data Crunching">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="UNHCR IATI Data Crunching">
 <meta property="og:description" content="This is a data package with all frame organised and reshapped
     for easy consumptions in R Please see https://reporting.unhcr.org/iati">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -24,7 +26,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
     
     <a class="navbar-brand me-2" href="index.html">iati</a>
 
@@ -74,7 +76,7 @@
 <div class="section level2">
 <h2 id="objective">Objective<a class="anchor" aria-label="anchor" href="#objective"></a>
 </h2>
-<p>A data package with UNHCR contribution to the International Aid Transparency Initiative (IATI) that aims at:</p>
+<p>A data package with UNHCR contribution to the <a href="https://reporting.unhcr.org/iati-international-aid-transparency-initiative" class="external-link">International Aid Transparency Initiative (IATI)</a> that aims at:</p>
 <ul>
 <li>reshaping IATI extraction from a complex xml file structure to a more user-friendly tabular format with necessary look-up code tables</li>
 <li>offer easy to consume documentation on the data structure</li>
@@ -82,15 +84,19 @@
 </ul>
 </div>
 <div class="section level2">
-<h2 id="context">Context<a class="anchor" aria-label="anchor" href="#context"></a>
+<h2 id="install">Install<a class="anchor" aria-label="anchor" href="#install"></a>
 </h2>
-<p>UNHCR is committed to IATI: <a href="https://reporting.unhcr.org/iati" class="external-link">https://reporting.unhcr.org/iati</a></p>
-<p>Extracting information from IATI can assist governments to plan and manage their budgets; parliamentarians and citizens to better hold governments accountable; community-based organisations to influence how resources are used; and journalists, researchers and activists to investigate the use and impact of the resources.</p>
-<p>Information from Global Focus is translated monthly into the IATI open data standard and published using UNHCR’s IATI identifier: XM-DAC-41121. An overview of the publication process is accessible through <a href="http://dashboard.iatistandard.org/publisher/unhcr.html" class="external-link">IATI Dashboard</a>. Every UNHCR operation world-wide is reported on for each year from 2016. This includes financial information (budget, contributions, disbursements and expenditure), office locations, and results at various levels of activity. Activities for 2019 and onwards are be published as soon as possible after they become available. This current package is updated a much as possible….</p>
+<pre><code><span><span class="co"># install.packages("pak")</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"unhcr-americas/iati"</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="section level2">
-<h2 id="what-is-iati">What is IATI?<a class="anchor" aria-label="anchor" href="#what-is-iati"></a>
+<h2 id="context">Context<a class="anchor" aria-label="anchor" href="#context"></a>
 </h2>
+<p>Extracting information from IATI can assist governments to plan and manage their budgets; parliamentarians and citizens to better hold governments accountable; community-based organisations to influence how resources are used; and journalists, researchers and activists to investigate the use and impact of the resources.</p>
+<p>Information from Global Focus is translated monthly into the IATI open data standard and published using UNHCR’s IATI identifier: XM-DAC-41121. An overview of the publication process is accessible through <a href="http://dashboard.iatistandard.org/publisher/unhcr.html" class="external-link">IATI Dashboard</a>. Every UNHCR operation world-wide is reported on for each year from 2016. This includes financial information (budget, contributions, disbursements and expenditure), office locations, and results at various levels of activity. Activities for 2019 and onwards are be published as soon as possible after they become available. This current package is updated a much as possible….</p>
+<div class="section level3">
+<h3 id="what-is-iati">What is IATI?<a class="anchor" aria-label="anchor" href="#what-is-iati"></a>
+</h3>
 <p>Launched in Accra in 2008, the International Aid Transparency Initiative (<a href="https://iatistandard.org/en/about/" class="external-link">IATI</a>) is a multi-stakeholder initiative and international open data standard that aims to improve the transparency and openness of both development and humanitarian activities. In the 2016 Humanitarian grand Bargain, multiple organisations also <a href="https://interagencystandingcommittee.org/greater-transparency" class="external-link">committed to</a> “<em>Publish timely, transparent, harmonised and open high-quality data on humanitarian funding within two years of the World Humanitarian Summit in Istanbul” noting that parties “consider IATI to provide a basis for the purpose of a common standard.</em>”</p>
 <p>IATI provides a mechanism for the regular, automated publication of open data on financial flows and also enables organizations to publish information on their project or programming activities, including information on monitoring, evaluation and results. Overall, 1000+ <a href="https://www.iatiregistry.org/publisher/unhcr" class="external-link">humanitarian and development organisations</a>, including government donors, multilateral and UN agencies and international and local NGOs currently use the IATI Standard to publish information on who funds them, where the money goes and the impact or outcome of their activities. The use of IATI for Humanitarian actors is among the commitment from the grand bargain as presented in the <a href="https://www.humportal.org/about" class="external-link">dedicated portal</a>.</p>
 <p>The International Aid Transparency Initiative (IATI) data to trace aid flows from donor treasuries to their final end use. IATI is designed so that people can trace development spending flows through the development implementation chain, from one organization to other organizations, right down to the final stage in the chain: spending on goods and services. <strong>Traceability</strong> in IATI works by following the money as it flows from organization to organization through the development implementation chain. Provided that all organizations publish their information, it is possible to assess how much of the total funding at the beginning of the implementation chain is spent on goods and services, and where the money is spent.</p>
@@ -100,15 +106,12 @@
 <p><strong>Incoming fund</strong>: Funds received for an activity, which can be from an external or internal source.</p>
 <p><strong>Organisations</strong> can have different roles in IATI (each of them being segregated into different “Organisation Types”): * Reporting Organisations, i.e. organisations voluntarily reporting about their aid projects * Implementations organisations, that actually implements the activity.</p>
 <p>The main concept are nicely summarised in the table below from <a href="https://media.ifrc.org/ifrc/wp-content/uploads/sites/5/2018/03/IFRC-IATI-Feasibility-Study-Report-Final-2017-12-14.pdf" class="external-link">IFRC IATI Feasibility Study</a> - see also the <a href="https://media.ifrc.org/ifrc/wp-content/uploads/sites/5/2018/03/IFRC-IATI-Feasibility-Study-Appendices-Final-2017-12-14.pdf" class="external-link">Appendices</a></p>
-<div class="figure">
-<img src="reference/figures/iatifig3.png" alt=""><p class="caption">Overview of traceability in IATI</p>
+<div class="float">
+<img src="reference/figures/iatifig3.png" alt="Overview of traceability in IATI"><div class="figcaption">Overview of traceability in IATI</div>
 </div>
 </div>
-<div class="section level2">
-<h2 id="key-visualisation-in-the-library-work-in-progress">Key Visualisation in the library (work-in-progress)<a class="anchor" aria-label="anchor" href="#key-visualisation-in-the-library-work-in-progress"></a>
-</h2>
 <div class="section level3">
-<h3 id="unhcr-programme">UNHCR Programme<a class="anchor" aria-label="anchor" href="#unhcr-programme"></a>
+<h3 id="key-visualisation-on-unhcr-programme-in-the-library-work-in-progress">Key Visualisation on UNHCR Programme in the library (work-in-progress)<a class="anchor" aria-label="anchor" href="#key-visualisation-on-unhcr-programme-in-the-library-work-in-progress"></a>
 </h3>
 <ul>
 <li>What are the <strong>most funded sectors</strong> per country (Expenditure evolution per impact /outcome area)?<br>
@@ -127,15 +130,16 @@
 </ul>
 </div>
 <div class="section level3">
-<h3 id="humanitarian-funding-at-large">Humanitarian Funding at large<a class="anchor" aria-label="anchor" href="#humanitarian-funding-at-large"></a>
+<h3 id="out-of-scope-humanitarian-funding-at-large">Out of Scope: Humanitarian Funding at large<a class="anchor" aria-label="anchor" href="#out-of-scope-humanitarian-funding-at-large"></a>
 </h3>
+<p>This package only includes UNHCR Data, as such the following questions can not be adressed:</p>
 <ul>
 <li>What is the <strong>share of funds received by different UN Agencies</strong> (UNICEF, WFP, IOM, UNDP, UNOCHA)?</li>
 <li>How much donors <strong>balance resources between different humanitarian crisis</strong>?</li>
 <li>How much donors allocate budget between <strong>humanitarian and development programmes</strong> devoted to displacement crisis by key donors/region</li>
 <li>How much of donors funding goes to <strong>migratory vs refugee issues</strong>?</li>
 <li>What’s the <strong>share of ODA</strong> (Official Development Assistance) among the total flow of foreign aid per country?</li>
-<li>What’s the share of ODA going to <strong>benefit of refugees</strong>? (this can complement the measurement of <a href="https://www.unhcr.org/5cf907854.pdf#page=13" class="external-link">Global Refugee Compact Indicators related to ODA</a> )<br>
+<li>What’s the share of ODA going to <strong>benefit of refugees</strong>? (this can complement the measurement of <a href="https://www.unhcr.org/5cf907854.pdf#page=13" class="external-link">Global Refugee Compact Indicators related to ODA</a>)<br>
 </li>
 <li>What is the share of ODA allocated to <strong>national actors</strong>?<br>
 </li>
@@ -144,23 +148,11 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="country-factsheet">Country Factsheet<a class="anchor" aria-label="anchor" href="#country-factsheet"></a>
-</h2>
-<p>All the key visualizations are easily created for any single country through a dedicated template for country fact sheet generated a slide deck ready for data interpretation and inclusion in existing Situation analysis for program design or Protection Monitoring Analysis for advocacy.</p>
-</div>
-<div class="section level2">
-<h2 id="install">Install<a class="anchor" aria-label="anchor" href="#install"></a>
-</h2>
-<pre><code><span class="co"># With {remotes} using GitHub API</span>
-<span class="co"># install.packages("remotes")</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"unhcr-americas/iati"</span><span class="op">)</span></code></pre>
-</div>
-<div class="section level2">
 <h2 id="contribute">Contribute<a class="anchor" aria-label="anchor" href="#contribute"></a>
 </h2>
 <p>The package includes different tables (<code>data</code>, <code>code</code> &amp; <code>reference</code>) together with a series of visualization functions, aka a “chart library”“, (<code>show</code>) based on ggplot2</p>
 <p>This package is built with the help of <a href="https://thinkr-open.github.io/fusen/index.html" class="external-link">fusen package</a> which allow to easily maintain consistent documentation through a single notebook.</p>
-<pre><code><span class="fu">fusen</span><span class="fu">::</span><span class="fu"><a href="https://thinkr-open.github.io/fusen/reference/inflate.html" class="external-link">inflate</a></span><span class="op">(</span>flat_file <span class="op">=</span> <span class="st">"dev/dev_unhcr_programme.Rmd"</span>, vignette_name <span class="op">=</span> <span class="st">"UNHCR Programme"</span><span class="op">)</span></code></pre>
+<pre><code><span><span class="fu">fusen</span><span class="fu">::</span><span class="fu"><a href="https://thinkr-open.github.io/fusen/reference/inflate.html" class="external-link">inflate</a></span><span class="op">(</span>flat_file <span class="op">=</span> <span class="st">"dev/dev_unhcr_programme.Rmd"</span>, vignette_name <span class="op">=</span> <span class="st">"UNHCR Programme"</span><span class="op">)</span></span></code></pre>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -208,7 +200,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
     </footer>

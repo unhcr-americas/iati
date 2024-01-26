@@ -2,19 +2,11 @@ Type: Package
 Package: iati
 Title: UNHCR IATI Data Crunching
 Version: 0.1.1
-Authors@R: 
-    c(person(given = "Edouard",
-             family = "Legoupil",
-             role = c("aut", "cre"),
-             email = "legoupil@unhcr.org"),
-      person(given = "Matheus",
-             family = "Soldi Hardt",
-             role = c("aut"),
-             email = "matheus@unhcr.org"),
-      person(given = "Hisham",
-             family = "Galal",
-             role = "aut",
-             email = "galalh@unhcr.org"))
+Authors@R: c(
+    person("Edouard", "Legoupil", , "legoupil@unhcr.org", role = c("aut", "cre")),
+    person("Matheus", "Soldi Hardt", , "matheus@unhcr.org", role = "aut"),
+    person("Hisham", "Galal", , "galalh@unhcr.org", role = "aut")
+  )
 Maintainer: Edouard Legoupil <legoupil@unhcr.org>
 Description: This is a data package with all frame organised and reshapped
     for easy consumptions in R Please see https://reporting.unhcr.org/iati
@@ -30,11 +22,13 @@ Imports:
     tidyverse
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 VignetteBuilder: 
     knitr
 Remotes:
     github::unhcr-americas/iati
+Config/fusen/version: 0.5.2
 Encoding: UTF-8
 LazyData: TRUE
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3.9000

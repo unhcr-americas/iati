@@ -35,7 +35,8 @@ activity <- rbind(
   readxl::read_excel( here::here("data-raw/unhcr_2019", "iati_activity.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2020", "iati_activity.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2021", "iati_activity.xlsx"), sheet = "Sheet1"),
-  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_activity.xlsx"), sheet = "Sheet1"))
+  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_activity.xlsx"), sheet = "Sheet1"),
+  readxl::read_excel( here::here("data-raw/unhcr_2023", "iati_activity.xlsx"), sheet = "Sheet1"))
 
 #names(activity)
 #str(activity)
@@ -79,7 +80,8 @@ budget <- rbind(
   readxl::read_excel( here::here("data-raw/unhcr_2019", "iati_budget.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2020", "iati_budget.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2021", "iati_budget.xlsx"), sheet = "Sheet1"),
-  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_budget.xlsx"), sheet = "Sheet1"))
+  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_budget.xlsx"), sheet = "Sheet1"),
+  readxl::read_excel( here::here("data-raw/unhcr_2023", "iati_budget.xlsx"), sheet = "Sheet1"))
 
 names(budget)
 sinew::makeOxygen(budget, add_fields = "source")
@@ -94,7 +96,8 @@ default_aid_type <- rbind(
   readxl::read_excel( here::here("data-raw/unhcr_2019", "iati_default_aid_type.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2020", "iati_default_aid_type.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2021", "iati_default_aid_type.xlsx"), sheet = "Sheet1"),
-  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_default_aid_type.xlsx"), sheet = "Sheet1"))
+  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_default_aid_type.xlsx"), sheet = "Sheet1"),
+  readxl::read_excel( here::here("data-raw/unhcr_2023", "iati_default_aid_type.xlsx"), sheet = "Sheet1"))
 
 names(default_aid_type)
 sinew::makeOxygen(default_aid_type, add_fields = "source")
@@ -109,7 +112,8 @@ document_link <- rbind(
   readxl::read_excel( here::here("data-raw/unhcr_2019", "iati_document_link.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2020", "iati_document_link.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2021", "iati_document_link.xlsx"), sheet = "Sheet1"),
-  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_document_link.xlsx"), sheet = "Sheet1"))
+  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_document_link.xlsx"), sheet = "Sheet1"),
+  readxl::read_excel( here::here("data-raw/unhcr_2023", "iati_document_link.xlsx"), sheet = "Sheet1"))
 
 names(document_link)
 sinew::makeOxygen(document_link, add_fields = "source")
@@ -124,7 +128,8 @@ humanitarian_scope <- rbind(
   readxl::read_excel( here::here("data-raw/unhcr_2019", "iati_humanitarian_scope.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2020", "iati_humanitarian_scope.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2021", "iati_humanitarian_scope.xlsx"), sheet = "Sheet1"),
-  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_humanitarian_scope.xlsx"), sheet = "Sheet1"))
+  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_humanitarian_scope.xlsx"), sheet = "Sheet1"),
+  readxl::read_excel( here::here("data-raw/unhcr_2023", "iati_humanitarian_scope.xlsx"), sheet = "Sheet1"))
 
 names(humanitarian_scope)
 sinew::makeOxygen(humanitarian_scope, add_fields = "source")
@@ -139,7 +144,8 @@ location <- rbind(
   readxl::read_excel( here::here("data-raw/unhcr_2019", "iati_location.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2020", "iati_location.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2021", "iati_location.xlsx"), sheet = "Sheet1"),
-  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_location.xlsx"), sheet = "Sheet1"))
+  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_location.xlsx"), sheet = "Sheet1"),
+  readxl::read_excel( here::here("data-raw/unhcr_2023", "iati_location.xlsx"), sheet = "Sheet1"))
 
 names(location)
 sinew::makeOxygen(location, add_fields = "source")
@@ -154,7 +160,8 @@ participating_org <- rbind(
   readxl::read_excel( here::here("data-raw/unhcr_2019", "iati_participating_org.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2020", "iati_participating_org.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2021", "iati_participating_org.xlsx"), sheet = "Sheet1"),
-  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_participating_org.xlsx"), sheet = "Sheet1"))
+  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_participating_org.xlsx"), sheet = "Sheet1"),
+  readxl::read_excel( here::here("data-raw/unhcr_2023", "iati_participating_org.xlsx"), sheet = "Sheet1"))
 
 names(participating_org)
 str(participating_org)
@@ -174,7 +181,8 @@ related_activity <- rbind(
   readxl::read_excel( here::here("data-raw/unhcr_2019", "iati_related_activity.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2020", "iati_related_activity.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2021", "iati_related_activity.xlsx"), sheet = "Sheet1"),
-  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_related_activity.xlsx"), sheet = "Sheet1"))
+  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_related_activity.xlsx"), sheet = "Sheet1"),
+  readxl::read_excel( here::here("data-raw/unhcr_2023", "iati_related_activity.xlsx"), sheet = "Sheet1"))
 
 names(related_activity)
 sinew::makeOxygen(related_activity, add_fields = "source")
@@ -189,7 +197,8 @@ result <- rbind(
   readxl::read_excel( here::here("data-raw/unhcr_2019", "iati_result.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2020", "iati_result.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2021", "iati_result.xlsx"), sheet = "Sheet1"),
-  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_result.xlsx"), sheet = "Sheet1"))
+  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_result.xlsx"), sheet = "Sheet1"),
+  readxl::read_excel( here::here("data-raw/unhcr_2023", "iati_result.xlsx"), sheet = "Sheet1"))
 
 names(result)
 sinew::makeOxygen(result, add_fields = "source")
@@ -204,7 +213,8 @@ sector <- rbind(
   readxl::read_excel( here::here("data-raw/unhcr_2019", "iati_sector.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2020", "iati_sector.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2021", "iati_sector.xlsx"), sheet = "Sheet1"),
-  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_sector.xlsx"), sheet = "Sheet1"))
+  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_sector.xlsx"), sheet = "Sheet1"),
+  readxl::read_excel( here::here("data-raw/unhcr_2023", "iati_sector.xlsx"), sheet = "Sheet1"))
 
 names(sector)
 sinew::makeOxygen(sector, add_fields = "source")
@@ -219,7 +229,8 @@ transaction <- rbind(
   readxl::read_excel( here::here("data-raw/unhcr_2019", "iati_transaction.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2020", "iati_transaction.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2021", "iati_transaction.xlsx"), sheet = "Sheet1"),
-  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_transaction.xlsx"), sheet = "Sheet1"))
+  readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_transaction.xlsx"), sheet = "Sheet1"),
+  readxl::read_excel( here::here("data-raw/unhcr_2023", "iati_transaction.xlsx"), sheet = "Sheet1"))
 
 str(transaction)
 ## Cleaning a bit to match with code.. 

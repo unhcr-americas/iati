@@ -2,21 +2,26 @@
 
 ## Objective
 
-A data package with UNHCR contribution to the International Aid Transparency Initiative (IATI) that aims at:
+A data package with UNHCR contribution to the [International Aid Transparency Initiative (IATI)](https://reporting.unhcr.org/iati-international-aid-transparency-initiative) that aims at:
 
  * reshaping IATI extraction from a complex xml file structure to a more user-friendly tabular format with necessary look-up code tables
  * offer easy to consume documentation on the data structure
  * provide built-in ggplot2 visualization, aka a "__chart library__" around high level key questions on UNHCR programme. Those visualizations can be integrated in Operation Situation Analysis or Protection Monitoring Analysis.
 
-## Context 
+## Install  
 
-UNHCR is committed to IATI: [https://reporting.unhcr.org/iati](https://reporting.unhcr.org/iati)
+```  
+# install.packages("pak")
+pak::pkg_install("unhcr-americas/iati")
+```
+
+## Context 
 
 Extracting information from IATI can assist governments to plan and manage their budgets; parliamentarians and citizens to better hold governments accountable; community-based organisations to influence how resources are used; and journalists, researchers and activists to investigate the use and impact of the resources.
 
 Information from Global Focus is translated monthly into the IATI open data standard and published using UNHCR’s IATI identifier: XM-DAC-41121. An overview of the publication process is accessible through [IATI Dashboard](http://dashboard.iatistandard.org/publisher/unhcr.html). Every UNHCR operation world-wide is reported on for each year from 2016. This includes financial information (budget, contributions, disbursements and expenditure), office locations, and results at various levels of activity. Activities for 2019 and onwards are be published as soon as possible after they become available. This current package is updated a much as possible.... 
 
-## What is IATI?
+### What is IATI?
 
 Launched in Accra in 2008, the International Aid Transparency Initiative ([IATI](https://iatistandard.org/en/about/)) is a multi-stakeholder initiative and international open data standard that aims to improve the transparency and openness of both development and humanitarian activities. In the 2016 Humanitarian grand Bargain, multiple organisations also [committed to](https://interagencystandingcommittee.org/greater-transparency) "_Publish timely, transparent, harmonised and open high-quality data on humanitarian funding within two years of the World Humanitarian Summit in Istanbul” noting that parties “consider IATI to provide a basis for the purpose of a common standard._"
 
@@ -40,46 +45,28 @@ The main concept are nicely summarised in the table below from [IFRC IATI Feasib
 
 ![Overview of traceability in IATI](man/figures/iatifig3.png) 
 
-## Key Visualisation in the library (work-in-progress)
-
-### UNHCR Programme
-
+### Key Visualisation on UNHCR Programme in the library (work-in-progress)
+ 
  *  What are the __most funded sectors__ per country (Expenditure evolution per impact /outcome area)?    
- *  Who are the __main donors by country__ in terms of number of
-    projects and/or total budget?   
+ *  Who are the __main donors by country__ in terms of number of     projects and/or total budget?   
  *  Who are the __main implementing partners by country__ in terms of number of projects and/or total budget?  
- *  What’s the breakdown of __Earmarking Type__ (Un-earmarked, Tightly
-    earmarked, etc.) from Donor Funds by Year?  
+ *  What’s the breakdown of __Earmarking Type__ (Un-earmarked, Tightly earmarked, etc.) from Donor Funds by Year?  
  *  What’s the level of __partnership between organisations__ when implementing projects?  
  *  How much __expenditures compare to the initial budget__ (weighted by # PoCs / GPP in the country)?   
  *  How much __indicators__ evolve over time against thresholds?
 
+### Out of Scope: Humanitarian Funding at large 
 
-### Humanitarian Funding at large 
+This package only includes UNHCR Data, as such the following questions can not be adressed:
+
  *  What is the __share of funds received by different UN Agencies__ (UNICEF, WFP, IOM, UNDP, UNOCHA)?
  *  How much donors __balance resources between different humanitarian crisis__?
  *  How much donors allocate budget between __humanitarian and development programmes__ devoted to displacement crisis by key donors/region
  *  How much of donors funding goes to __migratory vs refugee issues__?
- *  What’s the __share of ODA__ (Official Development Assistance) among
-    the total flow of foreign aid per country?
- *  What’s the share of ODA going to __benefit of refugees__? (this can
-    complement the measurement of [Global Refugee Compact Indicators
-    related to ODA](https://www.unhcr.org/5cf907854.pdf#page=13) )  
+ *  What’s the __share of ODA__ (Official Development Assistance) among the total flow of foreign aid per country?
+ *  What’s the share of ODA going to __benefit of refugees__? (this can complement the measurement of [Global Refugee Compact Indicators related to ODA](https://www.unhcr.org/5cf907854.pdf#page=13))  
  *  What is the share of ODA allocated to __national actors__?  
- *  What’s the __share of Humanitarian assistance__ within the total
-    ODA? 
- 
-## Country Factsheet
-
-All the key visualizations are easily created for any single country through a dedicated template for country fact sheet generated a slide deck ready for data interpretation and inclusion in existing Situation analysis for program design or Protection Monitoring Analysis for advocacy.
-
-## Install  
-
-``` 
-# With {remotes} using GitHub API
-# install.packages("remotes")
-remotes::install_github("unhcr-americas/iati")
-```
+ *  What’s the __share of Humanitarian assistance__ within the total ODA? 
 
 ## Contribute
 
@@ -90,5 +77,3 @@ This package is built with the help of [fusen package](https://thinkr-open.githu
 ``` 
 fusen::inflate(flat_file = "dev/dev_unhcr_programme.Rmd", vignette_name = "UNHCR Programme")
 ```
-
-

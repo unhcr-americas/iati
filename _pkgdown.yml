@@ -1,8 +1,6 @@
-url: ~
 template:
+  package: unhcrtemplate
   bootstrap: 5
-  params:
-    bootswatch: yeti
 
 reference:
 - title: Chart Library
@@ -21,3 +19,4 @@ reference:
   desc: UNHCR Geographci Referential
   contents:
   - starts_with("reference")
+  

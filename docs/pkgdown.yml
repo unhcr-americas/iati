@@ -1,7 +1,7 @@
-pandoc: 2.14.0.3
-pkgdown: 2.0.2
+pandoc: 3.1.1
+pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   unhcr-programme: unhcr-programme.html
-last_built: 2022-04-19T22:10Z
+last_built: 2024-01-26T19:33Z
 

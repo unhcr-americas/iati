@@ -20,11 +20,9 @@ If it is the first time you use {fusen}, after 'description', you can directly r
 
 
  *  What are the __most funded sectors__ per country (Expenditure evolution per impact /outcome area)?    
- *  Who are the __main donors by country__ in terms of number of
-    projects and/or total budget?   
+ *  Who are the __main donors by country__ in terms of number of     projects and/or total budget?   
  *  Who are the __main implementing partners by country__ in terms of number of projects and/or total budget?  
- *  What’s the breakdown of __Earmarking Type__ (Un-earmarked, Tightly
-    earmarked, etc.) from Donor Funds by Year?  
+ *  What’s the breakdown of __Earmarking Type__ (Un-earmarked, Tightly earmarked, etc.) from Donor Funds by Year?  
  *  What’s the level of __partnership between organisations__ when implementing projects?  
  *  How much __expenditures compare to the initial budget__ (weighted by # PoCs / GPP in the country)?   
  *  How much __indicators__ evolve over time against thresholds?
@@ -353,7 +351,7 @@ pkgload::load_all(export_all = FALSE)
 
 # Keep eval=FALSE to avoid infinite loop in case you hit the knit button
 # Execute in the console directly
-fusen::inflate(flat_file = "dev/unhcr_programme.Rmd", vignette_name = "UNHCR Programme")
+fusen::inflate(flat_file = "dev/dev_unhcr_programme.Rmd", vignette_name = "UNHCR Programme")
 ```
 
 

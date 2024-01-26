@@ -4,16 +4,19 @@ t1 <- Sys.time()
 
 fs::dir_ls("inst/source/", recurse = TRUE, type = "file") |> purrr::walk(source)
 
-# create folder -----------------------------------------------------------
-folder_name = "data-raw-unhcr"
-dir_create(folder_name) 
-
 # read data ---------------------------------------------------------------
 iati_file <- file_temp()
 
-download.file('https://reporting.unhcr.org/sites/default/files/IATI/UNHCR-Activities-2022.xml', 
+# https://reporting.unhcr.org/files/IATI/UNHCR-Activities-2020.xml
+# https://reporting.unhcr.org/files/IATI/UNHCR-Activities-2023.xml
+
+download.file('https://reporting.unhcr.org/files/IATI/UNHCR-Activities-2022.xml', 
               iati_file, 
               quiet = TRUE)
+
+# create folder -----------------------------------------------------------
+folder_name = "data-raw-2022"
+dir_create(folder_name) 
 
 # list tasks --------------------------------------------------------------
 iati_extractors <- list(iati_activity = iati_activity,
@@ -29,7 +32,7 @@ iati_extractors <- list(iati_activity = iati_activity,
                         iati_transaction = iati_transaction)
 
 # run each one of the tasks ------------
-plan(multisession)
+future::plan(multisession)
 
 iati_extractors |> 
   future_map(~rlang::exec(., read_xml(iati_file))) |> 
@@ -37,10 +40,10 @@ iati_extractors |>
 
 Sys.time() - t1
 
-rm(iati_extractors,
-   iati_file,
-   t1,
-   xml_attr_by_name,
-   xml_child_attr_by_name,
-   xml_text_by_lang,
-   xml_text_by_name)
+# rm(iati_extractors,
+#    iati_file,
+#    t1,
+#    xml_attr_by_name,
+#    xml_child_attr_by_name,
+#    xml_text_by_lang,
+#    xml_text_by_name)

@@ -2,22 +2,16 @@
 % Please edit documentation in R/show_implementers.R
 \name{show_implementers}
 \alias{show_implementers}
-\title{Ploting implementers}
+\title{Ploting implementer}
 \usage{
-show_implementers(year, geo, transtype)
+show_implementers()
 }
-\arguments{
-\item{year}{year to select starting from 2016 - could be one year or a list}
-
-\item{geo}{Region or Country or Site}
-
-\item{transtype}{Transaction type}
+\value{
+a graph
 }
 \description{
-Ploting implementers
+Ploting implementer
 }
 \examples{
-show_implementers(year = 2020,
-            geo = "The Americas",
-            transtype = "11" ) 
+show_implementers( ) 
 }

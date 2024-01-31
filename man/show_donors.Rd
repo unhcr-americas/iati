@@ -4,28 +4,29 @@
 \alias{show_donors}
 \title{Ploting Donors}
 \usage{
-show_donors(year, geo, transtype)
+show_donors(
+  year,
+  iati_identifier_ctr_region,
+  TransactionType = "Incoming Commitment"
+)
 }
 \arguments{
 \item{year}{year to select starting from 2016 - could be one year or a list}
 
-\item{geo}{Region or Country or Site}
+\item{iati_identifier_ctr_region}{UNHCR Region}
 
-\item{transtype}{Transaction type}
+\item{TransactionType}{Transaction type}
+}
+\value{
+a graph
 }
 \description{
 Ploting Donors
 }
 \examples{
-show_donors(year = 2020,
-            geo = "The Americas",
-            transtype = "11" ) +
-  #unhcRstyle::unhcr_theme(base_size = 12) +
-  labs(
-    title = "Donations received by UNHCR",
-    subtitle = "Between 2014 and 2022",
-    x = "",
-    y = "",
-    caption = "IATI Package - github.com/unhcr-americas/iati"
-  ) 
+
+knitr::kable( codeTransactionType |> dplyr::select(name,  description) )
+show_donors(year = 2018,
+           iati_identifier_ctr_region = "The Americas",
+            TransactionType = "Incoming Commitment" )
 }

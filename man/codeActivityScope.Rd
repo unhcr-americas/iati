@@ -7,12 +7,12 @@
 \format{
 A data frame with 8 rows and 6 variables:
 \describe{
-  \item{\code{code}}{double COLUMN_DESCRIPTION}
-  \item{\code{name}}{character COLUMN_DESCRIPTION}
-  \item{\code{description}}{character COLUMN_DESCRIPTION}
-  \item{\code{category}}{logical COLUMN_DESCRIPTION}
-  \item{\code{url}}{logical COLUMN_DESCRIPTION}
-  \item{\code{status}}{character COLUMN_DESCRIPTION}
+  \item{\code{code}}{double code}
+  \item{\code{name}}{character name}
+  \item{\code{description}}{character description}
+  \item{\code{category}}{double  category}
+  \item{\code{url}}{character url}
+  \item{\code{status}}{character status}
 }
 }
 \source{

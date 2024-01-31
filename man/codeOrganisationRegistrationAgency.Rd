@@ -7,13 +7,13 @@
 \format{
 A data frame with 197 rows and 7 variables:
 \describe{
-  \item{\code{code}}{character COLUMN_DESCRIPTION}
-  \item{\code{name}}{character COLUMN_DESCRIPTION}
-  \item{\code{description}}{character COLUMN_DESCRIPTION}
-  \item{\code{category}}{character COLUMN_DESCRIPTION}
-  \item{\code{url}}{character COLUMN_DESCRIPTION}
-  \item{\code{status}}{character COLUMN_DESCRIPTION}
-  \item{\code{public-database}}{logical COLUMN_DESCRIPTION}
+  \item{\code{code}}{double code}
+  \item{\code{name}}{character name}
+  \item{\code{description}}{character description}
+  \item{\code{category}}{double  category}
+  \item{\code{url}}{character url}
+  \item{\code{status}}{character status}
+  \item{\code{public-database}}{logical public-database}
 }
 }
 \source{

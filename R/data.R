@@ -64,17 +64,17 @@
 
 ## iati_budget ##########
 #' @title dataBudget
-#' @description DATASET_DESCRIPTION
+#' @description Display budget by operation
 #' @format A data frame with 840 rows and 8 variables:
 #' \describe{
 #'   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
-#'   \item{\code{budget_type}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{budget_status}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{budget_period_start}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{budget_period_end}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{budget_currency}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{budget_value_date}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{budget_value}}{character COLUMN_DESCRIPTION} 
+#'   \item{\code{budget_type}}{character budget_type}
+#'   \item{\code{budget_status}}{character budget_status}
+#'   \item{\code{budget_period_start}}{character budget_period_start}
+#'   \item{\code{budget_period_end}}{character budget_period_end}
+#'   \item{\code{budget_currency}}{character budget_currency}
+#'   \item{\code{budget_value_date}}{character budget_value_date}
+#'   \item{\code{budget_value}}{character budget_value} 
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
@@ -84,14 +84,106 @@
 "dataBudget"
 
 
-## iati_document_link ##########
-#' @title dataDefault_aid_type
+
+## iati_result ##########
+
+#' @title dataResult
 #' @description DATASET_DESCRIPTION
+#' @format A data frame with 26667 rows and 24 variables:
+#' \describe{
+#'   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
+#'   \item{\code{result_type}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{result_aggregation_status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{result_title}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{result_desc}}{logical COLUMN_DESCRIPTION}
+#'   \item{\code{result_indicator_measure}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{result_indicator_title}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{result_indicator_desc}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{result_indicator_baseline_value}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{result_indicator_baseline_year}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{result_indicator_baseline_date}}{logical COLUMN_DESCRIPTION}
+#'   \item{\code{result_indicator_baseline_location_ref}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{result_indicator_baseline_dimension_1}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{result_indicator_baseline_dimension_value_1}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{result_indicator_baseline_dimension_2}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{result_indicator_baseline_dimension_value_2}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{result_indicator_period_start}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{result_indicator_period_end}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{result_indicator_target_value}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{result_indicator_target_location_ref}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{result_indicator_target_dimension_1}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{result_indicator_target_value_1}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{result_indicator_target_dimension_2}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{result_indicator_target_value_2}}{character COLUMN_DESCRIPTION} 
+#'}
+#' @source \url{https://iatistandard.org/en/iati-standard/203/}
+#' @examples
+#' {
+#' knitr::kable(head(dataResult, 10))
+#'}
+"dataResult"
+
+
+## iati_sector ##########
+#' @title sector
+#' @description DATASET_DESCRIPTION
+#' @format A data frame with 23793 rows and 6 variables:
+#' \describe{
+#'   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
+#'   \item{\code{sector_vocabulary}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{sector_vocabulary_uri}}{logical COLUMN_DESCRIPTION}
+#'   \item{\code{sector_code}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{sector_pct}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{sector_desc}}{character COLUMN_DESCRIPTION} 
+#'}
+#' @source \url{https://iatistandard.org/en/iati-standard/203/}
+#' @examples
+#' {
+#' knitr::kable(head(dataSector, 10))
+#'}
+"dataSector"
+
+## iati_transaction ##########
+#' @title transaction
+#' @description Transactions recording committed or actual funds flowing in or out of an aid activity.
+#' @format A data frame with 30752 rows and 17 variables:
+#' \describe{
+#'   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
+#'   \item{\code{transaction_ref}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_humanitarian}}{logical COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_type_code}}{double The type of the transaction (e.g. commitment, disbursement, expenditure, etc.).}
+#'   \item{\code{transaction_date}}{date COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_value_currency}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_value_date}}{date COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_value}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_description}}{character A human-readable description of the transaction.}
+#'   \item{\code{transaction_provider_org_type}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_provider_org_ref}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_provider_org}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_aid_type_code_1}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_aid_type_vocabulary_1}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_aid_type_code_2}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_aid_type_vocabulary_2}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_value_USD}}{double COLUMN_DESCRIPTION} 
+#'}
+#' @source \url{https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/transaction/}
+#' @examples
+#' {
+#' knitr::kable(head(dataTransaction, 10))
+#'}
+"dataTransaction"
+
+
+
+
+## iati_default_aid_type ##########
+#' @title dataDefault_aid_type
+#' @description Default_aid_type 
 #' @format A data frame with 825 rows and 3 variables:
 #' \describe{
 #'   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
-#'   \item{\code{default_aid_type_code}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{default_aid_type_vocabulary}}{logical COLUMN_DESCRIPTION} 
+#'   \item{\code{default_aid_type_code}}{character aid_type_code}
+#'   \item{\code{default_aid_type_vocabulary}}{logical aid_type_vocabulary} 
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
@@ -103,11 +195,11 @@
 
 ## iati_document_link ##########
 #' @title dataDocument_link
-#' @description DATASET_DESCRIPTION
+#' @description Links to additional documents in relation with the programme
 #' @format A data frame with 4722 rows and 7 variables:
 #' \describe{
 #'   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
-#'   \item{\code{document_url}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{document_url}}{character document_url}
 #'   \item{\code{document_format}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{document_title}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{document_category_code}}{character COLUMN_DESCRIPTION}
@@ -212,157 +304,28 @@
 "dataRelated_activity"
 
 
-## iati_result ##########
-
-#' @title dataResult
-#' @description DATASET_DESCRIPTION
-#' @format A data frame with 26667 rows and 24 variables:
-#' \describe{
-#'   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
-#'   \item{\code{result_type}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{result_aggregation_status}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{result_title}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{result_desc}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{result_indicator_measure}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{result_indicator_title}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{result_indicator_desc}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{result_indicator_baseline_value}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{result_indicator_baseline_year}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{result_indicator_baseline_date}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{result_indicator_baseline_location_ref}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{result_indicator_baseline_dimension_1}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{result_indicator_baseline_dimension_value_1}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{result_indicator_baseline_dimension_2}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{result_indicator_baseline_dimension_value_2}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{result_indicator_period_start}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{result_indicator_period_end}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{result_indicator_target_value}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{result_indicator_target_location_ref}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{result_indicator_target_dimension_1}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{result_indicator_target_value_1}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{result_indicator_target_dimension_2}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{result_indicator_target_value_2}}{character COLUMN_DESCRIPTION} 
-#'}
-#' @source \url{https://iatistandard.org/en/iati-standard/203/}
-#' @examples
-#' {
-#' knitr::kable(head(dataResult, 10))
-#'}
-"dataResult"
-
-
-## iati_sector ##########
-#' @title sector
-#' @description DATASET_DESCRIPTION
-#' @format A data frame with 23793 rows and 6 variables:
-#' \describe{
-#'   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
-#'   \item{\code{sector_vocabulary}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{sector_vocabulary_uri}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{sector_code}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{sector_pct}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{sector_desc}}{character COLUMN_DESCRIPTION} 
-#'}
-#' @source \url{https://iatistandard.org/en/iati-standard/203/}
-#' @examples
-#' {
-#' knitr::kable(head(dataSector, 10))
-#'}
-"dataSector"
-
-## iati_transaction ##########
-#' @title transaction
-#' @description Transactions recording committed or actual funds flowing in or out of an aid activity.
-#' @format A data frame with 30752 rows and 17 variables:
-#' \describe{
-#'   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
-#'   \item{\code{transaction_ref}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_humanitarian}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_type_code}}{double The type of the transaction (e.g. commitment, disbursement, expenditure, etc.).}
-#'   \item{\code{transaction_date}}{date COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_value_currency}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_value_date}}{date COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_value}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_description}}{character A human-readable description of the transaction.}
-#'   \item{\code{transaction_provider_org_type}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_provider_org_ref}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_provider_org}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_aid_type_code_1}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_aid_type_vocabulary_1}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_aid_type_code_2}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_aid_type_vocabulary_2}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_value_USD}}{double COLUMN_DESCRIPTION} 
-#'}
-#' @source \url{https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/transaction/}
-#' @examples
-#' {
-#' knitr::kable(head(dataTransaction, 10))
-#'}
-"dataTransaction"
-
 
 
 #### All code list doc ############
 
-
-## Reference ##########
-#' @title reference
-#' @description Code Mapping table
-#' @format A data frame with 267 rows and 34 variables:
-#' \describe{
-#'   \item{\code{iso_3}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{UNHCRcode}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{ctryname}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{namepostat}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{namepostat2}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{gis_name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{UNHCRBureau}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{main_office}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{hcr_region}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{hcr_subregion}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{code_op}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{Latitude}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{Longitude}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{scalerank}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{LABELRANK}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{SOVEREIGNT}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{SOV_A3}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{ADM0_DIF}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{LEVEL}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{TYPE}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{ADMIN}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{ADM0_A3}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{CONTINENT}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{REGION_UN}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{SUBREGION}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{REGION_WB}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{ECONOMY}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{INCOME_GRP}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{POP_EST}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{POP_RANK}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{GDP_MD_EST}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{POP_YEAR}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{LASTCENSUS}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{M49_code}}{double COLUMN_DESCRIPTION} 
-#'}
-#' @source \url{http://somewhere.important.com/}
-"reference"
-
+ 
 
 
 
 #' @title codeCollaborationType
-#' @description DATASET_DESCRIPTION
+#' @description OECD DAC classification used to determine the character of
+#'     resource flows (bilateral or multilateral).
+#'   External URL: http://www.oecd.org/dac/stats/dacandcrscodelists.htm
 #' @format A data frame with 7 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION} 
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
-#' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
+#' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/collaborationtype/}
 #' @examples
 #' {
 #' knitr::kable(head(codeCollaborationType, 10))
@@ -379,12 +342,12 @@
 #'  indication of the lifespan of an activity.
 #' @format A data frame with 4 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -398,12 +361,12 @@
 #' @description Geographic scope of activity
 #' @format A data frame with 8 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -417,12 +380,12 @@
 #' @description Lifecycle status of the activity from pipeline to completion
 #' @format A data frame with 6 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -436,12 +399,12 @@
 #' @description See: http://www.oecd.org/dac/stats/dacandcrscodelists.htm
 #' @format A data frame with 18 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -456,12 +419,12 @@
 #' External URL: http://www.oecd.org/dac/stats/dacandcrscodelists.htm
 #' @format A data frame with 8 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -476,12 +439,12 @@
 #' This is a Non-Core codelist.
 #' @format A data frame with 4 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -498,12 +461,12 @@
 #'   This is a Non-Core codelist.
 #' @format A data frame with 152 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -519,12 +482,12 @@
 #'   This is a Non-Core codelist.
 #' @format A data frame with 31 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -538,12 +501,12 @@
 #'   External URL: http://www.oecd.org/dac/stats/dacandcrscodelists.htm
 #' @format A data frame with 44 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -557,12 +520,12 @@
 #'   External URL: http://www.oecd.org/dac/stats/dacandcrscodelists.htm
 #' @format A data frame with 323 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -580,12 +543,12 @@
 #'   This is a Non-Core codelist.
 #' @format A data frame with 2 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -604,12 +567,12 @@
 #'     External URL: http://www.iso.org/iso/home/standards/country_codes.htm
 #' @format A data frame with 251 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -622,12 +585,12 @@
 #' @description External URL: http://www.oecd.org/dac/stats/dacandcrscodelists.htm
 #' @format A data frame with 26 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -642,12 +605,12 @@
 #'   External URL: http://www.iso.org/iso/home/standards/currency_codes.htm
 #' @format A data frame with 174 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -660,12 +623,12 @@
 #' @description Activity decription types. (General, objectives, etc)
 #' @format A data frame with 4 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -680,12 +643,12 @@
 #' See: https://reliefweb.int/sites/reliefweb.int/files/resources/Grand_Bargain_final_22_May_FINAL-2.pdf
 #' @format A data frame with 4 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -701,12 +664,12 @@
 #'    External URL: http://www.oecd.org/dac/stats/dacandcrscodelists.htm
 #' @format A data frame with 10 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -720,12 +683,12 @@
 #' @description This is a Non-Core codelist.
 #' @format A data frame with 4 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -740,12 +703,12 @@
 #' humanitarian events and actions.
 #' @format A data frame with 2 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -761,12 +724,12 @@
 #' humanitarian events and actions.
 #' @format A data frame with 3 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -792,12 +755,12 @@
 #'     http://iatistandard.org/organisation-identifiers/
 #' @format A data frame with 39 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -812,12 +775,12 @@
 #' This includes qualitative and quantitative values.
 #' @format A data frame with 5 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -833,12 +796,12 @@
 #' for example to specify results.
 #' @format A data frame with 10 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -855,12 +818,12 @@
 #'    please see http://iatistandard.org/organisation-identifiers/
 #' @format A data frame with 419 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -895,13 +858,13 @@
 #'
 #' @format A data frame with 197 rows and 7 variables:
 #' \describe{
-#'   \item{\code{code}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{public-database}}{logical COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
+#'   \item{\code{public-database}}{logical public-database}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -917,14 +880,14 @@
 #'    This is a Core codelist.
 #' @format A data frame with 4 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION} 
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
-#' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
+#' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/organisationrole/}
 #' @examples
 #' {
 #' knitr::kable(head(codeOrganisationRole, 10))
@@ -935,14 +898,14 @@
 #' @description This is a Non-Core codelist
 #' @format A data frame with 16 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION} 
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
-#' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
+#' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/organisationtype/}
 #' @examples
 #' {
 #' knitr::kable(head(codeOrganisationType, 10))
@@ -955,12 +918,12 @@
 #'    External URL: http://www.oecd.org/dac/stats/dacandcrscodelists.htm
 #' @format A data frame with 12 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -976,12 +939,12 @@
 #'   External URL: https://sustainabledevelopment.un.org/?menu=1300
 #' @format A data frame with 17 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -997,12 +960,12 @@
 #'   External URL: https://unstats.un.org/sdgs/indicators/indicators-list/
 #' @format A data frame with 169 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -1016,12 +979,12 @@
 #' @description Transaction Type -   This is a Core codelist.
 #' @format A data frame with 13 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
 #' @examples
@@ -1035,14 +998,14 @@
 #' @description This is a Non-Core codelist.
 #' @format A data frame with 13 rows and 6 variables:
 #' \describe{
-#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{url}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{code}}{double code}
+#'   \item{\code{name}}{character name}
+#'   \item{\code{description}}{character description}
+#'   \item{\code{category}}{double  category}
+#'   \item{\code{url}}{character url}
+#'   \item{\code{status}}{character status}
 #'}
-#' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
+#' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/sectorvocabulary/}
 #' @examples
 #' {
 #' knitr::kable(head(codeSectorVocabulary, 10))
@@ -1092,7 +1055,7 @@
 #'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
 #'   \item{\code{status}}{character COLUMN_DESCRIPTION}
 #'}
-#' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
+#' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/resulttype/}
 #' @examples
 #' {
 #' knitr::kable(head(codeResultType, 10))

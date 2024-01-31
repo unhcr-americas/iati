@@ -14,12 +14,14 @@ License: Creative Commons Attribution 4.0 International Public License
 URL: https://unhcr-americas.github.io/iati/docs/
 BugReports: https://github.com/unhcr-americas/iati/issues
 Imports: 
+    countrycode,
     dplyr,
     ggplot2,
     lubridate,
     magrittr,
     scales,
-    tidyverse
+    stringr,
+    unhcrthemes
 Suggests: 
     knitr,
     rmarkdown,

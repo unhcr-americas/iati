@@ -7,22 +7,24 @@
 \format{
 A data frame with 7 rows and 6 variables:
 \describe{
-  \item{\code{code}}{double COLUMN_DESCRIPTION}
-  \item{\code{name}}{character COLUMN_DESCRIPTION}
-  \item{\code{description}}{character COLUMN_DESCRIPTION}
-  \item{\code{category}}{logical COLUMN_DESCRIPTION}
-  \item{\code{url}}{logical COLUMN_DESCRIPTION}
-  \item{\code{status}}{character COLUMN_DESCRIPTION} 
+  \item{\code{code}}{double code}
+  \item{\code{name}}{character name}
+  \item{\code{description}}{character description}
+  \item{\code{category}}{double  category}
+  \item{\code{url}}{character url}
+  \item{\code{status}}{character status}
 }
 }
 \source{
-\url{https://iatistandard.org/en/iati-standard/203/codelists/}
+\url{https://iatistandard.org/en/iati-standard/203/codelists/collaborationtype/}
 }
 \usage{
 codeCollaborationType
 }
 \description{
-DATASET_DESCRIPTION
+OECD DAC classification used to determine the character of
+    resource flows (bilateral or multilateral).
+  External URL: http://www.oecd.org/dac/stats/dacandcrscodelists.htm
 }
 \examples{
 {

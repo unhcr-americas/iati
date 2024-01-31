@@ -8,7 +8,7 @@
 A data frame with 4722 rows and 7 variables:
 \describe{
   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
-  \item{\code{document_url}}{character COLUMN_DESCRIPTION}
+  \item{\code{document_url}}{character document_url}
   \item{\code{document_format}}{character COLUMN_DESCRIPTION}
   \item{\code{document_title}}{character COLUMN_DESCRIPTION}
   \item{\code{document_category_code}}{character COLUMN_DESCRIPTION}
@@ -23,7 +23,7 @@ A data frame with 4722 rows and 7 variables:
 dataDocument_link
 }
 \description{
-DATASET_DESCRIPTION
+Links to additional documents in relation with the programme
 }
 \examples{
 {

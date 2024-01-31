@@ -8,8 +8,8 @@
 A data frame with 825 rows and 3 variables:
 \describe{
   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
-  \item{\code{default_aid_type_code}}{character COLUMN_DESCRIPTION}
-  \item{\code{default_aid_type_vocabulary}}{logical COLUMN_DESCRIPTION} 
+  \item{\code{default_aid_type_code}}{character aid_type_code}
+  \item{\code{default_aid_type_vocabulary}}{logical aid_type_vocabulary} 
 }
 }
 \source{
@@ -19,7 +19,7 @@ A data frame with 825 rows and 3 variables:
 dataDefault_aid_type
 }
 \description{
-DATASET_DESCRIPTION
+Default_aid_type
 }
 \examples{
 {

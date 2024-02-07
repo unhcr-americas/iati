@@ -1,4 +1,4 @@
-# iati
+# {iati}   <img src="man/figures/hex-.png" align="right" height="139" alt="" />
 
 ## Objective
 
@@ -41,9 +41,13 @@ __Organisations__ can have different roles in IATI (each of them being segregate
  * Reporting Organisations, i.e. organisations voluntarily reporting about their aid projects
  * Implementations organisations, that actually implements the activity.
  
-The main concept are nicely summarised in the table below from [IFRC IATI Feasibility Study](https://media.ifrc.org/ifrc/wp-content/uploads/sites/5/2018/03/IFRC-IATI-Feasibility-Study-Report-Final-2017-12-14.pdf) - see also the [Appendices](https://media.ifrc.org/ifrc/wp-content/uploads/sites/5/2018/03/IFRC-IATI-Feasibility-Study-Appendices-Final-2017-12-14.pdf)
+The main concept are   summarized in the table below from [IFRC IATI Feasibility Study](https://media.ifrc.org/ifrc/wp-content/uploads/sites/5/2018/03/IFRC-IATI-Feasibility-Study-Report-Final-2017-12-14.pdf) - see also the [Appendices](https://media.ifrc.org/ifrc/wp-content/uploads/sites/5/2018/03/IFRC-IATI-Feasibility-Study-Appendices-Final-2017-12-14.pdf)
 
-![Overview of traceability in IATI](man/figures/iatifig3.png) 
+![](man/figures/iatifig3.png) 
+
+
+The diagram below provides also a summary of the main topics covered through IATI:
+![](https://raw.githubusercontent.com/unhcr-americas/iati/main/inst/iati.png) 
 
 ### Key Visualisation on UNHCR Programme in the library (work-in-progress)
  

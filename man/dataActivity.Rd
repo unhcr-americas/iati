@@ -38,20 +38,38 @@ A data frame with 825 rows and 45 variables:
   \item{\code{contact_info_email}}{character COLUMN_DESCRIPTION}
   \item{\code{contact_info_website}}{character COLUMN_DESCRIPTION}
   \item{\code{contact_info_mailing_address}}{character COLUMN_DESCRIPTION}
-  \item{\code{activity_scope_code}}{double COLUMN_DESCRIPTION}
-  \item{\code{recipient_country_code}}{character COLUMN_DESCRIPTION}
-  \item{\code{recipient_country_pct}}{logical COLUMN_DESCRIPTION}
+  \item{\code{activity_scope_code}}{double activity_scope_code}
+  \item{\code{recipient_country_code}}{character recipient_country_code alpha 2 letters}
+  \item{\code{recipient_country_pct}}{logical percentage of this activity to the recipoent country}
   \item{\code{recipient_country}}{logical COLUMN_DESCRIPTION}
   \item{\code{recipient_region_code}}{double COLUMN_DESCRIPTION}
   \item{\code{recipient_region_vocabulary}}{double COLUMN_DESCRIPTION}
   \item{\code{recipient_region_vocabulary_url}}{character COLUMN_DESCRIPTION}
   \item{\code{recipient_region_pct}}{logical COLUMN_DESCRIPTION}
-  \item{\code{recipient_region}}{character COLUMN_DESCRIPTION}
+  \item{\code{recipient_region}}{character recipient_region}
   \item{\code{collaboration_type_code}}{double The type of collaboration involved in the activity’s disbursements, e.g. “bilateral” or “multilateral”.}
   \item{\code{default_flow_type_code}}{double COLUMN_DESCRIPTION}
   \item{\code{default_finance_type_code}}{double COLUMN_DESCRIPTION}
   \item{\code{default_tied_status_code}}{double COLUMN_DESCRIPTION}
-  \item{\code{capital_spend}}{double COLUMN_DESCRIPTION} 
+  \item{\code{capital_spend}}{double capital_spend} 
+  \item{\code{year}}{character iati id year}
+  \item{\code{iati_identifier_reg_ops}}{character iati_identifier_reg_ops}
+  \item{\code{is_operation}}{logical is a UNHCR Field Operation}
+  \item{\code{programmme}}{character ID of the programme or region}
+  \item{\code{programmme_lab}}{character label of the programme or region}
+  \item{\code{iati_identifier_ops}}{character Operation identifier}
+  \item{\code{iso3c}}{character iso 3 character for the country}
+  \item{\code{ops_type}}{character type of operation if not single country operation}
+  \item{\code{ctr_name}}{character countyr name}
+  \item{\code{unhcr_region}}{character unhcr region}
+  \item{\code{reporting_org_type_name}}{character reporting_org_type_name}
+  \item{\code{reporting_org_type_description}}{character reporting_org_type_description}
+  \item{\code{activity_status_name}}{character activity_status_name}
+  \item{\code{activity_status_description}}{character activity_status_description}
+  \item{\code{activity_scope_name}}{character activity_scope_name}
+  \item{\code{activity_scope_description}}{character activity_scope_description} 
+  \item{\code{collaboration_type_name}}{character collaboration_type_name}
+  \item{\code{collaboration_type_description}}{character collaboration_type_description} 
 }
 }
 \source{

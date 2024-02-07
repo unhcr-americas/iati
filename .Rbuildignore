@@ -1,6 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-usethis::use_data_raw()
 ^dev$
 ^LICENSE\.md$
 ^\.github$
@@ -8,3 +7,12 @@ usethis::use_data_raw()
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^dev\.R$
+^dev\.Rmd$
+^README\.Rmd$
+^CODE_OF_CONDUCT\.md$
+^docs$
+^data-raw$
+^pkgdown$
+^app\.R$
+^rsconnect$

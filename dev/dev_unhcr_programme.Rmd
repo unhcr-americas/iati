@@ -5,28 +5,82 @@ editor_options:
   chunk_output_type: console
 ---
 
-<!-- Run this 'development' chunk -->
-<!-- Store every call to library() that you need to explore your functions -->
-
-```{r development, include=FALSE}
-library(testthat)
-```
 
 
 ```{r developmenttest, include=FALSE, message=FALSE, warning=FALSE}
-library(testthat)
+library(testthat) 
 # Load already included functions
 pkgload::load_all(export_all = FALSE)
 ```
 
+
+
+```{r development_with_mixral, eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+## This chart library was conveniently built using an offline LLM - 
+###########
+# pak::pak("JBGruber/rollama")
+library(rollama)
+options(rollama_server = "http://localhost:11434")
+options("rollama_verbose" = TRUE)
+## Using the last mixtral instruct with good quantization from TheBloke
+## https://mistral.ai/news/mixtral-of-experts/ 
+# pull_model("mixtral:8x7b-instruct-v0.1-q4_K_M")
+options(rollama_model = "mixtral:8x7b-instruct-v0.1-q4_K_M")
+options(rollama_config = "<s> [INST]Act if you were an R developer. 
+You are writing functions that will be included within an R package called “iati”.[/INST]
+
+The data themselves are already part of the package, stored a .RData files.
+
+Each function should include documentation using `roxygen2`.
+
+Insert line breaks into the `roxygen2` documentation after every 80 characters.
+
+The documentaiton should include description of the function parameters, the imported libraries and provide an example for the function. 
+
+In the answer to the prompt, include the function within an R markdonw Rmd chunk.  
  
+As much as possible, include at first functions from within the tidyverse package universe. 
+
+Always opt for a simple coding style that is accessible to everyone. Avoid complex approach, no need to show that you are smarter than me!
+
+Add comments within the code to explain what is happening: All explanations should exclusively be kept as comments within the function itself.
+
+
+Typically, the function will include first some data tidy stage and then the visualization using ggplot2. 
+
+When generating a ggplot2 chart, use UNHCR theme from unhcrthemes package using the following:
+ `unhcrthemes::theme_unhcr(grid = TRUE, axis = \"Y\", axis_title = \"X\") + ` 
+
+When using a color scale, please use the following: 
+` ggplot2::scale_fill_viridis_d(option = \"inferno\", na.value = \"grey50\") + ` 
+
+When one axis includes continuous values please use:
+`ggplot2::scale_y_continuous( expand = ggplot2::expansion(mult = c(0, .1)), labels = scales::label_number(scale_cut = scales::cut_short_scale())) +`
+
+Add a specific caption in each charts with the following:
+`labs(caption = \"Data Source: UNHCR IATI (International Aid Transparency Initiative)\") + ``
+</s>
+ [INST]
+At the end include some unit testing for the created function.[/INST]  
+ ")
+ping_ollama()
+
+# 
+# my_ai_function <- rollama::query("Write a function that will take 3 parameters:  
+# 
+#  1. TransactionType – a parameter that can take value such as \"Incoming Commitment\"  
+# 
+#  2. year – corresponding the first year of focus until the most recent year within the dataset  
+# 
+#  3. region or countries 
+# 
+# The output of the function should be a plot showing transaction for a specific country from a certain year. ")
+# 
+# dput(my_ai_function$message$content )
+
+``` 
  
 
-<!--
- You need to run the 'description' chunk in the '0-dev_history.Rmd' file before continuing your code there.
-
-If it is the first time you use {fusen}, after 'description', you can directly run the last chunk of the present file with inflate() inside.
---> 
 
 
 # Show donors 
@@ -38,9 +92,9 @@ If it is the first time you use {fusen}, after 'description', you can directly r
 #' Ploting Donors
 #'
 #' 
-#' @param year year to select starting from 2016 - could be one year or a list
-#' @param iati_identifier_ctr_region UNHCR Region  
-#' @param TransactionType Transaction type
+#' @param thisyear year to select starting from 2016 - could be one year or a list
+#' @param thisprogrammme_lab  programme_lab
+#' @param thistransaction_type_name Transaction type
 #' 
 #' @import ggplot2
 #' @import dplyr
@@ -50,153 +104,34 @@ If it is the first time you use {fusen}, after 'description', you can directly r
 #' @export 
 #'
 #' @return  a graph
-show_donors <- function(year, 
-                        iati_identifier_ctr_region,
-                        TransactionType = "Incoming Commitment"  ) {
+show_donors <- function(thisyear, 
+                        thisprogrammme_lab,
+                        thistransaction_type_name = "Incoming Commitment"  ) {
   #require(ggplot2)
  # require(tidyverse)
 #  require(scales)
 Transaction0 <- iati::dataTransaction |> 
-  
-  ## let's decompose IATI identifiers to define specific programme
-  
-  # XM-DAC-41121-2023-WCA-TCD
-  # XM-DAC-41121 --> UNHCR
-  #  2023 --> year
-  # WCA --> Region
-  # TCD --> Country
-  dplyr::mutate( 
-    iati_identifier_year_reg_ops = stringr::str_remove(
-                          string = iati_identifier, 
-                          pattern = "XM-DAC-41121-"),
-    iati_identifier_year = stringr::str_sub(iati_identifier_year_reg_ops, 
-                                                          start = 1, 
-                                                          end = 4),
-    iati_identifier_reg_ops = stringr::str_sub(iati_identifier_year_reg_ops, 
-                                              start = 6),
-    iati_identifier_is_notreg = grepl("-", iati_identifier_reg_ops ),
-    sep = dplyr::if_else( iati_identifier_is_notreg =="TRUE",
-                                       stringr::str_locate( 
-                        string = iati_identifier_reg_ops,
-                        pattern = "-"),
-                        0)[,1]   , 
-    iati_identifier_reg  = dplyr::if_else( iati_identifier_is_notreg =="TRUE",
-                                           stringr::str_sub(iati_identifier_reg_ops,
-                                                          start = 0,
-                                                          end = sep-1 ),
-                                           iati_identifier_reg_ops  ),
-    iati_identifier_reg_lab = dplyr::recode(iati_identifier_reg ,
-                         "AFR"  = "Africa"    ,
-                         "AME" =  "The Americas" ,
-                         "ASO" = "Asia and the Pacific"  ,     
-                         "EHGL" = "East and Horn of Africa"    ,
-                         "EUR"  = "Europe"   ,  
-                         "GLOBALPROG" = "Global Program" ,
-                         "HQ"  = "Head Quarter"      , 
-                         "JPO"  = "Junior Professional Officer"     ,
-                         "MENA" ="Middle East and North Africa"     , 
-                         "SA"   = "Southern Africa"     , 
-                         "SAO"    = "Southern Africa"   ,  
-                         "WCA"    =  "West and Central Africa"  ),
-    iati_identifier_ops  = dplyr::if_else(  iati_identifier_is_notreg =="TRUE",
-                                            stringr::str_sub(iati_identifier_reg_ops,
-                                                             start =   sep + 1 ),
-                                           ""),
-    ## Extract Country Code
-    iati_identifier_ctr  =    stringr::str_sub(iati_identifier_ops ,
-                                                start =  0,
-                                                end =3),
-    ## Detect Operation type
-    iati_identifier_ops_type  =     dplyr::if_else(
-                                    stringr::str_length(iati_identifier_ops) > 3 ,
-                                    stringr::str_sub(iati_identifier_ops ,
-                                                     start =  4),
-                                    ""),
-    ## Get country name & unhcr region
-    iati_identifier_ctr_name  =   countrycode::countrycode(iati_identifier_ctr ,
-                                                           origin = "iso3c",
-                                                           destination = "country.name"),
-    iati_identifier_ctr_region  =   countrycode::countrycode(iati_identifier_ctr ,
-                                                        origin = "iso3c",
-                                                        destination = "unhcr.region") ) |>
-  
-  dplyr::left_join(iati::codeOrganisationType |> 
-                     dplyr::mutate(transorg_type = name) |> 
-                     dplyr::select(code, transorg_type) ,
-                   by= c("transaction_provider_org_type" = "code")) |> 
-  dplyr::left_join(iati::codeTransactionType |> 
-                     dplyr::mutate(TransactionType = name,
-                                   TransactionDescr = description) |> 
-                     dplyr::select(code, TransactionType,TransactionDescr  ) ,
-                   by= c("transaction_type_code" = "code")) |> 
-  dplyr::left_join(iati::codeAidTypeVocabulary |> 
-                     dplyr::mutate(aidvocabulary1 = name,
-                                   aidvocabularyDescr1 = description) |> 
-                     dplyr::select(code, aidvocabulary1,aidvocabularyDescr1  ) ,
-                   by= c("transaction_aid_type_vocabulary_1" = "code")) |> 
-  dplyr::left_join(iati::codeAidType |> 
-                     dplyr::mutate(AidType1 = name,
-                                   AidTypeDescr1 = description) |> 
-                     dplyr::select(code, AidType1,AidTypeDescr1  ) ,
-                   by= c("transaction_aid_type_code_1" = "code")) |> 
-  dplyr::left_join(iati::codeAidTypeVocabulary |> 
-                     dplyr::mutate(aidvocabulary2 = name,
-                                   aidvocabularyDescr2 = description) |> 
-                     dplyr::select(code, aidvocabulary2,aidvocabularyDescr2  ) ,
-                   by= c("transaction_aid_type_vocabulary_2" = "code"))|> 
-  dplyr::left_join(iati::codeAidType |> 
-                     dplyr::mutate(AidType2 = name,
-                                   AidTypeDescr2 = description) |> 
-                     dplyr::select(code, AidType2,AidTypeDescr2  ) ,
-                   by= c("transaction_aid_type_code_2" = "code")) |> 
-  dplyr::left_join(iati::dataActivity |> 
-                     dplyr::left_join(iati::codeOrganisationType |> 
-                                        dplyr::mutate(report_org_type = name) |> 
-                                        dplyr::select(code, report_org_type) ,
-                                      by= c("reporting_org_type" = "code")) |> 
-                     dplyr::left_join(iati::codeActivityScope |> 
-                                        dplyr::mutate(codeActivityScope = name) |> 
-                                        dplyr::select(code, codeActivityScope) ,
-                                      by= c("activity_scope_code" = "code"))  |> 
-                     dplyr::left_join(iati::codeCountry |> 
-                                        dplyr::mutate(recipientCountry = name) |> 
-                                        dplyr::select(code, recipientCountry) ,
-                                      by= c("recipient_country_code" = "code")) |> 
-                     dplyr::left_join(iati::codeRegion |> 
-                                        dplyr::mutate(recipientRegion = name) |> 
-                                        dplyr::select(code, recipientRegion) ,
-                                      by= c("recipient_region_code" = "code")) |> 
-                     dplyr::left_join(iati::codeActivityStatus |> 
-                                        dplyr::mutate(ActivityStatus = name) |> 
-                                        dplyr::select(code, ActivityStatus) ,
-                                      by= c("activity_status_code" = "code")) |> 
-                     dplyr::left_join(iati::codeCollaborationType |> 
-                                        dplyr::mutate(CollaborationType = name) |> 
-                                        dplyr::select(code, CollaborationType) ,
-                                      by= c("collaboration_type_code" = "code"))  ,
-                   by= c("iati_identifier")) 
+  dplyr::left_join(iati::dataActivity, by= c("iati_identifier")) 
 
 Transaction <- Transaction0 |> 
   ## Add filters 
-  dplyr::filter(iati_identifier_ctr_region == iati_identifier_ctr_region) |> 
-  dplyr::filter(lubridate::year(transaction_date) >= year) |>    
+  dplyr::filter(year >= as.integer(thisyear)) |> 
+  #dplyr::filter(year >= 2018) |>    
+  dplyr::filter(programmme_lab == as.character(thisprogrammme_lab)) |> 
   ## Add filters transaction type  transaction type 
  #  dplyr::filter(TransactionType == "Incoming Commitment") |>  
-  dplyr::filter(TransactionType %in% TransactionType) |>  
-  dplyr::mutate(
-    trans_year = lubridate::year(transaction_date),
-    month_trans = factor(format(transaction_date, "%b"), month.abb, ordered = TRUE)
-  ) |> 
-  dplyr::group_by(trans_year, transorg_type) |>
-  dplyr::summarise( transaction_value= sum(transaction_value, na.rm = TRUE)) |>
-  dplyr::mutate(transorg_type = as.character(transorg_type) )  |>
-  dplyr::mutate(transorg_type = as.factor(transorg_type) ) 
+  dplyr::filter(transaction_type_name %in% thistransaction_type_name) |>  
+ 
+  dplyr::group_by(year, reporting_org_type_name) |>
+  dplyr::summarise( transaction_value_USD = sum(transaction_value_USD , na.rm = TRUE)) |>
+  dplyr::mutate(reporting_org_type_name = as.character(reporting_org_type_name) )  |>
+  dplyr::mutate(reporting_org_type_name = as.factor(reporting_org_type_name) ) 
 
 p <- Transaction |> 
-#  dplyr::filter(transaction_value <= 1000000 & transaction_value > 1000) |> 
-  ggplot2::ggplot(ggplot2::aes(y = transaction_value,
-             x = trans_year,
-             fill = transorg_type)) +
+#  dplyr::filter(transaction_value_USD  <= 1000000 & transaction_value_USD  > 1000) |> 
+  ggplot2::ggplot(ggplot2::aes(y = transaction_value_USD ,
+             x =  year,
+             fill = reporting_org_type_name)) +
   ggplot2::geom_bar(alpha = 0.9, stat = "identity") +
   ggplot2::scale_fill_viridis_d(option = "inferno", na.value = "grey50") +
   ggplot2::scale_y_continuous(
@@ -207,8 +142,8 @@ p <- Transaction |>
  # ggplot2::facet_wrap(~ trans_year) +
   unhcrthemes::theme_unhcr()+
   ggplot2::labs(
-    title = paste0(TransactionType," received by UNHCR"),
-    subtitle = paste0("In ",  iati_identifier_ctr_region, " recorded since ", year,""),
+    title = paste0(thistransaction_type_name," received by UNHCR in USD"),
+    subtitle = paste0("In ",  thisprogrammme_lab, " recorded since ", thisyear,""),
     x = "",
     y = "",
     caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative)"
@@ -219,12 +154,19 @@ p <- Transaction |>
 ```
 
 
-```{r examples-show_donors, message=FALSE, warning=FALSE}
+```{r examples-show_donors, message=FALSE, warning=FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center",  out.width = "90%"}
 
 knitr::kable( codeTransactionType |> dplyr::select(name,  description) )
-show_donors(year = 2018,
-           iati_identifier_ctr_region = "The Americas",
-            TransactionType = "Incoming Commitment" )
+
+show_donors(thisyear = 2018,
+           thisprogrammme_lab = "The Americas",
+           thistransaction_type_name = "Incoming Commitment" )
+
+
+show_donors(thisyear = 2018,
+           thisprogrammme_lab = "The Americas",
+           thistransaction_type_name = "Disbursement" )
+
 ```
 
 ```{r tests-show_donors}
@@ -257,7 +199,7 @@ show_implementers <- function(  ) {
 }
 ```
  
-```{r examples-show_implementers, message=FALSE, warning=FALSE}
+```{r examples-show_implementers, message=FALSE, warning=FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center",  out.width = "90%"}
 show_implementers( ) 
 ```
 
@@ -290,7 +232,7 @@ show_sectors <- function(){
 }
 ```
   
-```{r example-show_sectors}
+```{r example-show_sectors, message=FALSE, warning=FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center",  out.width = "90%"}
 show_sectors()
 ```
   
@@ -323,7 +265,7 @@ show_earmarking <- function(){
 }
 ```
   
-```{r example-show_earmarking}
+```{r example-show_earmarking, message=FALSE, warning=FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center",  out.width = "90%"}
 show_earmarking()
 ```
   
@@ -356,7 +298,7 @@ show_partnership <- function(){
 }
 ```
   
-```{r example-show_partnership}
+```{r example-show_partnership, message=FALSE, warning=FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center",  out.width = "90%"}
 show_partnership()
 ```
   
@@ -387,7 +329,7 @@ show_expenditure <- function(){
 }
 ```
   
-```{r example-show_expenditure}
+```{r example-show_expenditure, message=FALSE, warning=FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center",  out.width = "90%"}
 show_expenditure()
 ```
   
@@ -420,7 +362,7 @@ show_indicators <- function(){
 }
 ```
   
-```{r example-show_indicators}
+```{r example-show_indicators, message=FALSE, warning=FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center",  out.width = "90%"}
 show_indicators()
 ```
   

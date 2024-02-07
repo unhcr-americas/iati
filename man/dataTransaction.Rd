@@ -5,17 +5,17 @@
 \alias{dataTransaction}
 \title{transaction}
 \format{
-A data frame with 30752 rows and 17 variables:
+A data frame with 40419 rows and 29 variables:
 \describe{
-  \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
+  \item{\code{iati_identifier}}{character COLUMN_DESCRIPTION}
   \item{\code{transaction_ref}}{character COLUMN_DESCRIPTION}
   \item{\code{transaction_humanitarian}}{logical COLUMN_DESCRIPTION}
-  \item{\code{transaction_type_code}}{double The type of the transaction (e.g. commitment, disbursement, expenditure, etc.).}
-  \item{\code{transaction_date}}{date COLUMN_DESCRIPTION}
+  \item{\code{transaction_type_code}}{double COLUMN_DESCRIPTION}
+  \item{\code{transaction_date}}{double COLUMN_DESCRIPTION}
   \item{\code{transaction_value_currency}}{character COLUMN_DESCRIPTION}
-  \item{\code{transaction_value_date}}{date COLUMN_DESCRIPTION}
+  \item{\code{transaction_value_date}}{double COLUMN_DESCRIPTION}
   \item{\code{transaction_value}}{double COLUMN_DESCRIPTION}
-  \item{\code{transaction_description}}{character A human-readable description of the transaction.}
+  \item{\code{transaction_description}}{character COLUMN_DESCRIPTION}
   \item{\code{transaction_provider_org_type}}{double COLUMN_DESCRIPTION}
   \item{\code{transaction_provider_org_ref}}{character COLUMN_DESCRIPTION}
   \item{\code{transaction_provider_org}}{character COLUMN_DESCRIPTION}
@@ -23,7 +23,19 @@ A data frame with 30752 rows and 17 variables:
   \item{\code{transaction_aid_type_vocabulary_1}}{double COLUMN_DESCRIPTION}
   \item{\code{transaction_aid_type_code_2}}{character COLUMN_DESCRIPTION}
   \item{\code{transaction_aid_type_vocabulary_2}}{double COLUMN_DESCRIPTION}
-  \item{\code{transaction_value_USD}}{double COLUMN_DESCRIPTION} 
+  \item{\code{transaction_value_USD}}{double COLUMN_DESCRIPTION}
+  \item{\code{transaction_type_name}}{character COLUMN_DESCRIPTION}
+  \item{\code{transaction_type_description}}{character COLUMN_DESCRIPTION}
+  \item{\code{provider_org_type_name}}{character COLUMN_DESCRIPTION}
+  \item{\code{provider_org_type_description}}{character COLUMN_DESCRIPTION}
+  \item{\code{aid_type1_name}}{character COLUMN_DESCRIPTION}
+  \item{\code{aid_type1_description}}{character COLUMN_DESCRIPTION}
+  \item{\code{aid_type2_name}}{character COLUMN_DESCRIPTION}
+  \item{\code{aid_type2_description}}{character COLUMN_DESCRIPTION}
+  \item{\code{aid_type_vocabulary1_name}}{character COLUMN_DESCRIPTION}
+  \item{\code{aid_type_vocabulary1_description}}{character COLUMN_DESCRIPTION}
+  \item{\code{aid_type_vocabulary2_name}}{character COLUMN_DESCRIPTION}
+  \item{\code{aid_type_vocabulary2_description}}{character COLUMN_DESCRIPTION} 
 }
 }
 \source{

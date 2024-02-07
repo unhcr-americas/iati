@@ -39,20 +39,38 @@
 #'   \item{\code{contact_info_email}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{contact_info_website}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{contact_info_mailing_address}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{activity_scope_code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{recipient_country_code}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{recipient_country_pct}}{logical COLUMN_DESCRIPTION}
+#'   \item{\code{activity_scope_code}}{double activity_scope_code}
+#'   \item{\code{recipient_country_code}}{character recipient_country_code alpha 2 letters}
+#'   \item{\code{recipient_country_pct}}{logical percentage of this activity to the recipoent country}
 #'   \item{\code{recipient_country}}{logical COLUMN_DESCRIPTION}
 #'   \item{\code{recipient_region_code}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{recipient_region_vocabulary}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{recipient_region_vocabulary_url}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{recipient_region_pct}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{recipient_region}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{recipient_region}}{character recipient_region}
 #'   \item{\code{collaboration_type_code}}{double The type of collaboration involved in the activity’s disbursements, e.g. “bilateral” or “multilateral”.}
 #'   \item{\code{default_flow_type_code}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{default_finance_type_code}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{default_tied_status_code}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{capital_spend}}{double COLUMN_DESCRIPTION} 
+#'   \item{\code{capital_spend}}{double capital_spend} 
+#'   \item{\code{year}}{character iati id year}
+#'   \item{\code{iati_identifier_reg_ops}}{character iati_identifier_reg_ops}
+#'   \item{\code{is_operation}}{logical is a UNHCR Field Operation}
+#'   \item{\code{programmme}}{character ID of the programme or region}
+#'   \item{\code{programmme_lab}}{character label of the programme or region}
+#'   \item{\code{iati_identifier_ops}}{character Operation identifier}
+#'   \item{\code{iso3c}}{character iso 3 character for the country}
+#'   \item{\code{ops_type}}{character type of operation if not single country operation}
+#'   \item{\code{ctr_name}}{character countyr name}
+#'   \item{\code{unhcr_region}}{character unhcr region}
+#'   \item{\code{reporting_org_type_name}}{character reporting_org_type_name}
+#'   \item{\code{reporting_org_type_description}}{character reporting_org_type_description}
+#'   \item{\code{activity_status_name}}{character activity_status_name}
+#'   \item{\code{activity_status_description}}{character activity_status_description}
+#'   \item{\code{activity_scope_name}}{character activity_scope_name}
+#'   \item{\code{activity_scope_description}}{character activity_scope_description} 
+#'   \item{\code{collaboration_type_name}}{character collaboration_type_name}
+#'   \item{\code{collaboration_type_description}}{character collaboration_type_description} 
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/}
 #' @examples
@@ -65,16 +83,16 @@
 ## iati_budget ##########
 #' @title dataBudget
 #' @description Display budget by operation
-#' @format A data frame with 840 rows and 8 variables:
+#' @format A data frame with 1194 rows and 8 variables:
 #' \describe{
-#'   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
-#'   \item{\code{budget_type}}{character budget_type}
-#'   \item{\code{budget_status}}{character budget_status}
-#'   \item{\code{budget_period_start}}{character budget_period_start}
-#'   \item{\code{budget_period_end}}{character budget_period_end}
-#'   \item{\code{budget_currency}}{character budget_currency}
-#'   \item{\code{budget_value_date}}{character budget_value_date}
-#'   \item{\code{budget_value}}{character budget_value} 
+#'   \item{\code{iati_identifier}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{budget_type}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{budget_status}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{budget_period_start}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{budget_period_end}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{budget_currency}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{budget_value_date}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{budget_value}}{character COLUMN_DESCRIPTION} 
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
@@ -146,17 +164,17 @@
 ## iati_transaction ##########
 #' @title transaction
 #' @description Transactions recording committed or actual funds flowing in or out of an aid activity.
-#' @format A data frame with 30752 rows and 17 variables:
+#' @format A data frame with 40419 rows and 29 variables:
 #' \describe{
-#'   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
+#'   \item{\code{iati_identifier}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_ref}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_humanitarian}}{logical COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_type_code}}{double The type of the transaction (e.g. commitment, disbursement, expenditure, etc.).}
-#'   \item{\code{transaction_date}}{date COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_type_code}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_date}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_value_currency}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_value_date}}{date COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_value_date}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_value}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_description}}{character A human-readable description of the transaction.}
+#'   \item{\code{transaction_description}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_provider_org_type}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_provider_org_ref}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_provider_org}}{character COLUMN_DESCRIPTION}
@@ -164,7 +182,19 @@
 #'   \item{\code{transaction_aid_type_vocabulary_1}}{double COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_aid_type_code_2}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_aid_type_vocabulary_2}}{double COLUMN_DESCRIPTION}
-#'   \item{\code{transaction_value_USD}}{double COLUMN_DESCRIPTION} 
+#'   \item{\code{transaction_value_USD}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_type_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{transaction_type_description}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{provider_org_type_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{provider_org_type_description}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{aid_type1_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{aid_type1_description}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{aid_type2_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{aid_type2_description}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{aid_type_vocabulary1_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{aid_type_vocabulary1_description}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{aid_type_vocabulary2_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{aid_type_vocabulary2_description}}{character COLUMN_DESCRIPTION} 
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/transaction/}
 #' @examples

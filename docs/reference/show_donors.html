@@ -57,58 +57,67 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">show_donors</span><span class="op">(</span><span class="va">year</span>, <span class="va">geo</span>, <span class="va">transtype</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">show_donors</span><span class="op">(</span></span>
+<span>  <span class="va">thisyear</span>,</span>
+<span>  <span class="va">thisprogrammme_lab</span>,</span>
+<span>  thistransaction_type_name <span class="op">=</span> <span class="st">"Incoming Commitment"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>year</dt>
+    <dl><dt>thisyear</dt>
 <dd><p>year to select starting from 2016 - could be one year or a list</p></dd>
 
 
-<dt>geo</dt>
-<dd><p>Region or Country or Site</p></dd>
+<dt>thisprogrammme_lab</dt>
+<dd><p>programme_lab</p></dd>
 
 
-<dt>transtype</dt>
+<dt>thistransaction_type_name</dt>
 <dd><p>Transaction type</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    
+
+<p>a graph</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">show_donors</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2020</span>,</span></span>
-<span class="r-in"><span>            geo <span class="op">=</span> <span class="st">"The Americas"</span>,</span></span>
-<span class="r-in"><span>            transtype <span class="op">=</span> <span class="st">"11"</span> <span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="co">#unhcRstyle::unhcr_theme(base_size = 12) +</span></span></span>
-<span class="r-in"><span>  <span class="fu">labs</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    title <span class="op">=</span> <span class="st">"Donations received by UNHCR"</span>,</span></span>
-<span class="r-in"><span>    subtitle <span class="op">=</span> <span class="st">"Between 2014 and 2022"</span>,</span></span>
-<span class="r-in"><span>    x <span class="op">=</span> <span class="st">""</span>,</span></span>
-<span class="r-in"><span>    y <span class="op">=</span> <span class="st">""</span>,</span></span>
-<span class="r-in"><span>    caption <span class="op">=</span> <span class="st">"IATI Package - github.com/unhcr-americas/iati"</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span> </span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: tidyverse</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Attaching core tidyverse packages</span> ──────────────────────── tidyverse 2.0.0 ──</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">dplyr    </span> 1.1.4     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">readr    </span> 2.1.5</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">forcats  </span> 1.0.0     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">stringr  </span> 1.5.1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">ggplot2  </span> 3.4.4     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tibble   </span> 3.2.1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">lubridate</span> 1.9.3     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tidyr    </span> 1.3.1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">purrr    </span> 1.0.2     </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Conflicts</span> ────────────────────────────────────────── tidyverse_conflicts() ──</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">filter()</span> masks <span style="color: #0000BB;">stats</span>::filter()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">lag()</span>    masks <span style="color: #0000BB;">stats</span>::lag()</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use the conflicted package (<span style="color: #0000BB; font-style: italic;">&lt;http://conflicted.r-lib.org/&gt;</span>) to force all conflicts to become errors</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: scales</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘scales’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:purrr’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     discard</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:readr’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     col_factor</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span> <span class="va">codeTransactionType</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span>,  <span class="va">description</span><span class="op">)</span> <span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |name                |description                                                                                                                                                                                 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:-------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Incoming Funds      |Funds recieved for use on the activity, which can be from an external or internal source.                                                                                                   |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Outgoing Commitment |A firm, written obligation from a donor or provider to provide a specified amount of funds, under particular terms and conditions, for specific purposes, for the benefit of the recipient. |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Disbursement        |Outgoing funds that are placed at the disposal of a recipient government or organisation, or funds transferred between two separately reported activities.                                  |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Expenditure         |Outgoing funds that are spent on goods and services for the activity.                                                                                                                       |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Interest Payment    |The actual amount of interest paid on a loan or line of credit, including fees.                                                                                                             |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Loan Repayment      |The actual amount of principal (amortisation) repaid, including any arrears.                                                                                                                |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Reimbursement       |A type of disbursement that covers funds that have already been spent by the recipient, as agreed in the terms of the grant or loan                                                         |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Purchase of Equity  |Outgoing funds that are used to purchase equity in a business                                                                                                                               |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Sale of Equity      |Incoming funds from the sale of equity.                                                                                                                                                     |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Credit Guarantee    |A commitment made by a funding organisation to underwrite a loan or line of credit entered into by a third party.                                                                           |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Incoming Commitment |A firm, written obligation from a donor or provider to provide a specified amount of funds, under particular terms and conditions, reported by a recipient for this activity.               |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Outgoing Pledge     |Indicative, non-binding advice of an intended outgoing commitment.                                                                                                                          |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Incoming Pledge     |Indicative, non-binding advice of an intended incoming commitment.                                                                                                                          |</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">show_donors</span><span class="op">(</span>thisyear <span class="op">=</span> <span class="fl">2018</span>,</span></span>
+<span class="r-in"><span>           thisprogrammme_lab <span class="op">=</span> <span class="st">"The Americas"</span>,</span></span>
+<span class="r-in"><span>           thistransaction_type_name <span class="op">=</span> <span class="st">"Incoming Commitment"</span> <span class="op">)</span></span></span>
 <span class="r-plt img"><img src="show_donors-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">show_donors</span><span class="op">(</span>thisyear <span class="op">=</span> <span class="fl">2018</span>,</span></span>
+<span class="r-in"><span>           thisprogrammme_lab <span class="op">=</span> <span class="st">"The Americas"</span>,</span></span>
+<span class="r-in"><span>           thistransaction_type_name <span class="op">=</span> <span class="st">"Disbursement"</span> <span class="op">)</span></span></span>
+<span class="r-plt img"><img src="show_donors-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

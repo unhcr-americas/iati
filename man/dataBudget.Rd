@@ -5,16 +5,16 @@
 \alias{dataBudget}
 \title{dataBudget}
 \format{
-A data frame with 840 rows and 8 variables:
+A data frame with 1194 rows and 8 variables:
 \describe{
-  \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
-  \item{\code{budget_type}}{character budget_type}
-  \item{\code{budget_status}}{character budget_status}
-  \item{\code{budget_period_start}}{character budget_period_start}
-  \item{\code{budget_period_end}}{character budget_period_end}
-  \item{\code{budget_currency}}{character budget_currency}
-  \item{\code{budget_value_date}}{character budget_value_date}
-  \item{\code{budget_value}}{character budget_value} 
+  \item{\code{iati_identifier}}{character COLUMN_DESCRIPTION}
+  \item{\code{budget_type}}{character COLUMN_DESCRIPTION}
+  \item{\code{budget_status}}{character COLUMN_DESCRIPTION}
+  \item{\code{budget_period_start}}{character COLUMN_DESCRIPTION}
+  \item{\code{budget_period_end}}{character COLUMN_DESCRIPTION}
+  \item{\code{budget_currency}}{character COLUMN_DESCRIPTION}
+  \item{\code{budget_value_date}}{character COLUMN_DESCRIPTION}
+  \item{\code{budget_value}}{character COLUMN_DESCRIPTION} 
 }
 }
 \source{

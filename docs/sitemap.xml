@@ -205,7 +205,22 @@
     <loc>/reference/show_donors.html</loc>
   </url>
   <url>
+    <loc>/reference/show_earmarking.html</loc>
+  </url>
+  <url>
+    <loc>/reference/show_expenditure.html</loc>
+  </url>
+  <url>
     <loc>/reference/show_implementers.html</loc>
+  </url>
+  <url>
+    <loc>/reference/show_indicators.html</loc>
+  </url>
+  <url>
+    <loc>/reference/show_partnership.html</loc>
+  </url>
+  <url>
+    <loc>/reference/show_sectors.html</loc>
   </url>
   <url>
     <loc>/reference/transaction.html</loc>

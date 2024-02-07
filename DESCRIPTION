@@ -8,19 +8,19 @@ Authors@R: c(
     person("Hisham", "Galal", , "galalh@unhcr.org", role = "aut")
   )
 Maintainer: Edouard Legoupil <legoupil@unhcr.org>
-Description: This is a data package with all frame organised and reshapped
-    for easy consumptions in R Please see https://reporting.unhcr.org/iati
-License: Creative Commons Attribution 4.0 International Public License
+Description: This package includes UNHCR IATI data organised in tabular
+    format together with a chat library.
+License: CC BY 4.0
 URL: https://unhcr-americas.github.io/iati/docs/
 BugReports: https://github.com/unhcr-americas/iati/issues
 Imports: 
-    countrycode,
     dplyr,
     ggplot2,
-    lubridate,
     magrittr,
     scales,
-    stringr,
+    showtext,
+    sysfonts,
+    systemfonts,
     unhcrthemes
 Suggests: 
     knitr,
@@ -33,4 +33,4 @@ Remotes:
 Config/fusen/version: 0.5.2
 Encoding: UTF-8
 LazyData: TRUE
-RoxygenNote: 7.2.3.9000
+RoxygenNote: 7.3.1

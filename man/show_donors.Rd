@@ -5,17 +5,17 @@
 \title{Ploting Donors}
 \usage{
 show_donors(
-  year,
-  iati_identifier_ctr_region,
-  TransactionType = "Incoming Commitment"
+  thisyear,
+  thisprogrammme_lab,
+  thistransaction_type_name = "Incoming Commitment"
 )
 }
 \arguments{
-\item{year}{year to select starting from 2016 - could be one year or a list}
+\item{thisyear}{year to select starting from 2016 - could be one year or a list}
 
-\item{iati_identifier_ctr_region}{UNHCR Region}
+\item{thisprogrammme_lab}{programme_lab}
 
-\item{TransactionType}{Transaction type}
+\item{thistransaction_type_name}{Transaction type}
 }
 \value{
 a graph
@@ -26,7 +26,14 @@ Ploting Donors
 \examples{
 
 knitr::kable( codeTransactionType |> dplyr::select(name,  description) )
-show_donors(year = 2018,
-           iati_identifier_ctr_region = "The Americas",
-            TransactionType = "Incoming Commitment" )
+
+show_donors(thisyear = 2018,
+           thisprogrammme_lab = "The Americas",
+           thistransaction_type_name = "Incoming Commitment" )
+
+
+show_donors(thisyear = 2018,
+           thisprogrammme_lab = "The Americas",
+           thistransaction_type_name = "Disbursement" )
+
 }

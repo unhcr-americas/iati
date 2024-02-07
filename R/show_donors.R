@@ -3,9 +3,9 @@
 #' Ploting Donors
 #'
 #' 
-#' @param year year to select starting from 2016 - could be one year or a list
-#' @param iati_identifier_ctr_region UNHCR Region  
-#' @param TransactionType Transaction type
+#' @param thisyear year to select starting from 2016 - could be one year or a list
+#' @param thisprogrammme_lab  programme_lab
+#' @param thistransaction_type_name Transaction type
 #' 
 #' @import ggplot2
 #' @import dplyr
@@ -18,156 +18,44 @@
 #' @examples
 #'
 #' knitr::kable( codeTransactionType |> dplyr::select(name,  description) )
-#' show_donors(year = 2018,
-#'            iati_identifier_ctr_region = "The Americas",
-#'             TransactionType = "Incoming Commitment" )
-show_donors <- function(year, 
-                        iati_identifier_ctr_region,
-                        TransactionType = "Incoming Commitment"  ) {
+#'
+#' show_donors(thisyear = 2018,
+#'            thisprogrammme_lab = "The Americas",
+#'            thistransaction_type_name = "Incoming Commitment" )
+#'
+#'
+#' show_donors(thisyear = 2018,
+#'            thisprogrammme_lab = "The Americas",
+#'            thistransaction_type_name = "Disbursement" )
+#'
+show_donors <- function(thisyear, 
+                        thisprogrammme_lab,
+                        thistransaction_type_name = "Incoming Commitment"  ) {
   #require(ggplot2)
  # require(tidyverse)
 #  require(scales)
 Transaction0 <- iati::dataTransaction |> 
-  
-  ## let's decompose IATI identifiers to define specific programme
-  
-  # XM-DAC-41121-2023-WCA-TCD
-  # XM-DAC-41121 --> UNHCR
-  #  2023 --> year
-  # WCA --> Region
-  # TCD --> Country
-  dplyr::mutate( 
-    iati_identifier_year_reg_ops = stringr::str_remove(
-                          string = iati_identifier, 
-                          pattern = "XM-DAC-41121-"),
-    iati_identifier_year = stringr::str_sub(iati_identifier_year_reg_ops, 
-                                                          start = 1, 
-                                                          end = 4),
-    iati_identifier_reg_ops = stringr::str_sub(iati_identifier_year_reg_ops, 
-                                              start = 6),
-    iati_identifier_is_notreg = grepl("-", iati_identifier_reg_ops ),
-    sep = dplyr::if_else( iati_identifier_is_notreg =="TRUE",
-                                       stringr::str_locate( 
-                        string = iati_identifier_reg_ops,
-                        pattern = "-"),
-                        0)[,1]   , 
-    iati_identifier_reg  = dplyr::if_else( iati_identifier_is_notreg =="TRUE",
-                                           stringr::str_sub(iati_identifier_reg_ops,
-                                                          start = 0,
-                                                          end = sep-1 ),
-                                           iati_identifier_reg_ops  ),
-    iati_identifier_reg_lab = dplyr::recode(iati_identifier_reg ,
-                         "AFR"  = "Africa"    ,
-                         "AME" =  "The Americas" ,
-                         "ASO" = "Asia and the Pacific"  ,     
-                         "EHGL" = "East and Horn of Africa"    ,
-                         "EUR"  = "Europe"   ,  
-                         "GLOBALPROG" = "Global Program" ,
-                         "HQ"  = "Head Quarter"      , 
-                         "JPO"  = "Junior Professional Officer"     ,
-                         "MENA" ="Middle East and North Africa"     , 
-                         "SA"   = "Southern Africa"     , 
-                         "SAO"    = "Southern Africa"   ,  
-                         "WCA"    =  "West and Central Africa"  ),
-    iati_identifier_ops  = dplyr::if_else(  iati_identifier_is_notreg =="TRUE",
-                                            stringr::str_sub(iati_identifier_reg_ops,
-                                                             start =   sep + 1 ),
-                                           ""),
-    ## Extract Country Code
-    iati_identifier_ctr  =    stringr::str_sub(iati_identifier_ops ,
-                                                start =  0,
-                                                end =3),
-    ## Detect Operation type
-    iati_identifier_ops_type  =     dplyr::if_else(
-                                    stringr::str_length(iati_identifier_ops) > 3 ,
-                                    stringr::str_sub(iati_identifier_ops ,
-                                                     start =  4),
-                                    ""),
-    ## Get country name & unhcr region
-    iati_identifier_ctr_name  =   countrycode::countrycode(iati_identifier_ctr ,
-                                                           origin = "iso3c",
-                                                           destination = "country.name"),
-    iati_identifier_ctr_region  =   countrycode::countrycode(iati_identifier_ctr ,
-                                                        origin = "iso3c",
-                                                        destination = "unhcr.region") ) |>
-  
-  dplyr::left_join(iati::codeOrganisationType |> 
-                     dplyr::mutate(transorg_type = name) |> 
-                     dplyr::select(code, transorg_type) ,
-                   by= c("transaction_provider_org_type" = "code")) |> 
-  dplyr::left_join(iati::codeTransactionType |> 
-                     dplyr::mutate(TransactionType = name,
-                                   TransactionDescr = description) |> 
-                     dplyr::select(code, TransactionType,TransactionDescr  ) ,
-                   by= c("transaction_type_code" = "code")) |> 
-  dplyr::left_join(iati::codeAidTypeVocabulary |> 
-                     dplyr::mutate(aidvocabulary1 = name,
-                                   aidvocabularyDescr1 = description) |> 
-                     dplyr::select(code, aidvocabulary1,aidvocabularyDescr1  ) ,
-                   by= c("transaction_aid_type_vocabulary_1" = "code")) |> 
-  dplyr::left_join(iati::codeAidType |> 
-                     dplyr::mutate(AidType1 = name,
-                                   AidTypeDescr1 = description) |> 
-                     dplyr::select(code, AidType1,AidTypeDescr1  ) ,
-                   by= c("transaction_aid_type_code_1" = "code")) |> 
-  dplyr::left_join(iati::codeAidTypeVocabulary |> 
-                     dplyr::mutate(aidvocabulary2 = name,
-                                   aidvocabularyDescr2 = description) |> 
-                     dplyr::select(code, aidvocabulary2,aidvocabularyDescr2  ) ,
-                   by= c("transaction_aid_type_vocabulary_2" = "code"))|> 
-  dplyr::left_join(iati::codeAidType |> 
-                     dplyr::mutate(AidType2 = name,
-                                   AidTypeDescr2 = description) |> 
-                     dplyr::select(code, AidType2,AidTypeDescr2  ) ,
-                   by= c("transaction_aid_type_code_2" = "code")) |> 
-  dplyr::left_join(iati::dataActivity |> 
-                     dplyr::left_join(iati::codeOrganisationType |> 
-                                        dplyr::mutate(report_org_type = name) |> 
-                                        dplyr::select(code, report_org_type) ,
-                                      by= c("reporting_org_type" = "code")) |> 
-                     dplyr::left_join(iati::codeActivityScope |> 
-                                        dplyr::mutate(codeActivityScope = name) |> 
-                                        dplyr::select(code, codeActivityScope) ,
-                                      by= c("activity_scope_code" = "code"))  |> 
-                     dplyr::left_join(iati::codeCountry |> 
-                                        dplyr::mutate(recipientCountry = name) |> 
-                                        dplyr::select(code, recipientCountry) ,
-                                      by= c("recipient_country_code" = "code")) |> 
-                     dplyr::left_join(iati::codeRegion |> 
-                                        dplyr::mutate(recipientRegion = name) |> 
-                                        dplyr::select(code, recipientRegion) ,
-                                      by= c("recipient_region_code" = "code")) |> 
-                     dplyr::left_join(iati::codeActivityStatus |> 
-                                        dplyr::mutate(ActivityStatus = name) |> 
-                                        dplyr::select(code, ActivityStatus) ,
-                                      by= c("activity_status_code" = "code")) |> 
-                     dplyr::left_join(iati::codeCollaborationType |> 
-                                        dplyr::mutate(CollaborationType = name) |> 
-                                        dplyr::select(code, CollaborationType) ,
-                                      by= c("collaboration_type_code" = "code"))  ,
-                   by= c("iati_identifier")) 
+  dplyr::left_join(iati::dataActivity, by= c("iati_identifier")) 
 
 Transaction <- Transaction0 |> 
   ## Add filters 
-  dplyr::filter(iati_identifier_ctr_region == iati_identifier_ctr_region) |> 
-  dplyr::filter(lubridate::year(transaction_date) >= year) |>    
+  dplyr::filter(year >= as.integer(thisyear)) |> 
+  #dplyr::filter(year >= 2018) |>    
+  dplyr::filter(programmme_lab == as.character(thisprogrammme_lab)) |> 
   ## Add filters transaction type  transaction type 
  #  dplyr::filter(TransactionType == "Incoming Commitment") |>  
-  dplyr::filter(TransactionType %in% TransactionType) |>  
-  dplyr::mutate(
-    trans_year = lubridate::year(transaction_date),
-    month_trans = factor(format(transaction_date, "%b"), month.abb, ordered = TRUE)
-  ) |> 
-  dplyr::group_by(trans_year, transorg_type) |>
-  dplyr::summarise( transaction_value= sum(transaction_value, na.rm = TRUE)) |>
-  dplyr::mutate(transorg_type = as.character(transorg_type) )  |>
-  dplyr::mutate(transorg_type = as.factor(transorg_type) ) 
+  dplyr::filter(transaction_type_name %in% thistransaction_type_name) |>  
+ 
+  dplyr::group_by(year, reporting_org_type_name) |>
+  dplyr::summarise( transaction_value_USD = sum(transaction_value_USD , na.rm = TRUE)) |>
+  dplyr::mutate(reporting_org_type_name = as.character(reporting_org_type_name) )  |>
+  dplyr::mutate(reporting_org_type_name = as.factor(reporting_org_type_name) ) 
 
 p <- Transaction |> 
-#  dplyr::filter(transaction_value <= 1000000 & transaction_value > 1000) |> 
-  ggplot2::ggplot(ggplot2::aes(y = transaction_value,
-             x = trans_year,
-             fill = transorg_type)) +
+#  dplyr::filter(transaction_value_USD  <= 1000000 & transaction_value_USD  > 1000) |> 
+  ggplot2::ggplot(ggplot2::aes(y = transaction_value_USD ,
+             x =  year,
+             fill = reporting_org_type_name)) +
   ggplot2::geom_bar(alpha = 0.9, stat = "identity") +
   ggplot2::scale_fill_viridis_d(option = "inferno", na.value = "grey50") +
   ggplot2::scale_y_continuous(
@@ -178,8 +66,8 @@ p <- Transaction |>
  # ggplot2::facet_wrap(~ trans_year) +
   unhcrthemes::theme_unhcr()+
   ggplot2::labs(
-    title = paste0(TransactionType," received by UNHCR"),
-    subtitle = paste0("In ",  iati_identifier_ctr_region, " recorded since ", year,""),
+    title = paste0(thistransaction_type_name," received by UNHCR in USD"),
+    subtitle = paste0("In ",  thisprogrammme_lab, " recorded since ", thisyear,""),
     x = "",
     y = "",
     caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative)"

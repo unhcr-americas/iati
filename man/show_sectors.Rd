@@ -2,16 +2,42 @@
 % Please edit documentation in R/show_sectors.R
 \name{show_sectors}
 \alias{show_sectors}
-\title{Title}
+\title{show_sectors}
 \usage{
-show_sectors()
+show_sectors(
+  year,
+  programme_lab = NULL,
+  iati_identifier_ops = NULL,
+  ctr_name = NULL,
+  sector_vocabulary_name = "Reporting Organisation 2"
+)
+}
+\arguments{
+\item{year}{A numeric value corresponding to the first year of focus until the most recent year within the dataset.}
+
+\item{programme_lab}{A character vector corresponding to the name of the programme.}
+
+\item{iati_identifier_ops}{A character vector corresponding to the name of the operation.}
+
+\item{ctr_name}{A character vector corresponding to the name of the country.}
+
+\item{sector_vocabulary_name}{sector_vocabulary}
 }
 \value{
 a graph
 }
 \description{
-Description
+What are the most funded sectors per country (Expenditure evolution per impact /outcome area)?
 }
 \examples{
-show_sectors()
+
+knitr::kable( iati::dataSector |> 
+                dplyr::select( sector_vocabulary_name, sector_vocabulary_description) |>
+                dplyr::distinct())
+
+show_sectors(year = 2018, 
+             programme_lab = NULL, 
+             iati_identifier_ops = NULL, 
+             ctr_name = "Syria",
+            sector_vocabulary_name = "Reporting Organisation 2")
 }

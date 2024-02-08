@@ -21,7 +21,7 @@
 library(tidyverse)
 library(readr)
 library(sinew)
-library(docthis)
+#library(docthis)
  
 
 
@@ -179,6 +179,27 @@ budget <- rbind(
   readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_budget.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2023", "iati_budget.xlsx"), sheet = "Sheet1"))
 
+
+budget$budget_type <- as.numeric(budget$budget_type)
+budget$budget_status <- as.numeric(budget$budget_status)
+
+budget <- budget |>
+  ## Adding look up table 
+  dplyr::left_join(iati::codeBudgetType |> 
+                     dplyr::mutate(budget_type_name = name,
+                                   budget_type_description = description) |> 
+                     dplyr::select(code, 
+                                   budget_type_name ,
+                                   budget_type_description) ,
+                   by= c("budget_type" = "code"))  |>
+  ## Adding look up table 
+  dplyr::left_join(iati::codeBudgetStatus |> 
+                     dplyr::mutate(budget_status_name = name,
+                                   budget_status_description = description) |> 
+                     dplyr::select(code, 
+                                   budget_status_name ,
+                                   budget_status_description) ,
+                   by= c("budget_status" = "code")) 
  
 
 names(budget)
@@ -244,7 +265,7 @@ dataHumanitarian_scope <- humanitarian_scope
 save(dataHumanitarian_scope, file =  "data/dataHumanitarian_scope.RData")
 # Note: significantly better compression could be obtained
 #by using R CMD build --resave-data
-tools::resaveRdaFiles(here::here("data","dataHumanitarian_scopen.RData"),compress="bzip2")
+tools::resaveRdaFiles(here::here("data","dataHumanitarian_scope.RData"),compress="bzip2")
 
 ## iati_location ##########
 location <- rbind( 
@@ -281,6 +302,25 @@ str(participating_org)
 
 participating_org$participating_org_type <- as.numeric(participating_org$participating_org_type )
 participating_org$participating_org_role  <- as.numeric(participating_org$participating_org_role )
+
+
+participating_org <- participating_org |>
+  ## Adding look up table 
+  dplyr::left_join(iati::codeOrganisationType |> 
+                     dplyr::mutate(participating_org_type_name = name,
+                                   participating_org_type_description = description) |> 
+                     dplyr::select(code, 
+                                   participating_org_type_name ,
+                                   participating_org_type_description) ,
+                   by= c("participating_org_type" = "code")) |>
+  ## Adding look up table 
+  dplyr::left_join(iati::codeOrganisationRole |> 
+                     dplyr::mutate(participating_org_role_name = name,
+                                   participating_org_role_description = description) |> 
+                     dplyr::select(code, 
+                                   participating_org_role_name ,
+                                   participating_org_role_description) ,
+                   by= c("participating_org_role" = "code")) 
 
 sinew::makeOxygen(participating_org, add_fields = "source")
 dataParticipating_org <- participating_org
@@ -319,6 +359,28 @@ result <- rbind(
   readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_result.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2023", "iati_result.xlsx"), sheet = "Sheet1"))
 
+
+result$result_type <- as.numeric(result$result_type )
+result$result_indicator_measure <- as.numeric(result$result_indicator_measure)
+
+result <- result |>
+  ## Adding look up table 
+  dplyr::left_join(iati::codeResultType |> 
+                     dplyr::mutate(result_type_name = name,
+                                   result_type_description = description) |> 
+                     dplyr::select(code, 
+                                   result_type_name ,
+                                   result_type_description) ,
+                   by= c("result_type" = "code")) |>
+  ## Adding look up table 
+  dplyr::left_join(iati::codeIndicatorMeasure |> 
+                     dplyr::mutate(indicator_measure_name = name,
+                                   indicator_measure_description = description) |> 
+                     dplyr::select(code, 
+                                   indicator_measure_name ,
+                                   indicator_measure_description) ,
+                   by= c("result_indicator_measure" = "code")) 
+
 names(result)
 sinew::makeOxygen(result, add_fields = "source")
 dataResult <- result
@@ -339,6 +401,19 @@ sector <- rbind(
   readxl::read_excel( here::here("data-raw/unhcr_2021", "iati_sector.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2022", "iati_sector.xlsx"), sheet = "Sheet1"),
   readxl::read_excel( here::here("data-raw/unhcr_2023", "iati_sector.xlsx"), sheet = "Sheet1"))
+
+sector$sector_vocabulary <- as.numeric(sector$sector_vocabulary)
+
+sector <- sector |>
+  ## Adding look up table 
+  dplyr::left_join(iati::codeSectorVocabulary |> 
+                     dplyr::mutate(sector_vocabulary_name = name,
+                                   sector_vocabulary_description = description) |> 
+                     dplyr::select(code, 
+                                   sector_vocabulary_name ,
+                                   sector_vocabulary_description) ,
+                   by= c("sector_vocabulary" = "code"))
+
 
 names(sector)
 sinew::makeOxygen(sector, add_fields = "source")
@@ -441,6 +516,13 @@ tools::resaveRdaFiles(here::here("data","dataTransaction.RData"),compress="xz")
 # codeActivityDateType <- ActivityDateType
 # save(codeActivityDateType, file =  "data/codeActivityDateType.RData")
 # 
+
+# codeBudgetType <- readr::read_csv("data-raw/code/BudgetType.csv") 
+# sinew::makeOxygen(codeBudgetType, add_fields = "source") 
+# save(codeBudgetType, file =  "data/codeBudgetType.RData")
+# codeBudgetStatus <- readr::read_csv("data-raw/code/BudgetStatus.csv")  
+# sinew::makeOxygen(codeBudgetStatus, add_fields = "source")
+# save(codeBudgetStatus, file =  "data/codeBudgetStatus.RData")
 # 
 # load("data/codeActivityScope.RData")
 # codeActivityScope <- ActivityScope

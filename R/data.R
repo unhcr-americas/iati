@@ -133,6 +133,8 @@
 #'   \item{\code{result_indicator_target_value_1}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{result_indicator_target_dimension_2}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{result_indicator_target_value_2}}{character COLUMN_DESCRIPTION} 
+#'   \item{\code{result_type_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{result_type_description}}{character COLUMN_DESCRIPTION} 
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
@@ -153,6 +155,8 @@
 #'   \item{\code{sector_code}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{sector_pct}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{sector_desc}}{character COLUMN_DESCRIPTION} 
+#'   \item{\code{sector_vocabulary_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{sector_vocabulary_description}}{character COLUMN_DESCRIPTION} 
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
@@ -309,6 +313,10 @@
 #'   \item{\code{participating_org_role}}{double An IATI code describing the organisation’s role in the activity (donor, agency, etc.). see codeOrganisationRole}
 #'   \item{\code{participating_org_activity_id}}{logical A valid activity identifier published by the participating organisation which points to the activity that it has published to IATI that describes its role in this activity.}
 #'   \item{\code{participating_org_crs_channel_code}}{logical Under CRS++ Reporting Directives this code identifies the implementing agency. Codes ending in ‘00’ are generic and are similar to the OrganisationType code.} 
+#'   \item{\code{participating_org_type_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{participating_org_type_description}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{participating_org_role_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{participating_org_role_description}}{character COLUMN_DESCRIPTION} 
 #'}
 #' @source \url{https://iatistandard.org/en/iati-standard/203/}
 #' @examples
@@ -339,7 +347,34 @@
 #### All code list doc ############
 
  
+#' @title codeBudgetType
+#' @description This is a Core codelist.
+#' @format A data frame with 2 rows and 6 variables:
+#' \describe{
+#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
+#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
+#'   \item{\code{status}}{character COLUMN_DESCRIPTION} 
+#'}
+#' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/budgettype/}
+"codeBudgetType"
 
+
+#' @title codeBudgetStatus
+#' @description Code to denote if the described budget is binding. This is a Core codelist.
+#' @format A data frame with 2 rows and 6 variables:
+#' \describe{
+#'   \item{\code{code}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{description}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{category}}{logical COLUMN_DESCRIPTION}
+#'   \item{\code{url}}{logical COLUMN_DESCRIPTION}
+#'   \item{\code{status}}{character COLUMN_DESCRIPTION} 
+#'}
+#' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/budgetstatus/}
+"codeBudgetStatus"
 
 
 #' @title codeCollaborationType

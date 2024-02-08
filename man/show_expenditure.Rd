@@ -4,14 +4,31 @@
 \alias{show_expenditure}
 \title{Title}
 \usage{
-show_expenditure()
+show_expenditure(
+  year,
+  programme_lab = NULL,
+  iati_identifier_ops = NULL,
+  ctr_name = NULL
+)
+}
+\arguments{
+\item{year}{A numeric value corresponding to the first year of focus until the most recent year within the dataset.}
+
+\item{programme_lab}{A character vector corresponding to the name of the programme.}
+
+\item{iati_identifier_ops}{A character vector corresponding to the name of the operation.}
+
+\item{ctr_name}{A character vector corresponding to the name of the country.}
 }
 \value{
 a graph
 }
 \description{
-Description
+How much expenditures compare to the initial budget (weighted by # PoCs / GPP in the country)?
 }
 \examples{
-show_expenditure()
+show_expenditure(year = 2018, 
+             programme_lab = NULL, 
+             iati_identifier_ops = NULL, 
+             ctr_name = "Brazil")
 }

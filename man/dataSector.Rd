@@ -13,6 +13,8 @@ A data frame with 23793 rows and 6 variables:
   \item{\code{sector_code}}{character COLUMN_DESCRIPTION}
   \item{\code{sector_pct}}{character COLUMN_DESCRIPTION}
   \item{\code{sector_desc}}{character COLUMN_DESCRIPTION} 
+  \item{\code{sector_vocabulary_name}}{character COLUMN_DESCRIPTION}
+  \item{\code{sector_vocabulary_description}}{character COLUMN_DESCRIPTION} 
 }
 }
 \source{

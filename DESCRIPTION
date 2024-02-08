@@ -16,14 +16,17 @@ BugReports: https://github.com/unhcr-americas/iati/issues
 Imports: 
     dplyr,
     ggplot2,
+    glue,
+    knitr,
     magrittr,
     scales,
     showtext,
+    stringr,
     sysfonts,
     systemfonts,
+    tidyr,
     unhcrthemes
 Suggests: 
-    knitr,
     rmarkdown,
     testthat
 VignetteBuilder: 

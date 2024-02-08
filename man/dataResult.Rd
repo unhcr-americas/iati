@@ -31,6 +31,8 @@ A data frame with 26667 rows and 24 variables:
   \item{\code{result_indicator_target_value_1}}{character COLUMN_DESCRIPTION}
   \item{\code{result_indicator_target_dimension_2}}{character COLUMN_DESCRIPTION}
   \item{\code{result_indicator_target_value_2}}{character COLUMN_DESCRIPTION} 
+  \item{\code{result_type_name}}{character COLUMN_DESCRIPTION}
+  \item{\code{result_type_description}}{character COLUMN_DESCRIPTION} 
 }
 }
 \source{

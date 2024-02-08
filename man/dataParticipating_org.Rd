@@ -14,6 +14,10 @@ A data frame with 13990 rows and 7 variables:
   \item{\code{participating_org_role}}{double An IATI code describing the organisation’s role in the activity (donor, agency, etc.). see codeOrganisationRole}
   \item{\code{participating_org_activity_id}}{logical A valid activity identifier published by the participating organisation which points to the activity that it has published to IATI that describes its role in this activity.}
   \item{\code{participating_org_crs_channel_code}}{logical Under CRS++ Reporting Directives this code identifies the implementing agency. Codes ending in ‘00’ are generic and are similar to the OrganisationType code.} 
+  \item{\code{participating_org_type_name}}{character COLUMN_DESCRIPTION}
+  \item{\code{participating_org_type_description}}{character COLUMN_DESCRIPTION}
+  \item{\code{participating_org_role_name}}{character COLUMN_DESCRIPTION}
+  \item{\code{participating_org_role_description}}{character COLUMN_DESCRIPTION} 
 }
 }
 \source{

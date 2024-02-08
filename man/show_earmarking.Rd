@@ -4,14 +4,31 @@
 \alias{show_earmarking}
 \title{Title}
 \usage{
-show_earmarking()
+show_earmarking(
+  year,
+  programme_lab = NULL,
+  iati_identifier_ops = NULL,
+  ctr_name = NULL
+)
+}
+\arguments{
+\item{year}{A numeric value corresponding to the first year of focus until the most recent year within the dataset.}
+
+\item{programme_lab}{A character vector corresponding to the name of the programme.}
+
+\item{iati_identifier_ops}{A character vector corresponding to the name of the operation.}
+
+\item{ctr_name}{A character vector corresponding to the name of the country.}
 }
 \value{
 a graph
 }
 \description{
-Description
+What’s the breakdown of Earmarking Type (Un-earmarked, Tightly earmarked, etc.) from Donor Funds by Year?
 }
 \examples{
-show_earmarking()
+show_earmarking(year = 2018, 
+             programme_lab = NULL, 
+             iati_identifier_ops = NULL, 
+             ctr_name = "Brazil")
 }

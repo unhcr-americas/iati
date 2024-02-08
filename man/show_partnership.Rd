@@ -2,16 +2,31 @@
 % Please edit documentation in R/show_partnership.R
 \name{show_partnership}
 \alias{show_partnership}
-\title{Title}
+\title{show_partnership}
 \usage{
-show_partnership()
+show_partnership(
+  year,
+  programme_lab = NULL,
+  iati_identifier_ops = NULL,
+  ctr_name = NULL
+)
+}
+\arguments{
+\item{year}{A numeric value corresponding to the year to be displayed}
+
+\item{programme_lab}{A character vector corresponding to the name of the programme.}
+
+\item{iati_identifier_ops}{A character vector corresponding to the name of the operation.}
+
+\item{ctr_name}{A character vector corresponding to the name of the country.}
 }
 \value{
 a graph
 }
 \description{
-Description
+What’s the level of partnership between organisations when implementing projects?
 }
 \examples{
-show_partnership()
+show_partnership(year = 2022,
+           ctr_name = "Brazil" ) 
 }

@@ -6,13 +6,23 @@
 \alias{iati-package}
 \title{iati: UNHCR IATI Data Crunching}
 \description{
-This is a data package with all frame organised and reshapped for easy consumptions in R Please see https://reporting.unhcr.org/iati
+This package includes UNHCR IATI data organised in tabular format together with a chat library.
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://unhcr-americas.github.io/iati/docs/}
   \item Report bugs at \url{https://github.com/unhcr-americas/iati/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Edouard Legoupil \email{legoupil@unhcr.org}
+
+Authors:
+\itemize{
+  \item Matheus Soldi Hardt \email{matheus@unhcr.org}
+  \item Hisham Galal \email{galalh@unhcr.org}
 }
 
 }

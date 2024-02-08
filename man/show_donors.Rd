@@ -2,38 +2,54 @@
 % Please edit documentation in R/show_donors.R
 \name{show_donors}
 \alias{show_donors}
-\title{Ploting Donors}
+\title{show_donors}
 \usage{
 show_donors(
-  thisyear,
-  thisprogrammme_lab,
-  thistransaction_type_name = "Incoming Commitment"
+  year,
+  programme_lab = NULL,
+  iati_identifier_ops = NULL,
+  ctr_name = NULL,
+  transaction_type_name = "Incoming Commitment"
 )
 }
 \arguments{
-\item{thisyear}{year to select starting from 2016 - could be one year or a list}
+\item{year}{year to select starting from 2016 - could be one year or a list}
 
-\item{thisprogrammme_lab}{programme_lab}
+\item{programme_lab}{A character vector corresponding to the name of the programme.}
 
-\item{thistransaction_type_name}{Transaction type}
+\item{iati_identifier_ops}{A character vector corresponding to the name of the operation.}
+
+\item{ctr_name}{A character vector corresponding to the name of the country.}
+
+\item{transaction_type_name}{Transaction type - default is "Incoming Commitment" ,
+can also be   "Disbursement", or "Expenditure"}
 }
 \value{
 a graph
 }
 \description{
-Ploting Donors
+Who are the main donors by country in terms of number of projects and/or total budget?
 }
 \examples{
 
 knitr::kable( codeTransactionType |> dplyr::select(name,  description) )
 
-show_donors(thisyear = 2018,
-           thisprogrammme_lab = "The Americas",
-           thistransaction_type_name = "Incoming Commitment" )
+show_donors(year = 2018,
+           programme_lab = "The Americas",
+           transaction_type_name = "Incoming Commitment" )
+
+show_donors(year = 2018,
+           ctr_name = "Brazil",
+           transaction_type_name = "Incoming Commitment" )
 
 
-show_donors(thisyear = 2018,
-           thisprogrammme_lab = "The Americas",
-           thistransaction_type_name = "Disbursement" )
+show_donors(year = 2018,
+           programme_lab = "The Americas",
+           transaction_type_name = "Disbursement" )
+
+
+show_donors(year = 2018,
+           programme_lab = "The Americas",
+           transaction_type_name = "Expenditure" )
 
 }

@@ -89,6 +89,18 @@ If the reporting organisation plays a role in the activity it should be repeated
   <dt><code>participating_org_crs_channel_code</code></dt>
 <dd><p>logical Under CRS++ Reporting Directives this code identifies the implementing agency. Codes ending in ‘00’ are generic and are similar to the OrganisationType code.</p></dd>
  
+  <dt><code>participating_org_type_name</code></dt>
+<dd><p>character COLUMN_DESCRIPTION</p></dd>
+
+  <dt><code>participating_org_type_description</code></dt>
+<dd><p>character COLUMN_DESCRIPTION</p></dd>
+
+  <dt><code>participating_org_role_name</code></dt>
+<dd><p>character COLUMN_DESCRIPTION</p></dd>
+
+  <dt><code>participating_org_role_description</code></dt>
+<dd><p>character COLUMN_DESCRIPTION</p></dd>
+ 
 
 </dl></div>
     <div class="section level2">
@@ -103,18 +115,18 @@ If the reporting organisation plays a role in the activity it should be repeated
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |iati_identifier   |participating_org_eng                                 |participating_org_ref | participating_org_type| participating_org_role|participating_org_activity_id |participating_org_crs_channel_code |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |:-----------------|:-----------------------------------------------------|:---------------------|----------------------:|----------------------:|:-----------------------------|:----------------------------------|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |United Nations High Commissioner for Refugees (UNHCR) |XM-DAC-41121          |                     40|                      4|NA                            |NA                                 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |Australia for UNHCR                                   |NA                    |                     22|                      1|NA                            |NA                                 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |España con ACNUR                                      |NA                    |                     22|                      1|NA                            |NA                                 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |Japan for UNHCR                                       |NA                    |                     22|                      1|NA                            |NA                                 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |Sweden for UNHCR                                      |NA                    |                     22|                      1|NA                            |NA                                 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |UNO-Flüchtlingshilfe                                  |NA                    |                     22|                      1|NA                            |NA                                 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |USA for UNHCR                                         |NA                    |                     22|                      1|NA                            |NA                                 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |Government of Kuwait                                  |NA                    |                     10|                      1|NA                            |NA                                 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |Government of Portugal                                |NA                    |                     10|                      1|NA                            |NA                                 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |Government of France                                  |NA                    |                     10|                      1|NA                            |NA                                 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |iati_identifier   |participating_org_eng                                 |participating_org_ref | participating_org_type| participating_org_role|participating_org_activity_id |participating_org_crs_channel_code |participating_org_type_name |participating_org_type_description |participating_org_role_name |participating_org_role_description                                         |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:-----------------|:-----------------------------------------------------|:---------------------|----------------------:|----------------------:|:-----------------------------|:----------------------------------|:---------------------------|:----------------------------------|:---------------------------|:--------------------------------------------------------------------------|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |United Nations High Commissioner for Refugees (UNHCR) |XM-DAC-41121          |                     40|                      4|NA                            |NA                                 |Multilateral                |NA                                 |Implementing                |The organisation that physically carries out the activity or intervention. |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |Australia for UNHCR                                   |NA                    |                     22|                      1|NA                            |NA                                 |National NGO                |NA                                 |Funding                     |The government or organisation which provides funds to the activity.       |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |España con ACNUR                                      |NA                    |                     22|                      1|NA                            |NA                                 |National NGO                |NA                                 |Funding                     |The government or organisation which provides funds to the activity.       |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |Japan for UNHCR                                       |NA                    |                     22|                      1|NA                            |NA                                 |National NGO                |NA                                 |Funding                     |The government or organisation which provides funds to the activity.       |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |Sweden for UNHCR                                      |NA                    |                     22|                      1|NA                            |NA                                 |National NGO                |NA                                 |Funding                     |The government or organisation which provides funds to the activity.       |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |UNO-Flüchtlingshilfe                                  |NA                    |                     22|                      1|NA                            |NA                                 |National NGO                |NA                                 |Funding                     |The government or organisation which provides funds to the activity.       |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |USA for UNHCR                                         |NA                    |                     22|                      1|NA                            |NA                                 |National NGO                |NA                                 |Funding                     |The government or organisation which provides funds to the activity.       |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |Government of Kuwait                                  |NA                    |                     10|                      1|NA                            |NA                                 |Government                  |NA                                 |Funding                     |The government or organisation which provides funds to the activity.       |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |Government of Portugal                                |NA                    |                     10|                      1|NA                            |NA                                 |Government                  |NA                                 |Funding                     |The government or organisation which provides funds to the activity.       |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016 |Government of France                                  |NA                    |                     10|                      1|NA                            |NA                                 |Government                  |NA                                 |Funding                     |The government or organisation which provides funds to the activity.       |</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

@@ -2,16 +2,38 @@
 % Please edit documentation in R/show_indicators.R
 \name{show_indicators}
 \alias{show_indicators}
-\title{Title}
+\title{show_indicators}
 \usage{
-show_indicators()
+show_indicators(
+  year,
+  programme_lab = NULL,
+  iati_identifier_ops = NULL,
+  ctr_name = NULL,
+  result_type_name = "Outcome"
+)
+}
+\arguments{
+\item{year}{A numeric value corresponding to the first year of focus until the most recent year within the dataset.}
+
+\item{programme_lab}{A character vector corresponding to the name of the programme.}
+
+\item{iati_identifier_ops}{A character vector corresponding to the name of the operation.}
+
+\item{ctr_name}{A character vector corresponding to the name of the country.}
+
+\item{result_type_name}{either  "Impact"  "Outcome" "Output" - default is  "Outcome"}
 }
 \value{
 a graph
 }
 \description{
-Description
+How much indicators evolve over time against thresholds?
 }
 \examples{
-show_indicators()
+show_indicators(year = 2022, 
+             programme_lab = NULL, 
+             iati_identifier_ops = NULL, 
+             ctr_name = "Brazil",
+              result_type_name = "Outcome"
+             )
 }

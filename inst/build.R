@@ -10,12 +10,22 @@ iati_file <- file_temp()
 # https://reporting.unhcr.org/files/IATI/UNHCR-Activities-2020.xml
 # https://reporting.unhcr.org/files/IATI/UNHCR-Activities-2023.xml
 
-download.file('https://reporting.unhcr.org/files/IATI/UNHCR-Activities-2022.xml', 
+#' list_iati <- c("http://reporting.unhcr.org/files/IATI/UNHCR-Activities-2016.xml",
+#'                "http://reporting.unhcr.org/files/IATI/UNHCR-Activities-2017.xml",
+#'                "http://reporting.unhcr.org/files/IATI/UNHCR-Activities-2018.xml",
+#'                "http://reporting.unhcr.org/files/IATI/UNHCR-Activities-2019.xml",
+#'                "http://reporting.unhcr.org/files/IATI/UNHCR-Activities-2020.xml",
+#'                "http://reporting.unhcr.org/files/IATI/UNHCR-Activities-2021.xml",
+#'                "http://reporting.unhcr.org/files/IATI/UNHCR-Activities-2022.xml",
+#'                "http://reporting.unhcr.org/files/IATI/UNHCR-Activities-2023.xml"
+#'                )
+
+download.file('https://reporting.unhcr.org/files/IATI/UNHCR-Activities-2021.xml', 
               iati_file, 
               quiet = TRUE)
 
 # create folder -----------------------------------------------------------
-folder_name = "data-raw-2022"
+folder_name = "data-raw-2021"
 dir_create(folder_name) 
 
 # list tasks --------------------------------------------------------------

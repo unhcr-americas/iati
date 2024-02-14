@@ -21,6 +21,7 @@ Imports:
     magrittr,
     scales,
     showtext,
+    stats,
     stringr,
     sysfonts,
     systemfonts,

@@ -5,17 +5,7 @@
 \alias{dataBudget}
 \title{dataBudget}
 \format{
-A data frame with 1194 rows and 8 variables:
-\describe{
-  \item{\code{iati_identifier}}{character COLUMN_DESCRIPTION}
-  \item{\code{budget_type}}{character COLUMN_DESCRIPTION}
-  \item{\code{budget_status}}{character COLUMN_DESCRIPTION}
-  \item{\code{budget_period_start}}{character COLUMN_DESCRIPTION}
-  \item{\code{budget_period_end}}{character COLUMN_DESCRIPTION}
-  \item{\code{budget_currency}}{character COLUMN_DESCRIPTION}
-  \item{\code{budget_value_date}}{character COLUMN_DESCRIPTION}
-  \item{\code{budget_value}}{character COLUMN_DESCRIPTION} 
-}
+
 }
 \source{
 \url{https://iatistandard.org/en/iati-standard/203/}

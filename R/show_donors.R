@@ -2,7 +2,7 @@
 
 #' show_donors
 #'
-#' @description Who are the main donors by country in terms of number of projects and/or total budget? 
+#' @description Who are the main donors by country in terms of transaction? 
 #' 
 #' @param year year to select starting from 2016 - could be one year or a list
 #' @param programme_lab A character vector corresponding to the name of the programme.
@@ -21,9 +21,11 @@
 #' @return  a graph
 #' @examples
 #'
-#' knitr::kable( codeTransactionType |> dplyr::select(name,  description) )
+#' knitr::kable(iati::dataTransaction |>
+#'                 dplyr::select( transaction_type_name, transaction_type_description) |>
+#'                 dplyr::distinct() )
 #'
-#' show_donors(year = 2018,
+#' show_donors(year = 2022,
 #'            programme_lab = "The Americas",
 #'            transaction_type_name = "Incoming Commitment" )
 #'
@@ -46,6 +48,8 @@ show_donors <- function(year,
                         iati_identifier_ops = NULL, 
                         ctr_name = NULL,
                         transaction_type_name = "Incoming Commitment"  ) {
+  
+  ## Check year is after or equal 2016
   
   
   # Check if only one argument is passed 

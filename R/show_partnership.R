@@ -2,7 +2,7 @@
 
 #' show_partnership
 #' 
-#' @description What’s the level of partnership between organisations when implementing projects? 
+#' @description How organisations partner together? 
 #'
 #' @param year A numeric value corresponding to the year to be displayed
 #' @param programme_lab A character vector corresponding to the name of the programme.
@@ -63,7 +63,13 @@ show_partnership <- function( year,
                   participating_org_type_name, 
                   participating_org_role_name) |>
      tidyr::pivot_wider(names_from = participating_org_role_name, 
-              values_from = participating_org_eng )
+              values_from = participating_org_eng ,
+              values_fn = list) |>
+    dplyr::select( - Accountable)  |>
+    dplyr::rename(Organisation =participating_org_type_name) 
+  ## replace null values...
+  df2[df2 == 'NULL'] <- as.list(" ")
+  
   
   df3 <- df    |>
     dplyr::select(participating_org_eng, 

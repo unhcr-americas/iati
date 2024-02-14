@@ -1,0 +1,1133 @@
+---
+title: "Data Reshape"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r development, include=FALSE}
+library(testthat)
+```
+
+```{r development-load}
+# Load already included functions if relevant
+pkgload::load_all(export_all = FALSE)
+```
+ 
+ 
+# XML extraction
+
+## xml_attr_by_name
+    
+```{r function-xml_attr_by_name}
+#' xml_attr_by_name
+#' 
+#' This function is designed to extract an attribute value from a specific XML node.
+#' 
+#' @param i An XML object
+#' @param parent_name The name of the parent node.
+#' @param node_name The name of the target node.
+#' @param attr_name  The name of the attribute to extract.
+#' @param attr_position  An optional argument specifying the position of the desired attribute
+#'  (default is 1).
+#' 
+#' @import xml2
+#' @import rlang
+#' @import dplyr
+#' 
+#' @return string
+#' 
+#' @noRd
+xml_attr_by_name <-
+  function(i, parent_name, node_name, attr_name, attr_position = 1L) {
+    # First, it finds all nodes with the name specified by parent_name using xml_find_all.
+    i =  i |> 
+      xml_find_all(parent_name)
+    
+    # Then, it identifies the position of the desired node_name within those nodes.
+    x <- tryCatch(
+      i[i |>
+          xml_name() |>
+          (\(x) which(x == node_name))() |> 
+          nth(attr_position)] |>
+        # Next, it retrieves the attribute value specified by attr_name from that node.
+        xml_attr(attr_name),
+    
+      error = function(e) {
+        NA_character_
+      }
+    )
+      # If an error occurs during this process (e.g., if the node or attribute is not found), it returns NA_character_.
+    if (rlang::is_empty(x) == TRUE) {
+      x <- NA_character_
+    } else {
+      x
+    }
+    return(x)
+  }
+```
+  
+```{r example-xml_attr_by_name}
+#xml_attr_by_name()
+```
+  
+```{r tests-xml_attr_by_name}
+test_that("xml_attr_by_name works", {
+  expect_true(inherits(xml_attr_by_name, "function")) 
+})
+```
+  
+
+## xml_child_attr_by_name
+    
+```{r function-xml_child_attr_by_name}
+#' xml_child_attr_by_name
+#' 
+#' Extracts an attribute value from a child node within the XML.
+#' 
+#' @param i An XML object 
+#' @param node_name The name of the target node.
+#' @param attr_name  The name of the attribute to extract.
+#' @param attr_position  An optional argument specifying the position of the desired attribute
+#'  (default is 1).
+#' 
+#' @import xml2
+#' @import rlang
+#' @import dplyr
+#' 
+#' @return string
+#' 
+#' @noRd
+xml_child_attr_by_name <-   function(i, node_name, attr_name, attr_position = 1L) {
+    x <- tryCatch(
+      i |> 
+        # Find all child nodes with the specified node_name.
+        xml_find_all(node_name) |> 
+        # Retrieve the attribute value specified by attr_name.
+        xml_attr(attr_name) |> 
+        dplyr::nth(attr_position),
+      error = function(e) {
+        NA_character_
+      }
+    )
+    
+      # Handle any errors (return NA_character_ if necessary).
+    if (rlang::is_empty(x) == TRUE) {
+      x <- NA_character_
+    } else {
+      x
+    }
+    return(x)
+  }
+```
+  
+```{r example-xml_child_attr_by_name}
+#xml_child_attr_by_name()
+```
+  
+```{r tests-xml_child_attr_by_name}
+test_that("xml_child_attr_by_name works", {
+  expect_true(inherits(xml_child_attr_by_name, "function")) 
+})
+```
+
+## xml_text_by_name
+    
+```{r function-xml_text_by_name}
+#' xml_text_by_name
+#' 
+#'  extracts the text content from a specific XML node.
+#'  
+#' @param i An XML object
+#' @param parent_name The name of the parent node.
+#' @param node_name The name of the target node.
+#' @param attr_name  The name of the attribute to extract.
+#' @param attr_position  An optional argument specifying the position of the desired attribute
+#'     (default is 1).
+#' 
+#' @import xml2
+#' @import rlang
+#' @import dplyr
+#' 
+#' @return string
+#' 
+#' @noRd
+xml_text_by_name <- function(i, parent_name, node_name, attr_position = 1L) {
+    i =  i |> 
+      xml_find_all(parent_name)
+    
+    x <- tryCatch(
+      i[i |> xml_name() |> (\(x) which(x == node_name))()|> 
+          nth(attr_position)] |> xml_text(),
+      error = function(e) {
+        NA_character_
+      }
+    )
+    
+    if (rlang::is_empty(x) == TRUE) {
+      x <- NA_character_
+    } else {
+      x
+    }
+    return(x)
+  }
+
+```
+  
+```{r example-xml_text_by_name}
+#xml_text_by_name()
+```
+  
+```{r tests-xml_text_by_name}
+test_that("xml_text_by_name works", {
+  expect_true(inherits(xml_text_by_name, "function")) 
+})
+```
+
+
+## xml_text_by_lang
+    
+```{r function-xml_text_by_lang}
+#' xml_text_by_lang
+#' 
+#' @param i An XML object
+#' @param parent_name The name of the parent node.
+#' @param set_xml_name The name of the target node for language-specific content.
+#' @param language   The desired language.
+#' @param attr_position  An optional argument specifying the position of the desired attribute
+#'     (default is 1).
+#' 
+#' @import xml2
+#' @import rlang
+#' @import dplyr
+#' 
+#' @return string
+#' 
+#' @noRd
+xml_text_by_lang <- function(i, 
+                             parent_name, 
+                             set_xml_name, 
+                             language, 
+                             attr_position = 1L) {
+    # Find all nodes with the specified parent_name.
+    i =  i |> 
+      xml_find_all(parent_name)
+    
+    # Identify the position of the desired node_name.
+    x <- tryCatch(
+      (i |> xml_find_all(set_xml_name))[grep(language, i |>
+                                               xml_contents() |>
+                                               xml_attrs())|> 
+                                          nth(attr_position)] |> 
+        # Retrieve the text content from that node.
+        xml_text(),
+      error = function(e) {
+        NA_character_
+      }
+    )
+    # Handle errors (return NA_character_ if needed).
+    if (rlang::is_empty(x) == TRUE) {
+      x <- NA_character_
+    } else {
+      x
+    }
+    # Return the extracted text content.
+    return(x)
+  }
+```
+  
+```{r example-xml_text_by_lang}
+#xml_text_by_lang()
+```
+  
+```{r tests-xml_text_by_lang}
+test_that("xml_text_by_lang works", {
+  expect_true(inherits(xml_text_by_lang, "function")) 
+})
+```
+  
+
+# Content Extraction
+
+## iati_transaction
+    
+```{r function-iati_transaction}
+#' iati_transaction
+#' 
+#' 
+#' @param xml_iati xml_iati
+#' @param folder_name folder_name
+#' 
+#' @import purrr
+#' @import xml2
+#' @import rlang
+#' @import dplyr
+#' @import writexl
+#' 
+#' @return dataframe
+#' 
+#' @noRd
+iati_transaction <- function(xml_iati, folder_name) {
+# xml subset --------------------------------------------------------------
+
+notesets_location <- xml_iati %>% 
+  xml_find_all('.//iati-activity/transaction') |> 
+  map(xml_children)
+
+
+# extract data ------------------------------------------------------------
+df_transaction <- purrr::map_dfr(notesets_location, function(i) {
+  tibble(
+    iati_identifier = tryCatch(i |> xml_parent() |> xml_parent() |> xml_find_all("iati-identifier") |> xml_text(), error = function(e){ NA_character_}),
+    transaction_ref = tryCatch(i |> xml_parent() |> xml_attr("ref"), error = function(e){ NA_character_}),
+    transaction_humanitarian = tryCatch(i |> xml_parent() |> xml_attr("humanitarian"), error = function(e){ NA_character_}),
+    transaction_type_code = xml_attr_by_name(i, ".", "transaction-type", "code"),
+    transaction_date = xml_attr_by_name(i, ".", "transaction-date", "iso-date"),
+    transaction_value_currency = xml_attr_by_name(i, ".", "value", "currency"),
+    transaction_value_date = xml_attr_by_name(i, ".", "value", "value-date"),
+    transaction_value = xml_text_by_name(i, ".", "value"),
+    transaction_description = xml_text_by_name(i, ".", "description"),
+    transaction_provider_org_type = xml_attr_by_name(i, ".", "provider-org", "type"),
+    transaction_provider_org_ref = xml_attr_by_name(i, ".", "provider-org", "ref"),
+    transaction_provider_org = xml_text_by_name(i, ".", "provider-org"),
+    transaction_aid_type_code_1 = xml_attr_by_name(i, ".", "aid-type", "code", 1),
+    transaction_aid_type_vocabulary_1 = xml_attr_by_name(i, ".", "aid-type", "vocabulary", 1),
+    transaction_aid_type_code_2 = xml_attr_by_name(i, ".", "aid-type", "code", 2),
+    transaction_aid_type_vocabulary_2 = xml_attr_by_name(i, ".", "aid-type", "vocabulary", 2),
+    transaction_value_USD = xml_text_by_name(i, ".", "value-USD")
+    )
+  
+})
+
+
+# remove unwanted objects -------------------------------------------------
+rm(notesets_location)
+
+
+# write data --------------------------------------------------------------
+write_xlsx(
+  df_transaction,
+  paste0(folder_name, "/", "iati_transaction", ".xlsx")
+)
+
+df_transaction
+}
+```
+  
+```{r example-iati_transaction}
+#iati_transaction()
+```
+  
+```{r tests-iati_transaction}
+test_that("iati_transaction works", {
+  expect_true(inherits(iati_transaction, "function")) 
+})
+```
+  
+  
+## iati_sector
+    
+```{r function-iati_sector}
+#' iati_sector
+#' 
+#' @param xml_iati xml_iati
+#' @param folder_name folder_name
+#' 
+#' @import purrr
+#' @import xml2
+#' @import rlang
+#' @import dplyr
+#' @import writexl
+#' 
+#' @return dataframe
+#' 
+#' @noRd
+iati_sector <- function(xml_iati, folder_name) {
+# xml subset --------------------------------------------------------------
+
+notesets_sector <- xml_iati %>% 
+  xml_find_all('.//iati-activity/sector')
+
+
+# extract data ------------------------------------------------------------
+df_sector <- map_dfr(notesets_sector, function(i) {
+  tibble(
+    iati_identifier = tryCatch(i |> xml_parent() |> xml_find_all("iati-identifier") |> xml_text(), error = function(e){ NA_character_}),
+    sector_vocabulary = i |> xml_attr("vocabulary"),
+    sector_vocabulary_uri = i |> xml_attr("vocabulary-uri"),
+    sector_code = i |> xml_attr("code"),
+    sector_pct = i |> xml_attr("percentage"),
+    sector_desc = i |> xml_text()
+  )
+  
+})
+
+
+# remove unwanted objects -------------------------------------------------
+rm(notesets_sector)
+
+
+# write data --------------------------------------------------------------
+write_xlsx(
+  df_sector,
+  paste0(folder_name, "/", "iati_sector", ".xlsx")
+)
+
+df_sector
+}
+```
+  
+```{r example-iati_sector}
+#iati_sector()
+```
+  
+```{r tests-iati_sector}
+test_that("iati_sector works", {
+  expect_true(inherits(iati_sector, "function")) 
+})
+```
+  
+
+## iati_result
+    
+```{r function-iati_result}
+#' iati_result 
+#' 
+#' @param xml_iati xml_iati
+#' @param folder_name folder_name
+#' 
+#' @import purrr
+#' @import xml2
+#' @import rlang
+#' @import dplyr
+#' @import writexl
+#' 
+#' @return dataframe
+#' 
+#' @noRd
+iati_result <- function(xml_iati, folder_name) {
+# xml subset --------------------------------------------------------------
+
+notesets_indicator <- xml_iati %>% 
+  xml_find_all('.//iati-activity/result/indicator') |> 
+  map(xml_children)
+
+
+# extract data ------------------------------------------------------------
+df_result <- map_dfr(notesets_indicator, function(i) {
+  tibble(
+    iati_identifier = tryCatch(i|> xml_parent() |> xml_parent() |> xml_parent() |> xml_find_all("iati-identifier") |> xml_text(), error = function(e){ NA_character_}),
+    result_type = tryCatch(i |> xml_parent() |> xml_parent() |> xml_attr("type"), error = function(e){ NA_character_}),
+    result_aggregation_status = tryCatch(i |> xml_parent() |> xml_parent() |> xml_attr("aggregation-status"), error = function(e){ NA_character_}),
+    result_title = i |>  xml_parent() |>  xml_parent() |> xml_find_first("title") |> xml_text(),
+    result_desc = i |>  xml_parent() |>  xml_parent() |> xml_find_first("description") |> xml_text(),
+    result_indicator_measure = i |>  xml_parent() |> xml_attr("measure"),
+    result_indicator_title = xml_text_by_name(i, ".", "title"),
+    result_indicator_desc = xml_text_by_name(i, ".", "description"),
+    result_indicator_baseline_value = xml_attr_by_name(i, ".", "baseline", "value"),
+    result_indicator_baseline_year = xml_attr_by_name(i, ".", "baseline", "year"),
+    result_indicator_baseline_date = xml_attr_by_name(i, ".", "baseline", "iso-date"),
+    result_indicator_baseline_location_ref = xml_child_attr_by_name(i, "location", "ref"),
+    result_indicator_baseline_dimension_1 = xml_child_attr_by_name(i, "dimension", "name", 1),
+    result_indicator_baseline_dimension_value_1 = xml_child_attr_by_name(i, "dimension", "value", 1),
+    result_indicator_baseline_dimension_2 = xml_child_attr_by_name(i,"dimension", "name", 2),
+    result_indicator_baseline_dimension_value_2 = xml_child_attr_by_name(i, "dimension", "value", 2),
+    result_indicator_period_start = xml_attr_by_name(i, "period-start", "period-start", "iso-date"),
+    result_indicator_period_end = xml_attr_by_name(i, "period-end", "period-end", "iso-date"),
+    result_indicator_target_value = xml_attr_by_name(i, "target", "target", "value"),
+    result_indicator_target_location_ref = xml_attr_by_name(i, "target/location", "location", "ref"),
+    result_indicator_target_dimension_1 = xml_attr_by_name(i, "./target/dimension", "dimension", "name", 1),
+    result_indicator_target_value_1 = xml_attr_by_name(i, "./target/dimension", "dimension", "value", 1),
+    result_indicator_target_dimension_2 = xml_attr_by_name(i, "./target/dimension", "dimension", "name", 2),
+    result_indicator_target_value_2 = xml_attr_by_name(i, "./target/dimension", "dimension", "value", 2)
+  )
+  
+})
+
+
+# remove unwanted objects -------------------------------------------------
+rm(notesets_indicator)
+
+
+# write data --------------------------------------------------------------
+write_xlsx(
+  df_result,
+  paste0(folder_name, "/", "iati_result", ".xlsx")
+)
+
+df_result
+}
+```
+  
+```{r example-iati_result}
+#iati_result()
+```
+  
+```{r tests-iati_result}
+test_that("iati_result works", {
+  expect_true(inherits(iati_result, "function")) 
+})
+```
+  
+## iati_related_activity
+    
+```{r function-iati_related_activity}
+#' iati_related_activity
+#' 
+#' @param xml_iati xml_iati
+#' @param folder_name folder_name
+#' 
+#' @import purrr
+#' @import xml2
+#' @import rlang
+#' @import dplyr
+#' @import writexl
+#' 
+#' @return dataframe
+#' 
+#' @noRd
+iati_related_activity <-  function(xml_iati, folder_name) {
+# xml subset --------------------------------------------------------------
+
+notesets_related_activity <- xml_iati %>% 
+  xml_find_all('.//iati-activity/related-activity')
+
+
+# extract data ------------------------------------------------------------
+df_related_activity <- map_dfr(notesets_related_activity, function(i) {
+  tibble(
+    iati_identifier = tryCatch(i |> xml_parent() |> xml_find_all("iati-identifier") |> xml_text(), error = function(e){ NA_character_}),
+    related_activity_ref = xml_attr_by_name(i, ".", "related-activity", "ref"),
+    related_activity_type = xml_attr_by_name(i, ".", "related-activity", "type")
+  )
+  
+})
+
+
+# remove unwanted objects -------------------------------------------------
+rm(notesets_related_activity)
+
+
+# write data --------------------------------------------------------------
+write_xlsx(
+  df_related_activity,
+  paste0(folder_name, "/", "iati_related_activity", ".xlsx")
+)
+
+df_related_activity
+}
+```
+  
+```{r example-iati_related_activity}
+#iati_related_activity()
+```
+  
+```{r tests-iati_related_activity}
+test_that("iati_related_activity works", {
+  expect_true(inherits(iati_related_activity, "function")) 
+})
+```
+
+## iati_participating_org
+    
+```{r function-iati_participating_org}
+#' iati_participating_org
+#' 
+#' @param xml_iati xml_iati
+#' @param folder_name folder_name
+#' 
+#' @import purrr
+#' @import xml2
+#' @import rlang
+#' @import dplyr
+#' @import writexl
+#' 
+#' @return dataframe
+#' 
+#' @noRd
+iati_participating_org <- function(xml_iati, folder_name) {
+# xml subset --------------------------------------------------------------
+notesets_part_org <- xml_iati %>% 
+  xml_find_all('.//iati-activity/participating-org')
+
+
+# extract data ------------------------------------------------------------
+df_participating_org <- map_dfr(notesets_part_org, function(i) {
+  tibble(
+    iati_identifier = tryCatch(i |> xml_parent() |> xml_find_all("iati-identifier") |> xml_text(), error = function(e){ NA_character_}),
+    participating_org_eng = xml_text_by_name(i, 'narrative', "narrative", 1),
+    participating_org_ref =  i |> xml_attr("ref"),
+    participating_org_type = i |> xml_attr("type"),
+    participating_org_role = i |> xml_attr("role"),
+    participating_org_activity_id =  i |> xml_attr("activity-id"), 
+    participating_org_crs_channel_code =  i |> xml_attr("crs-channel-code")
+    )
+})
+
+
+# remove unwanted objects -------------------------------------------------
+rm(notesets_part_org)
+
+
+# write data --------------------------------------------------------------
+write_xlsx(
+  df_participating_org,
+  paste0(folder_name, "/", "iati_participating_org", ".xlsx")
+)
+
+df_participating_org
+}
+
+```
+  
+```{r example-iati_participating_org}
+#iati_participating_org()
+```
+  
+```{r tests-iati_participating_org}
+test_that("iati_participating_org works", {
+  expect_true(inherits(iati_participating_org, "function")) 
+})
+```
+
+## iati_location
+    
+```{r function-iati_location}
+#' iati_location
+#' 
+#' @param xml_iati xml_iati
+#' @param folder_name folder_name
+#' 
+#' @import purrr
+#' @import xml2
+#' @import rlang
+#' @import dplyr
+#' @import writexl
+#' 
+#' @return dataframe
+#' 
+#' @noRd
+iati_location <- function(xml_iati, folder_name) {
+# xml subset --------------------------------------------------------------
+notesets_location <- xml_iati %>% 
+  xml_find_all('.//iati-activity/location')
+
+
+# extract data ------------------------------------------------------------
+df_location <- map_dfr(notesets_location, function(i) {
+  tibble(
+    iati_identifier = tryCatch(i |> xml_parent() |> xml_find_all("iati-identifier") |> xml_text(), error = function(e){ NA_character_}),
+    location_ref = i |> xml_attr("ref"),
+    location_reach = xml_attr_by_name(i, ".//location-reach", "location-reach", "code"),
+    location_id_vocabulary = xml_attr_by_name(i, ".//location-id", "location-id", "vocabulary"),
+    location_id_code = xml_attr_by_name(i, ".//location-id", "location-id", "code"),
+    location_name = xml_text_by_name(i, ".//name", "name"),
+    location_activity_descr = xml_text_by_name(i, ".//activity-description", "activity-description"),
+    location_adm_vocabulary = xml_attr_by_name(i, ".//administrative", "administrative", "code"),
+    location_adm_level = xml_attr_by_name(i, ".//administrative", "administrative", "vocabulary"),
+    location_adm_code = xml_attr_by_name(i, ".//administrative", "administrative", "code"),
+    location_lat = str_split(xml_text_by_name(i, ".//point", "point"), " ")[[1]][1],
+    location_long = str_split(xml_text_by_name(i, ".//point", "point"), " ")[[1]][2],
+    location_exactness_code = xml_attr_by_name(i, ".//exactness", "exactness", "code"),
+    location_class_code = xml_attr_by_name(i, ".//location-class", "location-class", "code"),
+    location_feature_designation_code = xml_attr_by_name(i, ".//feature-designation", "feature-designation", "code")
+  )
+  
+})
+
+
+# remove unwanted objects -------------------------------------------------
+rm(notesets_location)
+
+
+# write data --------------------------------------------------------------
+write_xlsx(
+  df_location,
+  paste0(folder_name, "/", "iati_location", ".xlsx")
+)
+
+df_location
+}
+
+```
+  
+```{r example-iati_location}
+#iati_location()
+```
+  
+```{r tests-iati_location}
+test_that("iati_location works", {
+  expect_true(inherits(iati_location, "function")) 
+})
+```
+
+## iati_humanitarian_scope
+    
+```{r function-iati_humanitarian_scope}
+#' iati_humanitarian_scope
+#' 
+#' @param xml_iati xml_iati
+#' @param folder_name folder_name
+#' 
+#' @import purrr
+#' @import xml2
+#' @import rlang
+#' @import dplyr
+#' @import writexl
+#' 
+#' @return dataframe
+#' 
+#' @export
+iati_humanitarian_scope <- function(xml_iati, folder_name) {
+# xml subset --------------------------------------------------------------
+
+notesets_humanitarian_scope <- xml_iati %>% 
+  xml_find_all('.//iati-activity/humanitarian-scope')
+
+# extract data ------------------------------------------------------------
+df_humanitarian_scope <- map_dfr(notesets_humanitarian_scope, function(i) {
+  tibble(
+    iati_identifier = tryCatch(i |> xml_parent() |> xml_find_all("iati-identifier") |> xml_text(), error = function(e){ NA_character_}),
+    humanitarian_scope_type = i |> xml_attr("type"),
+    humanitarian_scope_vocabulary = i |> xml_attr("vocabulary"),
+    humanitarian_scope_vocabulary_uri = i |> xml_attr("vocabulary-uri"),
+    humanitarian_scope_code = i |> xml_attr("code"),
+    humanitarian_scope_pct = i |> xml_attr("percentage"),
+    humanitarian_scope_desc_eng = xml_text_by_lang(i, ".", 'narrative', "character\\(0\\)"),
+    humanitarian_scope_desc_fr = xml_text_by_lang(i, ".", 'narrative', "^fr")
+  )
+  
+})
+
+
+# remove unwanted objects -------------------------------------------------
+rm(notesets_humanitarian_scope)
+
+# write data --------------------------------------------------------------
+write_xlsx(
+  df_humanitarian_scope,
+  paste0(folder_name, "/", "iati_humanitarian_scope", ".xlsx")
+)
+
+df_humanitarian_scope
+}
+```
+  
+```{r example-iati_humanitarian_scope}
+#iati_humanitarian_scope()
+```
+  
+```{r tests-iati_humanitarian_scope}
+test_that("iati_humanitarian_scope works", {
+  expect_true(inherits(iati_humanitarian_scope, "function")) 
+})
+```
+  
+## iati_document_link
+    
+```{r function-iati_document_link}
+#' iati_document_link 
+#' 
+#' @param xml_iati xml_iati
+#' @param folder_name folder_name
+#' 
+#' @import purrr
+#' @import xml2
+#' @import rlang
+#' @import dplyr
+#' @import writexl
+#' 
+#' @return dataframe
+#' 
+#' @noRd
+iati_document_link <- function(xml_iati, folder_name) {
+# xml subset --------------------------------------------------------------
+notesets_document_link <- xml_iati %>% 
+  xml_find_all('.//iati-activity/document-link')
+
+
+# extract data ------------------------------------------------------------
+df_document_link <- map_dfr(notesets_document_link, function(i) {
+  tibble(
+    iati_identifier = tryCatch(i |> xml_parent() |> xml_find_all("iati-identifier") |> xml_text(), error = function(e){ NA_character_}),
+    document_url = xml_attr_by_name(i, ".", "document-link", "url"),
+    document_format = xml_attr_by_name(i, ".", "document-link", "format"),
+    document_title =  xml_text_by_name(i, "./title", "title"),
+    document_category_code = xml_attr_by_name(i, "./category", "category", "code"),
+    document_language_code = xml_attr_by_name(i, "./language", "language", "code"),
+    document_date = xml_attr_by_name(i, "./document-date", "document-date", "iso-date")
+  )
+  
+})
+
+# remove unwanted objects -------------------------------------------------
+rm(notesets_document_link)
+
+
+# write data --------------------------------------------------------------
+write_xlsx(
+  df_document_link,
+  paste0(folder_name, "/", "iati_document_link", ".xlsx")
+)
+
+df_document_link
+}
+```
+  
+```{r example-iati_document_link}
+#iati_document_link()
+```
+  
+```{r tests-iati_document_link}
+test_that("iati_document_link works", {
+  expect_true(inherits(iati_document_link, "function")) 
+})
+```
+  
+## iati_default_aid_type
+    
+```{r function-iati_default_aid_type}
+#' iati_default_aid_type
+#' 
+#' @param xml_iati xml_iati
+#' @param folder_name folder_name
+#' 
+#' @import purrr
+#' @import xml2
+#' @import rlang
+#' @import dplyr
+#' @import writexl
+#' 
+#' @return dataframe
+#' 
+#' @noRd
+iati_default_aid_type <- function(xml_iati, folder_name) {
+# xml subset --------------------------------------------------------------
+
+notesets_default_aid_type <- xml_iati %>% 
+  xml_find_all('.//iati-activity/default-aid-type')
+
+
+# extract data ------------------------------------------------------------
+df_default_aid_type <- 
+  map_dfr(notesets_default_aid_type, function(i) {
+  tibble(
+    iati_identifier = tryCatch(i |> xml_parent() |> xml_find_all("iati-identifier") |> xml_text(), error = function(e){ NA_character_}),
+    default_aid_type_code = xml_attr_by_name(i, ".", "default-aid-type", "code"),
+    default_aid_type_vocabulary = xml_attr_by_name(i, ".", "default-aid-type", "vocabulary")
+  )
+  
+})
+
+# remove unwanted objects -------------------------------------------------
+rm(notesets_default_aid_type)
+
+
+# write data --------------------------------------------------------------
+write_xlsx(
+  df_default_aid_type,
+  paste0(folder_name, "/", "iati_default_aid_type", ".xlsx")
+)
+
+df_default_aid_type
+}
+```
+  
+```{r example-iati_default_aid_type}
+#iati_default_aid_type()
+```
+  
+```{r tests-iati_default_aid_type}
+test_that("iati_default_aid_type works", {
+  expect_true(inherits(iati_default_aid_type, "function")) 
+})
+```
+
+## iati_budget
+    
+```{r function-iati_budget}
+#' iati_budget
+#' 
+#' @param xml_iati xml_iati
+#' @param folder_name folder_name
+#' 
+#' @import purrr
+#' @import xml2
+#' @import rlang
+#' @import dplyr
+#' @import writexl
+#' 
+#' @return dataframe
+#' 
+#' @noRd
+iati_budget <- function(xml_iati, folder_name) {
+# xml subset --------------------------------------------------------------
+
+notesets_budget <- xml_iati %>% 
+  xml_find_all('.//iati-activity/budget')
+
+
+# extract data ------------------------------------------------------------
+df_budget <- future_map_dfr(notesets_budget, function(i) {
+  tibble(
+    iati_identifier = tryCatch(
+      i |> 
+        xml_parent() |> 
+        xml_find_all("iati-identifier") |> 
+        xml_text(),
+      
+      error = function(e) {
+        NA_character_
+      }
+    ),
+    budget_type = xml_attr_by_name(i, ".", "budget", "type"),
+    budget_status = xml_attr_by_name(i, ".", "budget", "status"),
+    budget_period_start = xml_attr_by_name(i, "./period-start", "period-start", "iso-date"),
+    budget_period_end = xml_attr_by_name(i, "./period-end", "period-end", "iso-date"),
+    budget_currency = xml_attr_by_name(i, "./value", "value", "currency"),
+    budget_value_date = xml_attr_by_name(i, "./value", "value", "value-date"),
+    budget_value = xml_text_by_name(i, ".//value", "value")
+  )
+}, .progress = TRUE)
+
+
+# remove unwanted objects -------------------------------------------------
+rm(notesets_budget)
+
+
+# write data --------------------------------------------------------------
+write_xlsx(df_budget,
+           paste0(folder_name, "/", "iati_budget", ".xlsx"))
+
+
+df_budget
+}
+
+```
+  
+```{r example-iati_budget}
+iati_file <- file_temp()
+download.file( "https://reporting.unhcr.org/files/IATI/UNHCR-Activities-2022.xml", 
+              iati_file, 
+              quiet = TRUE)
+xml_iati <- read_xml(iati_file)
+folder_name <- here::here("dev/test")
+iati_budget(xml_iati, folder_name)
+```
+  
+```{r tests-iati_budget}
+test_that("iati_budget works", {
+  expect_true(inherits(iati_budget, "function")) 
+})
+```
+
+## iati_activity
+    
+```{r function-iati_activity}
+#' iati_activity
+#' 
+#' @param xml_iati xml_iati
+#' @param folder_name folder_name
+#' 
+#' @import purrr
+#' @import xml2
+#' @import rlang
+#' @import dplyr
+#' @import writexl
+#' 
+#' @return dataframe
+#' 
+#' @noRd
+iati_activity <-  function(xml_iati, folder_name) {
+# xml subset --------------------------------------------------------------
+nodeset_activity <- xml_iati %>% 
+  xml_find_all('.//iati-activity')
+
+
+# extract data ------------------------------------------------------------
+df_activity <- map_dfr(nodeset_activity, function(i) {
+  tibble(
+    iati_identifier = tryCatch(i  |> xml_find_all("iati-identifier") |> xml_text(), error = function(e){ NA_character_}),
+    reporting_org =  xml_text_by_name(i, "reporting-org", "reporting-org"),
+    reporting_org_ref =  xml_attr_by_name(i, "reporting-org", "reporting-org", "ref"),
+    reporting_org_type = xml_attr_by_name(i, "reporting-org", "reporting-org", "type"),
+    reporting_org_secondary_reporter  =  xml_attr_by_name(i, "reporting-org", "reporting-org", "secondary-reporter"),
+    title_eng = xml_text_by_lang(i, "title", 'narrative', "character\\(0\\)"),
+    title_fr = xml_text_by_lang(i, "title", 'narrative', "^fr"),
+    title_es = xml_text_by_lang(i, "title", 'narrative', "^es"),
+    title_zh = xml_text_by_lang(i, "title", 'narrative', "^zh"),
+    title_ru = xml_text_by_lang(i, "title", 'narrative', "^ru"),
+    title_ar = xml_text_by_lang(i, "title", 'narrative', "^ar"),
+    description_type_1 = xml_attr_by_name(i, "description", "description", "type"),
+    description_eng_1 = xml_text_by_lang(i, "description", 'narrative', "character\\(0\\)"),
+    descriptionv_fr_1 = xml_text_by_lang(i, "description", 'narrative', "^fr"),
+    # description_es_1 = xml_text_by_lang(i, "description", 'narrative', "^es"),
+    # description_zh_1 = xml_text_by_lang(i, "description", 'narrative', "^zh"),
+    # description_ru_1 = xml_text_by_lang(i, "description", 'narrative', "^ru"),
+    # description_ar_1 = xml_text_by_lang(i, "description", 'narrative', "^ar"),
+    description_type_2= xml_attr_by_name(i, "description", "description", "type", attr_position = 2L),
+    description_eng_2 = xml_text_by_lang(i, "description", 'narrative', "character\\(0\\)", attr_position = 2L),
+    descriptionv_fr_2 = xml_text_by_lang(i, "description", 'narrative', "^fr", attr_position = 2L),
+    # description_es_2 = xml_text_by_lang(i, "description", 'narrative', "^es", attr_position = 2L),
+    # description_zh_2 = xml_text_by_lang(i, "description", 'narrative', "^zh", attr_position = 2L),
+    # description_ru_2 = xml_text_by_lang(i, "description", 'narrative', "^ru", attr_position = 2L),
+    # description_ar_2 = xml_text_by_lang(i, "description", 'narrative', "^ar", attr_position = 2L),
+    activity_status_code = xml_attr_by_name(i, "activity-status", "activity-status", "code"),
+    activity_date_1 = xml_attr_by_name(i, "activity-date", "activity-date", "iso-date", 1),
+    activity_date_type_1 = xml_attr_by_name(i, "activity-date", "activity-date", "type", 1),
+    activity_date_2 = xml_attr_by_name(i, "activity-date", "activity-date", "iso-date", 2),
+    activity_date_type_2 = xml_attr_by_name(i, "activity-date", "activity-date", "type", 2),
+    activity_date_3 = xml_attr_by_name(i, "activity-date", "activity-date", "iso-date", 3),
+    activity_date_type_3 = xml_attr_by_name(i, "activity-date", "activity-date", "type", 3),
+    activity_date_4 = xml_attr_by_name(i, "activity-date", "activity-date", "iso-date", 4),
+    activity_date_type_4 = xml_attr_by_name(i, "activity-date", "activity-date", "type", 4),
+    # contact_info
+    contact_info_type = xml_attr_by_name(i, "contact-info", "contact-info", "type"),
+    contact_info_org = xml_text_by_name(i, ".//organisation", "organisation"),
+    contact_info_email = xml_text_by_name(i, ".//email", "email"),
+    contact_info_website = xml_text_by_name(i, ".//website", "website"),
+    contact_info_mailing_address = xml_text_by_name(i, ".//mailing-address", "mailing-address"),
+    activity_scope_code = xml_attr_by_name(i, "activity-scope", "activity-scope", "code"),
+    recipient_country_code = xml_attr_by_name(i, "recipient-country", "recipient-country", "code"),
+    recipient_country_pct = xml_attr_by_name(i, "recipient-country", "recipient-country", "percentage"),
+    recipient_country =  xml_text_by_name(i, "recipient-country", "recipient-country"),
+    recipient_region_code = xml_attr_by_name(i, "recipient-region", "recipient-region", "code"),
+    recipient_region_vocabulary = xml_attr_by_name(i, "recipient-region", "recipient-region", "vocabulary"),
+    recipient_region_vocabulary_url = xml_attr_by_name(i, "recipient-region", "recipient-region", "vocabulary-uri"),
+    recipient_region_pct = xml_attr_by_name(i, "recipient-region", "recipient-region", "percentage"),
+    recipient_region =  xml_text_by_name(i, "recipient-region", "recipient-region"),
+    collaboration_type_code =  xml_attr_by_name(i, "collaboration-type", "collaboration-type", "code"),
+    default_flow_type_code = xml_attr_by_name(i, "default-flow-type", "default-flow-type", "code"),
+    default_finance_type_code = xml_attr_by_name(i, "default-finance-type", "default-finance-type", "code"),
+    default_tied_status_code = xml_attr_by_name(i, "default-tied-status", "default-tied-status", "code"),
+    capital_spend = xml_attr_by_name(i, "capital-spend", "capital-spend", "percentage")
+  )
+  
+})
+
+
+# remove unwanted objects -------------------------------------------------
+rm(nodeset_activity)
+
+
+# write data --------------------------------------------------------------
+write_xlsx(df_activity,
+           paste0(folder_name, "/", "iati_activity", ".xlsx"))
+
+df_activity
+}
+
+```
+  
+```{r example-iati_activity}
+iati_activity()
+```
+  
+```{r tests-iati_activity}
+test_that("iati_activity works", {
+  expect_true(inherits(iati_activity, "function")) 
+})
+```
+  
+
+#  iati_reshape
+    
+```{r function-iati_reshape}
+#' iati_reshape
+#' 
+#' Take anxml file and creates all the decomposed xls file out o it..
+#' 
+#' @param xml_iati xml_iati
+#' @param folder_name folder_name within project
+#' 
+#' @import fs
+#' @import xml2
+#' @import purrr
+#' @import future
+#' 
+#' @export
+iati_reshape <- function( iati_file_url = 'https://reporting.unhcr.org/files/IATI/UNHCR-Activities-2022.xml' , 
+                         folder_name = "data-raw"){
+  
+  # A workflow to pull and tidy IATI data for UNHCR - https://reporting.unhcr.org/iati
+  t1 <- Sys.time() 
+
+  #fs::dir_ls("inst/source/", recurse = TRUE, type = "file") |> purrr::walk(source)
+
+# create folder -----------------------------------------------------------
+#folder_name = "data-raw-unhcr"
+dir_create(folder_name) 
+
+# read data ---------------------------------------------------------------
+iati_file <- file_temp()
+
+# https://reporting.unhcr.org/files/IATI/UNHCR-Activities-2020.xml
+# https://reporting.unhcr.org/files/IATI/UNHCR-Activities-2023.xml
+
+download.file( iati_file_url, 
+              iati_file, 
+              quiet = TRUE)
+
+# run each one of the tasks ------------
+future::plan(multisession)
+# list tasks --------------------------------------------------------------
+list(
+  iati_activity = iati_activity,
+  iati_budget = iati_budget,
+  iati_default_aid_type = iati_default_aid_type,
+  iati_document_link = iati_document_link,
+  iati_humanitarian_scope = iati_humanitarian_scope,
+  iati_location = iati_location,
+  iati_participating_org = iati_participating_org,
+  iati_related_activity = iati_related_activity,
+  iati_result = iati_result,
+  iati_sector = iati_sector,
+  iati_transaction = iati_transaction
+)  |>
+  
+  # The future_map function is used to apply the read_xml function to each element of the iati_extractors object in parallel.
+  # The ~rlang::exec(., read_xml(iati_file)) syntax is a shorthand for defining an anonymous function that takes one argument and applies the read_xml function to it.
+  # The . is a placeholder for the argument, which is the current element of the iati_extractors object.
+  # The iati_file variable is assumed to contain the path to the IATI XML file.
+  future_map( ~ rlang::exec(., read_xml(iati_file))) |>
+ # The iwalk function is then used to assign each element of the resulting list to a new variable in the global environment. 
+  # The .y argument specifies the name of the new variable, and the .x argument specifies the value to be assigned.
+
+# The envir = .GlobalEnv argument specifies that the new variable should be created in the global environment.
+
+  iwalk( ~ assign(.y, .x, envir = .GlobalEnv))
+
+Sys.time() - t1
+
+# rm(iati_extractors,
+#    iati_file,
+#    t1,
+#    xml_attr_by_name,
+#    xml_child_attr_by_name,
+#    xml_text_by_lang,
+#    xml_text_by_name)
+
+    
+}
+```
+  
+```{r example-iati_reshape}
+#iati_reshape(
+# iati_file_url = 'https://reporting.unhcr.org/files/IATI/UNHCR-Activities-2022.xml' , 
+# folder_name = "data-raw")
+```
+  
+```{r tests-iati_reshape}
+test_that("iati_reshape works", {
+  expect_true(inherits(iati_reshape, "function")) 
+})
+```
+    
+    
+
+```{r development-inflate, eval=FALSE}
+# Run but keep eval=FALSE to avoid infinite loop
+# Execute in the console directly
+fusen::inflate(flat_file = "dev/Data_reshape.Rmd", vignette_name = "Data Reshape")
+```
+

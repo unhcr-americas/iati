@@ -28,13 +28,15 @@ can also be   "Disbursement", or "Expenditure"}
 a graph
 }
 \description{
-Who are the main donors by country in terms of number of projects and/or total budget?
+Who are the main donors by country in terms of transaction?
 }
 \examples{
 
-knitr::kable( codeTransactionType |> dplyr::select(name,  description) )
+knitr::kable(iati::dataTransaction |>
+                dplyr::select( transaction_type_name, transaction_type_description) |>
+                dplyr::distinct() )
 
-show_donors(year = 2018,
+show_donors(year = 2022,
            programme_lab = "The Americas",
            transaction_type_name = "Incoming Commitment" )
 

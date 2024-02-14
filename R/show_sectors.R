@@ -14,6 +14,7 @@
 #' @import dplyr
 #' @import scales
 #' @import unhcrthemes
+#' @importFrom stats reorder
 #'
 #' @export 
 #' @return  a graph
@@ -81,7 +82,7 @@ show_sectors <- function(year,
   
 
   p <-  ggplot2::ggplot(data = df, 
-                        ggplot2::aes(x = reorder(sector_desc, sector_pct),
+                        ggplot2::aes(x = stats::reorder(sector_desc, sector_pct),
                                  y = sector_pct
                                  )) +
     unhcrthemes::theme_unhcr(grid = TRUE, axis = "Y", axis_title = "Sector Percentage") +

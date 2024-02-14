@@ -8,17 +8,19 @@
 A data frame with 26667 rows and 24 variables:
 \describe{
   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
-  \item{\code{result_type}}{character COLUMN_DESCRIPTION}
-  \item{\code{result_aggregation_status}}{character COLUMN_DESCRIPTION}
+  \item{\code{result_type}}{double COLUMN_DESCRIPTION}
   \item{\code{result_title}}{character COLUMN_DESCRIPTION}
-  \item{\code{result_desc}}{logical COLUMN_DESCRIPTION}
-  \item{\code{result_indicator_measure}}{character COLUMN_DESCRIPTION}
   \item{\code{result_indicator_title}}{character COLUMN_DESCRIPTION}
-  \item{\code{result_indicator_desc}}{character COLUMN_DESCRIPTION}
+  \item{\code{result_indicator_measure}}{double COLUMN_DESCRIPTION}
+  \item{\code{result_indicator_aggregation_status}}{character COLUMN_DESCRIPTION}
+  \item{\code{result_indicator_ascending}}{character COLUMN_DESCRIPTION}
+  \item{\code{result_indicator_reference_code}}{logical COLUMN_DESCRIPTION}
+  \item{\code{result_indicator_reference_uri}}{logical COLUMN_DESCRIPTION}
+  \item{\code{result_indicator_reference_vocabulary}}{logical COLUMN_DESCRIPTION}
+  \item{\code{result_indicator_baseline_location_ref}}{character COLUMN_DESCRIPTION}
   \item{\code{result_indicator_baseline_value}}{character COLUMN_DESCRIPTION}
   \item{\code{result_indicator_baseline_year}}{character COLUMN_DESCRIPTION}
   \item{\code{result_indicator_baseline_date}}{logical COLUMN_DESCRIPTION}
-  \item{\code{result_indicator_baseline_location_ref}}{character COLUMN_DESCRIPTION}
   \item{\code{result_indicator_baseline_dimension_1}}{character COLUMN_DESCRIPTION}
   \item{\code{result_indicator_baseline_dimension_value_1}}{character COLUMN_DESCRIPTION}
   \item{\code{result_indicator_baseline_dimension_2}}{character COLUMN_DESCRIPTION}
@@ -30,9 +32,17 @@ A data frame with 26667 rows and 24 variables:
   \item{\code{result_indicator_target_dimension_1}}{character COLUMN_DESCRIPTION}
   \item{\code{result_indicator_target_value_1}}{character COLUMN_DESCRIPTION}
   \item{\code{result_indicator_target_dimension_2}}{character COLUMN_DESCRIPTION}
-  \item{\code{result_indicator_target_value_2}}{character COLUMN_DESCRIPTION} 
+  \item{\code{result_indicator_target_value_2}}{character COLUMN_DESCRIPTION}
+  \item{\code{result_indicator_actual_value}}{character COLUMN_DESCRIPTION}
+  \item{\code{result_indicator_actual_location_ref}}{character COLUMN_DESCRIPTION}
+  \item{\code{result_indicator_actual_dimension_1}}{character COLUMN_DESCRIPTION}
+  \item{\code{result_indicator_actual_value_1}}{character COLUMN_DESCRIPTION}
+  \item{\code{result_indicator_actual_dimension_2}}{character COLUMN_DESCRIPTION}
+  \item{\code{result_indicator_actual_value_2}}{character COLUMN_DESCRIPTION}
   \item{\code{result_type_name}}{character COLUMN_DESCRIPTION}
-  \item{\code{result_type_description}}{character COLUMN_DESCRIPTION} 
+  \item{\code{result_type_description}}{character COLUMN_DESCRIPTION}
+  \item{\code{indicator_measure_name}}{character COLUMN_DESCRIPTION}
+  \item{\code{indicator_measure_description}}{character COLUMN_DESCRIPTION} 
 }
 }
 \source{

@@ -14,6 +14,7 @@
 #' @import dplyr
 #' @import scales
 #' @import unhcrthemes
+#' @importFrom stats reorder
 #'
 #' @export 
 #' 
@@ -128,7 +129,7 @@ show_indicators <- function(year,
       ## and now the plot
       p <-      ggplot2::ggplot(  data = df1) +
         ggplot2::coord_flip()  + 
-        # geom_col(   aes(x = reorder(operation, - gap_actual_green), 
+        # geom_col(   aes(x = stats::reorder(operation, - gap_actual_green), 
         #                 y = gap_actual_green ,
         #                 fill = gap_color_green ),
         #            # fill = "grey50",    
@@ -136,7 +137,7 @@ show_indicators <- function(year,
         #             width = 0.9,
         #            color = NA ) +
         ggplot2::geom_col(   
-          ggplot2::aes(x = reorder(operation, - gap_actual_target),
+          ggplot2::aes(x = stats::reorder(operation, - gap_actual_target),
                        y = gap_actual_target,
                        fill = gap_color ),
                     #fill = "#0072BC",
@@ -146,7 +147,7 @@ show_indicators <- function(year,
                                       "orange" = "#FF980E",
                                       "green" = "#069C56")) +
         ggplot2::geom_text( 
-          ggplot2::aes(x = reorder(operation, - gap_actual_target), 
+          ggplot2::aes(x = stats::reorder(operation, - gap_actual_target), 
                        y = gap_actual_target,
                        label = paste(round(gap_actual_target, 1), " %") ),
                    #hjust = 1.5, 

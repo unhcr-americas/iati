@@ -13,73 +13,6 @@ library(testthat)
 pkgload::load_all(export_all = FALSE)
 ```
 
-
-
-```{r development_with_mixral, eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
-## This chart library was conveniently built using an offline LLM - 
-###########
-# pak::pak("JBGruber/rollama")
-library(rollama)
-options(rollama_server = "http://localhost:11434")
-options("rollama_verbose" = TRUE)
-## Using the last mixtral instruct with good quantization from TheBloke
-## https://mistral.ai/news/mixtral-of-experts/ 
-# pull_model("mixtral:8x7b-instruct-v0.1-q4_K_M")
-options(rollama_model = "mixtral:8x7b-instruct-v0.1-q4_K_M")
-options(rollama_config = "<s> [INST]Act if you were an R developer. 
-You are writing functions that will be included within an R package called “iati”.[/INST]
-
-The data themselves are already part of the package, stored a .RData files.
-
-Each function should include documentation using `roxygen2`.
-
-Insert line breaks into the `roxygen2` documentation after every 80 characters.
-
-The documentaiton should include description of the function parameters, the imported libraries and provide an example for the function. 
-
-In the answer to the prompt, include the function within an R markdonw Rmd chunk.  
- 
-As much as possible, include at first functions from within the tidyverse package universe. 
-
-Always opt for a simple coding style that is accessible to everyone. Avoid complex approach, no need to show that you are smarter than me!
-
-Add comments within the code to explain what is happening: All explanations should exclusively be kept as comments within the function itself.
-
-
-Typically, the function will include first some data tidy stage and then the visualization using ggplot2. 
-
-When generating a ggplot2 chart, use UNHCR theme from unhcrthemes package using the following:
- `unhcrthemes::theme_unhcr(grid = TRUE, axis = \"Y\", axis_title = \"X\") + ` 
-
-When using a color scale, please use the following: 
-` ggplot2::scale_fill_viridis_d(option = \"inferno\", na.value = \"grey50\") + ` 
-
-When one axis includes continuous values please use:
-`ggplot2::scale_y_continuous( expand = ggplot2::expansion(mult = c(0, .1)), labels = scales::label_number(scale_cut = scales::cut_short_scale())) +`
-
-Add a specific caption in each charts with the following:
-`labs(caption = \"Data Source: UNHCR IATI (International Aid Transparency Initiative)\") + ``
-</s>
- [INST]
-At the end include some unit testing for the created function.[/INST]  
- ")
-ping_ollama()
-
-# 
-# my_ai_function <- rollama::query("Write a function that will take 3 parameters:  
-# 
-#  1. TransactionType – a parameter that can take value such as \"Incoming Commitment\"  
-# 
-#  2. year – corresponding the first year of focus until the most recent year within the dataset  
-# 
-#  3. region or countries 
-# 
-# The output of the function should be a plot showing transaction for a specific country from a certain year. ")
-# 
-# dput(my_ai_function$message$content )
-
-``` 
- 
  
 # Using  `iati::dataTransaction`
 
@@ -443,13 +376,13 @@ test_that("show_expenditure works", {
 ## Show partnership
 
  
- *  What’s the level of __partnership between organisations__ when implementing projects?   
+ *  How __organisations partner together__?   
  
 
 ```{r function-show_partnership, echo=FALSE, message=FALSE, warning=FALSE}
 #' show_partnership
 #' 
-#' @description What’s the level of partnership between organisations when implementing projects? 
+#' @description How organisations partner together? 
 #'
 #' @param year A numeric value corresponding to the year to be displayed
 #' @param programme_lab A character vector corresponding to the name of the programme.
@@ -509,7 +442,11 @@ show_partnership <- function( year,
      tidyr::pivot_wider(names_from = participating_org_role_name, 
               values_from = participating_org_eng ,
               values_fn = list) |>
-    dplyr::select( - Accountable)
+    dplyr::select( - Accountable)  |>
+    dplyr::rename(Organisation =participating_org_type_name) 
+  ## replace null values...
+  df2[df2 == 'NULL'] <- as.list(" ")
+  
   
   df3 <- df    |>
     dplyr::select(participating_org_eng, 
@@ -652,7 +589,7 @@ show_sectors <- function(year,
   
 
   p <-  ggplot2::ggplot(data = df, 
-                        ggplot2::aes(x = reorder(sector_desc, sector_pct),
+                        ggplot2::aes(x = stats::reorder(sector_desc, sector_pct),
                                  y = sector_pct
                                  )) +
     unhcrthemes::theme_unhcr(grid = TRUE, axis = "Y", axis_title = "Sector Percentage") +
@@ -820,7 +757,7 @@ show_indicators <- function(year,
       ## and now the plot
       p <-      ggplot2::ggplot(  data = df1) +
         ggplot2::coord_flip()  + 
-        # geom_col(   aes(x = reorder(operation, - gap_actual_green), 
+        # geom_col(   aes(x = stats::reorder(operation, - gap_actual_green), 
         #                 y = gap_actual_green ,
         #                 fill = gap_color_green ),
         #            # fill = "grey50",    
@@ -828,7 +765,7 @@ show_indicators <- function(year,
         #             width = 0.9,
         #            color = NA ) +
         ggplot2::geom_col(   
-          ggplot2::aes(x = reorder(operation, - gap_actual_target),
+          ggplot2::aes(x = stats::reorder(operation, - gap_actual_target),
                        y = gap_actual_target,
                        fill = gap_color ),
                     #fill = "#0072BC",
@@ -838,7 +775,7 @@ show_indicators <- function(year,
                                       "orange" = "#FF980E",
                                       "green" = "#069C56")) +
         ggplot2::geom_text( 
-          ggplot2::aes(x = reorder(operation, - gap_actual_target), 
+          ggplot2::aes(x = stats::reorder(operation, - gap_actual_target), 
                        y = gap_actual_target,
                        label = paste(round(gap_actual_target, 1), " %") ),
                    #hjust = 1.5, 

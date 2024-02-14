@@ -24,7 +24,7 @@ show_partnership(
 a graph
 }
 \description{
-What’s the level of partnership between organisations when implementing projects?
+How organisations partner together?
 }
 \examples{
 show_partnership(year = 2022,

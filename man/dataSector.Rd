@@ -5,7 +5,7 @@
 \alias{dataSector}
 \title{sector}
 \format{
-A data frame with 23793 rows and 6 variables:
+A data frame  
 \describe{
   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
   \item{\code{sector_vocabulary}}{character COLUMN_DESCRIPTION}

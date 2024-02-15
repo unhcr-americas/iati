@@ -5,7 +5,7 @@
 \alias{dataRelated_activity}
 \title{dataRelated_activity}
 \format{
-A data frame with 2950 rows and 3 variables:
+A data frame  
 \describe{
   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
   \item{\code{related_activity_ref}}{character COLUMN_DESCRIPTION}

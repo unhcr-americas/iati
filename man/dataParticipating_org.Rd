@@ -5,7 +5,7 @@
 \alias{dataParticipating_org}
 \title{participating_org}
 \format{
-A data frame with 13990 rows and 7 variables:
+A data frame  
 \describe{
   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
   \item{\code{participating_org_eng}}{character COLUMN_DESCRIPTION}

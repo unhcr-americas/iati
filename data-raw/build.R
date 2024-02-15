@@ -182,6 +182,7 @@ budget <- rbind(
 
 budget$budget_type <- as.numeric(budget$budget_type)
 budget$budget_status <- as.numeric(budget$budget_status)
+budget$budget_value <- as.numeric(budget$budget_value)
 
 budget <- budget |>
   ## Adding look up table 
@@ -439,8 +440,12 @@ str(transaction)
 transaction$transaction_provider_org_type  <- as.numeric(transaction$transaction_provider_org_type)
 transaction$transaction_type_code   <- as.numeric(transaction$transaction_type_code )
 levels(as.factor(transaction$transaction_aid_type_vocabulary_1))
+table(transaction$transaction_aid_type_vocabulary_1, useNA = "ifany")
 transaction$transaction_aid_type_vocabulary_1  <- as.numeric(transaction$transaction_aid_type_vocabulary_1)
 levels(as.factor(transaction$transaction_aid_type_vocabulary_2))
+table(transaction$transaction_aid_type_vocabulary_2, useNA = "ifany")
+table(transaction$transaction_aid_type_vocabulary_2, transaction$transaction_aid_type_code_2, useNA = "ifany")
+
 transaction$transaction_aid_type_vocabulary_2  <- as.numeric(transaction$transaction_aid_type_vocabulary_2)
 transaction$transaction_value  <- as.numeric(transaction$transaction_value)
 transaction$transaction_value_USD  <- as.numeric(transaction$transaction_value_USD)
@@ -472,11 +477,12 @@ transaction <- transaction |>
                                    aid_type1_description) ,
                    by= c("transaction_aid_type_code_1" = "code"))  |> 
   ## Adding look up table 
-  dplyr::left_join(iati::codeAidType |> 
-                     dplyr::mutate(aid_type2_name = name,
-                                   aid_type2_description = description) |> 
-                     dplyr::select(code, aid_type2_name,aid_type2_description  ) ,
-                   by= c("transaction_aid_type_code_2" = "code")) |>    
+  dplyr::left_join(iati::codeEarmarkingCategory |> 
+                     dplyr::mutate(code = as.character(code),
+                                   earmarking_name = name,
+                                   earmarking_description = description) |> 
+                     dplyr::select(code, earmarking_name, earmarking_description  ) ,
+                   by= c("transaction_aid_type_code_2" = "code" )) |>    
   ## Adding look up table 
   dplyr::left_join(iati::codeAidTypeVocabulary |> 
                      dplyr::mutate(aid_type_vocabulary1_name = name,
@@ -493,7 +499,6 @@ transaction <- transaction |>
                                    aid_type_vocabulary2_name,
                                    aid_type_vocabulary2_description  ) ,
                    by= c("transaction_aid_type_vocabulary_2" = "code"))  
-
 
 
 names(transaction)

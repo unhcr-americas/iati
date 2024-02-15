@@ -27,6 +27,10 @@ a graph
 What’s the breakdown of Earmarking Type (Un-earmarked, Tightly earmarked, etc.) from Donor Funds by Year?
 }
 \examples{
+knitr::kable(iati::dataTransaction |>
+                dplyr::select(earmarking_name, earmarking_description)  |>
+                dplyr::distinct() |>
+                dplyr::filter(!(is.na(earmarking_name))))
 show_earmarking(year = 2018, 
              programme_lab = NULL, 
              iati_identifier_ops = NULL, 

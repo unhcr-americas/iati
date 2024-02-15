@@ -16,7 +16,7 @@ A data frame with 4 rows and 6 variables:
 }
 }
 \source{
-\url{https://iatistandard.org/en/iati-standard/203/codelists/}
+\url{https://iatistandard.org/en/iati-standard/203/codelists/earmarkingcategory/}
 }
 \usage{
 codeEarmarkingCategory

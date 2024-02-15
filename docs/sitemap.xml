@@ -208,6 +208,12 @@
     <loc>/reference/sector.html</loc>
   </url>
   <url>
+    <loc>/reference/show_budget_gap.html</loc>
+  </url>
+  <url>
+    <loc>/reference/show_contributions.html</loc>
+  </url>
+  <url>
     <loc>/reference/show_donors.html</loc>
   </url>
   <url>
@@ -227,6 +233,9 @@
   </url>
   <url>
     <loc>/reference/show_sectors.html</loc>
+  </url>
+  <url>
+    <loc>/reference/show_top_donors.html</loc>
   </url>
   <url>
     <loc>/reference/transaction.html</loc>

@@ -5,7 +5,7 @@
 \alias{dataDefault_aid_type}
 \title{dataDefault_aid_type}
 \format{
-A data frame with 825 rows and 3 variables:
+A data frame  
 \describe{
   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
   \item{\code{default_aid_type_code}}{character aid_type_code}

@@ -17,6 +17,10 @@
 #' @export 
 #' @return  a graph
 #' @examples
+#' knitr::kable(iati::dataTransaction |>
+#'                 dplyr::select(earmarking_name, earmarking_description)  |>
+#'                 dplyr::distinct() |>
+#'                 dplyr::filter(!(is.na(earmarking_name))))
 #' show_earmarking(year = 2018, 
 #'              programme_lab = NULL, 
 #'              iati_identifier_ops = NULL, 
@@ -63,17 +67,17 @@ show_earmarking <- function(year,
              transaction_type_name ==  "Incoming Commitment")
   }
    
-  df <- df |> 
-    dplyr::group_by(year, aid_type1_name) |>
+  df2 <- df |> 
+    dplyr::group_by(year, earmarking_name) |>
     dplyr::summarise( transaction_value_USD = sum(transaction_value_USD , na.rm = TRUE)) |>
-    dplyr::mutate(aid_type1_name = as.character(aid_type1_name) )  |>
-    dplyr::mutate(aid_type1_name = as.factor(aid_type1_name) ) 
+    dplyr::mutate(earmarking_name = as.character(earmarking_name) )  |>
+    dplyr::mutate(earmarking_name = as.factor(earmarking_name) ) 
   
- p <- df |> 
+ p <- df2 |> 
 #  dplyr::filter(transaction_value_USD  <= 1000000 & transaction_value_USD  > 1000) |> 
   ggplot2::ggplot(ggplot2::aes(y = transaction_value_USD ,
              x =  year,
-             fill = aid_type1_name)) +
+             fill = earmarking_name)) +
   ggplot2::geom_bar(alpha = 0.9, stat = "identity") +
   ggplot2::scale_fill_viridis_d(option = "inferno", na.value = "grey50") +
   ggplot2::scale_y_continuous(
@@ -81,10 +85,10 @@ show_earmarking <- function(year,
     labels = scales::label_number(scale_cut = scales::cut_short_scale())  ) +
 #  scale_x_continuous(labels = scales::label_number(scale_cut = cut_short_scale())) +
  # ggplot2::facet_wrap(~ trans_year) +
-  unhcrthemes::theme_unhcr(grid = "Y", axis = "X", axis_title = "X")+
+  unhcrthemes::theme_unhcr(grid = "Y", axis = "X", axis_title = "X", font_size = 18)+
   ggplot2::labs(
-    title = paste0("Earmarking level in USD"),
-    subtitle = paste0("In  recorded since ", year,""),
+    title = paste0("Commitment vs Earmarking (in USD)"),
+    subtitle = paste0("Recorded in ", programme_lab, ctr_name,iati_identifier_ops, " since ", year,""),
     x = "",
     y = "",
     caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ) 

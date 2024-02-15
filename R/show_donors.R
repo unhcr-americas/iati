@@ -20,29 +20,21 @@
 #'
 #' @return  a graph
 #' @examples
-#'
 #' knitr::kable(iati::dataTransaction |>
 #'                 dplyr::select( transaction_type_name, transaction_type_description) |>
 #'                 dplyr::distinct() )
-#'
 #' show_donors(year = 2022,
 #'            programme_lab = "The Americas",
 #'            transaction_type_name = "Incoming Commitment" )
-#'
 #' show_donors(year = 2018,
 #'            ctr_name = "Brazil",
 #'            transaction_type_name = "Incoming Commitment" )
-#'
-#'
 #' show_donors(year = 2018,
-#'            programme_lab = "The Americas",
+#'            programme_lab = "Brazil",
 #'            transaction_type_name = "Disbursement" )
-#'
-#'
 #' show_donors(year = 2018,
-#'            programme_lab = "The Americas",
+#'            programme_lab = "Brazil",
 #'            transaction_type_name = "Expenditure" )
-#'
 show_donors <- function(year, 
                         programme_lab = NULL, 
                         iati_identifier_ops = NULL, 
@@ -64,6 +56,7 @@ show_donors <- function(year,
   df <-  iati::dataTransaction |> 
          dplyr::left_join(iati::dataActivity, by= c("iati_identifier"))  
   
+  ## Filtering
   if (!is.null(programme_lab)) {
     thisprogramme_lab <- programme_lab
     thisyear <-  year
@@ -91,31 +84,47 @@ show_donors <- function(year,
              transaction_type_name ==  thistransaction_type_name)
   }
    
-  df <- df |> 
-    dplyr::group_by(year, reporting_org_type_name) |>
-    dplyr::summarise( transaction_value_USD = sum(transaction_value_USD , na.rm = TRUE)) |>
-    dplyr::mutate(reporting_org_type_name = as.character(reporting_org_type_name) )  |>
-    dplyr::mutate(reporting_org_type_name = as.factor(reporting_org_type_name) ) 
+ 
   
- p <- df |> 
-#  dplyr::filter(transaction_value_USD  <= 1000000 & transaction_value_USD  > 1000) |> 
-  ggplot2::ggplot(ggplot2::aes(y = transaction_value_USD ,
-             x =  year,
-             fill = reporting_org_type_name)) +
-  ggplot2::geom_bar(alpha = 0.9, stat = "identity") +
-  ggplot2::scale_fill_viridis_d(option = "inferno", na.value = "grey50") +
-  ggplot2::scale_y_continuous(
-    expand = ggplot2::expansion(mult = c(0, .1)),
-    labels = scales::label_number(scale_cut = scales::cut_short_scale())  ) +
-#  scale_x_continuous(labels = scales::label_number(scale_cut = cut_short_scale())) +
- # ggplot2::facet_wrap(~ trans_year) +
-  unhcrthemes::theme_unhcr(grid = "Y", axis = "X", axis_title = "X")+
-  ggplot2::labs(
-    title = paste0(transaction_type_name," received by UNHCR in USD"),
-    subtitle = paste0("In ", programme_lab, ctr_name,iati_identifier_ops, " recorded since ", year,""),
-    x = "",
-    y = "",
-    caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ) 
+  df1 <- df |> 
+    dplyr::group_by(year, provider_org_type_name) |>
+    dplyr::summarise( transaction_value_USD = sum(transaction_value_USD , na.rm = TRUE)) |>
+    dplyr::mutate(provider_org_type_name = as.character(provider_org_type_name) )  |>
+    dplyr::mutate(provider_org_type_name = as.factor(provider_org_type_name) ) 
+  
+  
+    ## case there's no data at all
+    if( nrow(df1) == 0) {
+      info <-  paste0("No ", transaction_type_name, "\n  recorded   in ", 
+                              programme_lab, ctr_name,iati_identifier_ops, " for year: ", year)
+      p <- ggplot2::ggplot() +  
+                     ggplot2::annotate("text",  x = 1, y = 1, size = 12,
+                                          label = info ) +  
+                     ggplot2::theme_void()
+          
+    } else if(nrow(df1)> 0) {
+      
+      
+     p <- df1 |> 
+    #  dplyr::filter(transaction_value_USD  <= 1000000 & transaction_value_USD  > 1000) |> 
+      ggplot2::ggplot(ggplot2::aes(y = transaction_value_USD ,
+                 x =  year,
+                 fill = provider_org_type_name)) +
+      ggplot2::geom_bar(alpha = 0.9, stat = "identity") +
+      ggplot2::scale_fill_viridis_d(option = "inferno", na.value = "grey50") +
+      ggplot2::scale_y_continuous(
+        expand = ggplot2::expansion(mult = c(0, .1)),
+        labels = scales::label_number(scale_cut = scales::cut_short_scale())  ) +
+    #  scale_x_continuous(labels = scales::label_number(scale_cut = cut_short_scale())) +
+     # ggplot2::facet_wrap(~ trans_year) +
+      unhcrthemes::theme_unhcr(grid = "Y", axis = "X", axis_title = "X", font_size = 18)+
+      ggplot2::labs(
+        title = paste0(transaction_type_name," (in USD)"),
+        subtitle = paste0("Recorded in ", programme_lab, ctr_name,iati_identifier_ops, " since ", year,""),
+        x = "",
+        y = "",
+        caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ) 
+           }
  
   return(p)
 }

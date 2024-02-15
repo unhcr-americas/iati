@@ -83,7 +83,7 @@
 ## iati_budget ##########
 #' @title dataBudget
 #' @description Display budget by operation
-#' @format A data frame with 1194 rows and 8 variables:
+#' @format A data frame  
 #' \describe{
 #'   \item{\code{iati_identifier}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{budget_type}}{double  COLUMN_DESCRIPTION}
@@ -111,7 +111,7 @@
 
 #' @title dataResult
 #' @description DATASET_DESCRIPTION
-#' @format A data frame with 26667 rows and 24 variables:
+#' @format A data frame  
 #' \describe{
 #'   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
 #'   \item{\code{result_type}}{double COLUMN_DESCRIPTION}
@@ -161,7 +161,7 @@
 ## iati_sector ##########
 #' @title sector
 #' @description DATASET_DESCRIPTION
-#' @format A data frame with 23793 rows and 6 variables:
+#' @format A data frame  
 #' \describe{
 #'   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
 #'   \item{\code{sector_vocabulary}}{character COLUMN_DESCRIPTION}
@@ -182,7 +182,7 @@
 ## iati_transaction ##########
 #' @title transaction
 #' @description Transactions recording committed or actual funds flowing in or out of an aid activity.
-#' @format A data frame with 40419 rows and 29 variables:
+#' @format A data frame  
 #' \describe{
 #'   \item{\code{iati_identifier}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{transaction_ref}}{character COLUMN_DESCRIPTION}
@@ -207,8 +207,8 @@
 #'   \item{\code{provider_org_type_description}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{aid_type1_name}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{aid_type1_description}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{aid_type2_name}}{character COLUMN_DESCRIPTION}
-#'   \item{\code{aid_type2_description}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{earmarking_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{earmarking_description}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{aid_type_vocabulary1_name}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{aid_type_vocabulary1_description}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{aid_type_vocabulary2_name}}{character COLUMN_DESCRIPTION}
@@ -227,7 +227,7 @@
 ## iati_default_aid_type ##########
 #' @title dataDefault_aid_type
 #' @description Default_aid_type 
-#' @format A data frame with 825 rows and 3 variables:
+#' @format A data frame  
 #' \describe{
 #'   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
 #'   \item{\code{default_aid_type_code}}{character aid_type_code}
@@ -287,7 +287,7 @@
 ## iati_location ##########
 #' @title dataLocation 
 #' @description DATASET_DESCRIPTION
-#' @format A data frame with 3664 rows and 15 variables:
+#' @format A data frame  
 #' \describe{
 #'   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
 #'   \item{\code{location_ref}}{character COLUMN_DESCRIPTION}
@@ -318,7 +318,7 @@
 #' @description An organisation involved with the activity. May be a donor, fund, agency, etc.
 #'  Specifying the ref identifier is strongly recommended. May contain the organisation name as narrative. 
 #' If the reporting organisation plays a role in the activity it should be repeated here. One organisation may play more than one role (eg, funding and implementing): in such a case each role should be reported and the name of the organisation repeated.
-#' @format A data frame with 13990 rows and 7 variables:
+#' @format A data frame  
 #' \describe{
 #'   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
 #'   \item{\code{participating_org_eng}}{character COLUMN_DESCRIPTION}
@@ -342,7 +342,7 @@
 ## iati_related_activity ##########
 #' @title dataRelated_activity
 #' @description DATASET_DESCRIPTION
-#' @format A data frame with 2950 rows and 3 variables:
+#' @format A data frame  
 #' \describe{
 #'   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
 #'   \item{\code{related_activity_ref}}{character COLUMN_DESCRIPTION}
@@ -729,7 +729,7 @@
 #'   \item{\code{url}}{character url}
 #'   \item{\code{status}}{character status}
 #'}
-#' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/}
+#' @source \url{https://iatistandard.org/en/iati-standard/203/codelists/earmarkingcategory/}
 #' @examples
 #' {
 #' knitr::kable(head(codeEarmarkingCategory, 10))

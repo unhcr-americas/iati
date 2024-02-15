@@ -5,7 +5,7 @@
 \alias{dataLocation}
 \title{dataLocation}
 \format{
-A data frame with 3664 rows and 15 variables:
+A data frame  
 \describe{
   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
   \item{\code{location_ref}}{character COLUMN_DESCRIPTION}

@@ -5,7 +5,7 @@
 \alias{dataResult}
 \title{dataResult}
 \format{
-A data frame with 26667 rows and 24 variables:
+A data frame  
 \describe{
   \item{\code{iati_identifier}}{character A globally unique identifier for the activity.}
   \item{\code{result_type}}{double COLUMN_DESCRIPTION}

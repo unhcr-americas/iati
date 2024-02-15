@@ -9,7 +9,8 @@ show_indicators(
   programme_lab = NULL,
   iati_identifier_ops = NULL,
   ctr_name = NULL,
-  result_type_name = "Outcome"
+  result_type_name = "Outcome",
+  type = "deviation"
 )
 }
 \arguments{
@@ -22,6 +23,9 @@ show_indicators(
 \item{ctr_name}{A character vector corresponding to the name of the country.}
 
 \item{result_type_name}{either  "Impact"  "Outcome" "Output" - default is  "Outcome"}
+
+\item{type}{"deviation" showing difference between target and actual - or 
+"progress"  showing difference between baseline and actual}
 }
 \value{
 a graph
@@ -30,10 +34,34 @@ a graph
 How much indicators evolve over time against thresholds?
 }
 \examples{
-show_indicators(year = 2022, 
-             programme_lab = NULL, 
-             iati_identifier_ops = NULL, 
+show_indicators(year = 2022,  
              ctr_name = "Brazil",
-              result_type_name = "Outcome"
+              result_type_name = "Outcome",
+             type = "deviation"
+             )
+show_indicators(year = 2022,  
+             ctr_name = "Brazil",
+              result_type_name = "Impact",
+             type = "deviation"
+             )
+show_indicators(year = 2019,  
+             ctr_name = "Brazil",
+              result_type_name = "Output",
+             type = "deviation"
+             )
+show_indicators(year = 2022,  
+             ctr_name = "Brazil",
+              result_type_name = "Outcome",
+             type = "progress"
+             )
+show_indicators(year = 2022,  
+             ctr_name = "Brazil",
+              result_type_name = "Impact",
+             type = "progress"
+             )
+show_indicators(year = 2019,  
+             ctr_name = "Brazil",
+              result_type_name = "Output",
+             type = "progress"
              )
 }

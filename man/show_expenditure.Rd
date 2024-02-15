@@ -2,13 +2,14 @@
 % Please edit documentation in R/show_expenditure.R
 \name{show_expenditure}
 \alias{show_expenditure}
-\title{Title}
+\title{show_expenditure}
 \usage{
 show_expenditure(
   year,
   programme_lab = NULL,
   iati_identifier_ops = NULL,
-  ctr_name = NULL
+  ctr_name = NULL,
+  weight_by = NULL
 )
 }
 \arguments{
@@ -19,16 +20,26 @@ show_expenditure(
 \item{iati_identifier_ops}{A character vector corresponding to the name of the operation.}
 
 \item{ctr_name}{A character vector corresponding to the name of the country.}
+
+\item{weight_by}{list of population group to weight the budget - 
+"refugees", "asylum_seekers",
+ "returned_refugees" "idps",
+ "returned_idps", "stateless", 
+ "ooc", "oip"  
+default is null.}
 }
 \value{
 a graph
 }
 \description{
-How much expenditures compare to the initial budget (weighted by # PoCs / GPP in the country)?
+How much expenditures compare to the initial budget (potentially weighted by #)?
 }
 \examples{
 show_expenditure(year = 2018, 
-             programme_lab = NULL, 
-             iati_identifier_ops = NULL, 
              ctr_name = "Brazil")
+
+show_expenditure(year = 2018, 
+             ctr_name = "Brazil",
+             weight_by = c("refugees", "oip"))
+
 }

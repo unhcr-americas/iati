@@ -31,30 +31,46 @@ library(iati)
 
 
 ```{r examples-show_donors, message = FALSE, warning = FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center", out.width = "90%"}
-
 knitr::kable(iati::dataTransaction |>
                 dplyr::select( transaction_type_name, transaction_type_description) |>
                 dplyr::distinct() )
-
 show_donors(year = 2022,
            programme_lab = "The Americas",
            transaction_type_name = "Incoming Commitment" )
-
 show_donors(year = 2018,
            ctr_name = "Brazil",
            transaction_type_name = "Incoming Commitment" )
-
-
 show_donors(year = 2018,
-           programme_lab = "The Americas",
+           programme_lab = "Brazil",
            transaction_type_name = "Disbursement" )
-
-
 show_donors(year = 2018,
-           programme_lab = "The Americas",
+           programme_lab = "Brazil",
            transaction_type_name = "Expenditure" )
-
 ```
+
+## show_top_donors
+
+    
+
+  
+
+```{r example-show_top_donors, message = FALSE, warning = FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center", out.width = "90%"}
+show_top_donors(year = 2022,
+           ctr_name = "Brazil",
+           transaction_type_name = "Incoming Commitment" ,
+           top_n = 5)
+show_top_donors(year = 2020,
+           ctr_name = "Brazil",
+           transaction_type_name = "Incoming Commitment" ,
+           top_n = 10)
+```
+
+  
+
+  
+
+
+
 
 ## show_earmarking
 
@@ -65,6 +81,10 @@ show_donors(year = 2018,
   
 
 ```{r example-show_earmarking, message = FALSE, warning = FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center", out.width = "90%"}
+knitr::kable(iati::dataTransaction |>
+                dplyr::select(earmarking_name, earmarking_description)  |>
+                dplyr::distinct() |>
+                dplyr::filter(!(is.na(earmarking_name))))
 show_earmarking(year = 2018, 
              programme_lab = NULL, 
              iati_identifier_ops = NULL, 
@@ -76,25 +96,64 @@ show_earmarking(year = 2018,
   
 
 
+## show_contributions
+
+    
+
+  
+
+```{r example-show_contributions, message = FALSE, warning = FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center", out.width = "90%"}
+knitr::kable(iati::dataTransaction |>
+                dplyr::select(aid_type1_name, aid_type1_description)  |>
+                dplyr::distinct() |>
+                dplyr::filter(!(is.na(aid_type1_name))))
+show_contributions(year = 2018, 
+                   ctr_name = "Brazil") 
+show_contributions(year = 2018, 
+                   programme_lab = "The Americas") 
+```
+
+  
+
+  
 
 
 # Using `iati::dataBudget`
 
 ## show_expenditure
 
- *  How much __expenditures compare to the initial budget__ (weighted by # PoCs / GPP in the country)?   
+ *  How much __expenditures compare to the initial budget__ (potentially weighted by # )?   
     
 
   
 
 ```{r example-show_expenditure, message = FALSE, warning = FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center", out.width = "90%"}
 show_expenditure(year = 2018, 
-             programme_lab = NULL, 
-             iati_identifier_ops = NULL, 
+             ctr_name = "Brazil")
+
+show_expenditure(year = 2018, 
+             ctr_name = "Brazil",
+             weight_by = c("refugees", "oip"))
+
+```
+
+  
+
+## show_budget_gap
+
+    
+
+  
+
+```{r example-show_budget_gap, message = FALSE, warning = FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center", out.width = "90%"}
+show_budget_gap(year = 2018, 
              ctr_name = "Brazil")
 ```
 
   
+
+  
+
 
 # Using `iati::dataParticipating_org`
 
@@ -122,16 +181,25 @@ show_partnership(year = 2022,
   
 
 ```{r example-show_sectors, message = FALSE, warning = FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center", out.width = "90%"}
-
 knitr::kable( iati::dataSector |> 
                 dplyr::select( sector_vocabulary_name, sector_vocabulary_description) |>
-                dplyr::distinct())
-
-show_sectors(year = 2018, 
-             programme_lab = NULL, 
-             iati_identifier_ops = NULL, 
-             ctr_name = "Syria",
+                dplyr::distinct() |>
+                dplyr::filter(!(is.na(sector_vocabulary_name))))
+show_sectors(year =  c(2020, 2021, 2022), 
+             ctr_name = "Brazil",
+            sector_vocabulary_name = "Reporting Organisation")
+show_sectors(year = 2022, 
+             ctr_name = "Brazil",
             sector_vocabulary_name = "Reporting Organisation 2")
+show_sectors(year = c(2020, 2021, 2022),  
+             ctr_name = "Brazil",
+            sector_vocabulary_name = "Reporting Organisation 2")
+show_sectors(year = c(2017,2018,2019,2020,2021, 2022), 
+             ctr_name = "Brazil",
+            sector_vocabulary_name = "Humanitarian Global Clusters (Inter-Agency Standing Committee)")
+show_sectors(year = c(2017,2018,2019,2020,2021, 2022), 
+             ctr_name = "Brazil",
+            sector_vocabulary_name = "OECD DAC CRS Purpose Codes (5 digit)")
 ```
 
   
@@ -144,17 +212,41 @@ show_sectors(year = 2018,
 ## show_indicators
 
     
- *  How much __indicators__ evolve over time against thresholds?
+ *  How much __indicators__ relate to target or baseline?
  
 
   
 
-```{r example-show_indicators, message = FALSE, warning = FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center", out.width = "90%"}
-show_indicators(year = 2022, 
-             programme_lab = NULL, 
-             iati_identifier_ops = NULL, 
+```{r example-show_indicators, message = FALSE, warning = FALSE, fig.retina = 2, fig.width = 8, fig.align = "center", out.width = "90%"}
+show_indicators(year = 2022,  
              ctr_name = "Brazil",
-              result_type_name = "Outcome"
+              result_type_name = "Outcome",
+             type = "deviation"
+             )
+show_indicators(year = 2022,  
+             ctr_name = "Brazil",
+              result_type_name = "Impact",
+             type = "deviation"
+             )
+show_indicators(year = 2019,  
+             ctr_name = "Brazil",
+              result_type_name = "Output",
+             type = "deviation"
+             )
+show_indicators(year = 2022,  
+             ctr_name = "Brazil",
+              result_type_name = "Outcome",
+             type = "progress"
+             )
+show_indicators(year = 2022,  
+             ctr_name = "Brazil",
+              result_type_name = "Impact",
+             type = "progress"
+             )
+show_indicators(year = 2019,  
+             ctr_name = "Brazil",
+              result_type_name = "Output",
+             type = "progress"
              )
 ```
 

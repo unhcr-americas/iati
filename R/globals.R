@@ -14,5 +14,19 @@ globalVariables(unique(c(
   # show_partnership: 
   "participating_org_eng", "participating_org_role_name", "participating_org_type_name", 
   # show_sectors: 
-  "sector_desc", "sector_pct", "sector_vocabulary", "thiprogramme_lab"
+  "sector_desc", "sector_pct", "sector_vocabulary", "thiprogramme_lab",
+  # show_budget_gap: 
+  "budget_gap", "budget_value", "iati_identifier", "transaction_value", 
+  # show_donors: 
+  "provider_org_type_name", 
+  # show_earmarking: 
+  "earmarking_name", 
+  # show_expenditure: 
+  "asylum_seekers", "budget_value", "coa_name", "iati_identifier", "idps", "oip", "ooc", "refugees", "returned_idps", "returned_refugees", "stateless", "transaction_value", "weight", 
+  # show_indicators: 
+  "baseline", "deviation_actual_target", "deviation_color", "progress_baseline", "result_indicator_actual_value", "result_indicator_ascending", "result_indicator_target_value_1", 
+  # show_partnership: 
+  "Accountable", 
+  # show_top_donors: 
+  "transaction_provider_org"
 )))

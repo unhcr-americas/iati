@@ -5,7 +5,7 @@
 \alias{dataTransaction}
 \title{transaction}
 \format{
-A data frame with 40419 rows and 29 variables:
+A data frame  
 \describe{
   \item{\code{iati_identifier}}{character COLUMN_DESCRIPTION}
   \item{\code{transaction_ref}}{character COLUMN_DESCRIPTION}
@@ -30,8 +30,8 @@ A data frame with 40419 rows and 29 variables:
   \item{\code{provider_org_type_description}}{character COLUMN_DESCRIPTION}
   \item{\code{aid_type1_name}}{character COLUMN_DESCRIPTION}
   \item{\code{aid_type1_description}}{character COLUMN_DESCRIPTION}
-  \item{\code{aid_type2_name}}{character COLUMN_DESCRIPTION}
-  \item{\code{aid_type2_description}}{character COLUMN_DESCRIPTION}
+  \item{\code{earmarking_name}}{character COLUMN_DESCRIPTION}
+  \item{\code{earmarking_description}}{character COLUMN_DESCRIPTION}
   \item{\code{aid_type_vocabulary1_name}}{character COLUMN_DESCRIPTION}
   \item{\code{aid_type_vocabulary1_description}}{character COLUMN_DESCRIPTION}
   \item{\code{aid_type_vocabulary2_name}}{character COLUMN_DESCRIPTION}

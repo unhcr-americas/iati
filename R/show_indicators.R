@@ -8,7 +8,9 @@
 #' @param programme_lab A character vector corresponding to the name of the programme.
 #' @param iati_identifier_ops A character vector corresponding to the name of the operation.
 #' @param ctr_name A character vector corresponding to the name of the country.
-#' @param  result_type_name either  "Impact"  "Outcome" "Output" - default is  "Outcome"  
+#' @param  result_type_name either  "Impact"  "Outcome" "Output" - default is  "Outcome" 
+#' @param  type  "deviation" showing difference between target and actual - or 
+#'               "progress"  showing difference between baseline and actual 
 #' 
 #' @import ggplot2
 #' @import dplyr
@@ -20,17 +22,42 @@
 #' 
 #' @return  a graph
 #' @examples
-#' show_indicators(year = 2022, 
-#'              programme_lab = NULL, 
-#'              iati_identifier_ops = NULL, 
+#' show_indicators(year = 2022,  
 #'              ctr_name = "Brazil",
-#'               result_type_name = "Outcome"
+#'               result_type_name = "Outcome",
+#'              type = "deviation"
+#'              )
+#' show_indicators(year = 2022,  
+#'              ctr_name = "Brazil",
+#'               result_type_name = "Impact",
+#'              type = "deviation"
+#'              )
+#' show_indicators(year = 2019,  
+#'              ctr_name = "Brazil",
+#'               result_type_name = "Output",
+#'              type = "deviation"
+#'              )
+#' show_indicators(year = 2022,  
+#'              ctr_name = "Brazil",
+#'               result_type_name = "Outcome",
+#'              type = "progress"
+#'              )
+#' show_indicators(year = 2022,  
+#'              ctr_name = "Brazil",
+#'               result_type_name = "Impact",
+#'              type = "progress"
+#'              )
+#' show_indicators(year = 2019,  
+#'              ctr_name = "Brazil",
+#'               result_type_name = "Output",
+#'              type = "progress"
 #'              )
 show_indicators <- function(year, 
                         programme_lab = NULL, 
                         iati_identifier_ops = NULL, 
                         ctr_name = NULL ,
-                       result_type_name = "Outcome") {
+                       result_type_name = "Outcome",
+                        type = "deviation") {
   
   
   # Check if only one argument is passed 
@@ -52,7 +79,7 @@ show_indicators <- function(year,
     df <- df |> 
       # levels(as.factor(df$result_type_name ))
       dplyr::filter( programmme_lab == thisprogramme_lab &
-            year >= thisyear & 
+            year == thisyear & 
              result_type_name ==  thisresult_type_name)
   } else if (!is.null(iati_identifier_ops)) {
     thisiati_identifier_ops <- iati_identifier_ops
@@ -60,7 +87,7 @@ show_indicators <- function(year,
     thisresult_type_name <-  result_type_name
     df <- df |> 
       dplyr::filter(iati_identifier_ops == thisiati_identifier_ops &
-            year >= thisyear & 
+            year == thisyear & 
              result_type_name ==  thisresult_type_name)
   } else if (!is.null(ctr_name)) {
     thisctr_name <- ctr_name
@@ -68,115 +95,210 @@ show_indicators <- function(year,
     thisresult_type_name <-  result_type_name
     df <- df |> 
       dplyr::filter( ctr_name == thisctr_name &
-            year >= thisyear & 
+            year == thisyear & 
             result_type_name ==  thisresult_type_name)
   }
    
   ## in order to compare indictors alltogether in the same country, we need to normalise them
   ## one way is to compute the distance to the target...
   ## names(df)
+  
+  #table(df$result_indicator_ascending, useNA = "ifany")
   df1 <- df  |> 
-    dplyr::select(result_type_name ,  result_title, indicator_measure_name, result_indicator_title,
-                  result_indicator_baseline_value, result_indicator_target_value,
-                  result_indicator_baseline_location_ref, result_indicator_baseline_dimension_1,
-                  result_indicator_baseline_dimension_value_1, result_indicator_baseline_dimension_2,
-                  result_indicator_baseline_dimension_value_2) |>
-      dplyr::mutate(  actual = as.numeric(result_indicator_baseline_value),
-                      target = as.numeric(result_indicator_target_value),
+    dplyr::select(result_type_name ,  result_title, 
+                  indicator_measure_name, result_indicator_title,
+                  
+                  result_indicator_baseline_value, 
+                  result_indicator_actual_value,
+                  result_indicator_target_value,
+                  result_indicator_target_value_1,
+                  
+                  result_indicator_baseline_location_ref, 
+                  result_indicator_baseline_dimension_1,
+                  result_indicator_baseline_dimension_value_1, 
+                  result_indicator_baseline_dimension_2,
+                  result_indicator_baseline_dimension_value_2,
+                  result_indicator_ascending)  |>
+  
+    
+     
+      dplyr::mutate(  actual = as.numeric(result_indicator_actual_value),
+                      baseline = as.numeric(result_indicator_baseline_value),
+                      target = as.numeric(result_indicator_target_value), 
+                      ## Reshape the indicator label... 
+                      operation = as.character(glue::glue("{result_indicator_title} / {result_indicator_target_value_1}") ), 
+                      # operation = as.character(glue::glue("{result_indicator_title} / {result_title} -
+                      #                                        {result_indicator_target_value_1}") ),  
                       
-              ## Calculating gap to target        
-                      gap_actual_target = - round( (  target - actual) /  target *100  ,2 ),
-                      #gap_actual_target = dplyr::if_else(reverse == "TRUE", gap_actual_target * -1, gap_actual_target), 
-                      gap_actual_target =   gap_actual_target , 
-                      gap_color = dplyr::case_when(
-                        gap_actual_target >= 0     ~ "green",
-                        gap_actual_target < 0  & gap_actual_target >= -10    ~ "orange",
-                        gap_actual_target < -10     ~ "red",  
-                                                   TRUE ~ "") )     |> 
-    dplyr::filter (! (is.na(actual)))  |> 
-    dplyr::filter (! (is.nan(gap_actual_target))) |>
-      #dplyr::arrange(desc(actual))
-      dplyr::group_by( result_indicator_title) |>
-      dplyr::arrange(desc( actual), .by_group=TRUE )  |> 
-      dplyr::ungroup(result_indicator_title) |>
+              ## Calculating deviation to target        
+                      deviation_actual_target =  round( ( actual - target ) / 
+                                                           dplyr::if_else(target == 0, 1, target) * 
+                                                           dplyr::if_else(target == 0, 1, 100) ,2 ),
+               
+                      ## Account for indicator direction
+                      deviation_actual_target = dplyr::if_else(result_indicator_ascending == 0, 
+                                                         deviation_actual_target * -1, 
+                                                         deviation_actual_target),   
+                      
+                      deviation_color = dplyr::case_when(
+                        deviation_actual_target >= -1     ~ "green",
+                        deviation_actual_target < -1  & deviation_actual_target >= -15    ~ "orange",
+                        deviation_actual_target < -15     ~ "red",  
+                                                   TRUE ~ ""),
+              ## Calculating progress to baseline..        
+                      progress_baseline =  round( ( actual - baseline) / 
+                                                           dplyr::if_else(baseline == 0, 1, baseline) * 
+                                                           dplyr::if_else(baseline == 0, 1, 100)  ,2 ), 
+                      ## Account for indicator direction
+                      progress_baseline = dplyr::if_else(result_indicator_ascending == 0, 
+                                                         progress_baseline * -1, 
+                                                         progress_baseline),   
+                      progress_color = dplyr::case_when(
+                        progress_baseline >= -1     ~ "green",
+                        progress_baseline < -1  & progress_baseline >= -15    ~ "orange",
+                        progress_baseline < -15     ~ "red",  
+                                                   TRUE ~ "")
               
+              )    
+  
+  ### Type of chart to build...
+  if(type == "deviation") {
+    
+      df1 <- df1 |> 
+          ## Filter out - when no data...
+          dplyr::filter (! (is.na(actual)))  |> 
+          dplyr::filter (! (is.na(target)))  |> 
+          dplyr::filter (! (is.nan(deviation_actual_target))) |>
+          #dplyr::arrange(desc(actual))
+          dplyr::group_by( result_indicator_title) |>
+          dplyr::arrange(desc( actual), .by_group=TRUE )  |> 
+          dplyr::ungroup(result_indicator_title)
+     
+          ## case there's no data at all
+          if( nrow(df1) == 0) {
+                info <-  paste0("No deviation - actual to target - \n comparative analysis \n  could be produced for \n",
+                                result_type_name, " indicator values \n in ", 
+                              programme_lab, ctr_name,iati_identifier_ops, " for year: ", year)
+                p <- ggplot2::ggplot() +  
+                     ggplot2::annotate("text",  x = 1, y = 1, size = 12,
+                                          label = info ) +  
+                     ggplot2::theme_void()
+          
+           } else if(nrow(df1)> 0) {
+              ## and now the plot
+              p <- ggplot2::ggplot(  data = df1) +
+                ggplot2::coord_flip()  + 
+                ggplot2::geom_col(   
+                  ggplot2::aes(x = stats::reorder(operation, - deviation_actual_target),
+                               y = deviation_actual_target,
+                               fill = deviation_color ),
+                            width = 0.7,
+                            color = NA ) 
               
-              ## Calculating gap to green threshold
-              #dplyr::mutate(  gap_actual_green = - round( ( threshold_green - actual) /  threshold_green *100 ,2 ),
-                      # gap_actual_green = dplyr::if_else(reverse == "TRUE", gap_actual_green * -1, gap_actual_green), 
-                      # gap_color_green = dplyr::case_when(
-                      #   gap_actual_green >= 5     ~ "green",
-                      #   gap_actual_green < 5  & gap_actual_target >= -15    ~ "orange",
-                      #   gap_actual_green < -15     ~ "red",  
-                      #                              TRUE ~ "")  )     |> 
-
-  ## Reshape the inidcator label... 
-      dplyr::mutate( operation = as.character(glue::glue("{result_title}-
-                                                         {result_indicator_title} /
-                                                         {result_indicator_baseline_dimension_1}") ) )  
+               p <-   p +
+                ggplot2::scale_fill_manual(values = c( "red" = "#D3212C",   
+                                              "orange" = "#FF980E",
+                                              "green" = "#069C56")) +
+                ggplot2::geom_text( 
+                  ggplot2::aes(x = stats::reorder(operation, - deviation_actual_target), 
+                               y = deviation_actual_target,
+                               label = paste(round(deviation_actual_target, 1), " %") ),
+                           #hjust = 1.5, 
+                           size = 2.5,
+                           color = "black")  +
+                # scale_y_continuous( label = scales::label_percent(accuracy = 0,
+                #                                    suffix = "%") ) +
+                ggplot2::scale_y_continuous( label =  scales::label_number(accuracy = 1, 
+                                                                  scale_cut = scales::cut_short_scale(),
+                                                                  suffix = "%") )+
+                ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 120)) +
+                unhcrthemes::theme_unhcr(font_size = 18, 
+                                         axis_text_size = 9,
+                                         grid = "X", 
+                                         axis = "y") +
+                ggplot2::theme(  #axis.text.y = ggtext::element_markdown(),
+                        legend.position = "none")+
+                ggplot2::labs( x = "", y = "" ,
+                      title = stringr::str_wrap( 
+                        paste0( result_type_name, " Indicators | ", thisyear, " ", 
+                                programme_lab, ctr_name,iati_identifier_ops ) ,
+                        100),
+                      subtitle = stringr::str_wrap( paste0( 
+                        "Deviation between reported \"Actual\" value and programmatic \"Target\" (in %)" ) ,
+                        110),
+                      caption = stringr::str_wrap( 
+                        "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ,
+                      110) )  
+           }
+    } else if( type == "progress")  {
+      
+      df1 <- df1 |> 
+        ## Filter out - when no data...
+        dplyr::filter (! (is.na(actual)))  |> 
+        dplyr::filter (! (is.na(baseline)))  |> 
+        dplyr::filter (! (is.nan(progress_baseline))) |>
+        #dplyr::arrange(desc(actual))
+        dplyr::group_by( result_indicator_title) |>
+        dplyr::arrange(desc( actual), .by_group=TRUE )  |> 
+        dplyr::ungroup(result_indicator_title)
  
-  ## case there's no data at all
-  if( nrow(df1) == 0) {
-        info <-  paste0("No gap analysis could be \n produced for \n outcome indicator values \n in ", 
-                      programme_lab, ctr_name,iati_identifier_ops)
-        p <- ggplot2::ggplot() +  
-             ggplot2::annotate("text",  x = 1, y = 1, size = 12,
-                                  label = info ) +  
-             ggplot2::theme_void()
-  
-   } else if(nrow(df1)> 0) {
-  
-      ## and now the plot
-      p <-      ggplot2::ggplot(  data = df1) +
-        ggplot2::coord_flip()  + 
-        # geom_col(   aes(x = stats::reorder(operation, - gap_actual_green), 
-        #                 y = gap_actual_green ,
-        #                 fill = gap_color_green ),
-        #            # fill = "grey50",    
-        #             alpha = 0.3,    
-        #             width = 0.9,
-        #            color = NA ) +
-        ggplot2::geom_col(   
-          ggplot2::aes(x = stats::reorder(operation, - gap_actual_target),
-                       y = gap_actual_target,
-                       fill = gap_color ),
-                    #fill = "#0072BC",
-                    width = 0.7,
-                    color = NA ) +
-        ggplot2::scale_fill_manual(values = c( "red" = "#D3212C",   
-                                      "orange" = "#FF980E",
-                                      "green" = "#069C56")) +
-        ggplot2::geom_text( 
-          ggplot2::aes(x = stats::reorder(operation, - gap_actual_target), 
-                       y = gap_actual_target,
-                       label = paste(round(gap_actual_target, 1), " %") ),
-                   #hjust = 1.5, 
-                   size = 2.5,
-                   color = "black")  +
-        # scale_y_continuous( label = scales::label_percent(accuracy = 0,
-        #                                    suffix = "%") ) +
-        ggplot2::scale_y_continuous( label =  scales::label_number(accuracy = 1, 
-                                                          scale_cut = scales::cut_short_scale(),
-                                                          suffix = "%") )+
-        ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 120)) +
-        unhcrthemes::theme_unhcr(font_size = 18, 
-                                 axis_text_size = 9,
-                                 grid = "X", 
-                                 axis = "y") +
-        ggplot2::theme(  #axis.text.y = ggtext::element_markdown(),
-                legend.position = "none")+
-        ggplot2::labs( x = "", y = "" ,
-              title = stringr::str_wrap( 
-                paste0("Outcome Indicators (RBM) | ", thisyear, " ", 
-                        programme_lab, ctr_name,iati_identifier_ops ) ,
-                100),
-              subtitle = stringr::str_wrap( paste0( 
-                "Gap in % between \"Actual\" reported value and the \"acceptable\" standard threshold" ) ,
-                110),
-              caption = stringr::str_wrap( "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ,
-              110) )  
-      }
- 
+        ## case there's no data at all
+        if( nrow(df1) == 0) {
+              info <- paste0("No progress - actual to baseline - \n comparative analysis \n  could be produced for \n",
+                                  result_type_name, " indicator values \n in ", 
+                                programme_lab, ctr_name,iati_identifier_ops, " for year: ", year)
+              p <- ggplot2::ggplot() +  
+                   ggplot2::annotate("text",  x = 1, y = 1, size = 12,
+                                        label = info ) +  
+                   ggplot2::theme_void()
+        
+         } else if(nrow(df1)> 0) {
+            ## and now the plot
+            p <-  ggplot2::ggplot(  data = df1) +
+              ggplot2::coord_flip()  + 
+              ggplot2::geom_col(   
+                ggplot2::aes(x = stats::reorder(operation, - progress_baseline),
+                             y = progress_baseline,
+                             fill = deviation_color ),
+                          width = 0.7,
+                          color = NA ) 
+            
+             p <-   p +
+              ggplot2::scale_fill_manual(values = c( "red" = "#D3212C",   
+                                            "orange" = "#FF980E",
+                                            "green" = "#069C56")) +
+              ggplot2::geom_text( 
+                ggplot2::aes(x = stats::reorder(operation, - progress_baseline), 
+                             y = progress_baseline,
+                             label = paste(round(progress_baseline, 1), " %") ),
+                         #hjust = 1.5, 
+                         size = 2.5,
+                         color = "black")  +
+              # scale_y_continuous( label = scales::label_percent(accuracy = 0,
+              #                                    suffix = "%") ) +
+              ggplot2::scale_y_continuous( label =  scales::label_number(accuracy = 1, 
+                                                                scale_cut = scales::cut_short_scale(),
+                                                                suffix = "%") )+
+              ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 120)) +
+              unhcrthemes::theme_unhcr(font_size = 18, 
+                                       axis_text_size = 9,
+                                       grid = "X", 
+                                       axis = "y") +
+              ggplot2::theme(  #axis.text.y = ggtext::element_markdown(),
+                      legend.position = "none")+
+              ggplot2::labs( x = "", y = "" ,
+                    title = stringr::str_wrap( 
+                      paste0( result_type_name, " Indicators | ", thisyear, " ", 
+                              programme_lab, ctr_name,iati_identifier_ops ) ,
+                      100),
+                    subtitle = stringr::str_wrap( paste0( 
+                      "Progress comparison between \"Actual\" reported value and their \"baseline\" (in %)" ) ,
+                      110),
+                    caption = stringr::str_wrap(
+                      "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ,
+                    110) )  
+             }
+  }
   return(p)
     
 }

@@ -61,6 +61,7 @@ show_donors <- function(year,
   df <-  iati::dataTransaction |> 
          dplyr::left_join(iati::dataActivity, by= c("iati_identifier"))  
   
+  ## Filtering
   if (!is.null(programme_lab)) {
     thisprogramme_lab <- programme_lab
     thisyear <-  year
@@ -88,31 +89,47 @@ show_donors <- function(year,
              transaction_type_name ==  thistransaction_type_name)
   }
    
-  df <- df |> 
-    dplyr::group_by(year, reporting_org_type_name) |>
-    dplyr::summarise( transaction_value_USD = sum(transaction_value_USD , na.rm = TRUE)) |>
-    dplyr::mutate(reporting_org_type_name = as.character(reporting_org_type_name) )  |>
-    dplyr::mutate(reporting_org_type_name = as.factor(reporting_org_type_name) ) 
+ 
   
- p <- df |> 
-#  dplyr::filter(transaction_value_USD  <= 1000000 & transaction_value_USD  > 1000) |> 
-  ggplot2::ggplot(ggplot2::aes(y = transaction_value_USD ,
-             x =  year,
-             fill = reporting_org_type_name)) +
-  ggplot2::geom_bar(alpha = 0.9, stat = "identity") +
-  ggplot2::scale_fill_viridis_d(option = "inferno", na.value = "grey50") +
-  ggplot2::scale_y_continuous(
-    expand = ggplot2::expansion(mult = c(0, .1)),
-    labels = scales::label_number(scale_cut = scales::cut_short_scale())  ) +
-#  scale_x_continuous(labels = scales::label_number(scale_cut = cut_short_scale())) +
- # ggplot2::facet_wrap(~ trans_year) +
-  unhcrthemes::theme_unhcr(grid = "Y", axis = "X", axis_title = "X")+
-  ggplot2::labs(
-    title = paste0(transaction_type_name," received by UNHCR in USD"),
-    subtitle = paste0("In ", programme_lab, ctr_name,iati_identifier_ops, " recorded since ", year,""),
-    x = "",
-    y = "",
-    caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ) 
+  df1 <- df |> 
+    dplyr::group_by(year, provider_org_type_name) |>
+    dplyr::summarise( transaction_value_USD = sum(transaction_value_USD , na.rm = TRUE)) |>
+    dplyr::mutate(provider_org_type_name = as.character(provider_org_type_name) )  |>
+    dplyr::mutate(provider_org_type_name = as.factor(provider_org_type_name) ) 
+  
+  
+    ## case there's no data at all
+    if( nrow(df1) == 0) {
+      info <-  paste0("No ", transaction_type_name, "\n  recorded   in ", 
+                              programme_lab, ctr_name,iati_identifier_ops, " for year: ", year)
+      p <- ggplot2::ggplot() +  
+                     ggplot2::annotate("text",  x = 1, y = 1, size = 12,
+                                          label = info ) +  
+                     ggplot2::theme_void()
+          
+    } else if(nrow(df1)> 0) {
+      
+      
+     p <- df1 |> 
+    #  dplyr::filter(transaction_value_USD  <= 1000000 & transaction_value_USD  > 1000) |> 
+      ggplot2::ggplot(ggplot2::aes(y = transaction_value_USD ,
+                 x =  year,
+                 fill = provider_org_type_name)) +
+      ggplot2::geom_bar(alpha = 0.9, stat = "identity") +
+      ggplot2::scale_fill_viridis_d(option = "inferno", na.value = "grey50") +
+      ggplot2::scale_y_continuous(
+        expand = ggplot2::expansion(mult = c(0, .1)),
+        labels = scales::label_number(scale_cut = scales::cut_short_scale())  ) +
+    #  scale_x_continuous(labels = scales::label_number(scale_cut = cut_short_scale())) +
+     # ggplot2::facet_wrap(~ trans_year) +
+      unhcrthemes::theme_unhcr(grid = "Y", axis = "X", axis_title = "X", font_size = 18)+
+      ggplot2::labs(
+        title = paste0(transaction_type_name," (in USD)"),
+        subtitle = paste0("Recorded in ", programme_lab, ctr_name,iati_identifier_ops, " since ", year,""),
+        x = "",
+        y = "",
+        caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ) 
+           }
  
   return(p)
 }
@@ -120,29 +137,21 @@ show_donors <- function(year,
 
 
 ```{r examples-show_donors, message=FALSE, warning=FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center",  out.width = "90%"}
-
 knitr::kable(iati::dataTransaction |>
                 dplyr::select( transaction_type_name, transaction_type_description) |>
                 dplyr::distinct() )
-
 show_donors(year = 2022,
            programme_lab = "The Americas",
            transaction_type_name = "Incoming Commitment" )
-
 show_donors(year = 2018,
            ctr_name = "Brazil",
            transaction_type_name = "Incoming Commitment" )
-
-
 show_donors(year = 2018,
-           programme_lab = "The Americas",
+           programme_lab = "Brazil",
            transaction_type_name = "Disbursement" )
-
-
 show_donors(year = 2018,
-           programme_lab = "The Americas",
+           programme_lab = "Brazil",
            transaction_type_name = "Expenditure" )
-
 ```
 
 ```{r tests-show_donors}
@@ -150,6 +159,142 @@ test_that("show_donors works", {
   expect_true(inherits(show_donors, "function")) 
 })
 ```
+
+## show_top_donors
+    
+```{r function-show_top_donors}
+#' show_top_donors
+#'
+#' @description Who are the main donors by country in terms of transaction? 
+#' 
+#' @param year year to select starting from 2016 - could be one year or a list
+#' @param programme_lab A character vector corresponding to the name of the programme.
+#' @param iati_identifier_ops A character vector corresponding to the name of the operation.
+#' @param ctr_name A character vector corresponding to the name of the country.
+#' @param transaction_type_name Transaction type - default is "Incoming Commitment" ,
+#'   can also be   "Disbursement", or "Expenditure"  
+#' @param top_n top n donors to show - the rest being lumped together
+#' 
+#' @import ggplot2
+#' @import dplyr
+#' @import scales
+#' @import unhcrthemes
+#'
+#' @export 
+#'
+#' @return  a graph
+show_top_donors <- function(year, 
+                        programme_lab = NULL, 
+                        iati_identifier_ops = NULL, 
+                        ctr_name = NULL,
+                        transaction_type_name = "Incoming Commitment",
+                        top_n = 5) {
+  
+  ## Check year is after or equal 2016
+  
+  
+  # Check if only one argument is passed 
+  if (!is.null(programme_lab) && !is.null(iati_identifier_ops)) {
+    stop("Please pass only one of the arguments programme_lab or iati_identifier_ops.")
+  } else if (!is.null(programme_lab) && !is.null(ctr_name)) {
+    stop("Please pass only one of the arguments programme_lab or ctr_name.")
+  } else if (!is.null(iati_identifier_ops) && !is.null(ctr_name)) {
+    stop("Please pass only one of the arguments iati_identifier_ops or ctr_name.")
+  }
+  
+  df <-  iati::dataTransaction |> 
+         dplyr::left_join(iati::dataActivity, by= c("iati_identifier"))  
+  
+  ## Filtering
+  if (!is.null(programme_lab)) {
+    thisprogramme_lab <- programme_lab
+    thisyear <-  year
+    thistransaction_type_name <-  transaction_type_name
+    df <- df |> 
+      # levels(as.factor(df$programmme_lab))
+      dplyr::filter( programmme_lab == thisprogramme_lab &
+            year == thisyear & 
+             transaction_type_name ==  thistransaction_type_name)
+  } else if (!is.null(iati_identifier_ops)) {
+    thisiati_identifier_ops <- iati_identifier_ops
+    thisyear <-  year
+    thistransaction_type_name <-  transaction_type_name
+    df <- df |> 
+      dplyr::filter(iati_identifier_ops == thisiati_identifier_ops &
+            year == thisyear & 
+             transaction_type_name ==  thistransaction_type_name)
+  } else if (!is.null(ctr_name)) {
+    thisctr_name <- ctr_name
+    thisyear <-  year
+    thistransaction_type_name <-  transaction_type_name
+    df <- df |> 
+      dplyr::filter( ctr_name == thisctr_name &
+            year == thisyear & 
+             transaction_type_name ==  thistransaction_type_name)
+  }
+   
+   
+  df2 <- df |>
+    dplyr::group_by(year, transaction_provider_org) |>
+    dplyr::summarise( transaction_value_USD = sum(transaction_value_USD , na.rm = TRUE)) |>
+    dplyr::mutate( transaction_provider_org = as.character(transaction_provider_org) )  |>
+    dplyr::mutate( transaction_provider_org = as.factor(transaction_provider_org) )  |>
+    dplyr::mutate( transaction_provider_org = forcats::fct_lump_n(
+        f = transaction_provider_org,
+        n = top_n,  #### Parameter
+        w = transaction_value_USD,
+        other_level = 'Other Partners',
+        ties.method = "last")    ) |>
+    dplyr::group_by(year, transaction_provider_org) |>
+    dplyr::summarise( transaction_value_USD = sum(transaction_value_USD , na.rm = TRUE)) |>
+    dplyr::mutate(transaction_provider_org = as.character(transaction_provider_org) )  |>
+    dplyr::mutate(transaction_provider_org = as.factor(transaction_provider_org) )
+  
+  #levels(as.factor(df2$transaction_provider_org))
+
+  
+ p <- df2 |> 
+#  dplyr::filter(transaction_value_USD  <= 1000000 & transaction_value_USD  > 1000) |> 
+  ggplot2::ggplot(ggplot2::aes(y = transaction_value_USD ,
+             x = stats::reorder( transaction_provider_org, transaction_value_USD) )) +
+  ggplot2::geom_bar(alpha = 0.9, stat = "identity", fill = "#0072BC") +
+  ggplot2::coord_flip() +
+  ggplot2::scale_y_continuous(
+    expand = ggplot2::expansion(mult = c(0, .1)),
+    labels = scales::label_number(scale_cut = scales::cut_short_scale())  ) +
+#  scale_x_continuous(labels = scales::label_number(scale_cut = cut_short_scale())) +
+ # ggplot2::facet_wrap(~ trans_year) +
+  unhcrthemes::theme_unhcr(grid = "X", axis = "X", axis_title = "X", font_size = 18)+
+  ggplot2::labs(
+    title = paste0(transaction_type_name," (in USD)"),
+    subtitle = paste0("Recorded in ", programme_lab, ctr_name,iati_identifier_ops, "  in year ", year,""),
+    x = "",
+    y = "",
+    caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ) 
+ 
+  return(p)
+}
+```
+  
+```{r example-show_top_donors, message=FALSE, warning=FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center",  out.width = "90%"}
+show_top_donors(year = 2022,
+           ctr_name = "Brazil",
+           transaction_type_name = "Incoming Commitment" ,
+           top_n = 5)
+show_top_donors(year = 2020,
+           ctr_name = "Brazil",
+           transaction_type_name = "Incoming Commitment" ,
+           top_n = 10)
+```
+  
+```{r tests-show_top_donors}
+test_that("show_top_donors works", {
+  expect_true(inherits(show_top_donors, "function")) 
+})
+```
+  
+
+
 
 ## show_earmarking
 
@@ -215,17 +360,17 @@ show_earmarking <- function(year,
              transaction_type_name ==  "Incoming Commitment")
   }
    
-  df <- df |> 
-    dplyr::group_by(year, aid_type1_name) |>
+  df2 <- df |> 
+    dplyr::group_by(year, earmarking_name) |>
     dplyr::summarise( transaction_value_USD = sum(transaction_value_USD , na.rm = TRUE)) |>
-    dplyr::mutate(aid_type1_name = as.character(aid_type1_name) )  |>
-    dplyr::mutate(aid_type1_name = as.factor(aid_type1_name) ) 
+    dplyr::mutate(earmarking_name = as.character(earmarking_name) )  |>
+    dplyr::mutate(earmarking_name = as.factor(earmarking_name) ) 
   
- p <- df |> 
+ p <- df2 |> 
 #  dplyr::filter(transaction_value_USD  <= 1000000 & transaction_value_USD  > 1000) |> 
   ggplot2::ggplot(ggplot2::aes(y = transaction_value_USD ,
              x =  year,
-             fill = aid_type1_name)) +
+             fill = earmarking_name)) +
   ggplot2::geom_bar(alpha = 0.9, stat = "identity") +
   ggplot2::scale_fill_viridis_d(option = "inferno", na.value = "grey50") +
   ggplot2::scale_y_continuous(
@@ -233,10 +378,10 @@ show_earmarking <- function(year,
     labels = scales::label_number(scale_cut = scales::cut_short_scale())  ) +
 #  scale_x_continuous(labels = scales::label_number(scale_cut = cut_short_scale())) +
  # ggplot2::facet_wrap(~ trans_year) +
-  unhcrthemes::theme_unhcr(grid = "Y", axis = "X", axis_title = "X")+
+  unhcrthemes::theme_unhcr(grid = "Y", axis = "X", axis_title = "X", font_size = 18)+
   ggplot2::labs(
-    title = paste0("Earmarking level in USD"),
-    subtitle = paste0("In  recorded since ", year,""),
+    title = paste0("Commitment vs Earmarking (in USD)"),
+    subtitle = paste0("Recorded in ", programme_lab, ctr_name,iati_identifier_ops, " since ", year,""),
     x = "",
     y = "",
     caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ) 
@@ -246,6 +391,10 @@ show_earmarking <- function(year,
 ```
   
 ```{r example-show_earmarking, message=FALSE, warning=FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center",  out.width = "90%"}
+knitr::kable(iati::dataTransaction |>
+                dplyr::select(earmarking_name, earmarking_description)  |>
+                dplyr::distinct() |>
+                dplyr::filter(!(is.na(earmarking_name))))
 show_earmarking(year = 2018, 
              programme_lab = NULL, 
              iati_identifier_ops = NULL, 
@@ -259,19 +408,13 @@ test_that("show_earmarking works", {
 ```
   
 
-
-
-# Using `iati::dataBudget`
-
-## show_expenditure
-
- *  How much __expenditures compare to the initial budget__ (weighted by # PoCs / GPP in the country)?   
+## show_contributions
     
-```{r function-show_expenditure}
+```{r function-show_contributions}
 #' Title
 #' 
-#' How much expenditures compare to the initial budget (weighted by # PoCs / GPP in the country)?   
-
+#' @description What’s the breakdown by contribution Type (Un-earmarked, Tightly earmarked, etc.) from Donor Funds by Year?  
+#' 
 #' @param year A numeric value corresponding to the first year of focus until the most recent year within the dataset.
 #' @param programme_lab A character vector corresponding to the name of the programme.
 #' @param iati_identifier_ops A character vector corresponding to the name of the operation.
@@ -284,7 +427,7 @@ test_that("show_earmarking works", {
 #'
 #' @export 
 #' @return  a graph
-show_expenditure <- function(year, 
+show_contributions <- function(year, 
                         programme_lab = NULL, 
                         iati_identifier_ops = NULL, 
                         ctr_name = NULL  ) {
@@ -300,8 +443,7 @@ show_expenditure <- function(year,
   }
   
   df <-  iati::dataTransaction |> 
-         dplyr::left_join(iati::dataActivity, by= c("iati_identifier"))   |> 
-         dplyr::left_join(iati::dataBudget, by= c("iati_identifier"))  
+         dplyr::left_join(iati::dataActivity, by= c("iati_identifier"))  
   
   if (!is.null(programme_lab)) {
     thisprogramme_lab <- programme_lab
@@ -327,13 +469,13 @@ show_expenditure <- function(year,
              transaction_type_name ==  "Incoming Commitment")
   }
    
-  df <- df |> 
+  df2 <- df |> 
     dplyr::group_by(year, aid_type1_name) |>
     dplyr::summarise( transaction_value_USD = sum(transaction_value_USD , na.rm = TRUE)) |>
     dplyr::mutate(aid_type1_name = as.character(aid_type1_name) )  |>
     dplyr::mutate(aid_type1_name = as.factor(aid_type1_name) ) 
   
- p <- df |> 
+ p <- df2 |> 
 #  dplyr::filter(transaction_value_USD  <= 1000000 & transaction_value_USD  > 1000) |> 
   ggplot2::ggplot(ggplot2::aes(y = transaction_value_USD ,
              x =  year,
@@ -345,10 +487,190 @@ show_expenditure <- function(year,
     labels = scales::label_number(scale_cut = scales::cut_short_scale())  ) +
 #  scale_x_continuous(labels = scales::label_number(scale_cut = cut_short_scale())) +
  # ggplot2::facet_wrap(~ trans_year) +
-  unhcrthemes::theme_unhcr(grid = "Y", axis = "X", axis_title = "X")+
+  unhcrthemes::theme_unhcr(grid = "Y", axis = "X", axis_title = "X", font_size = 18)+
   ggplot2::labs(
-    title = paste0("Earmarking level in USD"),
-    subtitle = paste0("In  recorded since ", year,""),
+    title = paste0("Commitment vs Contribution type (in USD)"),
+    subtitle = paste0("Recorded in ", programme_lab, ctr_name,iati_identifier_ops, " since ", year,""),
+    x = "",
+    y = "",
+    caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ) 
+ 
+  return(p) 
+}
+```
+  
+```{r example-show_contributions, message=FALSE, warning=FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center",  out.width = "90%"}
+knitr::kable(iati::dataTransaction |>
+                dplyr::select(aid_type1_name, aid_type1_description)  |>
+                dplyr::distinct() |>
+                dplyr::filter(!(is.na(aid_type1_name))))
+show_contributions(year = 2018, 
+                   ctr_name = "Brazil") 
+show_contributions(year = 2018, 
+                   programme_lab = "The Americas") 
+```
+  
+```{r tests-show_contributions}
+test_that("show_contributions works", {
+  expect_true(inherits(show_contributions, "function")) 
+})
+```
+  
+
+# Using `iati::dataBudget`
+
+## show_expenditure
+
+ *  How much __expenditures compare to the initial budget__ (potentially weighted by # )?   
+    
+```{r function-show_expenditure}
+#' show_expenditure
+#' 
+#' How much expenditures compare to the initial budget (potentially weighted by #)?   
+#' 
+#' @param year A numeric value corresponding to the first year of focus until the most recent year within the dataset.
+#' @param programme_lab A character vector corresponding to the name of the programme.
+#' @param iati_identifier_ops A character vector corresponding to the name of the operation.
+#' @param ctr_name A character vector corresponding to the name of the country.
+#' @param weight_by list of population group to weight the budget - 
+#'                   "refugees", "asylum_seekers",
+#'                    "returned_refugees" "idps",
+#'                    "returned_idps", "stateless", 
+#'                    "ooc", "oip"  
+#'                   default is null.
+#' 
+#' @import ggplot2
+#' @import dplyr
+#' @import tidyselect
+#' @import scales
+#' @import unhcrthemes
+#' @import refugees
+#'
+#' @export 
+#' @return  a graph
+show_expenditure <- function(year, 
+                        programme_lab = NULL, 
+                        iati_identifier_ops = NULL, 
+                        ctr_name = NULL ,
+                        weight_by = NULL) {
+  
+  
+  # Check if only one argument is passed 
+  if (!is.null(programme_lab) && !is.null(iati_identifier_ops)) {
+    stop("Please pass only one of the arguments programme_lab or iati_identifier_ops.")
+  } else if (!is.null(programme_lab) && !is.null(ctr_name)) {
+    stop("Please pass only one of the arguments programme_lab or ctr_name.")
+  } else if (!is.null(iati_identifier_ops) && !is.null(ctr_name)) {
+    stop("Please pass only one of the arguments iati_identifier_ops or ctr_name.")
+  }
+  
+  df <-  iati::dataTransaction |> 
+         dplyr::left_join(iati::dataActivity, by= c("iati_identifier"))  
+  
+  if (!is.null(programme_lab)) {
+    thisprogramme_lab <- programme_lab
+    thisyear <-  year 
+    df <- df |> 
+      # levels(as.factor(df$programmme_lab))
+      dplyr::filter( programmme_lab == thisprogramme_lab &
+            year >= thisyear & 
+             transaction_type_name ==  "Expenditure")
+  } else if (!is.null(iati_identifier_ops)) {
+    thisiati_identifier_ops <- iati_identifier_ops
+    thisyear <-  year 
+    df <- df |> 
+      dplyr::filter(iati_identifier_ops == thisiati_identifier_ops &
+            year >= thisyear & 
+             transaction_type_name ==  "Expenditure")
+  } else if (!is.null(ctr_name)) {
+    thisctr_name <- ctr_name
+    thisyear <-  year 
+    df <- df |> 
+      dplyr::filter( ctr_name == thisctr_name &
+            year >= thisyear & 
+             transaction_type_name ==  "Expenditure")
+  }
+  
+   df2 <-  df  |> 
+        dplyr::group_by(iati_identifier, year) |>
+        dplyr::summarise(transaction_value= sum(transaction_value, na.rm = TRUE)) |>
+        dplyr::left_join(iati::dataBudget |> 
+                          dplyr::mutate(budget_value= as.numeric(budget_value)) |>
+                          dplyr::group_by(iati_identifier) |>
+                          dplyr::summarise(budget_value= sum(budget_value, na.rm = TRUE))  
+                            , by= c("iati_identifier"))  |>
+     dplyr::select(iati_identifier, year,budget_value,   transaction_value )  
+   
+    # Error catching -- Check if we weight
+    #weight_by <-  c("refugees", "oip") 
+    #weight_by <-  c("refugees", "oidp")
+   
+    if (  !is.null(weight_by) &&  !all(weight_by %in% c("refugees", "asylum_seekers",
+                                                   "returned_refugees", "idps",
+                                                   "returned_idps", "stateless", 
+                                                   "ooc", "oip"  ))  ) {
+     stop("weight_by is used but the population filter is not correctly set up...\n
+          it should be among: refugees, asylum_seekers, returned_refugees, idps,
+          returned_idps, stateless,  ooc, oip")
+    } 
+   
+   ## Calculate weight
+   if (!is.null(weight_by) && !is.null(ctr_name) ) {
+     ctrstat <- refugees::population |>
+            dplyr::filter( year>= thisyear & 
+                             coa_name == thisctr_name) |>
+            dplyr::group_by(year, coa_name) |>
+            dplyr::summarise(refugees = sum(refugees, na.rm = TRUE),
+                             asylum_seekers = sum(asylum_seekers, na.rm = TRUE),
+                              returned_refugees = sum(returned_refugees, na.rm = TRUE),
+                              idps = sum(idps, na.rm = TRUE),
+                              returned_idps = sum(returned_idps , na.rm = TRUE),
+                              stateless = sum(stateless, na.rm = TRUE),
+                              ooc = sum( ooc, na.rm = TRUE),
+                              oip = sum(oip, na.rm = TRUE)) |>
+            dplyr::select(year, coa_name, all_of(weight_by) ) |>
+            dplyr::mutate(year = as.factor(year) ) |>
+            dplyr::mutate( weight = rowSums(
+                                   dplyr::across(tidyselect::where(is.numeric))))
+     
+      df2 <-  df2 |>
+        dplyr::left_join(ctrstat |> 
+                         dplyr::select(year, weight)   , by = c("year")) |>
+        dplyr::mutate(budget_value = round(budget_value / weight,1),   
+                      transaction_value = round(transaction_value  / weight,1))
+     
+    } 
+   
+ subtitt <- if( is.null(weight_by)) {
+   paste0("In ", programme_lab, ctr_name,iati_identifier_ops, " recorded since ", year,"")
+   } else {
+   paste0("Weighted by total number of individual ", 
+          paste(weight_by, collapse = ', '),
+          " in ", 
+          programme_lab, ctr_name,iati_identifier_ops, " as recorded since ", year,"")
+     }
+ 
+ 
+ p <- df2 |> 
+#  dplyr::filter(transaction_value_USD  <= 1000000 & transaction_value_USD  > 1000) |> 
+  ggplot2::ggplot(ggplot2::aes(x =  year, group = 1)) +
+  ggplot2::geom_line(ggplot2::aes(y = budget_value,
+                         color = "Budget"), linewidth = 1.5) +
+  ggplot2::geom_line(ggplot2::aes(y =  transaction_value, 
+                         color = "Expenditure"), linewidth = 1.5) +
+  ggplot2::scale_color_manual(name = " ", 
+                               values = c("Expenditure" = "#F592A0", "Budget" = "#00568D")) +
+  ggplot2::scale_y_continuous(
+    expand = ggplot2::expansion(mult = c(0, .1)),
+    labels = scales::label_number(scale_cut = scales::cut_short_scale())  ) +
+#  scale_x_continuous(labels = scales::label_number(scale_cut = cut_short_scale())) +
+ # ggplot2::facet_wrap(~ trans_year) +
+  unhcrthemes::theme_unhcr(grid = "Y", axis = "X", 
+                           axis_title = "X", font_size = 18,
+                           legend = FALSE)+
+  ggplot2::labs(
+    title = paste0("<span style='color:\"#00568D\"'>Budget</span>  vs <span style='color:\"#F592A0\"'>Expenditure</span>  (in USD)"),
+    subtitle = subtitt,
     x = "",
     y = "",
     caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ) 
@@ -359,9 +681,12 @@ show_expenditure <- function(year,
   
 ```{r example-show_expenditure, message=FALSE, warning=FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center",  out.width = "90%"}
 show_expenditure(year = 2018, 
-             programme_lab = NULL, 
-             iati_identifier_ops = NULL, 
              ctr_name = "Brazil")
+
+show_expenditure(year = 2018, 
+             ctr_name = "Brazil",
+             weight_by = c("refugees", "oip"))
+
 ```
   
 ```{r tests-show_expenditure}
@@ -370,6 +695,118 @@ test_that("show_expenditure works", {
 })
 ```
 
+
+## show_budget_gap
+    
+```{r function-show_budget_gap}
+#' show_budget_gap
+#' 
+#' @param year A numeric value corresponding to the first year of focus until the most recent year within the dataset.
+#' @param programme_lab A character vector corresponding to the name of the programme.
+#' @param iati_identifier_ops A character vector corresponding to the name of the operation.
+#' @param ctr_name A character vector corresponding to the name of the country.
+#' 
+#' @import ggplot2
+#' @import dplyr
+#' @import tidyselect
+#' @import scales
+#' @import unhcrthemes 
+#'
+#' @export 
+#' @return  a graph
+show_budget_gap <- function(year, 
+                        programme_lab = NULL, 
+                        iati_identifier_ops = NULL, 
+                        ctr_name = NULL ) {
+  
+  
+  # Check if only one argument is passed 
+  if (!is.null(programme_lab) && !is.null(iati_identifier_ops)) {
+    stop("Please pass only one of the arguments programme_lab or iati_identifier_ops.")
+  } else if (!is.null(programme_lab) && !is.null(ctr_name)) {
+    stop("Please pass only one of the arguments programme_lab or ctr_name.")
+  } else if (!is.null(iati_identifier_ops) && !is.null(ctr_name)) {
+    stop("Please pass only one of the arguments iati_identifier_ops or ctr_name.")
+  }
+  
+  df <-  iati::dataTransaction |> 
+         dplyr::left_join(iati::dataActivity, by= c("iati_identifier"))  
+  
+  if (!is.null(programme_lab)) {
+    thisprogramme_lab <- programme_lab
+    thisyear <-  year 
+    df <- df |> 
+      # levels(as.factor(df$programmme_lab))
+      dplyr::filter( programmme_lab == thisprogramme_lab &
+            year >= thisyear & 
+             transaction_type_name ==  "Expenditure")
+  } else if (!is.null(iati_identifier_ops)) {
+    thisiati_identifier_ops <- iati_identifier_ops
+    thisyear <-  year 
+    df <- df |> 
+      dplyr::filter(iati_identifier_ops == thisiati_identifier_ops &
+            year >= thisyear & 
+             transaction_type_name ==  "Expenditure")
+  } else if (!is.null(ctr_name)) {
+    thisctr_name <- ctr_name
+    thisyear <-  year 
+    df <- df |> 
+      dplyr::filter( ctr_name == thisctr_name &
+            year >= thisyear & 
+             transaction_type_name ==  "Expenditure")
+  }
+  
+   df2 <-  df  |> 
+        dplyr::group_by(iati_identifier, year) |>
+        dplyr::summarise(transaction_value= sum(transaction_value, na.rm = TRUE)) |>
+        dplyr::left_join(iati::dataBudget |> 
+                          dplyr::mutate(budget_value= as.numeric(budget_value)) |>
+                          dplyr::group_by(iati_identifier) |>
+                          dplyr::summarise(budget_value= sum(budget_value, na.rm = TRUE))  
+                            , by= c("iati_identifier"))  |>
+     dplyr::select(iati_identifier, year,budget_value,   transaction_value )  |>
+     dplyr::mutate(budget_gap = (budget_value - transaction_value) / budget_value *100) 
+   
+ 
+ 
+ p <- df2 |> 
+#  dplyr::filter(transaction_value_USD  <= 1000000 & transaction_value_USD  > 1000) |> 
+  ggplot2::ggplot(ggplot2::aes(x =  year, group = 1)) +
+  ggplot2::geom_line(ggplot2::aes(y = budget_gap,
+                         color = "Budget"),
+                     linewidth = 1.5,
+                     color = "#F592A0") +  
+  ggplot2::scale_y_continuous(
+    expand = ggplot2::expansion(mult = c(0, .1)),
+    labels = scales::label_number(scale_cut = scales::cut_short_scale())  ) +
+#  scale_x_continuous(labels = scales::label_number(scale_cut = cut_short_scale())) +
+ # ggplot2::facet_wrap(~ trans_year) +
+  unhcrthemes::theme_unhcr(grid = "Y", axis = "X", 
+                           axis_title = "X", font_size = 18,
+                           legend = FALSE)+
+  ggplot2::labs(
+    title = paste0( "Budget Gap  (in %)"),
+    subtitle =  paste0("In ", programme_lab, ctr_name,iati_identifier_ops, " recorded since ", year,""),
+    x = "",
+    y = "",
+    caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ) 
+ 
+  return(p)
+    
+}
+```
+  
+```{r example-show_budget_gap, message=FALSE, warning=FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center",  out.width = "90%"}
+show_budget_gap(year = 2018, 
+             ctr_name = "Brazil")
+```
+  
+```{r tests-show_budget_gap}
+test_that("show_budget_gap works", {
+  expect_true(inherits(show_budget_gap, "function")) 
+})
+```
+  
 
 # Using `iati::dataParticipating_org`
 
@@ -522,7 +959,7 @@ test_that("show_partnership works", {
 #' 
 #' @description  What are the most funded sectors per country (Expenditure evolution per impact /outcome area)?  
 #' 
-#' @param year A numeric value corresponding to the first year of focus until the most recent year within the dataset.
+#' @param year A numeric value or a list of value.
 #' @param programme_lab A character vector corresponding to the name of the programme.
 #' @param iati_identifier_ops A character vector corresponding to the name of the operation.
 #' @param ctr_name A character vector corresponding to the name of the country.
@@ -559,24 +996,27 @@ show_sectors <- function(year,
     thisyear <- year
     thissector_vocabulary <- sector_vocabulary
     df <- df |> 
+      dplyr::mutate(year = factor(year)) |>
       dplyr::filter(programmme_lab == thiprogramme_lab &
-            year > thisyear & 
+            year %in% thisyear & 
             sector_vocabulary_name ==  thissector_vocabulary_name)
   } else if (!is.null(iati_identifier_ops)) {
     thisiati_identifier_ops <- iati_identifier_ops
     thisyear <- year
     thissector_vocabulary_name <- sector_vocabulary_name
     df <- df |> 
+      dplyr::mutate(year = factor(year)) |>
       dplyr::filter(iati_identifier_ops == thisiati_identifier_ops &
-            year > thisyear & 
+            year %in%  thisyear & 
             sector_vocabulary_name ==  thissector_vocabulary_name)
   } else if (!is.null(ctr_name)) {
     thisctr_name <- ctr_name
     thisyear <- year
     thissector_vocabulary_name <- sector_vocabulary_name
     df <- df |> 
+      dplyr::mutate(year = factor(year)) |>
       dplyr::filter(ctr_name == thisctr_name &
-            year > thisyear & 
+            year %in% thisyear & 
             sector_vocabulary_name ==  thissector_vocabulary_name)
   }
   
@@ -592,13 +1032,17 @@ show_sectors <- function(year,
                         ggplot2::aes(x = stats::reorder(sector_desc, sector_pct),
                                  y = sector_pct
                                  )) +
-    unhcrthemes::theme_unhcr(grid = TRUE, axis = "Y", axis_title = "Sector Percentage") +
-    ggplot2::geom_bar(stat = "identity") +
+   # unhcrthemes::theme_unhcr(grid = TRUE, axis = "Y", axis_title = "Sector Percentage") +
+    unhcrthemes::theme_unhcr(grid = "X", axis = "y", axis_title = "X", font_size = 18) +
+    
+    ggplot2::geom_bar(stat = "identity", fill = "#0072BC") +
     ggplot2::coord_flip()+
     ggplot2::facet_wrap( ggplot2::vars(year)) +
     ggplot2::scale_fill_viridis_d(option = "inferno", na.value = "grey50") +
     ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, .1)), labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
-    ggplot2::labs(title = "Share of budget per sectors for the selected year", 
+    ggplot2::labs(title = "Share of Budget per Sectors (%)", 
+        subtitle = paste0("Recorded in ", programme_lab, ctr_name,iati_identifier_ops,
+                          " based on vocabulary: ", sector_vocabulary_name),          
          x = "Sectors", y = "% of Total Funding", 
          caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative)") 
 
@@ -609,16 +1053,25 @@ show_sectors <- function(year,
 ```
   
 ```{r example-show_sectors, message=FALSE, warning=FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center",  out.width = "90%"}
-
 knitr::kable( iati::dataSector |> 
                 dplyr::select( sector_vocabulary_name, sector_vocabulary_description) |>
-                dplyr::distinct())
-
-show_sectors(year = 2018, 
-             programme_lab = NULL, 
-             iati_identifier_ops = NULL, 
-             ctr_name = "Syria",
+                dplyr::distinct() |>
+                dplyr::filter(!(is.na(sector_vocabulary_name))))
+show_sectors(year =  c(2020, 2021, 2022), 
+             ctr_name = "Brazil",
+            sector_vocabulary_name = "Reporting Organisation")
+show_sectors(year = 2022, 
+             ctr_name = "Brazil",
             sector_vocabulary_name = "Reporting Organisation 2")
+show_sectors(year = c(2020, 2021, 2022),  
+             ctr_name = "Brazil",
+            sector_vocabulary_name = "Reporting Organisation 2")
+show_sectors(year = c(2017,2018,2019,2020,2021, 2022), 
+             ctr_name = "Brazil",
+            sector_vocabulary_name = "Humanitarian Global Clusters (Inter-Agency Standing Committee)")
+show_sectors(year = c(2017,2018,2019,2020,2021, 2022), 
+             ctr_name = "Brazil",
+            sector_vocabulary_name = "OECD DAC CRS Purpose Codes (5 digit)")
 ```
   
 ```{r tests-show_sectors}
@@ -632,7 +1085,7 @@ test_that("show_sectors works", {
 
 ## show_indicators
     
- *  How much __indicators__ evolve over time against thresholds?
+ *  How much __indicators__ relate to target or baseline?
  
 ```{r function-show_indicators}
 #' show_indicators
@@ -643,7 +1096,9 @@ test_that("show_sectors works", {
 #' @param programme_lab A character vector corresponding to the name of the programme.
 #' @param iati_identifier_ops A character vector corresponding to the name of the operation.
 #' @param ctr_name A character vector corresponding to the name of the country.
-#' @param  result_type_name either  "Impact"  "Outcome" "Output" - default is  "Outcome"  
+#' @param  result_type_name either  "Impact"  "Outcome" "Output" - default is  "Outcome" 
+#' @param  type  "deviation" showing difference between target and actual - or 
+#'               "progress"  showing difference between baseline and actual 
 #' 
 #' @import ggplot2
 #' @import dplyr
@@ -658,7 +1113,8 @@ show_indicators <- function(year,
                         programme_lab = NULL, 
                         iati_identifier_ops = NULL, 
                         ctr_name = NULL ,
-                       result_type_name = "Outcome") {
+                       result_type_name = "Outcome",
+                        type = "deviation") {
   
   
   # Check if only one argument is passed 
@@ -680,7 +1136,7 @@ show_indicators <- function(year,
     df <- df |> 
       # levels(as.factor(df$result_type_name ))
       dplyr::filter( programmme_lab == thisprogramme_lab &
-            year >= thisyear & 
+            year == thisyear & 
              result_type_name ==  thisresult_type_name)
   } else if (!is.null(iati_identifier_ops)) {
     thisiati_identifier_ops <- iati_identifier_ops
@@ -688,7 +1144,7 @@ show_indicators <- function(year,
     thisresult_type_name <-  result_type_name
     df <- df |> 
       dplyr::filter(iati_identifier_ops == thisiati_identifier_ops &
-            year >= thisyear & 
+            year == thisyear & 
              result_type_name ==  thisresult_type_name)
   } else if (!is.null(ctr_name)) {
     thisctr_name <- ctr_name
@@ -696,126 +1152,245 @@ show_indicators <- function(year,
     thisresult_type_name <-  result_type_name
     df <- df |> 
       dplyr::filter( ctr_name == thisctr_name &
-            year >= thisyear & 
+            year == thisyear & 
             result_type_name ==  thisresult_type_name)
   }
    
   ## in order to compare indictors alltogether in the same country, we need to normalise them
   ## one way is to compute the distance to the target...
   ## names(df)
+  
+  #table(df$result_indicator_ascending, useNA = "ifany")
   df1 <- df  |> 
-    dplyr::select(result_type_name ,  result_title, indicator_measure_name, result_indicator_title,
-                  result_indicator_baseline_value, result_indicator_target_value,
-                  result_indicator_baseline_location_ref, result_indicator_baseline_dimension_1,
-                  result_indicator_baseline_dimension_value_1, result_indicator_baseline_dimension_2,
-                  result_indicator_baseline_dimension_value_2) |>
-      dplyr::mutate(  actual = as.numeric(result_indicator_baseline_value),
-                      target = as.numeric(result_indicator_target_value),
+    dplyr::select(result_type_name ,  result_title, 
+                  indicator_measure_name, result_indicator_title,
+                  
+                  result_indicator_baseline_value, 
+                  result_indicator_actual_value,
+                  result_indicator_target_value,
+                  result_indicator_target_value_1,
+                  
+                  result_indicator_baseline_location_ref, 
+                  result_indicator_baseline_dimension_1,
+                  result_indicator_baseline_dimension_value_1, 
+                  result_indicator_baseline_dimension_2,
+                  result_indicator_baseline_dimension_value_2,
+                  result_indicator_ascending)  |>
+  
+    
+     
+      dplyr::mutate(  actual = as.numeric(result_indicator_actual_value),
+                      baseline = as.numeric(result_indicator_baseline_value),
+                      target = as.numeric(result_indicator_target_value), 
+                      ## Reshape the indicator label... 
+                      operation = as.character(glue::glue("{result_indicator_title} / {result_indicator_target_value_1}") ), 
+                      # operation = as.character(glue::glue("{result_indicator_title} / {result_title} -
+                      #                                        {result_indicator_target_value_1}") ),  
                       
-              ## Calculating gap to target        
-                      gap_actual_target = - round( (  target - actual) /  target *100  ,2 ),
-                      #gap_actual_target = dplyr::if_else(reverse == "TRUE", gap_actual_target * -1, gap_actual_target), 
-                      gap_actual_target =   gap_actual_target , 
-                      gap_color = dplyr::case_when(
-                        gap_actual_target >= 0     ~ "green",
-                        gap_actual_target < 0  & gap_actual_target >= -10    ~ "orange",
-                        gap_actual_target < -10     ~ "red",  
-                                                   TRUE ~ "") )     |> 
-    dplyr::filter (! (is.na(actual)))  |> 
-    dplyr::filter (! (is.nan(gap_actual_target))) |>
-      #dplyr::arrange(desc(actual))
-      dplyr::group_by( result_indicator_title) |>
-      dplyr::arrange(desc( actual), .by_group=TRUE )  |> 
-      dplyr::ungroup(result_indicator_title) |>
+              ## Calculating deviation to target        
+                      deviation_actual_target =  round( ( actual - target ) / 
+                                                           dplyr::if_else(target == 0, 1, target) * 
+                                                           dplyr::if_else(target == 0, 1, 100) ,2 ),
+               
+                      ## Account for indicator direction
+                      deviation_actual_target = dplyr::if_else(result_indicator_ascending == 0, 
+                                                         deviation_actual_target * -1, 
+                                                         deviation_actual_target),   
+                      
+                      deviation_color = dplyr::case_when(
+                        deviation_actual_target >= -1     ~ "green",
+                        deviation_actual_target < -1  & deviation_actual_target >= -15    ~ "orange",
+                        deviation_actual_target < -15     ~ "red",  
+                                                   TRUE ~ ""),
+              ## Calculating progress to baseline..        
+                      progress_baseline =  round( ( actual - baseline) / 
+                                                           dplyr::if_else(baseline == 0, 1, baseline) * 
+                                                           dplyr::if_else(baseline == 0, 1, 100)  ,2 ), 
+                      ## Account for indicator direction
+                      progress_baseline = dplyr::if_else(result_indicator_ascending == 0, 
+                                                         progress_baseline * -1, 
+                                                         progress_baseline),   
+                      progress_color = dplyr::case_when(
+                        progress_baseline >= -1     ~ "green",
+                        progress_baseline < -1  & progress_baseline >= -15    ~ "orange",
+                        progress_baseline < -15     ~ "red",  
+                                                   TRUE ~ "")
               
+              )    
+  
+  ### Type of chart to build...
+  if(type == "deviation") {
+    
+      df1 <- df1 |> 
+          ## Filter out - when no data...
+          dplyr::filter (! (is.na(actual)))  |> 
+          dplyr::filter (! (is.na(target)))  |> 
+          dplyr::filter (! (is.nan(deviation_actual_target))) |>
+          #dplyr::arrange(desc(actual))
+          dplyr::group_by( result_indicator_title) |>
+          dplyr::arrange(desc( actual), .by_group=TRUE )  |> 
+          dplyr::ungroup(result_indicator_title)
+     
+          ## case there's no data at all
+          if( nrow(df1) == 0) {
+                info <-  paste0("No deviation - actual to target - \n comparative analysis \n  could be produced for \n",
+                                result_type_name, " indicator values \n in ", 
+                              programme_lab, ctr_name,iati_identifier_ops, " for year: ", year)
+                p <- ggplot2::ggplot() +  
+                     ggplot2::annotate("text",  x = 1, y = 1, size = 12,
+                                          label = info ) +  
+                     ggplot2::theme_void()
+          
+           } else if(nrow(df1)> 0) {
+              ## and now the plot
+              p <- ggplot2::ggplot(  data = df1) +
+                ggplot2::coord_flip()  + 
+                ggplot2::geom_col(   
+                  ggplot2::aes(x = stats::reorder(operation, - deviation_actual_target),
+                               y = deviation_actual_target,
+                               fill = deviation_color ),
+                            width = 0.7,
+                            color = NA ) 
               
-              ## Calculating gap to green threshold
-              #dplyr::mutate(  gap_actual_green = - round( ( threshold_green - actual) /  threshold_green *100 ,2 ),
-                      # gap_actual_green = dplyr::if_else(reverse == "TRUE", gap_actual_green * -1, gap_actual_green), 
-                      # gap_color_green = dplyr::case_when(
-                      #   gap_actual_green >= 5     ~ "green",
-                      #   gap_actual_green < 5  & gap_actual_target >= -15    ~ "orange",
-                      #   gap_actual_green < -15     ~ "red",  
-                      #                              TRUE ~ "")  )     |> 
-
-  ## Reshape the inidcator label... 
-      dplyr::mutate( operation = as.character(glue::glue("{result_title}-
-                                                         {result_indicator_title} /
-                                                         {result_indicator_baseline_dimension_1}") ) )  
+               p <-   p +
+                ggplot2::scale_fill_manual(values = c( "red" = "#D3212C",   
+                                              "orange" = "#FF980E",
+                                              "green" = "#069C56")) +
+                ggplot2::geom_text( 
+                  ggplot2::aes(x = stats::reorder(operation, - deviation_actual_target), 
+                               y = deviation_actual_target,
+                               label = paste(round(deviation_actual_target, 1), " %") ),
+                           #hjust = 1.5, 
+                           size = 2.5,
+                           color = "black")  +
+                # scale_y_continuous( label = scales::label_percent(accuracy = 0,
+                #                                    suffix = "%") ) +
+                ggplot2::scale_y_continuous( label =  scales::label_number(accuracy = 1, 
+                                                                  scale_cut = scales::cut_short_scale(),
+                                                                  suffix = "%") )+
+                ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 120)) +
+                unhcrthemes::theme_unhcr(font_size = 18, 
+                                         axis_text_size = 9,
+                                         grid = "X", 
+                                         axis = "y") +
+                ggplot2::theme(  #axis.text.y = ggtext::element_markdown(),
+                        legend.position = "none")+
+                ggplot2::labs( x = "", y = "" ,
+                      title = stringr::str_wrap( 
+                        paste0( result_type_name, " Indicators | ", thisyear, " ", 
+                                programme_lab, ctr_name,iati_identifier_ops ) ,
+                        100),
+                      subtitle = stringr::str_wrap( paste0( 
+                        "Deviation between reported \"Actual\" value and programmatic \"Target\" (in %)" ) ,
+                        110),
+                      caption = stringr::str_wrap( 
+                        "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ,
+                      110) )  
+           }
+    } else if( type == "progress")  {
+      
+      df1 <- df1 |> 
+        ## Filter out - when no data...
+        dplyr::filter (! (is.na(actual)))  |> 
+        dplyr::filter (! (is.na(baseline)))  |> 
+        dplyr::filter (! (is.nan(progress_baseline))) |>
+        #dplyr::arrange(desc(actual))
+        dplyr::group_by( result_indicator_title) |>
+        dplyr::arrange(desc( actual), .by_group=TRUE )  |> 
+        dplyr::ungroup(result_indicator_title)
  
-  ## case there's no data at all
-  if( nrow(df1) == 0) {
-        info <-  paste0("No gap analysis could be \n produced for \n outcome indicator values \n in ", 
-                      programme_lab, ctr_name,iati_identifier_ops)
-        p <- ggplot2::ggplot() +  
-             ggplot2::annotate("text",  x = 1, y = 1, size = 12,
-                                  label = info ) +  
-             ggplot2::theme_void()
-  
-   } else if(nrow(df1)> 0) {
-  
-      ## and now the plot
-      p <-      ggplot2::ggplot(  data = df1) +
-        ggplot2::coord_flip()  + 
-        # geom_col(   aes(x = stats::reorder(operation, - gap_actual_green), 
-        #                 y = gap_actual_green ,
-        #                 fill = gap_color_green ),
-        #            # fill = "grey50",    
-        #             alpha = 0.3,    
-        #             width = 0.9,
-        #            color = NA ) +
-        ggplot2::geom_col(   
-          ggplot2::aes(x = stats::reorder(operation, - gap_actual_target),
-                       y = gap_actual_target,
-                       fill = gap_color ),
-                    #fill = "#0072BC",
-                    width = 0.7,
-                    color = NA ) +
-        ggplot2::scale_fill_manual(values = c( "red" = "#D3212C",   
-                                      "orange" = "#FF980E",
-                                      "green" = "#069C56")) +
-        ggplot2::geom_text( 
-          ggplot2::aes(x = stats::reorder(operation, - gap_actual_target), 
-                       y = gap_actual_target,
-                       label = paste(round(gap_actual_target, 1), " %") ),
-                   #hjust = 1.5, 
-                   size = 2.5,
-                   color = "black")  +
-        # scale_y_continuous( label = scales::label_percent(accuracy = 0,
-        #                                    suffix = "%") ) +
-        ggplot2::scale_y_continuous( label =  scales::label_number(accuracy = 1, 
-                                                          scale_cut = scales::cut_short_scale(),
-                                                          suffix = "%") )+
-        ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 120)) +
-        unhcrthemes::theme_unhcr(font_size = 18, 
-                                 axis_text_size = 9,
-                                 grid = "X", 
-                                 axis = "y") +
-        ggplot2::theme(  #axis.text.y = ggtext::element_markdown(),
-                legend.position = "none")+
-        ggplot2::labs( x = "", y = "" ,
-              title = stringr::str_wrap( 
-                paste0("Outcome Indicators (RBM) | ", thisyear, " ", 
-                        programme_lab, ctr_name,iati_identifier_ops ) ,
-                100),
-              subtitle = stringr::str_wrap( paste0( 
-                "Gap in % between \"Actual\" reported value and the \"acceptable\" standard threshold" ) ,
-                110),
-              caption = stringr::str_wrap( "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ,
-              110) )  
-      }
- 
+        ## case there's no data at all
+        if( nrow(df1) == 0) {
+              info <- paste0("No progress - actual to baseline - \n comparative analysis \n  could be produced for \n",
+                                  result_type_name, " indicator values \n in ", 
+                                programme_lab, ctr_name,iati_identifier_ops, " for year: ", year)
+              p <- ggplot2::ggplot() +  
+                   ggplot2::annotate("text",  x = 1, y = 1, size = 12,
+                                        label = info ) +  
+                   ggplot2::theme_void()
+        
+         } else if(nrow(df1)> 0) {
+            ## and now the plot
+            p <-  ggplot2::ggplot(  data = df1) +
+              ggplot2::coord_flip()  + 
+              ggplot2::geom_col(   
+                ggplot2::aes(x = stats::reorder(operation, - progress_baseline),
+                             y = progress_baseline,
+                             fill = deviation_color ),
+                          width = 0.7,
+                          color = NA ) 
+            
+             p <-   p +
+              ggplot2::scale_fill_manual(values = c( "red" = "#D3212C",   
+                                            "orange" = "#FF980E",
+                                            "green" = "#069C56")) +
+              ggplot2::geom_text( 
+                ggplot2::aes(x = stats::reorder(operation, - progress_baseline), 
+                             y = progress_baseline,
+                             label = paste(round(progress_baseline, 1), " %") ),
+                         #hjust = 1.5, 
+                         size = 2.5,
+                         color = "black")  +
+              # scale_y_continuous( label = scales::label_percent(accuracy = 0,
+              #                                    suffix = "%") ) +
+              ggplot2::scale_y_continuous( label =  scales::label_number(accuracy = 1, 
+                                                                scale_cut = scales::cut_short_scale(),
+                                                                suffix = "%") )+
+              ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 120)) +
+              unhcrthemes::theme_unhcr(font_size = 18, 
+                                       axis_text_size = 9,
+                                       grid = "X", 
+                                       axis = "y") +
+              ggplot2::theme(  #axis.text.y = ggtext::element_markdown(),
+                      legend.position = "none")+
+              ggplot2::labs( x = "", y = "" ,
+                    title = stringr::str_wrap( 
+                      paste0( result_type_name, " Indicators | ", thisyear, " ", 
+                              programme_lab, ctr_name,iati_identifier_ops ) ,
+                      100),
+                    subtitle = stringr::str_wrap( paste0( 
+                      "Progress comparison between \"Actual\" reported value and their \"baseline\" (in %)" ) ,
+                      110),
+                    caption = stringr::str_wrap(
+                      "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ,
+                    110) )  
+             }
+  }
   return(p)
     
 }
 ```
   
-```{r example-show_indicators, message=FALSE, warning=FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center",  out.width = "90%"}
-show_indicators(year = 2022, 
-             programme_lab = NULL, 
-             iati_identifier_ops = NULL, 
+```{r example-show_indicators, message=FALSE, warning=FALSE, fig.retina = 2, fig.width = 8,  fig.align = "center",  out.width = "90%"}
+show_indicators(year = 2022,  
              ctr_name = "Brazil",
-              result_type_name = "Outcome"
+              result_type_name = "Outcome",
+             type = "deviation"
+             )
+show_indicators(year = 2022,  
+             ctr_name = "Brazil",
+              result_type_name = "Impact",
+             type = "deviation"
+             )
+show_indicators(year = 2019,  
+             ctr_name = "Brazil",
+              result_type_name = "Output",
+             type = "deviation"
+             )
+show_indicators(year = 2022,  
+             ctr_name = "Brazil",
+              result_type_name = "Outcome",
+             type = "progress"
+             )
+show_indicators(year = 2022,  
+             ctr_name = "Brazil",
+              result_type_name = "Impact",
+             type = "progress"
+             )
+show_indicators(year = 2019,  
+             ctr_name = "Brazil",
+              result_type_name = "Output",
+             type = "progress"
              )
 ```
   

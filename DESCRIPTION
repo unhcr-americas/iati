@@ -15,10 +15,12 @@ URL: https://unhcr-americas.github.io/iati/docs/
 BugReports: https://github.com/unhcr-americas/iati/issues
 Imports: 
     dplyr,
+    forcats,
     ggplot2,
     glue,
     knitr,
     magrittr,
+    refugees,
     scales,
     showtext,
     stats,
@@ -26,6 +28,7 @@ Imports:
     sysfonts,
     systemfonts,
     tidyr,
+    tidyselect,
     unhcrthemes
 Suggests: 
     rmarkdown,

@@ -15,6 +15,10 @@ reference:
   desc: Lookup tables
   contents:
   - starts_with("code")
+- title: Mapping
+  desc: Mapping tables
+  contents:
+  - starts_with("mapping")  
 - title: Reference
   desc: UNHCR Geographci Referential
   contents:

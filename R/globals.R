@@ -28,5 +28,7 @@ globalVariables(unique(c(
   # show_partnership: 
   "Accountable", 
   # show_top_donors: 
-  "transaction_provider_org"
+  "transaction_provider_org",
+  # show_sectors_rbm: 
+  "sector_rbm", "sector_vocabulary_name", "year2"
 )))

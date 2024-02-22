@@ -4,7 +4,7 @@
 #' 
 #' @description  What are the most funded sectors per country (Expenditure evolution per impact /outcome area)?  
 #' 
-#' @param year A numeric value corresponding to the first year of focus until the most recent year within the dataset.
+#' @param year A numeric value or a list of value.
 #' @param programme_lab A character vector corresponding to the name of the programme.
 #' @param iati_identifier_ops A character vector corresponding to the name of the operation.
 #' @param ctr_name A character vector corresponding to the name of the country.
@@ -19,16 +19,30 @@
 #' @export 
 #' @return  a graph
 #' @examples
-#'
 #' knitr::kable( iati::dataSector |> 
 #'                 dplyr::select( sector_vocabulary_name, sector_vocabulary_description) |>
-#'                 dplyr::distinct())
-#'
-#' show_sectors(year = 2018, 
-#'              programme_lab = NULL, 
-#'              iati_identifier_ops = NULL, 
-#'              ctr_name = "Syria",
-#'             sector_vocabulary_name = "Reporting Organisation 2")
+#'                 dplyr::distinct() |>
+#'                 dplyr::filter(!(is.na(sector_vocabulary_name))))
+#' show_sectors(
+#'   year =  c(2020, 2021, 2022), 
+#'   ctr_name = "Brazil",
+#'   sector_vocabulary_name = "Reporting Organisation")
+#' show_sectors(
+#'   year = 2022, 
+#'   ctr_name = "Brazil",
+#'   sector_vocabulary_name = "Reporting Organisation 2")
+#' show_sectors(
+#'   year = c(2020, 2021, 2022),  
+#'   ctr_name = "Brazil",
+#'   sector_vocabulary_name = "Reporting Organisation 2")
+#' show_sectors(
+#'   year = c(2017,2018,2019,2020,2021, 2022), 
+#'   ctr_name = "Brazil",
+#'   sector_vocabulary_name = "Humanitarian Global Clusters (Inter-Agency Standing Committee)")
+#' show_sectors(
+#'   year = c(2017,2018,2019,2020,2021, 2022), 
+#'   ctr_name = "Brazil",
+#'   sector_vocabulary_name = "OECD DAC CRS Purpose Codes (5 digit)")
 show_sectors <- function(year, 
                          programme_lab = NULL, 
                          iati_identifier_ops = NULL, 
@@ -52,24 +66,27 @@ show_sectors <- function(year,
     thisyear <- year
     thissector_vocabulary <- sector_vocabulary
     df <- df |> 
+      dplyr::mutate(year = factor(year)) |>
       dplyr::filter(programmme_lab == thiprogramme_lab &
-            year > thisyear & 
+            year %in% thisyear & 
             sector_vocabulary_name ==  thissector_vocabulary_name)
   } else if (!is.null(iati_identifier_ops)) {
     thisiati_identifier_ops <- iati_identifier_ops
     thisyear <- year
     thissector_vocabulary_name <- sector_vocabulary_name
     df <- df |> 
+      dplyr::mutate(year = factor(year)) |>
       dplyr::filter(iati_identifier_ops == thisiati_identifier_ops &
-            year > thisyear & 
+            year %in%  thisyear & 
             sector_vocabulary_name ==  thissector_vocabulary_name)
   } else if (!is.null(ctr_name)) {
     thisctr_name <- ctr_name
     thisyear <- year
     thissector_vocabulary_name <- sector_vocabulary_name
     df <- df |> 
+      dplyr::mutate(year = factor(year)) |>
       dplyr::filter(ctr_name == thisctr_name &
-            year > thisyear & 
+            year %in% thisyear & 
             sector_vocabulary_name ==  thissector_vocabulary_name)
   }
   
@@ -85,13 +102,17 @@ show_sectors <- function(year,
                         ggplot2::aes(x = stats::reorder(sector_desc, sector_pct),
                                  y = sector_pct
                                  )) +
-    unhcrthemes::theme_unhcr(grid = TRUE, axis = "Y", axis_title = "Sector Percentage") +
-    ggplot2::geom_bar(stat = "identity") +
+   # unhcrthemes::theme_unhcr(grid = TRUE, axis = "Y", axis_title = "Sector Percentage") +
+    unhcrthemes::theme_unhcr(grid = "X", axis = "y", axis_title = "X", font_size = 18) +
+    
+    ggplot2::geom_bar(stat = "identity", fill = "#0072BC") +
     ggplot2::coord_flip()+
     ggplot2::facet_wrap( ggplot2::vars(year)) +
     ggplot2::scale_fill_viridis_d(option = "inferno", na.value = "grey50") +
     ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, .1)), labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
-    ggplot2::labs(title = "Share of budget per sectors for the selected year", 
+    ggplot2::labs(title = "Share of Budget per Sectors (%)", 
+        subtitle = paste0("Recorded in ", programme_lab, ctr_name,iati_identifier_ops,
+                          " based on vocabulary: ", sector_vocabulary_name),          
          x = "Sectors", y = "% of Total Funding", 
          caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative)") 
 

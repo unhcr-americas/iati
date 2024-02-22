@@ -2,10 +2,19 @@
 
 #' show_budget_gap
 #' 
+#' UNHCR budgets are needs-based: it represents the total amount
+#' of money that would be required were UNHCR to meet all of the needs that it is seeking to address.
+#' 
 #' @param year A numeric value corresponding to the first year of focus until the most recent year within the dataset.
 #' @param programme_lab A character vector corresponding to the name of the programme.
 #' @param iati_identifier_ops A character vector corresponding to the name of the operation.
 #' @param ctr_name A character vector corresponding to the name of the country.
+#' @param weight_by list of population group to weight the budget - 
+#'                   "refugees", "asylum_seekers",
+#'                    "returned_refugees" "idps",
+#'                    "returned_idps", "stateless", 
+#'                    "ooc", "oip"  
+#'                   default is null.
 #' 
 #' @import ggplot2
 #' @import dplyr
@@ -18,10 +27,17 @@
 #' @examples
 #' show_budget_gap(year = 2018, 
 #'              ctr_name = "Brazil")
+#'
+#'
+#'
+#' show_budget_gap(year = 2018, 
+#'              ctr_name = "Brazil",
+#'              weight_by = c("refugees", "oip"))
 show_budget_gap <- function(year, 
                         programme_lab = NULL, 
                         iati_identifier_ops = NULL, 
-                        ctr_name = NULL ) {
+                        ctr_name = NULL ,
+                        weight_by = NULL ) {
   
   
   # Check if only one argument is passed 
@@ -72,6 +88,55 @@ show_budget_gap <- function(year,
      dplyr::mutate(budget_gap = (budget_value - transaction_value) / budget_value *100) 
    
  
+   
+    if (  !is.null(weight_by) &&  !all(weight_by %in% c("refugees", "asylum_seekers",
+                                                   "returned_refugees", "idps",
+                                                   "returned_idps", "stateless", 
+                                                   "ooc", "oip"  ))  ) {
+     stop("weight_by is used but the population filter is not correctly set up...\n
+          it should be among: refugees, asylum_seekers, returned_refugees, idps,
+          returned_idps, stateless,  ooc, oip")
+    } 
+   
+   ## Calculate weight
+   if (!is.null(weight_by) && !is.null(ctr_name) ) {
+     ctrstat <- refugees::population |>
+            dplyr::filter( year>= thisyear & 
+                             coa_name == thisctr_name) |>
+            dplyr::group_by(year, coa_name) |>
+            dplyr::summarise(refugees = sum(refugees, na.rm = TRUE),
+                             asylum_seekers = sum(asylum_seekers, na.rm = TRUE),
+                              returned_refugees = sum(returned_refugees, na.rm = TRUE),
+                              idps = sum(idps, na.rm = TRUE),
+                              returned_idps = sum(returned_idps , na.rm = TRUE),
+                              stateless = sum(stateless, na.rm = TRUE),
+                              ooc = sum( ooc, na.rm = TRUE),
+                              oip = sum(oip, na.rm = TRUE)) |>
+            dplyr::select(year, coa_name, all_of(weight_by) ) |>
+            dplyr::mutate(year = as.factor(year) ) |>
+            dplyr::mutate( weight = rowSums(
+                                   dplyr::across(tidyselect::where(is.numeric))))
+     
+      df2 <-  df2 |>
+        dplyr::left_join(ctrstat |> 
+                         dplyr::select(year, weight)   , by = c("year")) |>
+        dplyr::mutate(budget_value = round(budget_value / weight,1),   
+                      transaction_value = round(transaction_value  / weight,1))|>
+       dplyr::mutate(budget_gap = (budget_value - transaction_value) / budget_value *100) 
+     
+    } 
+   
+ subtitt <- if( is.null(weight_by)) {
+   paste0("In ", programme_lab, ctr_name,iati_identifier_ops, " recorded since ", year,"")
+   } else {
+   paste0("Weighted by total number of individual ", 
+          paste(weight_by, collapse = ', '),
+          " in ", 
+          programme_lab, ctr_name,iati_identifier_ops, " as recorded since ", year,"")
+     }
+ 
+   
+   
  
  p <- df2 |> 
 #  dplyr::filter(transaction_value_USD  <= 1000000 & transaction_value_USD  > 1000) |> 
@@ -90,10 +155,10 @@ show_budget_gap <- function(year,
                            legend = FALSE)+
   ggplot2::labs(
     title = paste0( "Budget Gap  (in %)"),
-    subtitle =  paste0("In ", programme_lab, ctr_name,iati_identifier_ops, " recorded since ", year,""),
+    subtitle =   subtitt ,
     x = "",
     y = "",
-    caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ) 
+    caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative). UNHCR budget is needs-based. It represents the total amount of money that would be required were UNHCR to meet all of the needs that it is seeking to address." ) 
  
   return(p)
     

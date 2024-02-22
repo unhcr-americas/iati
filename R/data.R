@@ -355,8 +355,29 @@
 #'}
 "dataRelated_activity"
 
+#### Mapping table #########
+
+#' @title mapping_result
+#' @description Mapping Results to UNHCR 2022 RBM Framework
+#' @format A data frame with 107 rows and 2 variables:
+#' \describe{
+#'   \item{\code{result_title}}{character result_title}
+#'   \item{\code{sector_rbm}}{character sector_rbm} 
+#'}
+#' @source \url{https://www.unhcr.org/what-we-do/build-better-futures/compass/}
+"mapping_result"
 
 
+#' @title mapping_sector
+#' @description Mapping Sector to UNHCR 2022 RBM Framework
+#' @format A data frame with 83 rows and 3 variables:
+#' \describe{
+#'   \item{\code{sector_desc}}{character COLUMN_DESCRIPTION} 
+#'   \item{\code{sector_vocabulary_name}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{sector_rbm}}{character COLUMN_DESCRIPTION} 
+#'}
+#' @source \url{https://www.unhcr.org/what-we-do/build-better-futures/compass}
+"mapping_sector"
 
 #### All code list doc ############
 

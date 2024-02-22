@@ -24,7 +24,20 @@ show_earmarking(
 a graph
 }
 \description{
-What’s the breakdown of Earmarking Type (Un-earmarked, Tightly earmarked, etc.) from Donor Funds by Year?
+What’s the breakdown of Earmarking Type (Un-earmarked, Tightly earmarked, etc.) \
+ from Donor Funds by Year?  
+ Where possible, UNHCR prefers to receive unearmarked funds, as this allows the agency 
+ greater flexibility in allocating its resources as new needs emerge during the course of the year. 
+ Should that not be possible, funds can also be softly earmarked. This could mean funds that 
+ can be spent anywhere within a region or for a particular situation (for example, funds that have 
+ to be spent to assist refugees from Syria, but which can be spent in any country hosting such 
+ refugees). Earmarked funds would be a contribution that corresponds to a specific country but 
+ can be spent on anything within that operation’s programme. Finally, tightly earmarked funds 
+ are those that specify an activity or a population within a country’s programme.
+ 
+ UNHCR charges an ISC -  Indirect Support Costs - rate of 6.5% on all of its earmarked contributions.
+  This covers management and administration  costs at HQ and programme support costs 
+  incurred at HQ and Regional Bureaux.
 }
 \examples{
 knitr::kable(iati::dataTransaction |>

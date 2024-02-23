@@ -62,10 +62,44 @@
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    
+    <p>A data frame with 12 variables:</p><dl><dt><code>iati_identifier</code></dt>
+<dd><p>character COLUMN_DESCRIPTION</p></dd>
 
+  <dt><code>budget_type</code></dt>
+<dd><p>double COLUMN_DESCRIPTION</p></dd>
 
-    </div>
+  <dt><code>budget_status</code></dt>
+<dd><p>double COLUMN_DESCRIPTION</p></dd>
+
+  <dt><code>budget_period_start</code></dt>
+<dd><p>character COLUMN_DESCRIPTION</p></dd>
+
+  <dt><code>budget_period_end</code></dt>
+<dd><p>character COLUMN_DESCRIPTION</p></dd>
+
+  <dt><code>budget_currency</code></dt>
+<dd><p>character COLUMN_DESCRIPTION</p></dd>
+
+  <dt><code>budget_value_date</code></dt>
+<dd><p>character COLUMN_DESCRIPTION</p></dd>
+
+  <dt><code>budget_value</code></dt>
+<dd><p>double COLUMN_DESCRIPTION</p></dd>
+
+  <dt><code>budget_type_name</code></dt>
+<dd><p>character COLUMN_DESCRIPTION</p></dd>
+
+  <dt><code>budget_type_description</code></dt>
+<dd><p>character COLUMN_DESCRIPTION</p></dd>
+
+  <dt><code>budget_status_name</code></dt>
+<dd><p>character COLUMN_DESCRIPTION</p></dd>
+
+  <dt><code>budget_status_description</code></dt>
+<dd><p>character COLUMN_DESCRIPTION</p></dd>
+ 
+
+</dl></div>
     <div class="section level2">
     <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
     <p><a href="https://iatistandard.org/en/iati-standard/203/" class="external-link">https://iatistandard.org/en/iati-standard/203/</a></p>
@@ -78,18 +112,18 @@
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |iati_identifier             | budget_type| budget_status|budget_period_start |budget_period_end |budget_currency |budget_value_date |budget_value |budget_type_name |budget_type_description |budget_status_name |budget_status_description |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |:---------------------------|-----------:|-------------:|:-------------------|:-----------------|:---------------|:-----------------|:------------|:----------------|:-----------------------|:------------------|:-------------------------|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-AGO   |          NA|            NA|2016-01-01          |2016-12-31        |USD             |2017-06-15        |3721489.92   |NA               |NA                      |NA                 |NA                        |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-BDI   |          NA|            NA|2016-01-01          |2016-12-31        |USD             |2017-06-15        |34538841.62  |NA               |NA                      |NA                 |NA                        |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-BFA   |          NA|            NA|2016-01-01          |2016-12-31        |USD             |2017-06-15        |21679175.82  |NA               |NA                      |NA                 |NA                        |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-BWA   |          NA|            NA|2016-01-01          |2016-12-31        |USD             |2017-06-15        |3333214.59   |NA               |NA                      |NA                 |NA                        |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-CAF   |          NA|            NA|2016-01-01          |2016-12-31        |USD             |2017-06-15        |57558703.669 |NA               |NA                      |NA                 |NA                        |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-CIV   |          NA|            NA|2016-01-01          |2016-12-31        |USD             |2017-06-15        |30785019.55  |NA               |NA                      |NA                 |NA                        |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-CMR   |          NA|            NA|2016-01-01          |2016-12-31        |USD             |2017-06-15        |98624602.509 |NA               |NA                      |NA                 |NA                        |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-CODRO |          NA|            NA|2016-01-01          |2016-12-31        |USD             |2017-06-15        |209710336.16 |NA               |NA                      |NA                 |NA                        |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-COG   |          NA|            NA|2016-01-01          |2016-12-31        |USD             |2017-06-15        |32000000.31  |NA               |NA                      |NA                 |NA                        |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-DJI   |          NA|            NA|2016-01-01          |2016-12-31        |USD             |2017-06-15        |31987830.36  |NA               |NA                      |NA                 |NA                        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |iati_identifier             | budget_type| budget_status|budget_period_start |budget_period_end |budget_currency |budget_value_date | budget_value|budget_type_name |budget_type_description |budget_status_name |budget_status_description |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:---------------------------|-----------:|-------------:|:-------------------|:-----------------|:---------------|:-----------------|------------:|:----------------|:-----------------------|:------------------|:-------------------------|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-AGO   |          NA|            NA|2016-01-01          |2016-12-31        |USD             |2017-06-15        |      3721490|NA               |NA                      |NA                 |NA                        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-BDI   |          NA|            NA|2016-01-01          |2016-12-31        |USD             |2017-06-15        |     34538842|NA               |NA                      |NA                 |NA                        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-BFA   |          NA|            NA|2016-01-01          |2016-12-31        |USD             |2017-06-15        |     21679176|NA               |NA                      |NA                 |NA                        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-BWA   |          NA|            NA|2016-01-01          |2016-12-31        |USD             |2017-06-15        |      3333215|NA               |NA                      |NA                 |NA                        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-CAF   |          NA|            NA|2016-01-01          |2016-12-31        |USD             |2017-06-15        |     57558704|NA               |NA                      |NA                 |NA                        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-CIV   |          NA|            NA|2016-01-01          |2016-12-31        |USD             |2017-06-15        |     30785020|NA               |NA                      |NA                 |NA                        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-CMR   |          NA|            NA|2016-01-01          |2016-12-31        |USD             |2017-06-15        |     98624603|NA               |NA                      |NA                 |NA                        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-CODRO |          NA|            NA|2016-01-01          |2016-12-31        |USD             |2017-06-15        |    209710336|NA               |NA                      |NA                 |NA                        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-COG   |          NA|            NA|2016-01-01          |2016-12-31        |USD             |2017-06-15        |     32000000|NA               |NA                      |NA                 |NA                        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |XM-DAC-41121-2016-AFR-DJI   |          NA|            NA|2016-01-01          |2016-12-31        |USD             |2017-06-15        |     31987830|NA               |NA                      |NA                 |NA                        |</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

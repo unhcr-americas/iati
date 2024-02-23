@@ -18,9 +18,11 @@ Imports:
     forcats,
     ggplot2,
     glue,
+    here,
     knitr,
     magrittr,
     refugees,
+    rmarkdown,
     scales,
     showtext,
     stats,
@@ -29,9 +31,9 @@ Imports:
     systemfonts,
     tidyr,
     tidyselect,
+    unhcrdown,
     unhcrthemes
 Suggests: 
-    rmarkdown,
     testthat
 VignetteBuilder: 
     knitr

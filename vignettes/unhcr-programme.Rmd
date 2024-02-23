@@ -286,27 +286,27 @@ show_indicators_time(year = 2020,
               result_type_name = "Outcome",
              type = "deviation"
              )
-show_indicators_time(year = 2022,  
+show_indicators_time(year =  2020, 
              ctr_name = "Brazil",
               result_type_name = "Impact",
              type = "deviation"
              )
-show_indicators_time(year = 2019,  
+show_indicators_time(year =  2020,  
              ctr_name = "Brazil",
               result_type_name = "Output",
              type = "deviation"
              )
-show_indicators_time(year = 2022,  
+show_indicators_time(year =  2020, 
              ctr_name = "Brazil",
               result_type_name = "Outcome",
              type = "progress"
              )
-show_indicators_time(year = 2022,  
+show_indicators_time(year =  2020, 
              ctr_name = "Brazil",
               result_type_name = "Impact",
              type = "progress"
              )
-show_indicators_time(year = 2019,  
+show_indicators_time(year =  2020, 
              ctr_name = "Brazil",
               result_type_name = "Output",
              type = "progress"
@@ -318,6 +318,40 @@ show_indicators_time(year = 2019,
   
 
 
+# Template
+
+## template_prez
+
+    
+
+  
+
+```{r example-template_prez}
+
+## generate for one country
+# iati::template_prez(year = 2022, 
+#                     ctr_name = "Brazil",
+#                     folder = "dev/Prez")
+
+# ## Generate for all operation specific region
+# region <- "The Americas"
+# 
+# countries <- iati::dataActivity |> 
+#        dplyr::filter( unhcr_region ==  region) |>
+#        dplyr::select(ctr_name) |>
+#        dplyr::distinct() |>
+#        dplyr::pull()
+# 
+# for ( ctr in countries) {
+#     cat(paste0(ctr, "\n"))
+#     iati::template_prez(year = 2022, 
+#                     ctr_name = ctr,
+#                     folder = "dev/Prez")  }
+```
+
+  
+
+  
 
 
 

@@ -5,9 +5,9 @@
 #' How much indicators evolve over time against thresholds?
 #' 
 #' @param year A numeric value corresponding to the first year of focus until the most recent year within the dataset.
+#' @param ctr_name A character vector corresponding to the name of the country.
 #' @param programme_lab A character vector corresponding to the name of the programme.
 #' @param iati_identifier_ops A character vector corresponding to the name of the operation.
-#' @param ctr_name A character vector corresponding to the name of the country.
 #' @param  result_type_name either  "Impact"  "Outcome" "Output" - default is  "Outcome" 
 #' @param  type  "deviation" showing difference between target and actual - or 
 #'               "progress"  showing difference between baseline and actual 
@@ -27,27 +27,27 @@
 #'               result_type_name = "Outcome",
 #'              type = "deviation"
 #'              )
-#' show_indicators_time(year = 2022,  
+#' show_indicators_time(year =  2020, 
 #'              ctr_name = "Brazil",
 #'               result_type_name = "Impact",
 #'              type = "deviation"
 #'              )
-#' show_indicators_time(year = 2019,  
+#' show_indicators_time(year =  2020,  
 #'              ctr_name = "Brazil",
 #'               result_type_name = "Output",
 #'              type = "deviation"
 #'              )
-#' show_indicators_time(year = 2022,  
+#' show_indicators_time(year =  2020, 
 #'              ctr_name = "Brazil",
 #'               result_type_name = "Outcome",
 #'              type = "progress"
 #'              )
-#' show_indicators_time(year = 2022,  
+#' show_indicators_time(year =  2020, 
 #'              ctr_name = "Brazil",
 #'               result_type_name = "Impact",
 #'              type = "progress"
 #'              )
-#' show_indicators_time(year = 2019,  
+#' show_indicators_time(year =  2020, 
 #'              ctr_name = "Brazil",
 #'               result_type_name = "Output",
 #'              type = "progress"
@@ -229,9 +229,9 @@ show_indicators_time <- function(year,
                  title = stringr::str_wrap( 
                    paste0( result_type_name, " Indicators   ", 
                            programme_lab, ctr_name,iati_identifier_ops ) ,
-                   100),
-                subtitle = stringr::str_wrap( paste0( 
-                      "Progress comparison between \"Actual\" reported value and their \"baseline\" (in %)" ) ,
+                   100), 
+                 subtitle = stringr::str_wrap( paste0( 
+                         "Deviation between reported \"Actual\" value and programmatic \"Target\" (in %)" ) ,
                       110),
                  caption = stringr::str_wrap( 
                    "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ,
@@ -270,7 +270,7 @@ show_indicators_time <- function(year,
                              shape = 17,
                              size = 3) +
           ggplot2::stat_summary(fun.data=mean_sdl, #mult=1, 
-                         geom="pointrange", color="grey", size = 1)   + 
+                         geom="pointrange", color="grey", size = .3)   + 
           geom_hline(yintercept= 0, color="red") +
        # ggplot2::scale_color_viridis_d(option = "inferno", na.value = "grey50") + 
           ggplot2::scale_colour_brewer(palette = "Paired") +
@@ -291,8 +291,8 @@ show_indicators_time <- function(year,
                          paste0( result_type_name, " Indicators   ", 
                                  programme_lab, ctr_name,iati_identifier_ops ) ,
                          100),
-                       subtitle = stringr::str_wrap( paste0( 
-                         "Deviation between reported \"Actual\" value and programmatic \"Target\" (in %)" ) ,
+                subtitle = stringr::str_wrap( paste0( 
+                      "Progress comparison between \"Actual\" reported value and their \"baseline\" (in %)" ) ,
                          110),
                        caption = stringr::str_wrap( 
                          "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ,

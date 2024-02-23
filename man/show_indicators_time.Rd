@@ -39,27 +39,27 @@ show_indicators_time(year = 2020,
               result_type_name = "Outcome",
              type = "deviation"
              )
-show_indicators_time(year = 2022,  
+show_indicators_time(year =  2020, 
              ctr_name = "Brazil",
               result_type_name = "Impact",
              type = "deviation"
              )
-show_indicators_time(year = 2019,  
+show_indicators_time(year =  2020,  
              ctr_name = "Brazil",
               result_type_name = "Output",
              type = "deviation"
              )
-show_indicators_time(year = 2022,  
+show_indicators_time(year =  2020, 
              ctr_name = "Brazil",
               result_type_name = "Outcome",
              type = "progress"
              )
-show_indicators_time(year = 2022,  
+show_indicators_time(year =  2020, 
              ctr_name = "Brazil",
               result_type_name = "Impact",
              type = "progress"
              )
-show_indicators_time(year = 2019,  
+show_indicators_time(year =  2020, 
              ctr_name = "Brazil",
               result_type_name = "Output",
              type = "progress"

@@ -130,7 +130,7 @@ show_sectors_rbm <- function(year,
     
     ggplot2::geom_bar(stat = "identity", fill = "#0072BC") +
     ggplot2::coord_flip()+
-    ggplot2::facet_wrap( ggplot2::vars(year2)) +
+    ggplot2::facet_wrap( ggplot2::vars(year2), labeller = labeller(year2 = ggplot2::label_wrap_gen(5))) +
     ggplot2::scale_fill_viridis_d(option = "inferno", na.value = "grey50") +
     ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, .1)), labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
     ggplot2::labs(title = "Share of Budget per Sectors (%)", 

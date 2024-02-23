@@ -250,6 +250,9 @@
     <loc>/reference/show_top_donors.html</loc>
   </url>
   <url>
+    <loc>/reference/template_prez.html</loc>
+  </url>
+  <url>
     <loc>/reference/transaction.html</loc>
   </url>
 </urlset>

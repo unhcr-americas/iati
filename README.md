@@ -23,7 +23,7 @@ pak::pkg_install("unhcr-americas/iati")
 
 Extracting information from IATI can assist governments to plan and manage their budgets; parliamentarians and citizens to better hold governments accountable; community-based organisations to influence how resources are used; and journalists, researchers and activists to investigate the use and impact of the resources.
 
-Information from Global Focus is translated monthly into the IATI open data standard and published using UNHCR’s IATI identifier: XM-DAC-41121. An overview of the publication process is accessible through [IATI Dashboard](http://dashboard.iatistandard.org/publisher/unhcr.html). Every UNHCR operation world-wide is reported on for each year from 2016. This includes financial information (budget, contributions, disbursements and expenditure), office locations, and results at various levels of activity. Activities for 2019 and onwards are be published as soon as possible after they become available. This current package is updated a much as possible.... 
+Information from Global Focus is translated into the IATI open data standard and published using UNHCR’s IATI identifier: XM-DAC-41121. An overview of the publication process is accessible through [IATI Dashboard](http://dashboard.iatistandard.org/publisher/unhcr.html). Every UNHCR operation world-wide is reported on for each year from 2016. This includes financial information (budget, contributions, disbursements and expenditure), office locations, and results at various levels of activity. Activities for 2019 and onwards are be published as soon as possible after they become available. This current package is updated a much as possible.... 
 
 ### What is IATI?
 

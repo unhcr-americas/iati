@@ -1,0 +1,280 @@
+---
+params:
+  year: 2022
+  ctr_name: "Brazil"
+title: "UNHCR Programme in  \ `r params$ctr_name` "
+subtitle:  "Based on data publicly released through IATI - the International Aid Transparency Initiative"
+output:
+  unhcrdown::pptx_slides
+---
+
+
+```{r setup, include=FALSE, warning = FALSE, message = FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.cap = TRUE, warning = FALSE, message = FALSE)
+library(officedown)
+library(unhcrthemes)
+library(ggplot2)
+library(rvg)
+library(tidyverse)
+library(scales)
+library(lubridate) 
+library(fontawesome)
+library(iati)
+ 
+
+# fa_metadata()
+
+# turn off the automatic use of showtext functionality, so that the dml function can works properly
+showtext::showtext_auto(FALSE) 
+```
+
+# Data literacy... 
+
+
+
+... describes the ability to read, analyze, and argue with data.
+
+
+
+> ## “__Numbers have an important story to tell. They rely on YOU to give them a voice!__”
+
+> -- Stephen Few
+
+
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+ 
+show_donors(year = 2018,
+           ctr_name = params$ctr_nam,
+           transaction_type_name = "Incoming Commitment" )-> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+
+ 
+
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_top_donors(year = "2022",
+           ctr_name = params$ctr_name,
+           transaction_type_name = "Incoming Commitment" ,
+           top_n = 10) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_top_donors(year = "2021",
+           ctr_name = params$ctr_name,
+           transaction_type_name = "Incoming Commitment" ,
+           top_n = 10) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_top_donors(year = "2020",
+           ctr_name = params$ctr_name,
+           transaction_type_name = "Incoming Commitment" ,
+           top_n = 10) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_top_donors(year = "2019",
+           ctr_name = params$ctr_name,
+           transaction_type_name = "Incoming Commitment" ,
+           top_n = 10) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_earmarking(year = 2018,
+           ctr_name = params$ctr_name) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+
+ 
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_expenditure(year = 2018,
+           ctr_name = params$ctr_name ) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_expenditure(year = 2018,
+           ctr_name = params$ctr_name,
+             weight_by = c("refugees", "oip")) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_budget_gap(year = 2018,
+           ctr_name = params$ctr_name) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+ 
+show_partnership(year = params$year,
+           ctr_name = params$ctr_name) 
+```
+
+
+
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_sectors(
+  year =  c(2020, 2021, 2022), 
+  ctr_name = params$ctr_name,
+  sector_vocabulary_name = "OECD DAC CRS Purpose Codes (5 digit)") -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_sectors(
+  year =  c(2020, 2021, 2022), 
+  ctr_name = params$ctr_name,
+  sector_vocabulary_name = "Humanitarian Global Clusters (Inter-Agency Standing Committee)") -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_sectors(
+  year =  c(2020, 2021, 2022), 
+  ctr_name = params$ctr_name,
+  sector_vocabulary_name = "Reporting Organisation") -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_sectors(
+  year =  c(2020, 2021, 2022), 
+  ctr_name = params$ctr_name,
+  sector_vocabulary_name = "Reporting Organisation 2") -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+show_sectors_rbm( year =  c( 2020, 2021, 2022),  
+  ctr_name = params$ctr_name ) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+show_indicators(year = 2022,  
+            ctr_name = params$ctr_name,
+              result_type_name = "Outcome",
+             type = "deviation"  ) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+
+ 
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_indicators_time(year = 2019, 
+            ctr_name = params$ctr_name,
+              result_type_name = "Outcome",
+             type = "deviation"
+             ) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+
+```
+
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_indicators_time(year = 2019, 
+            ctr_name = params$ctr_name,
+              result_type_name = "Output",
+             type = "deviation"
+             ) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+show_indicators_time(year = 2022,  
+            ctr_name = params$ctr_name,
+              result_type_name = "Outcome",
+             type = "progress"  ) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_indicators_time(year = 2019, 
+            ctr_name = params$ctr_name,
+              result_type_name = "Outcome",
+             type = "progress"
+             ) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_indicators_time(year = 2019, 
+            ctr_name = params$ctr_name,
+              result_type_name = "Output",
+             type = "progress"
+             ) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+
+
+
+

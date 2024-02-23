@@ -20,6 +20,10 @@ reference:
   contents:
   - starts_with("mapping")  
 - title: Reference
-  desc: UNHCR Geographci Referential
+  desc: UNHCR Geographic Referential
   contents:
-  - starts_with("reference")
+  - starts_with("reference") 
+- title: Template
+  desc: Powerpoint Report
+  contents:
+  - starts_with("template")

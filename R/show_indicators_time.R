@@ -209,7 +209,7 @@ show_indicators_time <- function(year,
                        shape = 17,
                        size = 3) +
     ggplot2::stat_summary(fun.data=mean_sdl, #mult=1, 
-                   geom="pointrange", color="grey", size = 3)   + 
+                   geom="pointrange", color="grey", size = 1)   + 
     geom_hline(yintercept= 0, color="red") +
  # ggplot2::scale_color_viridis_d(option = "inferno", na.value = "grey50") + 
     ggplot2::scale_colour_brewer(palette = "Paired") +
@@ -230,9 +230,9 @@ show_indicators_time <- function(year,
                    paste0( result_type_name, " Indicators   ", 
                            programme_lab, ctr_name,iati_identifier_ops ) ,
                    100),
-                 subtitle = stringr::str_wrap( paste0( 
-                   "Deviation between reported \"Actual\" value and programmatic \"Target\" (in %)" ) ,
-                   110),
+                subtitle = stringr::str_wrap( paste0( 
+                      "Progress comparison between \"Actual\" reported value and their \"baseline\" (in %)" ) ,
+                      110),
                  caption = stringr::str_wrap( 
                    "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ,
                    110) )  
@@ -270,7 +270,7 @@ show_indicators_time <- function(year,
                              shape = 17,
                              size = 3) +
           ggplot2::stat_summary(fun.data=mean_sdl, #mult=1, 
-                         geom="pointrange", color="grey", size = 3)   + 
+                         geom="pointrange", color="grey", size = 1)   + 
           geom_hline(yintercept= 0, color="red") +
        # ggplot2::scale_color_viridis_d(option = "inferno", na.value = "grey50") + 
           ggplot2::scale_colour_brewer(palette = "Paired") +

@@ -148,9 +148,6 @@ show_expenditure(year = 2018,
 ```{r example-show_budget_gap, message = FALSE, warning = FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center", out.width = "90%"}
 show_budget_gap(year = 2018, 
              ctr_name = "Brazil")
-
-
-
 show_budget_gap(year = 2018, 
              ctr_name = "Brazil",
              weight_by = c("refugees", "oip"))

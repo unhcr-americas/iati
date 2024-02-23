@@ -27,9 +27,6 @@
 #' @examples
 #' show_budget_gap(year = 2018, 
 #'              ctr_name = "Brazil")
-#'
-#'
-#'
 #' show_budget_gap(year = 2018, 
 #'              ctr_name = "Brazil",
 #'              weight_by = c("refugees", "oip"))
@@ -121,8 +118,9 @@ show_budget_gap <- function(year,
         dplyr::left_join(ctrstat |> 
                          dplyr::select(year, weight)   , by = c("year")) |>
         dplyr::mutate(budget_value = round(budget_value / weight,1),   
-                      transaction_value = round(transaction_value  / weight,1))|>
-       dplyr::mutate(budget_gap = (budget_value - transaction_value) / budget_value *100) 
+                      transaction_value = round(transaction_value  / weight,1))
+      df2 <-  df2 |>
+       dplyr::mutate(budget_gap2 = (budget_value - transaction_value) / budget_value *100) 
      
     } 
    
@@ -145,9 +143,10 @@ show_budget_gap <- function(year,
                          color = "Budget"),
                      linewidth = 1.5,
                      color = "#F592A0") +  
-  ggplot2::scale_y_continuous(
-    expand = ggplot2::expansion(mult = c(0, .1)),
-    labels = scales::label_number(scale_cut = scales::cut_short_scale())  ) +
+  ggplot2::scale_y_continuous(  limits=c(0,100)) +
+  # ggplot2::scale_y_continuous(
+  #   #expand = ggplot2::expansion(mult = c(0, .1)),
+  #   labels = scales::label_number(scale_cut = scales::cut_short_scale())  ) +
 #  scale_x_continuous(labels = scales::label_number(scale_cut = cut_short_scale())) +
  # ggplot2::facet_wrap(~ trans_year) +
   unhcrthemes::theme_unhcr(grid = "Y", axis = "X", 

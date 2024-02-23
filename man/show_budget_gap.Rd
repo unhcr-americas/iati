@@ -38,9 +38,6 @@ of money that would be required were UNHCR to meet all of the needs that it is s
 \examples{
 show_budget_gap(year = 2018, 
              ctr_name = "Brazil")
-
-
-
 show_budget_gap(year = 2018, 
              ctr_name = "Brazil",
              weight_by = c("refugees", "oip"))

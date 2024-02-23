@@ -1,5 +1,9 @@
 # {iati}   <img src="man/figures/hex-.png" align="right" height="139" alt="" />
 
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/unhcr-americas/iati/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/unhcr-americas/iati/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
 ## Objective
 
 A data package with UNHCR contribution to the [International Aid Transparency Initiative (IATI)](https://reporting.unhcr.org/iati-international-aid-transparency-initiative) that aims at:

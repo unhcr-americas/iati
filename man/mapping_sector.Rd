@@ -10,6 +10,7 @@ A data frame with 83 rows and 3 variables:
   \item{\code{sector_desc}}{character COLUMN_DESCRIPTION} 
   \item{\code{sector_vocabulary_name}}{character COLUMN_DESCRIPTION}
   \item{\code{sector_rbm}}{character COLUMN_DESCRIPTION} 
+  \item{\code{area_id}}{character COLUMN_DESCRIPTION} 
 }
 }
 \source{

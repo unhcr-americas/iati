@@ -227,7 +227,7 @@ show_indicators <- function(year,
                         "Deviation between reported \"Actual\" value and programmatic \"Target\" (in %)" ) ,
                         110),
                       caption = stringr::str_wrap( 
-                        "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ,
+                        "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI)" ,
                       110) )  
            }
     } else if( type == "progress")  {
@@ -295,7 +295,7 @@ show_indicators <- function(year,
                       "Progress comparison between \"Actual\" reported value and their \"baseline\" (in %)" ) ,
                       110),
                     caption = stringr::str_wrap(
-                      "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ,
+                      "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI)" ,
                     110) )  
              }
   }

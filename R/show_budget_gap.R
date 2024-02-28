@@ -157,7 +157,7 @@ show_budget_gap <- function(year,
     subtitle =   subtitt ,
     x = "",
     y = "",
-    caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative). UNHCR budget is needs-based. It represents the total amount of money that would be required were UNHCR to meet all of the needs that it is seeking to address." ) 
+    caption = "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI). UNHCR budget is needs-based. It represents the total amount of money that would be required were UNHCR to meet all of the needs that it is seeking to address." ) 
  
   return(p)
     

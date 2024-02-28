@@ -190,7 +190,13 @@
     <loc>/reference/location.html</loc>
   </url>
   <url>
+    <loc>/reference/mapping_indicator.html</loc>
+  </url>
+  <url>
     <loc>/reference/mapping_result.html</loc>
+  </url>
+  <url>
+    <loc>/reference/mapping_sdg.html</loc>
   </url>
   <url>
     <loc>/reference/mapping_sector.html</loc>
@@ -229,6 +235,9 @@
     <loc>/reference/show_expenditure.html</loc>
   </url>
   <url>
+    <loc>/reference/show_goal_sdg.html</loc>
+  </url>
+  <url>
     <loc>/reference/show_implementers.html</loc>
   </url>
   <url>
@@ -236,6 +245,9 @@
   </url>
   <url>
     <loc>/reference/show_indicators_time.html</loc>
+  </url>
+  <url>
+    <loc>/reference/show_outcome_rbm.html</loc>
   </url>
   <url>
     <loc>/reference/show_partnership.html</loc>

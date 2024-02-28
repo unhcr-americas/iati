@@ -114,7 +114,7 @@ show_partnership <- function( year,
 #     subtitle = paste0("In ", programme_lab, " recorded since ", year,""),
 #     x = "Organisation Type",
 #     y = "Organisation Role",
-#     caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ) 
+#     caption = "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI)" ) 
  
   p <- knitr::kable( df2  )
   

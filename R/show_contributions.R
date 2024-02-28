@@ -91,7 +91,7 @@ show_contributions <- function(year,
     subtitle = paste0("Recorded in ", programme_lab, ctr_name,iati_identifier_ops, " since ", year,""),
     x = "",
     y = "",
-    caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ) 
+    caption = "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI)" ) 
  
   return(p) 
 }

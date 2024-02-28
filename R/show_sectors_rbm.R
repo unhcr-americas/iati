@@ -137,7 +137,7 @@ show_sectors_rbm <- function(year,
         subtitle = paste0("Recorded in ", programme_lab, ctr_name,iati_identifier_ops,
                           " based on UNHCR Results Framework "),          
          x = "Sectors", y = "% of Total Funding", 
-         caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative). UNHCR budget is needs-based. It represents the total amount of money that would be required were UNHCR to meet all of the needs that it is seeking to address.") 
+         caption = "Source: Data shared by UNHCR as part of the International Aid Transparency Initiative (IATI). UNHCR budget is needs-based. It represents the total amount of money that would be required were UNHCR to meet all of the needs that it is seeking to address.") 
 
   return(p)
 }

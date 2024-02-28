@@ -3,7 +3,7 @@ params:
   year: 2022
   ctr_name: "Brazil"
 title: "UNHCR Programme in  \ `r params$ctr_name` "
-subtitle:  "Based on data publicly released through IATI - the International Aid Transparency Initiative"
+subtitle:  "Strategic Moment of Reflection using publicly released open data"
 output:
   unhcrdown::pptx_slides
 ---
@@ -28,92 +28,252 @@ library(iati)
 showtext::showtext_auto(FALSE) 
 ```
 
-# Data literacy... 
+#  A "Strategic Moment of Reflection" ... 
 
+ _is  a dedicated moment for relevant stakeholders to review progress and identify challenges, opportunities and possible strategic shifts or re-orientations_.
 
+This presentation conveniently includes key visualization based on [publicly released data]( `r paste0("https://reporting.unhcr.org/operational/operations/",params$ctr_name)`) on:
 
-... describes the ability to read, analyze, and argue with data.
+ * Population Statistics
 
+ * Resources Allocation by Sector
 
+ * Results & Indicators
+ 
+ * Budget & Funding 
 
 > ## “__Numbers have an important story to tell. They rely on YOU to give them a voice!__”
-
 > -- Stephen Few
 
+---
+
+# Population statistics
+
+__Framing questions for strategic reflections:__
+
+* What are the main drivers behind significant changes in the number of forcibly displaced and stateless people?
+
+* Are Refugee Status Determination processing in line with needs?
+
+* What are the prospect for Refugee Solutions?
 
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+
+```{r ph=officer::ph_location_fullsize()} 
+
+## Need to account for MCO... - if MCO - then mutliple country to aggregate...
+
+# Piping from previous steps
+fd_last_ten_years <- refugees::population |>
+  dplyr::filter(year >= 2013 & year <= 2023 & 
+                coa ==   countrycode::countrycode(params$ctr_name, origin = 'country.name', destination = 'iso3c')) |>
+  dplyr::summarise(refugees = sum(refugees, na.rm = TRUE),
+                   asylum_seekers = sum(asylum_seekers, na.rm = TRUE), 
+                   oip = sum(oip, na.rm = TRUE),
+                   ooc = sum(ooc, na.rm = TRUE), 
+                   stateless = sum(stateless, na.rm = TRUE), 
+                   idps = sum(idps, na.rm = TRUE), 
+                   # by define the key to use for summarise
+                   .by = year) |>  
+  tidyr::pivot_longer(cols = -year, 
+                      names_to = "population_type", 
+                      values_to = "total")   |> 
+  # Creating new or overwriting variables with mutate 
+  dplyr::mutate(
+    # with factor we enforce a specific order to be used 
+    population_type = forcats::fct_relevel(population_type,
+                                             "refugees", "oip", "asylum_seekers", "stateless", "idps", "ooc"), 
+    # Now we map this to labels
+    pop_type  = dplyr::recode(population_type,
+                              refugees="Refugees",
+                              asylum_seekers="Asylum-seekers",
+                              oip="Other people in need of international protection",
+                              stateless="Stateless Persons",
+                              idps="Internally displaced person",
+                              ooc="Others of Concern to UNHCR")) |>
+  # Sorting with arrange
+  dplyr::arrange(year, population_type)  |>
+  # Renaming existing variables
+  dplyr::rename( pop_num = total ) 
+
+cols_poptype <- c("Asylum-seekers" = "#18375F",
+                    "Refugees" = "#0072BC",
+                    "Other people in need of international protection" = "#EF4A60", 
+                    "Others of Concern to UNHCR" = "#999999",
+                    "Internally displaced persons" = "#00B398",
+                    "Stateless Persons" = "#E1CC0D")
+
+### Pulling last record to populate the title and subtitle
+fd_last <- fd_last_ten_years |>
+        dplyr::filter(year == max( fd_last_ten_years$year))
+
+tot <- scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(sum( fd_last$pop_num, na.rm = TRUE))
+
+
+charttit <-  paste0(tot , " People reported through UNHCR Statistics in ",params$ctr_name , " | As of ", max( fd_last_ten_years$year))
+
+
+chartsub <- paste0(  
+  
+  dplyr::if_else(fd_last |> 
+                   dplyr::filter(population_type== "idps") |> 
+                   dplyr::pull(pop_num) > 0, 
+                 paste0( "<span style='color:\"#00B398\"'>", 
+                          scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(fd_last |>
+                                                                dplyr::filter(population_type== "idps") |> 
+                                                                  dplyr::pull(pop_num)),
+                         " IDPs</span>  "), 
+                 paste0("")),
+  
+  dplyr::if_else(fd_last |> 
+                   dplyr::filter(population_type== "refugees") |> 
+                   dplyr::pull(pop_num) > 0, 
+                 paste0( "<span style='color:\"#0072BC\"'>", 
+                          scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(fd_last |>
+                                                                dplyr::filter(population_type== "refugees") |> 
+                                                                  dplyr::pull(pop_num)),
+                         " Refugees</span>  "), 
+                 paste0("")),
+  
+  
+  dplyr::if_else(fd_last |> 
+                   dplyr::filter(population_type== "asylum_seekers") |> 
+                   dplyr::pull(pop_num) > 0, 
+                 paste0( "<span style='color:\"#18375F\"'>", 
+                          scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(fd_last |>
+                                                                dplyr::filter(population_type== "asylum_seekers") |> 
+                                                                  dplyr::pull(pop_num)),
+                         " Asylum-seekers</span>  "), 
+                 paste0("")),
+  
+  
+  dplyr::if_else(fd_last |> 
+                   dplyr::filter(population_type== "oip") |> 
+                   dplyr::pull(pop_num) > 0, 
+                 paste0( "<span style='color:\"#EF4A60\"'>", 
+                          scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(fd_last |>
+                                                                dplyr::filter(population_type== "oip") |> 
+                                                                  dplyr::pull(pop_num)),
+                         " Other people in need of international protection</span>  "), 
+                 paste0("")),
+  
+  
+  dplyr::if_else(fd_last |> 
+                   dplyr::filter(population_type== "stateless") |> 
+                   dplyr::pull(pop_num) > 0, 
+                 paste0( "<span style='color:\"#E1CC0D\"'>", 
+                          scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(fd_last |>
+                                                                dplyr::filter(population_type== "stateless") |> 
+                                                                  dplyr::pull(pop_num)),
+                         " Stateless Persons</span> "), 
+                 paste0("")),
+  
+  
+  dplyr::if_else(fd_last |> 
+                   dplyr::filter(population_type== "ooc") |> 
+                   dplyr::pull(pop_num) > 0, 
+                 paste0( "<span style='color:\"#999999\"'>", 
+                          scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(fd_last |>
+                                                                dplyr::filter(population_type== "ooc") |> 
+                                                                  dplyr::pull(pop_num)),
+                         " Others of Concern to UNHCR</span> "), 
+                 paste0("")),
+  
+          
+         "."
+         )
+
+
+p <- ggplot(data = fd_last_ten_years,
+       aes( x =  factor(year),  y = pop_num,
+            fill = pop_type)) +  
+  geom_col( width = .7 ) + 
+  unhcrthemes::scale_fill_unhcr_d(
+    palette = "pal_unhcr_poc" ,
+    nmax = 9, order = c(4, 1:3, 9, 8)  ) +
+      scale_fill_manual(values = cols_poptype,
+                      drop = TRUE,
+                      limits = force) +
+  
+  scale_y_continuous(
+    expand = expansion(mult = c(0, 0)),
+    labels = scales::label_number(scale_cut = scales::cut_short_scale()),
+    breaks = scales::pretty_breaks(n = 5)) +
+  labs(title = charttit,
+       subtitle =  chartsub , 
+       caption = "Source: Refugee Data Finder<br>© UNHCR, The UN Refugee Agency")+
+  theme_unhcr( grid = "Y", axis = "X", 
+               axis_title = FALSE,
+               legend = FALSE) 
+  
+showtext::showtext_auto(FALSE) 
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+  
+
+
  
-show_donors(year = 2018,
-           ctr_name = params$ctr_nam,
-           transaction_type_name = "Incoming Commitment" )-> p
-dml(ggobj = p, fonts = list(serif = 'Lato'))
-```
+---
 
+# Results & Indicators
 
+__Framing questions for strategic reflections:__
+
+ * What worked well? what did not work? What was learned?
+
+ * How the changes in context affected achievement of results?
+
+ * Which outcome-level results have we made the most progress towards? For which population types?
+
+ * Which outcomes are the least advanced? Are there any population types or locations that are left behind and why?
  
 
 
+
 ---
 
 ```{r ph=officer::ph_location_fullsize()}
-show_top_donors(year = "2022",
-           ctr_name = params$ctr_name,
-           transaction_type_name = "Incoming Commitment" ,
-           top_n = 10) -> p
+
+show_indicators(year = 2022,  
+            ctr_name = params$ctr_name,
+              result_type_name = "Outcome",
+             type = "deviation"  ) -> p
 dml(ggobj = p, fonts = list(serif = 'Lato'))
 ```
 
 ---
 
 ```{r ph=officer::ph_location_fullsize()}
-show_top_donors(year = "2021",
-           ctr_name = params$ctr_name,
-           transaction_type_name = "Incoming Commitment" ,
-           top_n = 10) -> p
+show_indicators_time(year = 2019, 
+            ctr_name = params$ctr_name,
+              result_type_name = "Outcome",
+             type = "deviation"
+             ) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+show_indicators(year = 2022,  
+            ctr_name = params$ctr_name,
+              result_type_name = "Outcome",
+             type = "progress" ) -> p
 dml(ggobj = p, fonts = list(serif = 'Lato'))
 ```
 
 ---
 
 ```{r ph=officer::ph_location_fullsize()}
-show_top_donors(year = "2020",
-           ctr_name = params$ctr_name,
-           transaction_type_name = "Incoming Commitment" ,
-           top_n = 10) -> p
-dml(ggobj = p, fonts = list(serif = 'Lato'))
-```
-
-
----
-
-```{r ph=officer::ph_location_fullsize()}
-show_top_donors(year = "2019",
-           ctr_name = params$ctr_name,
-           transaction_type_name = "Incoming Commitment" ,
-           top_n = 10) -> p
-dml(ggobj = p, fonts = list(serif = 'Lato'))
-```
-
-
----
-
-```{r ph=officer::ph_location_fullsize()}
-show_earmarking(year = 2018,
-           ctr_name = params$ctr_name) -> p
-dml(ggobj = p, fonts = list(serif = 'Lato'))
-```
-
-
- 
-
----
-
-```{r ph=officer::ph_location_fullsize()}
-show_expenditure(year = 2018,
-           ctr_name = params$ctr_name ) -> p
+show_indicators_time(year = 2019, 
+            ctr_name = params$ctr_name,
+              result_type_name = "Outcome",
+             type = "progress"
+             ) -> p
 dml(ggobj = p, fonts = list(serif = 'Lato'))
 ```
 
@@ -121,34 +281,18 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
-show_expenditure(year = 2018,
-           ctr_name = params$ctr_name,
-             weight_by = c("refugees", "oip")) -> p
-dml(ggobj = p, fonts = list(serif = 'Lato'))
-```
 
+# Resources Allocation  
 
+__Framing questions for strategic reflections:__
 
----
+ * What are the main changes in regional, political, legal, security, humanitarian space/access, social and economic factors and implications?
 
-```{r ph=officer::ph_location_fullsize()}
-show_budget_gap(year = 2018,
-           ctr_name = params$ctr_name) -> p
-dml(ggobj = p, fonts = list(serif = 'Lato'))
-```
+ * What are the strategy’s planning assumptions? Shall they be revised? 
 
-
+ * How much the main achievements and results align with Resource Allocation?  Can causal links be made between these changes and our interventions?
 
 ---
-
-```{r ph=officer::ph_location_fullsize()}
- 
-show_partnership(year = params$year,
-           ctr_name = params$ctr_name) 
-```
-
-
 
 
 ---
@@ -171,110 +315,132 @@ show_sectors(
 dml(ggobj = p, fonts = list(serif = 'Lato'))
 ```
 
----
-
-```{r ph=officer::ph_location_fullsize()}
-show_sectors(
-  year =  c(2020, 2021, 2022), 
-  ctr_name = params$ctr_name,
-  sector_vocabulary_name = "Reporting Organisation") -> p
-dml(ggobj = p, fonts = list(serif = 'Lato'))
-```
-
----
-
-```{r ph=officer::ph_location_fullsize()}
-show_sectors(
-  year =  c(2020, 2021, 2022), 
-  ctr_name = params$ctr_name,
-  sector_vocabulary_name = "Reporting Organisation 2") -> p
-dml(ggobj = p, fonts = list(serif = 'Lato'))
-```
 
 ---
 
 ```{r ph=officer::ph_location_fullsize()}
 
-show_sectors_rbm( year =  c( 2020, 2021, 2022),  
+show_goal_sdg( year =  c( 2020, 2021, 2022),  
   ctr_name = params$ctr_name ) -> p
 dml(ggobj = p, fonts = list(serif = 'Lato'))
 ```
 
 
+
 ---
 
 ```{r ph=officer::ph_location_fullsize()}
 
-show_indicators(year = 2022,  
-            ctr_name = params$ctr_name,
-              result_type_name = "Outcome",
-             type = "deviation"  ) -> p
+show_outcome_rbm( year =  c( 2020, 2021, 2022),  
+  ctr_name = params$ctr_name ) -> p
 dml(ggobj = p, fonts = list(serif = 'Lato'))
 ```
 
 
  
 ---
+ 
+# Budget & Funding 
+
+
+__Framing questions for strategic reflections:__
+
+ * How to explain the evolution of your budget vis-a-vis your expenditure?
+
+ * How resilient (or dependent) is the operation in relation with funding sources diversity?
+
+
+
+---
 
 ```{r ph=officer::ph_location_fullsize()}
-show_indicators_time(year = 2019, 
-            ctr_name = params$ctr_name,
-              result_type_name = "Outcome",
-             type = "deviation"
-             ) -> p
+show_expenditure(year = 2018,
+           ctr_name = params$ctr_name ) -> p
 dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
 
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_expenditure(year = 2018,
+           ctr_name = params$ctr_name,
+             weight_by = c("refugees", "oip")) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_budget_gap(year = 2018,
+           ctr_name = params$ctr_name) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_earmarking(year = 2018,
+           ctr_name = params$ctr_name) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
 ```
 
 
 ---
 
 ```{r ph=officer::ph_location_fullsize()}
-show_indicators_time(year = 2019, 
-            ctr_name = params$ctr_name,
-              result_type_name = "Output",
-             type = "deviation"
-             ) -> p
+ 
+show_donors(year = 2018,
+           ctr_name = params$ctr_nam,
+           transaction_type_name = "Incoming Commitment" )-> p
 dml(ggobj = p, fonts = list(serif = 'Lato'))
-
 ```
 
 ---
 
 ```{r ph=officer::ph_location_fullsize()}
+show_top_donors(year = "2022",
+           ctr_name = params$ctr_name,
+           top_n = 10) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
 
-show_indicators_time(year = 2022,  
-            ctr_name = params$ctr_name,
-              result_type_name = "Outcome",
-             type = "progress"  ) -> p
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_top_donors(year = "2021",
+           ctr_name = params$ctr_name,
+           top_n = 10) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_top_donors(year = "2020",
+           ctr_name = params$ctr_name,
+           top_n = 10) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_top_donors(year = "2019",
+           ctr_name = params$ctr_name,
+           top_n = 10) -> p
 dml(ggobj = p, fonts = list(serif = 'Lato'))
 ```
 
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
-show_indicators_time(year = 2019, 
-            ctr_name = params$ctr_name,
-              result_type_name = "Outcome",
-             type = "progress"
-             ) -> p
-dml(ggobj = p, fonts = list(serif = 'Lato'))
-```
+# Conclusion: An After-Action Review
 
+Organizational learning requires continuous assessment of organisational performance, looking at successes and failures, ensuring that learning takes place to support continuous improvement. At the end of the Strategic moment of Reflection, answer the 3 following set of questions: 
 
----
+* __Hindsight (looking back)__: What was supposed to happen? What actually happened? What were the differences?
 
-```{r ph=officer::ph_location_fullsize()}
-show_indicators_time(year = 2019, 
-            ctr_name = params$ctr_name,
-              result_type_name = "Output",
-             type = "progress"
-             ) -> p
-dml(ggobj = p, fonts = list(serif = 'Lato'))
-```
+* __Insight (looking broad and deep)__: What worked?  What didn't work? Why didn't it work?
 
-
-
-
+* __Foresight (looking forward) __: What would you do differently next time? Is there any lessons that can be shared with other Operations?
 

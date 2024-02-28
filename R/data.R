@@ -366,6 +366,7 @@
 #' \describe{
 #'   \item{\code{result_title}}{character result_title}
 #'   \item{\code{sector_rbm}}{character sector_rbm} 
+#'   \item{\code{area_id}}{character COLUMN_DESCRIPTION} 
 #'}
 #' @source \url{https://www.unhcr.org/what-we-do/build-better-futures/compass/}
 "mapping_result"
@@ -378,9 +379,62 @@
 #'   \item{\code{sector_desc}}{character COLUMN_DESCRIPTION} 
 #'   \item{\code{sector_vocabulary_name}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{sector_rbm}}{character COLUMN_DESCRIPTION} 
+#'   \item{\code{area_id}}{character COLUMN_DESCRIPTION} 
 #'}
 #' @source \url{https://www.unhcr.org/what-we-do/build-better-futures/compass}
 "mapping_sector"
+
+
+
+#' @title mapping_sdg
+#' @description Mapping UNHCR areas to UN SDG
+#' @format A data frame with 26 rows and 2 variables:
+#' \describe{
+#'   \item{\code{area}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{sdg}}{character COLUMN_DESCRIPTION} 
+#'}
+#' @source \url{https://www.unhcr.org/what-we-do/build-better-futures/compass}#' @examples
+#' {
+#' knitr::kable(head(mapping_sdg, 26))
+#'}
+"mapping_sdg"
+
+
+
+#' @title mapping_indicator
+#' @description Mapping Interpretation threshold for indicator values
+#' @format A data frame with 47 rows and 27 variables:
+#' \describe{
+#'   \item{\code{Indicator}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{Indicator_lab2}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{Area of work}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{theme}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{subtheme}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{Results_Level}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{area_id}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{Area}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{Area_id}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{Ind_id}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{Ind_seq}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{Show_As}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{Indicator_Code}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{Reverse}}{logical COLUMN_DESCRIPTION}
+#'   \item{\code{threshold_red}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{threshold_orange}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{threshold_green}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{standard_direction}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{survey}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{RAS}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{STA}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{IDP}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{RET}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{OOC}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{all}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{DEN}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{max}}{character COLUMN_DESCRIPTION} 
+#'}
+#' @source \url{http://somewhere.important.com/}
+"mapping_indicator"
 
 #### All code list doc ############
 

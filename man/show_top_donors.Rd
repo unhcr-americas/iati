@@ -9,7 +9,6 @@ show_top_donors(
   programme_lab = NULL,
   iati_identifier_ops = NULL,
   ctr_name = NULL,
-  transaction_type_name = "Incoming Commitment",
   top_n = 5
 )
 }
@@ -22,9 +21,6 @@ show_top_donors(
 
 \item{ctr_name}{A character vector corresponding to the name of the country.}
 
-\item{transaction_type_name}{Transaction type - default is "Incoming Commitment" ,
-can also be   "Disbursement", or "Expenditure"}
-
 \item{top_n}{top n donors to show - the rest being lumped together}
 }
 \value{
@@ -35,11 +31,9 @@ Who are the main donors by country in terms of transaction?
 }
 \examples{
 show_top_donors(year = 2022,
-           ctr_name = "Brazil",
-           transaction_type_name = "Incoming Commitment" ,
+           ctr_name = "Brazil", 
            top_n = 5)
 show_top_donors(year = 2020,
-           ctr_name = "Brazil",
-           transaction_type_name = "Incoming Commitment" ,
+           ctr_name = "Brazil", 
            top_n = 10)
 }

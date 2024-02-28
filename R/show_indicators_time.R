@@ -227,14 +227,14 @@ show_indicators_time <- function(year,
   
   ggplot2::labs( x = "", y = "" ,
                  title = stringr::str_wrap( 
-                   paste0( result_type_name, " Indicators   ", 
+                   paste0( "Deviation Review | ", result_type_name, " Indicators   ", 
                            programme_lab, ctr_name,iati_identifier_ops ) ,
                    100), 
                  subtitle = stringr::str_wrap( paste0( 
-                         "Deviation between reported \"Actual\" value and programmatic \"Target\" (in %)" ) ,
+                         "Between reported \"Actual\" value and programmatic \"Target\" (in %)" ) ,
                       110),
                  caption = stringr::str_wrap( 
-                   "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ,
+                   "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI)" ,
                    110) )  
            }
     } else if( type == "progress")  {
@@ -288,17 +288,83 @@ show_indicators_time <- function(year,
         
         ggplot2::labs( x = "", y = "" ,
                        title = stringr::str_wrap( 
-                         paste0( result_type_name, " Indicators   ", 
+                         paste0( "Progress Comparison | ", result_type_name, " Indicators   ", 
                                  programme_lab, ctr_name,iati_identifier_ops ) ,
                          100),
                 subtitle = stringr::str_wrap( paste0( 
-                      "Progress comparison between \"Actual\" reported value and their \"baseline\" (in %)" ) ,
+                      "Between \"Actual\" reported value and their \"baseline\" (in %)" ) ,
                          110),
                        caption = stringr::str_wrap( 
-                         "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ,
+                         "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI)" ,
+                         110) )  
+             }
+    } else if( type == "gap")  {
+      
+      df1 <- df1 |> 
+        ## Attach the mapping for outcome indicator threshold
+        dplyr::left_join(iati::mapping_indicator)
+        
+        ## Filter out - when no data...
+        dplyr::filter (! (is.na(actual)))  |> 
+        dplyr::filter (! (is.na(baseline)))  |> 
+        dplyr::filter (! (is.nan(progress_baseline))) |>
+        #dplyr::arrange(desc(actual))
+        dplyr::group_by( result_indicator_title) |>
+        dplyr::arrange(desc( actual), .by_group=TRUE )  |> 
+        dplyr::ungroup(result_indicator_title)
+ 
+        ## case there's no data at all
+        if( nrow(df1) == 0) {
+              info <- paste0("No gap analysis - actual to green threshold - \n comparative analysis \n  could be produced for \n",
+                                  result_type_name, " indicator values \n in ", 
+                                programme_lab, ctr_name,iati_identifier_ops, " for year: ", year)
+              p <- ggplot2::ggplot() +  
+                   ggplot2::annotate("text",  x = 1, y = 1, size = 12,
+                                        label = info ) +  
+                   ggplot2::theme_void()
+        
+         } else if(nrow(df1)> 0) {
+            ## and now the plot
+            p <-  ggplot2::ggplot( df1, 
+                 ggplot2::aes(x = year,
+                          y = progress_baseline,
+                   #shape = indicator_measure_name,
+                   color = sector_rbm)) + 
+        ggplot2::geom_jitter(position=position_jitter(0.2),
+                             shape = 17,
+                             size = 3) +
+          ggplot2::stat_summary(fun.data=mean_sdl, #mult=1, 
+                         geom="pointrange", color="grey", size = .3)   + 
+          geom_hline(yintercept= 0, color="red") +
+       # ggplot2::scale_color_viridis_d(option = "inferno", na.value = "grey50") + 
+          ggplot2::scale_colour_brewer(palette = "Paired") +
+        ggplot2::scale_y_continuous( label =  scales::label_number(accuracy = 1, 
+                                                                   scale_cut = scales::cut_short_scale(),
+                                                                   suffix = "%") )+
+        ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 120)) +
+        unhcrthemes::theme_unhcr(font_size = 22, 
+                                 axis_text_size = 9,
+                                 grid = "Y", 
+                                 axis = "y") +
+          ggplot2::theme( legend.direction = "vertical",
+                          legend.box = "horizontal",
+                          legend.position = "right")+
+        
+        ggplot2::labs( x = "", y = "" ,
+                       title = stringr::str_wrap( 
+                         paste0( "Progress Comparison | ", result_type_name, " Indicators   ", 
+                                 programme_lab, ctr_name,iati_identifier_ops ) ,
+                         100),
+                subtitle = stringr::str_wrap( paste0( 
+                      "Between \"Actual\" reported value and their \"baseline\" (in %)" ) ,
+                         110),
+                       caption = stringr::str_wrap( 
+                         "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI)" ,
                          110) )  
              }
   }
+  
+  
   return(p)
     
 }

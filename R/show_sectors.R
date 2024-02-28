@@ -110,11 +110,11 @@ show_sectors <- function(year,
     ggplot2::facet_wrap( ggplot2::vars(year)) +
     ggplot2::scale_fill_viridis_d(option = "inferno", na.value = "grey50") +
     ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, .1)), labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
-    ggplot2::labs(title = "Share of Budget per Sectors (%)", 
+    ggplot2::labs(title = "Resource Allocation per Sectors (%)", 
         subtitle = paste0("Recorded in ", programme_lab, ctr_name,iati_identifier_ops,
                           " based on vocabulary: ", sector_vocabulary_name),          
          x = "Sectors", y = "% of Total Funding", 
-         caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative)") 
+         caption = "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI)") 
 
     
  

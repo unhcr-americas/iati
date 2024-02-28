@@ -34,9 +34,7 @@
 #'                 dplyr::select(earmarking_name, earmarking_description)  |>
 #'                 dplyr::distinct() |>
 #'                 dplyr::filter(!(is.na(earmarking_name))))
-#' show_earmarking(year = 2018, 
-#'              programme_lab = NULL, 
-#'              iati_identifier_ops = NULL, 
+#' show_earmarking(year = 2018,  
 #'              ctr_name = "Brazil")
 show_earmarking <- function(year, 
                         programme_lab = NULL, 
@@ -79,12 +77,19 @@ show_earmarking <- function(year,
             year >= thisyear & 
              transaction_type_name ==  "Incoming Commitment")
   }
-   
+  # levels(as.factor(df$earmarking_name)) 
+  
   df2 <- df |> 
     dplyr::group_by(year, earmarking_name) |>
     dplyr::summarise( transaction_value_USD = sum(transaction_value_USD , na.rm = TRUE)) |>
     dplyr::mutate(earmarking_name = as.character(earmarking_name) )  |>
     dplyr::mutate(earmarking_name = as.factor(earmarking_name) ) 
+  
+ 
+  cols_earmarking_name <- c("Earmarked" = "#e1cc0d",
+                    "Softly Earmarked" = "#0072bc", 
+                    "Tightly Earmarked" = "#ef4a60", 
+                    "Unearmarked" = "#00b398" )
   
  p <- df2 |> 
 #  dplyr::filter(transaction_value_USD  <= 1000000 & transaction_value_USD  > 1000) |> 
@@ -92,7 +97,11 @@ show_earmarking <- function(year,
              x =  year,
              fill = earmarking_name)) +
   ggplot2::geom_bar(alpha = 0.9, stat = "identity") +
-  ggplot2::scale_fill_viridis_d(option = "inferno", na.value = "grey50") +
+  #ggplot2::scale_fill_viridis_d(option = "inferno", na.value = "grey50") +
+  ggplot2::scale_fill_manual(values = cols_earmarking_name,
+                      drop = TRUE,
+                      limits = force,
+                      na.value = "grey50") +
   ggplot2::scale_y_continuous(
     expand = ggplot2::expansion(mult = c(0, .1)),
     labels = scales::label_number(scale_cut = scales::cut_short_scale())  ) +
@@ -104,7 +113,7 @@ show_earmarking <- function(year,
     subtitle = paste0("Recorded in ", programme_lab, ctr_name,iati_identifier_ops, " since ", year,""),
     x = "",
     y = "",
-    caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ) 
+    caption = "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI)" ) 
  
   return(p) 
 }

@@ -145,7 +145,7 @@ show_expenditure <- function(year,
   ggplot2::scale_color_manual(name = " ", 
                                values = c("Expenditure" = "#F592A0", "Budget" = "#00568D")) +
   ggplot2::scale_y_continuous(
-    expand = ggplot2::expansion(mult = c(0, .1)),
+   # expand = ggplot2::expansion(mult = c(0, .1)),
     labels = scales::label_number(scale_cut = scales::cut_short_scale())  ) +
 #  scale_x_continuous(labels = scales::label_number(scale_cut = cut_short_scale())) +
  # ggplot2::facet_wrap(~ trans_year) +
@@ -157,7 +157,7 @@ show_expenditure <- function(year,
     subtitle = subtitt,
     x = "",
     y = "",
-    caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative). UNHCR budget is needs-based. It represents the total amount of money that would be required were UNHCR to meet all of the needs that it is seeking to address." ) 
+    caption = "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI). UNHCR budget is needs-based. It represents the total amount of money that would be required were UNHCR to meet all of the needs that it is seeking to address." ) 
  
   return(p)
 }

@@ -9,6 +9,7 @@ A data frame with 107 rows and 2 variables:
 \describe{
   \item{\code{result_title}}{character result_title}
   \item{\code{sector_rbm}}{character sector_rbm} 
+  \item{\code{area_id}}{character COLUMN_DESCRIPTION} 
 }
 }
 \source{

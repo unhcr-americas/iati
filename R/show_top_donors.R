@@ -7,9 +7,7 @@
 #' @param year year to select starting from 2016 - could be one year or a list
 #' @param programme_lab A character vector corresponding to the name of the programme.
 #' @param iati_identifier_ops A character vector corresponding to the name of the operation.
-#' @param ctr_name A character vector corresponding to the name of the country.
-#' @param transaction_type_name Transaction type - default is "Incoming Commitment" ,
-#'   can also be   "Disbursement", or "Expenditure"  
+#' @param ctr_name A character vector corresponding to the name of the country. 
 #' @param top_n top n donors to show - the rest being lumped together
 #' 
 #' @import ggplot2
@@ -22,18 +20,15 @@
 #' @return  a graph
 #' @examples
 #' show_top_donors(year = 2022,
-#'            ctr_name = "Brazil",
-#'            transaction_type_name = "Incoming Commitment" ,
+#'            ctr_name = "Brazil", 
 #'            top_n = 5)
 #' show_top_donors(year = 2020,
-#'            ctr_name = "Brazil",
-#'            transaction_type_name = "Incoming Commitment" ,
+#'            ctr_name = "Brazil", 
 #'            top_n = 10)
 show_top_donors <- function(year, 
                         programme_lab = NULL, 
                         iati_identifier_ops = NULL, 
-                        ctr_name = NULL,
-                        transaction_type_name = "Incoming Commitment",
+                        ctr_name = NULL, 
                         top_n = 5) {
   
   ## Check year is after or equal 2016
@@ -54,29 +49,26 @@ show_top_donors <- function(year,
   ## Filtering
   if (!is.null(programme_lab)) {
     thisprogramme_lab <- programme_lab
-    thisyear <-  year
-    thistransaction_type_name <-  transaction_type_name
+    thisyear <-  year 
     df <- df |> 
       # levels(as.factor(df$programmme_lab))
       dplyr::filter( programmme_lab == thisprogramme_lab &
             year == thisyear & 
-             transaction_type_name ==  thistransaction_type_name)
+             transaction_type_name ==  "Incoming Commitment")
   } else if (!is.null(iati_identifier_ops)) {
     thisiati_identifier_ops <- iati_identifier_ops
-    thisyear <-  year
-    thistransaction_type_name <-  transaction_type_name
+    thisyear <-  year 
     df <- df |> 
       dplyr::filter(iati_identifier_ops == thisiati_identifier_ops &
             year == thisyear & 
-             transaction_type_name ==  thistransaction_type_name)
+             transaction_type_name ==  "Incoming Commitment")
   } else if (!is.null(ctr_name)) {
     thisctr_name <- ctr_name
-    thisyear <-  year
-    thistransaction_type_name <-  transaction_type_name
+    thisyear <-  year 
     df <- df |> 
       dplyr::filter( ctr_name == thisctr_name &
             year == thisyear & 
-             transaction_type_name ==  thistransaction_type_name)
+             transaction_type_name == "Incoming Commitment")
   }
    
    
@@ -112,11 +104,11 @@ show_top_donors <- function(year,
  # ggplot2::facet_wrap(~ trans_year) +
   unhcrthemes::theme_unhcr(grid = "X", axis = "X", axis_title = "X", font_size = 18)+
   ggplot2::labs(
-    title = paste0(transaction_type_name," (in USD)"),
-    subtitle = paste0("Recorded in ", programme_lab, ctr_name,iati_identifier_ops, "  in year ", year,""),
+    title = paste0("Top ",top_n ," donors (in USD)"),
+    subtitle = paste0("Incoming Commitment Recorded in ", programme_lab, ctr_name,iati_identifier_ops, " | ", year,""),
     x = "",
     y = "",
-    caption = "Data Source: UNHCR IATI (International Aid Transparency Initiative)" ) 
+    caption = "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI)" ) 
  
   return(p)
 }

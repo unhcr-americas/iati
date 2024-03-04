@@ -24,8 +24,11 @@ show_indicators(
 
 \item{result_type_name}{either  "Impact"  "Outcome" "Output" - default is  "Outcome"}
 
-\item{type}{"deviation" showing difference between target and actual - or 
-"progress"  showing difference between baseline and actual}
+\item{type}{either "deviation" ,  "progress"  or "gap"
+"deviation" showing difference between target and actual - or 
+"progress"  showing difference between baseline and actual  - or
+"gap" showing difference between green acceptable threshold and actual. 
+gap analysis is only displayed for outcome indicators published after 2022}
 }
 \value{
 a graph
@@ -36,28 +39,33 @@ How much indicators evolve over time against thresholds?
 \examples{
 show_indicators(year = 2022,  
              ctr_name = "Brazil",
-              result_type_name = "Outcome",
+             result_type_name = "Outcome",
              type = "deviation"
              )
 show_indicators(year = 2022,  
              ctr_name = "Brazil",
-              result_type_name = "Impact",
+             result_type_name = "Outcome",
+             type = "progress"
+             )
+show_indicators(year = 2022,  
+             ctr_name = "Brazil",
+             result_type_name = "Outcome",
+             type = "gap"
+             )
+show_indicators(year = 2022,  
+             ctr_name = "Brazil",
+             result_type_name = "Impact",
              type = "deviation"
+             )
+show_indicators(year = 2022,  
+             ctr_name = "Brazil",
+             result_type_name = "Impact",
+             type = "progress"
              )
 show_indicators(year = 2019,  
              ctr_name = "Brazil",
-              result_type_name = "Output",
+             result_type_name = "Output",
              type = "deviation"
-             )
-show_indicators(year = 2022,  
-             ctr_name = "Brazil",
-              result_type_name = "Outcome",
-             type = "progress"
-             )
-show_indicators(year = 2022,  
-             ctr_name = "Brazil",
-              result_type_name = "Impact",
-             type = "progress"
              )
 show_indicators(year = 2019,  
              ctr_name = "Brazil",

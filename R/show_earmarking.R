@@ -86,7 +86,7 @@ show_earmarking <- function(year,
     dplyr::mutate(earmarking_name = as.factor(earmarking_name) ) 
   
  
-  cols_earmarking_name <- c("Earmarked" = "#e1cc0d",
+  palette_earmarking <- c("Earmarked" = "#e1cc0d",
                     "Softly Earmarked" = "#0072bc", 
                     "Tightly Earmarked" = "#ef4a60", 
                     "Unearmarked" = "#00b398" )
@@ -98,7 +98,7 @@ show_earmarking <- function(year,
              fill = earmarking_name)) +
   ggplot2::geom_bar(alpha = 0.9, stat = "identity") +
   #ggplot2::scale_fill_viridis_d(option = "inferno", na.value = "grey50") +
-  ggplot2::scale_fill_manual(values = cols_earmarking_name,
+  ggplot2::scale_fill_manual(values = palette_earmarking,
                       drop = TRUE,
                       limits = force,
                       na.value = "grey50") +

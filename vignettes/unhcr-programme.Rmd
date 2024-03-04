@@ -25,7 +25,7 @@ library(iati)
 ## show_indicators
 
     
- *  How much __indicators__ relate to target or baseline?
+ *  How much __indicators__ relate to target or baseline  - or acceptable global standard green threshold (for outcome indicators after 2022)- ?
  
 
   
@@ -33,28 +33,33 @@ library(iati)
 ```{r example-show_indicators, message = FALSE, warning = FALSE, fig.retina = 2, fig.width = 8, fig.align = "center", out.width = "90%"}
 show_indicators(year = 2022,  
              ctr_name = "Brazil",
-              result_type_name = "Outcome",
+             result_type_name = "Outcome",
              type = "deviation"
              )
 show_indicators(year = 2022,  
              ctr_name = "Brazil",
-              result_type_name = "Impact",
+             result_type_name = "Outcome",
+             type = "progress"
+             )
+show_indicators(year = 2022,  
+             ctr_name = "Brazil",
+             result_type_name = "Outcome",
+             type = "gap"
+             )
+show_indicators(year = 2022,  
+             ctr_name = "Brazil",
+             result_type_name = "Impact",
              type = "deviation"
+             )
+show_indicators(year = 2022,  
+             ctr_name = "Brazil",
+             result_type_name = "Impact",
+             type = "progress"
              )
 show_indicators(year = 2019,  
              ctr_name = "Brazil",
-              result_type_name = "Output",
+             result_type_name = "Output",
              type = "deviation"
-             )
-show_indicators(year = 2022,  
-             ctr_name = "Brazil",
-              result_type_name = "Outcome",
-             type = "progress"
-             )
-show_indicators(year = 2022,  
-             ctr_name = "Brazil",
-              result_type_name = "Impact",
-             type = "progress"
              )
 show_indicators(year = 2019,  
              ctr_name = "Brazil",
@@ -80,23 +85,28 @@ show_indicators_time(year = 2020,
              )
 show_indicators_time(year =  2020, 
              ctr_name = "Brazil",
-              result_type_name = "Impact",
-             type = "deviation"
-             )
-show_indicators_time(year =  2020,  
-             ctr_name = "Brazil",
-              result_type_name = "Output",
-             type = "deviation"
-             )
-show_indicators_time(year =  2020, 
-             ctr_name = "Brazil",
               result_type_name = "Outcome",
              type = "progress"
              )
 show_indicators_time(year =  2020, 
              ctr_name = "Brazil",
+              result_type_name = "Outcome",
+             type = "gap"
+             )
+show_indicators_time(year =  2020, 
+             ctr_name = "Brazil",
+              result_type_name = "Impact",
+             type = "deviation"
+             )
+show_indicators_time(year =  2020, 
+             ctr_name = "Brazil",
               result_type_name = "Impact",
              type = "progress"
+             )
+show_indicators_time(year =  2020,  
+             ctr_name = "Brazil",
+              result_type_name = "Output",
+             type = "deviation"
              )
 show_indicators_time(year =  2020, 
              ctr_name = "Brazil",
@@ -308,6 +318,24 @@ show_contributions(year = 2018,
 show_contributions(year = 2018, 
                    programme_lab = "The Americas") 
 ```
+
+  
+
+## show_transaction_flow
+
+    
+
+  
+
+```{r example-show_transaction_flow}
+show_transaction_flow(year = 2020, 
+                   ctr_name = "Brazil")
+
+show_transaction_flow(year = 2023, 
+                   ctr_name = "Brazil")
+```
+
+  
 
   
 

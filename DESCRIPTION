@@ -17,6 +17,7 @@ Imports:
     dplyr,
     forcats,
     ggplot2,
+    ggsankey,
     glue,
     here,
     knitr,
@@ -38,7 +39,8 @@ Suggests:
 VignetteBuilder: 
     knitr
 Remotes:
-    github::unhcr-americas/iati
+    github::davidsjoberg/ggsankey,
+    github::unhcr-dataviz/unhcrdown
 Config/fusen/version: 0.5.2
 Encoding: UTF-8
 LazyData: TRUE

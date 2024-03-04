@@ -116,25 +116,47 @@ show_goal_sdg <- function(year,
                           dplyr::summarise(budget_value= sum(budget_value, na.rm = TRUE))  
                             , by= c("iati_identifier"))  |>
      dplyr::select(iati_identifier, year,budget_value,   transaction_value ) |>
-     dplyr::mutate( year2 = glue::glue('{year} - Bud:{scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(budget_value)}$/ Exp:{scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(transaction_value)}$  '))
+     dplyr::mutate( year2 = glue::glue('{year}   Bud:{scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(budget_value)}$  Exp:{scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(transaction_value)}$  '))
    
    df <- df |>
          dplyr::left_join(df_bud2, by = c("year"))
    
+   ### https://www.un.org/sustainabledevelopment/wp-content/uploads/2019/01/SDG_Guidelines_AUG_2019_Final.pdf
+   palette_sdg <- c("1. No Poverty" ="#e5243b", 
+   "3. Good Health and well-being" ="#4C9F38", 
+   "4. Quality Education" ="#C5192D", 
+   "5. Gender Equality" ="#FF3A21", 
+   "6. Clean Water and Sanitation" ="#26BDE2", 
+   "8. Decent work and economic growth" ="#A21942", 
+   "10. Reduced inequalities" ="#DD1367", 
+   "11. Sustainable cities and communities" ="#FD9D24", 
+   "16. Peace, justice and strong institutions" ="#00689D", 
+   "17. Partnerships for the goals" ="#19486A",
+   "not_sdg" = "#D3D3D3")
   
 
   p <-  ggplot2::ggplot(data = df, 
                         ggplot2::aes(x = stats::reorder(sdg, sector_pct),
-                                 y = sector_pct
-                                 )) +
+                                 y = sector_pct,
+                                 fill = sdg )) +
    # unhcrthemes::theme_unhcr(grid = TRUE, axis = "Y", axis_title = "Sector Percentage") +
-    unhcrthemes::theme_unhcr(grid = "X", axis = "y", axis_title = "X", font_size = 18) +
+    unhcrthemes::theme_unhcr(grid = "X", axis = "y", 
+                             axis_title = "X",
+                             legend = FALSE,
+                             font_size = 18) +
     
-    ggplot2::geom_bar(stat = "identity", fill = "#0072BC") +
+    ggplot2::geom_bar(stat = "identity") +  # , fill = "#0072BC"
     ggplot2::coord_flip()+
-    ggplot2::facet_wrap( ggplot2::vars(year2), labeller = labeller(year2 = ggplot2::label_wrap_gen(5))) +
-    ggplot2::scale_fill_viridis_d(option = "inferno", na.value = "grey50") +
-    ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, .1)), labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
+    ggplot2::facet_wrap( ggplot2::vars(year2), 
+                         labeller = ggplot2::labeller(year2 = ggplot2::label_wrap_gen(5))) +
+   # ggplot2::scale_fill_viridis_d(option = "inferno", na.value = "grey50") +
+        ggplot2::scale_fill_manual(values = palette_sdg,
+                      drop = TRUE,
+                      limits = force,
+                      na.value = "grey50") +
+    ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, .1)),
+                                labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
+    
     ggplot2::labs(title = "Resource Allocation per SDG (%)", 
         subtitle = paste0("Recorded in ", programme_lab, ctr_name,iati_identifier_ops,
                           "  "),          

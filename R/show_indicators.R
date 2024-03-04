@@ -9,8 +9,11 @@
 #' @param iati_identifier_ops A character vector corresponding to the name of the operation.
 #' @param ctr_name A character vector corresponding to the name of the country.
 #' @param  result_type_name either  "Impact"  "Outcome" "Output" - default is  "Outcome" 
-#' @param  type  "deviation" showing difference between target and actual - or 
-#'               "progress"  showing difference between baseline and actual 
+#' @param  type  either "deviation" ,  "progress"  or "gap"
+#'   "deviation" showing difference between target and actual - or 
+#'   "progress"  showing difference between baseline and actual  - or
+#'   "gap" showing difference between green acceptable threshold and actual. 
+#'   gap analysis is only displayed for outcome indicators published after 2022
 #' 
 #' @import ggplot2
 #' @import dplyr
@@ -24,28 +27,33 @@
 #' @examples
 #' show_indicators(year = 2022,  
 #'              ctr_name = "Brazil",
-#'               result_type_name = "Outcome",
+#'              result_type_name = "Outcome",
 #'              type = "deviation"
 #'              )
 #' show_indicators(year = 2022,  
 #'              ctr_name = "Brazil",
-#'               result_type_name = "Impact",
+#'              result_type_name = "Outcome",
+#'              type = "progress"
+#'              )
+#' show_indicators(year = 2022,  
+#'              ctr_name = "Brazil",
+#'              result_type_name = "Outcome",
+#'              type = "gap"
+#'              )
+#' show_indicators(year = 2022,  
+#'              ctr_name = "Brazil",
+#'              result_type_name = "Impact",
 #'              type = "deviation"
+#'              )
+#' show_indicators(year = 2022,  
+#'              ctr_name = "Brazil",
+#'              result_type_name = "Impact",
+#'              type = "progress"
 #'              )
 #' show_indicators(year = 2019,  
 #'              ctr_name = "Brazil",
-#'               result_type_name = "Output",
+#'              result_type_name = "Output",
 #'              type = "deviation"
-#'              )
-#' show_indicators(year = 2022,  
-#'              ctr_name = "Brazil",
-#'               result_type_name = "Outcome",
-#'              type = "progress"
-#'              )
-#' show_indicators(year = 2022,  
-#'              ctr_name = "Brazil",
-#'               result_type_name = "Impact",
-#'              type = "progress"
 #'              )
 #' show_indicators(year = 2019,  
 #'              ctr_name = "Brazil",
@@ -80,7 +88,10 @@ show_indicators <- function(year,
       # levels(as.factor(df$result_type_name ))
       dplyr::filter( programmme_lab == thisprogramme_lab &
             year == thisyear & 
-             result_type_name ==  thisresult_type_name)
+             result_type_name ==  thisresult_type_name)  |>
+      dplyr::left_join(iati::mapping_result, by= c("result_title")) |> 
+      dplyr::left_join( iati::mapping_indicator, by= c("result_indicator_title" = "Indicator" ) ) |> 
+      dplyr::distinct()
   } else if (!is.null(iati_identifier_ops)) {
     thisiati_identifier_ops <- iati_identifier_ops
     thisyear <-  year 
@@ -88,7 +99,10 @@ show_indicators <- function(year,
     df <- df |> 
       dplyr::filter(iati_identifier_ops == thisiati_identifier_ops &
             year == thisyear & 
-             result_type_name ==  thisresult_type_name)
+             result_type_name ==  thisresult_type_name)|>
+      dplyr::left_join(iati::mapping_result, by= c("result_title")) |> 
+      dplyr::left_join( iati::mapping_indicator, by= c("result_indicator_title" = "Indicator" ) ) |> 
+      dplyr::distinct()
   } else if (!is.null(ctr_name)) {
     thisctr_name <- ctr_name
     thisyear <-  year 
@@ -96,7 +110,10 @@ show_indicators <- function(year,
     df <- df |> 
       dplyr::filter( ctr_name == thisctr_name &
             year == thisyear & 
-            result_type_name ==  thisresult_type_name)
+            result_type_name ==  thisresult_type_name) |>
+      dplyr::left_join(iati::mapping_result, by= c("result_title")) |> 
+      dplyr::left_join( iati::mapping_indicator, by= c("result_indicator_title" = "Indicator" ) ) |> 
+      dplyr::distinct()
   }
    
   ## in order to compare indictors alltogether in the same country, we need to normalise them
@@ -104,6 +121,8 @@ show_indicators <- function(year,
   ## names(df)
   
   #table(df$result_indicator_ascending, useNA = "ifany")
+  
+  ## Calculate deviation to taget, progress from baseline and gap to threshold
   df1 <- df  |> 
     dplyr::select(result_type_name ,  result_title, 
                   indicator_measure_name, result_indicator_title,
@@ -118,15 +137,34 @@ show_indicators <- function(year,
                   result_indicator_baseline_dimension_value_1, 
                   result_indicator_baseline_dimension_2,
                   result_indicator_baseline_dimension_value_2,
-                  result_indicator_ascending)  |>
-  
+                  result_indicator_ascending, 
+                  sector_rbm,
+                  threshold_red, threshold_orange, threshold_green)  |>
+  ## set order in outcome
+    dplyr::mutate( sector_rbm = factor(sector_rbm, levels = c("OA1: Access to Territory, Reg. and Documentation", 
+                     "OA2: Status Determination",
+                     "OA3: Protection Policy and Law", 
+                     "OA4: Sexual and Gender-based Violence",
+                     "OA5: Child Protection",
+                     "OA6: Safety and Access to Justice", 
+                     "OA7: Community Engagement and Women's Empowerment", 
+                     "OA8: Well-Being and Basic Needs", 
+                     "OA9: Sustainable Housing and Settlements", 
+                     "OA10: Healthy Lives" ,
+                     "OA11: Education",  
+                     "OA12: Clean Water, Sanitation and Hygiene",
+                     "OA13: Self Reliance, Economic Inclusion and Livelihoods",
+                     "OA14: Voluntary Repatriation and Sustainable Reintegration",
+                     "OA15: Resettlement and Complementary Pathways", 
+                     "OA16: Local Integration and other Local Solutions"))) |>
     
      
       dplyr::mutate(  actual = as.numeric(result_indicator_actual_value),
                       baseline = as.numeric(result_indicator_baseline_value),
                       target = as.numeric(result_indicator_target_value), 
                       ## Reshape the indicator label... 
-                      operation = as.character(glue::glue("{result_indicator_title} / {result_indicator_target_value_1}") ), 
+                      operation = as.character(glue::glue("{result_indicator_title}") ), 
+                     # operation = as.character(glue::glue("{result_indicator_title} / {result_indicator_target_value_1}") ), 
                       # operation = as.character(glue::glue("{result_indicator_title} / {result_title} -
                       #                                        {result_indicator_target_value_1}") ),  
                       
@@ -143,7 +181,7 @@ show_indicators <- function(year,
                       deviation_color = dplyr::case_when(
                         deviation_actual_target >= -1     ~ "green",
                         deviation_actual_target < -1  & deviation_actual_target >= -15    ~ "orange",
-                        deviation_actual_target < -15     ~ "red",  
+                        deviation_actual_target < -15     ~ "red",
                                                    TRUE ~ ""),
               ## Calculating progress to baseline..        
                       progress_baseline =  round( ( actual - baseline) / 
@@ -156,10 +194,52 @@ show_indicators <- function(year,
                       progress_color = dplyr::case_when(
                         progress_baseline >= -1     ~ "green",
                         progress_baseline < -1  & progress_baseline >= -15    ~ "orange",
-                        progress_baseline < -15     ~ "red",  
-                                                   TRUE ~ "")
+                        progress_baseline < -15     ~ "red",
+                                                   TRUE ~ ""),
+              
+                      gap_green =  round( ( threshold_green - actual ) / 
+                                           dplyr::if_else(threshold_green == 0, 1, threshold_green) * 
+                                           dplyr::if_else(threshold_green == 0, 1, 100)  ,2 ),
+                      gap_green = dplyr::if_else(result_indicator_ascending == 0, 
+                                                         gap_green * -1, 
+                                                         gap_green), 
+              
+                      gap_orange =  round( ( threshold_orange - actual ) / 
+                                           dplyr::if_else(threshold_orange == 0, 1, threshold_orange) * 
+                                           dplyr::if_else(threshold_orange == 0, 1, 100)  ,2 ), 
+                      gap_orange = dplyr::if_else(result_indicator_ascending == 0, 
+                                                         gap_orange * -1, 
+                                                         gap_orange), 
+                      
+                      gap_red =  round( ( threshold_red - actual ) / 
+                                           dplyr::if_else(threshold_red == 0, 1, threshold_red) * 
+                                           dplyr::if_else(threshold_red == 0, 1, 100)  ,2 ),
+                      gap_red = dplyr::if_else(result_indicator_ascending == 0, 
+                                                         gap_red * -1, 
+                                                         gap_red)
               
               )    
+  
+    ## ## https://www.researchgate.net/publication/334894331_Polychrome_Creating_and_Assessing_Qualitative_Palettes_with_Many_Colors
+    #install.packages("Polychrome")
+    ## Green-Armytage (2010) alphabet color - initially mapped - then corrected based on color mapping with SDG code
+    #GreenArmytage <- Polychrome::green.armytage.colors(16)
+    palette_outcome <- c("OA1: Access to Territory, Reg. and Documentation" ="#F0A3FF", 
+                         "OA2: Status Determination" = "#C20088",
+                         "OA3: Protection Policy and Law" = "#993F00", 
+                         "OA4: Sexual and Gender-based Violence" = "#FF3A21", #  "#4C005C",
+                         "OA5: Child Protection" =  "#FFCC99",
+                         "OA6: Safety and Access to Justice" = "#00689D", # "#003380", 
+                         "OA7: Community Engagement and Women's Empowerment"= "#94FFB5", 
+                         "OA8: Well-Being and Basic Needs" =   "#e5243b",  # "#005C31", 
+                         "OA9: Sustainable Housing and Settlements" = "#FD9D24", #  "#8F7C00", 
+                         "OA10: Healthy Lives" = "#4C9F38", #  "#FFA8BB", 
+                         "OA11: Education"= "#C5192D", # "#808080",  
+                         "OA12: Clean Water, Sanitation and Hygiene"= "#26BDE2", # "#0075DC",
+                         "OA13: Self Reliance, Economic Inclusion and Livelihoods" =  "#A21942", #  "#19A405",
+                         "OA14: Voluntary Repatriation and Sustainable Reintegration"= "#9DCC00",
+                         "OA15: Resettlement and Complementary Pathways" = "#191919", 
+                         "OA16: Local Integration and other Local Solutions" =  "#2BCE48")
   
   ### Type of chart to build...
   if(type == "deviation") {
@@ -170,9 +250,9 @@ show_indicators <- function(year,
           dplyr::filter (! (is.na(target)))  |> 
           dplyr::filter (! (is.nan(deviation_actual_target))) |>
           #dplyr::arrange(desc(actual))
-          dplyr::group_by( result_indicator_title) |>
+          dplyr::group_by( result_indicator_title) |>  #, result_indicator_target_value_1, sector_rbm
           dplyr::arrange(desc( actual), .by_group=TRUE )  |> 
-          dplyr::ungroup(result_indicator_title)
+          dplyr::ungroup(result_indicator_title) #, result_indicator_target_value_1, sector_rbm
      
           ## case there's no data at all
           if( nrow(df1) == 0) {
@@ -187,18 +267,38 @@ show_indicators <- function(year,
            } else if(nrow(df1)> 0) {
               ## and now the plot
               p <- ggplot2::ggplot(  data = df1) +
-                ggplot2::coord_flip()  + 
-                ggplot2::geom_col(   
-                  ggplot2::aes(x = stats::reorder(operation, - deviation_actual_target),
-                               y = deviation_actual_target,
-                               fill = deviation_color ),
-                            width = 0.7,
-                            color = NA ) 
+                   ggplot2::coord_flip()  
               
-               p <-   p +
-                ggplot2::scale_fill_manual(values = c( "red" = "#D3212C",   
-                                              "orange" = "#FF980E",
-                                              "green" = "#069C56")) +
+              ## if outcome let's use the color palette - if not use traffic light...
+              if (thisresult_type_name == "Outcome") {
+                p <- p + 
+                  ggplot2::geom_col(   
+                    ggplot2::aes(x = stats::reorder(operation, - deviation_actual_target),
+                                 y = deviation_actual_target,
+                                 fill = sector_rbm ),
+                              width = 0.7,
+                              color = NA ) + 
+                    ggplot2::scale_fill_manual(values = palette_outcome,
+                      drop = TRUE,
+                      limits = force,
+                      na.value = "grey50")  
+                
+              } else {
+                p <- p + 
+                    ggplot2::geom_col(   
+                      ggplot2::aes(x = stats::reorder(operation, - deviation_actual_target),
+                                   y = deviation_actual_target,
+                                   fill = deviation_color ),
+                                width = 0.7,
+                                color = NA )  +
+                    ggplot2::scale_fill_manual(values = c( "red" = "#D3212C",   
+                                                  "orange" = "#FF980E",
+                                                  "green" = "#069C56"))  
+              }
+              
+            p <- p + 
+                ## facet the chart by population group... 
+                ggplot2::facet_wrap( ggplot2::vars(result_indicator_target_value_1)) +
                 ggplot2::geom_text( 
                   ggplot2::aes(x = stats::reorder(operation, - deviation_actual_target), 
                                y = deviation_actual_target,
@@ -220,11 +320,11 @@ show_indicators <- function(year,
                         legend.position = "none")+
                 ggplot2::labs( x = "", y = "" ,
                       title = stringr::str_wrap( 
-                        paste0( result_type_name, " Indicators | ", thisyear, " ", 
-                                programme_lab, ctr_name,iati_identifier_ops ) ,
+                        paste0("Deviation Review | ", result_type_name, " Indicators, ",result_type_name, " Indicators in  ", 
+                              programme_lab, ctr_name,iati_identifier_ops, " as of " , thisyear ) ,
                         100),
                       subtitle = stringr::str_wrap( paste0( 
-                        "Deviation between reported \"Actual\" value and programmatic \"Target\" (in %)" ) ,
+                        "Between reported \"Actual\" value and programmatic \"Target\" (in %)" ) ,
                         110),
                       caption = stringr::str_wrap( 
                         "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI)" ,
@@ -255,20 +355,37 @@ show_indicators <- function(year,
          } else if(nrow(df1)> 0) {
             ## and now the plot
             p <-  ggplot2::ggplot(  data = df1) +
-              ggplot2::coord_flip()  + 
+              ggplot2::coord_flip() 
+            
+           if (thisresult_type_name == "Outcome") {
+                p <- p + 
+                  ggplot2::geom_col(   
+                    ggplot2::aes(x = stats::reorder(operation, - deviation_actual_target),
+                                 y = deviation_actual_target,
+                                 fill = sector_rbm ),
+                              width = 0.7,
+                              color = NA ) + 
+                    ggplot2::scale_fill_manual(values = palette_outcome,
+                      drop = TRUE,
+                      limits = force,
+                      na.value = "grey50")  
+                
+              } else {
+             p <-   p  + 
               ggplot2::geom_col(   
                 ggplot2::aes(x = stats::reorder(operation, - progress_baseline),
                              y = progress_baseline,
                              fill = deviation_color ),
                           width = 0.7,
-                          color = NA ) 
-            
-             p <-   p +
+                          color = NA ) +
               ggplot2::scale_fill_manual(values = c( "red" = "#D3212C",   
                                             "orange" = "#FF980E",
-                                            "green" = "#069C56")) +
+                                            "green" = "#069C56")) }
+            p <- p + 
+              ## facet the chart by population group... 
+              ggplot2::facet_wrap( ggplot2::vars(result_indicator_target_value_1)) +
               ggplot2::geom_text( 
-                ggplot2::aes(x = stats::reorder(operation, - progress_baseline), 
+                  ggplot2::aes(x = stats::reorder(operation, - progress_baseline), 
                              y = progress_baseline,
                              label = paste(round(progress_baseline, 1), " %") ),
                          #hjust = 1.5, 
@@ -288,8 +405,8 @@ show_indicators <- function(year,
                       legend.position = "none")+
               ggplot2::labs( x = "", y = "" ,
                     title = stringr::str_wrap( 
-                      paste0( result_type_name, " Indicators | ", thisyear, " ", 
-                              programme_lab, ctr_name,iati_identifier_ops ) ,
+                      paste0("Progress Comparison | ", result_type_name, " Indicators in  ", 
+                              programme_lab, ctr_name,iati_identifier_ops, " as of " , thisyear) ,
                       100),
                     subtitle = stringr::str_wrap( paste0( 
                       "Progress comparison between \"Actual\" reported value and their \"baseline\" (in %)" ) ,
@@ -297,8 +414,81 @@ show_indicators <- function(year,
                     caption = stringr::str_wrap(
                       "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI)" ,
                     110) )  
-             }
-  }
+         }
+      
+      
+    } else if( type == "gap")  {
+      
+      df1 <- df1 |> 
+        ## Filter out - when no data...
+        dplyr::filter (! (is.na(actual)))  |> 
+        dplyr::filter (! (is.na(gap_green)))  |> 
+        dplyr::filter (! (is.nan(gap_green))) |>
+        #dplyr::arrange(desc(actual))
+        dplyr::group_by( result_indicator_title) |>
+        dplyr::arrange(desc( actual), .by_group=TRUE )  |> 
+        dplyr::ungroup(result_indicator_title)
+ 
+        ## case there's no data at all
+        if( nrow(df1) == 0) {
+              info <- paste0("No gap - actual to green acceptable threshold - \n comparative analysis \n  could be produced for \n",
+                                  result_type_name, " indicator values \n in ", 
+                                programme_lab, ctr_name,iati_identifier_ops, " for year: ", year)
+              p <- ggplot2::ggplot() +  
+                   ggplot2::annotate("text",  x = 1, y = 1, size = 12,
+                                        label = info ) +  
+                   ggplot2::theme_void()
+        
+         } else if(nrow(df1)> 0) {
+            ## and now the plot
+            p <-  ggplot2::ggplot(  data = df1) +
+              ggplot2::coord_flip()   + 
+              ggplot2::geom_col(   
+                    ggplot2::aes(x = stats::reorder(operation, - gap_green),
+                                 y = gap_green,
+                                 fill = sector_rbm ),
+                              width = 0.7,
+                              color = NA ) + 
+              ggplot2::scale_fill_manual(values = palette_outcome,
+                      drop = TRUE,
+                      limits = force,
+                      na.value = "grey50")    + 
+              ## facet the chart by population group... 
+              ggplot2::facet_wrap( ggplot2::vars(result_indicator_target_value_1)) +
+              ggplot2::geom_text( 
+                ggplot2::aes(x = stats::reorder(operation, - gap_green), 
+                             y = gap_green,
+                             label = paste(round(gap_green, 1), " %") ),
+                         #hjust = 1.5, 
+                         size = 2.5,
+                         color = "black")  +
+              # scale_y_continuous( label = scales::label_percent(accuracy = 0,
+              #                                    suffix = "%") ) +
+              ggplot2::scale_y_continuous( label =  scales::label_number(accuracy = 1, 
+                                                                scale_cut = scales::cut_short_scale(),
+                                                                suffix = "%") )+
+              ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 120)) +
+              unhcrthemes::theme_unhcr(font_size = 18, 
+                                       axis_text_size = 9,
+                                       grid = "X", 
+                                       axis = "y") +
+              ggplot2::theme(  #axis.text.y = ggtext::element_markdown(),
+                      legend.position = "none")+
+              ggplot2::labs( x = "", y = "" ,
+                    title = stringr::str_wrap( 
+                      paste0("Gap Analysis | ", result_type_name, " Indicators in  ", 
+                              programme_lab, ctr_name,iati_identifier_ops, " as of " , thisyear) ,
+                      100),
+                    subtitle = stringr::str_wrap( paste0( 
+                      "Between \"Actual\" reported value and  \"Acceptable\" global standard for \"green\"  threshold  (in %)" ) ,
+                      110),
+                    caption = stringr::str_wrap(
+                      "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI)" ,
+                    110) )  
+            }
+              
+         }
+      
   return(p)
     
 }

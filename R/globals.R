@@ -30,5 +30,15 @@ globalVariables(unique(c(
   # show_top_donors: 
   "transaction_provider_org",
   # show_sectors_rbm: 
-  "sector_rbm", "sector_vocabulary_name", "year2"
-)))
+  "sector_rbm", "sector_vocabulary_name", "year2",
+  # show_goal_sdg: 
+  "sdg", 
+  # show_indicators: 
+  "gap_green", "gap_orange", "gap_red", "threshold_green", "threshold_orange", "threshold_red", 
+  # show_indicators_time: 
+  "gap_green", "gap_orange", "gap_red", "threshold_green", "threshold_orange", "threshold_red", 
+  # show_outcome_result: 
+  "gap_green", "gap_orange", "gap_red", "result_type_name", "threshold_green", "threshold_orange", "threshold_red", 
+  # show_transaction_flow: 
+  "next_node", "next_x", "node", "x"
+))) 

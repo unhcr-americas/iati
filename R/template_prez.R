@@ -56,7 +56,7 @@ template_prez <- function(year = 2022,
   
   rmarkdown::render(
     system.file("rmarkdown/templates/iati_prez/skeleton/skeleton.Rmd", package = "iati"),
-    output_file = here::here(folder, paste0('iati_prez-', ctr_name, '-', year, '.pptx') ),
+    output_file = here::here(folder, paste0('Strategic_Moment_of_Reflection-', ctr_name, '-', year, '.pptx') ),
     params = list(ctr_name = ctr_name, 
                   year = year)  )
 }

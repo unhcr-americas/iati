@@ -31,7 +31,7 @@ show_indicators_time(
 a graph
 }
 \description{
-How much indicators evolve over time against thresholds?
+How much indicators evolve over time?
 }
 \examples{
 show_indicators_time(year = 2020,  

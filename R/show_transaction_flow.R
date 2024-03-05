@@ -69,8 +69,8 @@ show_transaction_flow <- function(year,
   df1 <- df |>
          ggsankey::make_long(earmarking_name, 
                       year, 
-                      provider_org_type_name,
                       transaction_provider_org, 
+                      provider_org_type_name,
                       value = transaction_value_USD)
 
   p <- ggplot2::ggplot(df1, 

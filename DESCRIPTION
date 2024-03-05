@@ -14,14 +14,18 @@ License: CC BY 4.0
 URL: https://unhcr-americas.github.io/iati/docs/
 BugReports: https://github.com/unhcr-americas/iati/issues
 Imports: 
+    cowplot,
     dplyr,
     forcats,
     ggplot2,
     ggsankey,
     glue,
+    grid,
     here,
     knitr,
     magrittr,
+    patchwork,
+    purrr,
     refugees,
     rmarkdown,
     scales,

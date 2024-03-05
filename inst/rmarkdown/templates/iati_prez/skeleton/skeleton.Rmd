@@ -336,6 +336,168 @@ show_outcome_rbm( year =  c( 2020, 2021, 2022),
 dml(ggobj = p, fonts = list(serif = 'Lato'))
 ```
 
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+show_outcome_result(year =  c(  2020, 2021, 2022), 
+             ctr_name = params$ctr_name ,
+             outcome = "OA1: Access to Territory, Reg. and Documentation") -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+show_outcome_result(year =  c(  2020, 2021, 2022), 
+             ctr_name = params$ctr_name ,
+             outcome = "OA2: Status Determination") -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+show_outcome_result(year =  c(  2020, 2021, 2022), 
+             ctr_name = params$ctr_name ,
+             outcome = "OA3: Protection Policy and Law") -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+show_outcome_result(year =  c(  2020, 2021, 2022), 
+             ctr_name = params$ctr_name ,
+             outcome = "OA4: Sexual and Gender-based Violence") -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+show_outcome_result(year =  c(  2020, 2021, 2022), 
+             ctr_name = params$ctr_name ,
+             outcome = "OA5: Child Protection") -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+show_outcome_result(year =  c(  2020, 2021, 2022), 
+             ctr_name = params$ctr_name ,
+             outcome = "OA6: Safety and Access to Justice") -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+show_outcome_result(year =  c(  2020, 2021, 2022), 
+             ctr_name = params$ctr_name ,
+             outcome = "OA7: Community Engagement and Women's Empowerment") -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+show_outcome_result(year =  c(  2020, 2021, 2022), 
+             ctr_name = params$ctr_name ,
+             outcome = "OA8: Well-Being and Basic Needs") -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+show_outcome_result(year =  c(  2020, 2021, 2022), 
+             ctr_name = params$ctr_name ,
+             outcome = "OA9: Sustainable Housing and Settlements") -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+show_outcome_result(year =  c(  2020, 2021, 2022), 
+             ctr_name = params$ctr_name ,
+             outcome = "OA10: Healthy Lives") -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+show_outcome_result(year =  c(  2020, 2021, 2022), 
+             ctr_name = params$ctr_name ,
+             outcome = "OA11: Education") -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+show_outcome_result(year =  c(  2020, 2021, 2022), 
+             ctr_name = params$ctr_name ,
+             outcome = "OA12: Clean Water, Sanitation and Hygiene") -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+show_outcome_result(year =  c(  2020, 2021, 2022), 
+             ctr_name = params$ctr_name ,
+             outcome = "OA13: Self Reliance, Economic Inclusion and Livelihoods") -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+show_outcome_result(year =  c(  2020, 2021, 2022), 
+             ctr_name = params$ctr_name ,
+             outcome = "OA14: Voluntary Repatriation and Sustainable Reintegration") -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+show_outcome_result(year =  c(  2020, 2021, 2022), 
+             ctr_name = params$ctr_name ,
+             outcome = "OA15: Resettlement and Complementary Pathways") -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+show_outcome_result(year =  c(  2020, 2021, 2022), 
+             ctr_name = params$ctr_name ,
+             outcome = "OA16: Local Integration and other Local Solutions") -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+ 
+
 
  
 ---
@@ -375,6 +537,23 @@ show_budget_gap(year = 2018,
            ctr_name = params$ctr_name) -> p
 dml(ggobj = p, fonts = list(serif = 'Lato'))
 ```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_transaction_flow(year = 2023, 
+                   ctr_name = params$ctr_name) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_transaction_flow(year = 2020, 
+                   ctr_name = params$ctr_name) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
 
 ---
 

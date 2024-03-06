@@ -234,6 +234,30 @@ __Framing questions for strategic reflections:__
 
 ---
 
+
+```{r show_indicators, ph=officer::ph_location_fullsize()}
+
+show_indicators(year = 2022,  
+            ctr_name = params$ctr_name,
+              result_type_name = "Outcome",
+             type = "gap"  ) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+show_indicators_time(year = 2019, 
+            ctr_name = params$ctr_name,
+              result_type_name = "Outcome",
+             type = "gap"
+             ) -> p
+dml(ggobj = p, fonts = list(serif = 'Lato'))
+
+```
+
+---
+
 ```{r ph=officer::ph_location_fullsize()}
 
 show_indicators(year = 2022,  
@@ -297,7 +321,7 @@ __Framing questions for strategic reflections:__
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_sectors, ph=officer::ph_location_fullsize()}
 show_sectors(
   year =  c(2020, 2021, 2022), 
   ctr_name = params$ctr_name,
@@ -338,7 +362,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_outcome_result, ph=officer::ph_location_fullsize()}
 
 show_outcome_result(year =  c(  2020, 2021, 2022), 
              ctr_name = params$ctr_name ,
@@ -515,7 +539,7 @@ __Framing questions for strategic reflections:__
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_expenditure, ph=officer::ph_location_fullsize()}
 show_expenditure(year = 2018,
            ctr_name = params$ctr_name ) -> p
 dml(ggobj = p, fonts = list(serif = 'Lato'))

@@ -48,6 +48,9 @@
 #' show_outcome_result(year =  c(  2020, 2021, 2022), 
 #'              ctr_name = "Brazil",
 #'              outcome = "OA8: Well-Being and Basic Needs")
+#' show_outcome_result(year =  c(  2020, 2021, 2022), 
+#'              ctr_name = "Brazil",
+#'              outcome = "OA4: Sexual and Gender-based Violence")
 show_outcome_result <- function(year, 
                         programme_lab = NULL, 
                         iati_identifier_ops = NULL, 
@@ -216,7 +219,13 @@ show_outcome_result <- function(year,
                           shape = result_indicator_title)) +
                  ggplot2::geom_point() +
                  ggplot2::scale_shape_manual(values = shape_indicator,
-                                             name = "Indicators for that outcome")  
+                              labels = function(x) stringr::str_wrap(x, width = 45),
+                              name = "Indicators for that outcome")  +
+                unhcrthemes::theme_unhcr() +
+                ggplot2::theme( legend.direction = "vertical",
+                                legend.box = "vertical",
+                              legend.position = "left" ,
+                              legend.key.size = unit(1, "cm"))  
       
  
       indiclegend <-  cowplot::ggdraw() +
@@ -263,7 +272,7 @@ show_outcome_result <- function(year,
                                 outcome, " indicator values \n in ", 
                               programme_lab, ctr_name,iati_identifier_ops, " for year: ", year)
                 pdeviation <- ggplot2::ggplot() +  
-                     ggplot2::annotate("text",  x = 1, y = 1, size = 10,
+                     ggplot2::annotate("text",  x = 1, y = 1, size = 4,
                                           label = info ) +  
                      ggplot2::theme_void()
           
@@ -298,7 +307,7 @@ show_outcome_result <- function(year,
                                     legend.position = "bottom") +
                     ggplot2::labs( x = "", y = "" ,
                              subtitle = stringr::str_wrap( 
-                               paste0( "Deviation Review "   ) ,
+                               paste0( "Indicators Deviation Review "   ) ,
                                100) ,
                              caption = stringr::str_wrap(
                                "between reported \"Actual\" value and programmatic \"Target\" (in %)" ,
@@ -327,7 +336,7 @@ show_outcome_result <- function(year,
                                   outcome, " indicator values \n in ", 
                                 programme_lab, ctr_name,iati_identifier_ops, " for year: ", year)
               pprogress <- ggplot2::ggplot() +  
-                   ggplot2::annotate("text",  x = 1, y = 1, size = 12,
+                   ggplot2::annotate("text",  x = 1, y = 1, size = 4,
                                         label = info ) +  
                    ggplot2::theme_void()
         
@@ -364,7 +373,7 @@ show_outcome_result <- function(year,
                 
                 ggplot2::labs( x = "", y = "" ,
                                subtitle = stringr::str_wrap( 
-                                 paste0( "Progress Comparison " ) ,
+                                 paste0( "Indicators Progress Comparison " ) ,
                                  100) ,
                                caption = stringr::str_wrap(
                                  " between \"Actual\" reported value and their \"baseline\" (in %)" ,
@@ -389,7 +398,7 @@ show_outcome_result <- function(year,
                                 outcome, " indicator values \n in ", 
                                 programme_lab, ctr_name,iati_identifier_ops, " for year: ", year)
               pgap <- ggplot2::ggplot() +  
-                   ggplot2::annotate("text",  x = 1, y = 1, size = 12,
+                   ggplot2::annotate("text",  x = 1, y = 1, size = 4,
                                         label = info ) +  
                    ggplot2::theme_void()
         
@@ -425,7 +434,7 @@ show_outcome_result <- function(year,
                                     legend.position = "bottom") +
                  ggplot2::labs( x = "", y = "" ,
                                subtitle = stringr::str_wrap( 
-                                 paste0( "Gap Analysis"  ) ,
+                                 paste0( "Indicators Gap Analysis"  ) ,
                                  100) ,
                                caption = stringr::str_wrap(
                                  " between \"Actual\" reported value and  \"Acceptable\" global standard for \"green\"  threshold  (in %)" ,
@@ -515,14 +524,24 @@ show_outcome_result <- function(year,
                                   , by= c("iati_identifier"))  |>
            dplyr::select(iati_identifier, year,budget_value,   transaction_value )
          
-         dfRes <- dfRes |>
-               dplyr::left_join(df_bud2, by = c("year")) |>
-               dplyr::mutate( 
-                 transaction_value2 = transaction_value * sector_pct / 100, 
-                 year2 = glue::glue('Representing {scales::label_number(accuracy = .3, scale_cut = scales::cut_short_scale())(transaction_value2)}$ of expenditure '))
-         
+         dfRes2 <- dfRes |>
+               dplyr::left_join(df_bud2, by = c("year") ) |>
+               dplyr::mutate( transaction_value2 = transaction_value * sector_pct / 100 ) |>
+               dplyr::mutate( transaction_value3 = scales::label_number(accuracy = .2, 
+                        ## Bug work around - https://github.com/r-lib/scales/issues/413
+                                 scale_cut = append(scales::cut_short_scale(), 1, 1)
+                                                                        )(transaction_value2) ) |>
+               dplyr::mutate( year2 = glue::glue('{transaction_value3}$'))
+           ## https://github.com/r-lib/scales/issues/413#issuecomment-1837583921
+  #To install a specific version of a package, we need to install a package called “remotes” and then load it from the library.
+  #Afterwards we can use install_version() by specifying the package name and version needed as shown below.
+  
+  # remove.packages("scales")
+  # install.packages("remotes")
+  # library(remotes)
+  #remotes::install_version("scales", "1.2.1")
       
-        presource <-  ggplot2::ggplot(data = dfRes, 
+        presource <-  ggplot2::ggplot(data = dfRes2, 
                               ggplot2::aes(x = year,
                                        y = sector_pct,
                                        fill = sector_rbm,
@@ -530,18 +549,20 @@ show_outcome_result <- function(year,
                                        )) +
           
           ggplot2::geom_bar(stat = "identity") + # , fill = "#0072BC"
-  ggplot2::geom_text( vjust = -0.5, size = 4)+
+          ggplot2::geom_text( vjust = -0.5, size = 4)+
           ggplot2::scale_fill_manual(values = palette_outcome,
                             drop = TRUE,
                             limits = force,
                             na.value = "grey50") +
           ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, .1)),
                                       labels = scales::label_number(scale_cut = scales::cut_short_scale())) + 
-          unhcrthemes::theme_unhcr(grid = "X", axis = "y", 
-                                   axis_title = "X",
-                                    legend = FALSE,
+          
+          ggplot2::guides(fill = "none")  +
+          unhcrthemes::theme_unhcr(grid = "Y", axis = "y", 
+                                   axis_title = "Y",
+                                   legend = FALSE,
                                    font_size = 14) +
-          ggplot2::labs(subtitle = paste0("Resource Allocation"),          
+          ggplot2::labs(subtitle = paste0("Resource Allocation as % of total expenditure"),          
                x = "", y = "% "             ) 
         
         ## now assembling everything 
@@ -559,8 +580,8 @@ show_outcome_result <- function(year,
                                 design = design) + 
           patchwork::plot_annotation(
             title = paste0("Resource & Results for ",outcome, " in ", programme_lab, ctr_name,iati_identifier_ops),
-            caption = 'Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI).'  ) & 
-  unhcrthemes::theme_unhcr(font_size = 18)
+            caption = 'Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI).'  ) #& 
+  #unhcrthemes::theme_unhcr(font_size = 18)
         
   
   return(p)

@@ -298,7 +298,8 @@ show_indicators <- function(year,
               
             p <- p + 
                 ## facet the chart by population group... 
-                ggplot2::facet_wrap( ggplot2::vars(result_indicator_target_value_1)) +
+                ggplot2::facet_wrap( ggplot2::vars(result_indicator_target_value_1), 
+                         labeller = ggplot2::labeller(result_indicator_target_value_1 = ggplot2::label_wrap_gen(20))) +
                 ggplot2::geom_text( 
                   ggplot2::aes(x = stats::reorder(operation, - deviation_actual_target), 
                                y = deviation_actual_target,
@@ -383,7 +384,8 @@ show_indicators <- function(year,
                                             "green" = "#069C56")) }
             p <- p + 
               ## facet the chart by population group... 
-              ggplot2::facet_wrap( ggplot2::vars(result_indicator_target_value_1)) +
+              ggplot2::facet_wrap( ggplot2::vars(result_indicator_target_value_1), 
+                         labeller = ggplot2::labeller(result_indicator_target_value_1 = ggplot2::label_wrap_gen(20))) +
               ggplot2::geom_text( 
                   ggplot2::aes(x = stats::reorder(operation, - progress_baseline), 
                              y = progress_baseline,
@@ -454,7 +456,8 @@ show_indicators <- function(year,
                       limits = force,
                       na.value = "grey50")    + 
               ## facet the chart by population group... 
-              ggplot2::facet_wrap( ggplot2::vars(result_indicator_target_value_1)) +
+              ggplot2::facet_wrap( ggplot2::vars(result_indicator_target_value_1), 
+                         labeller = ggplot2::labeller(result_indicator_target_value_1 = ggplot2::label_wrap_gen(20))) +
               ggplot2::geom_text( 
                 ggplot2::aes(x = stats::reorder(operation, - gap_green), 
                              y = gap_green,

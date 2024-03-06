@@ -292,7 +292,8 @@ show_indicators_time <- function(year,
                       limits = force,
                       na.value = "grey50")  +
                    ## facet the chart by population group... 
-                   ggplot2::facet_wrap( ggplot2::vars(result_indicator_target_value_1)) +
+                   ggplot2::facet_wrap( ggplot2::vars(result_indicator_target_value_1), 
+                         labeller = ggplot2::labeller(result_indicator_target_value_1 = ggplot2::label_wrap_gen(20))) +
                    ggplot2::scale_y_continuous( label =  scales::label_number(accuracy = 1, 
                                                                          scale_cut = scales::cut_short_scale(),
                                                                          suffix = "%") ) +
@@ -362,7 +363,8 @@ show_indicators_time <- function(year,
                       limits = force,
                       na.value = "grey50")  +
                 ## facet the chart by population group... 
-                ggplot2::facet_wrap( ggplot2::vars(result_indicator_target_value_1)) +
+                ggplot2::facet_wrap( ggplot2::vars(result_indicator_target_value_1), 
+                         labeller = ggplot2::labeller(result_indicator_target_value_1 = ggplot2::label_wrap_gen(20))) +
                  ggplot2::scale_y_continuous( label =  scales::label_number(accuracy = 1, 
                                                                            scale_cut = scales::cut_short_scale(),
                                                                            suffix = "%") )+
@@ -429,7 +431,8 @@ show_indicators_time <- function(year,
                       limits = force,
                       na.value = "grey50")  +
                 ## facet the chart by population group... 
-                ggplot2::facet_wrap( ggplot2::vars(result_indicator_target_value_1)) +
+                ggplot2::facet_wrap( ggplot2::vars(result_indicator_target_value_1), 
+                         labeller = ggplot2::labeller(result_indicator_target_value_1 = ggplot2::label_wrap_gen(20))) +
                  ggplot2::scale_y_continuous( label =  scales::label_number(accuracy = 1, 
                                                                            scale_cut = scales::cut_short_scale(),
                                                                            suffix = "%") )+

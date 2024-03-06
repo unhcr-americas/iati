@@ -141,7 +141,9 @@ palette_outcome <- c("OA1: Access to Territory, Reg. and Documentation" ="#F0A3F
                      "OA13: Self Reliance, Economic Inclusion and Livelihoods" =  "#A21942", #  "#19A405",
                      "OA14: Voluntary Repatriation and Sustainable Reintegration"= "#9DCC00",
                      "OA15: Resettlement and Complementary Pathways" = "#191919", 
-                     "OA16: Local Integration and other Local Solutions" =  "#2BCE48")
+                     "OA16: Local Integration and other Local Solutions" =  "#2BCE48",
+                     "EA18: Operational Support and Supply Chain" = "#808080",             
+                     "EA20: External Engagement and Resource Mobilization"= "#003380" )
    
    
    

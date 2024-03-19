@@ -4,9 +4,13 @@ template:
 
 reference:
 - title: Chart Library
-  desc: Crafted visualisation charts in line with key questions
+  desc: Crafted visualisation charts by country in line with key questions
 - contents:
   - starts_with("show_")
+- title: Chart Library
+  desc: Crafted visualisation charts for comparison in line with key questions
+- contents:
+  - starts_with("compare_")  
 - title: Data
   desc: Main Data tables
   contents:

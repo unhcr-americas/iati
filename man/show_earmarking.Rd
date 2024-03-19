@@ -44,6 +44,6 @@ knitr::kable(iati::dataTransaction |>
                 dplyr::select(earmarking_name, earmarking_description)  |>
                 dplyr::distinct() |>
                 dplyr::filter(!(is.na(earmarking_name))))
-show_earmarking(year = 2018,  
+show_earmarking(year = c(2018, 2019,2020, 2021, 2022, 2023),  
              ctr_name = "Brazil")
 }

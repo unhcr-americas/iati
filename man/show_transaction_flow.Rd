@@ -8,7 +8,8 @@ show_transaction_flow(
   year,
   programme_lab = NULL,
   iati_identifier_ops = NULL,
-  ctr_name = NULL
+  ctr_name = NULL,
+  top_n = 10
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ show_transaction_flow(
 \item{iati_identifier_ops}{A character vector corresponding to the name of the operation.}
 
 \item{ctr_name}{A character vector corresponding to the name of the country.}
+
+\item{top_n}{top n donors to show - the rest being lumped together default is 10}
 }
 \value{
 a graph
@@ -27,7 +30,7 @@ a graph
 Flow diagramme of transations
 }
 \examples{
-show_transaction_flow(year = 2020, 
+show_transaction_flow(year = c(2020, 2021, 2022, 2023), 
                    ctr_name = "Brazil")
 
 show_transaction_flow(year = 2023, 

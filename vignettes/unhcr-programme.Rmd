@@ -214,6 +214,21 @@ show_outcome_result(year =  c(  2020, 2021, 2022),
 
    
 
+## compare_resource_result
+
+    
+
+  
+
+```{r example-compare_resource_result, message = FALSE, warning = FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center", out.width = "90%"}
+compare_resource_result(year =   2022, 
+                    indicator = "13.2. Proportion of PoC who self-report positive changes in their income compared to previous year.",
+                    outcome = "OA8: Well-Being and Basic Needs")
+```
+
+  
+
+  
 
 
 # Using `iati::dataBudget`
@@ -226,12 +241,17 @@ show_outcome_result(year =  c(  2020, 2021, 2022),
   
 
 ```{r example-show_expenditure, message = FALSE, warning = FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center", out.width = "90%"}
-show_expenditure(year = 2018, 
+show_expenditure(year = c(2018, 2019,2020, 2021, 2022, 2023), 
              ctr_name = "Brazil")
 
-show_expenditure(year = 2018, 
+show_expenditure(year = c(2018, 2019,2020, 2021, 2022, 2023), 
              ctr_name = "Brazil",
              weight_by = c("refugees", "oip"))
+
+
+show_expenditure(year = c(2018, 2019,2020, 2021, 2022, 2023),
+             ctr_name = "Argentina",
+             weight_by =  "all" )
 
 ```
 
@@ -244,9 +264,9 @@ show_expenditure(year = 2018,
   
 
 ```{r example-show_budget_gap, message = FALSE, warning = FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center", out.width = "90%"}
-show_budget_gap(year = 2018, 
+show_budget_gap(year = c(2018, 2019,2020, 2021, 2022, 2023), 
              ctr_name = "Brazil")
-show_budget_gap(year = 2018, 
+show_budget_gap(year = c(2018, 2019,2020, 2021, 2022, 2023), 
              ctr_name = "Brazil",
              weight_by = c("refugees", "oip"))
 ```
@@ -271,13 +291,13 @@ knitr::kable(iati::dataTransaction |>
 show_donors(year = 2022,
            programme_lab = "The Americas",
            transaction_type_name = "Incoming Commitment" )
-show_donors(year = 2018,
+show_donors(year = c(2018, 2019,2020, 2021, 2022, 2023),
            ctr_name = "Brazil",
            transaction_type_name = "Incoming Commitment" )
-show_donors(year = 2018,
+show_donors(year = c(2018, 2019,2020, 2021, 2022, 2023),
            programme_lab = "Brazil",
            transaction_type_name = "Disbursement" )
-show_donors(year = 2018,
+show_donors(year = c(2018, 2019,2020, 2021, 2022, 2023),
            programme_lab = "Brazil",
            transaction_type_name = "Expenditure" )
 ```
@@ -317,7 +337,7 @@ knitr::kable(iati::dataTransaction |>
                 dplyr::select(earmarking_name, earmarking_description)  |>
                 dplyr::distinct() |>
                 dplyr::filter(!(is.na(earmarking_name))))
-show_earmarking(year = 2018,  
+show_earmarking(year = c(2018, 2019,2020, 2021, 2022, 2023),  
              ctr_name = "Brazil")
 ```
 
@@ -337,9 +357,9 @@ knitr::kable(iati::dataTransaction |>
                 dplyr::select(aid_type1_name, aid_type1_description)  |>
                 dplyr::distinct() |>
                 dplyr::filter(!(is.na(aid_type1_name))))
-show_contributions(year = 2018, 
+show_contributions(year = c(2018, 2019,2020, 2021, 2022, 2023), 
                    ctr_name = "Brazil") 
-show_contributions(year = 2018, 
+show_contributions(year = c(2018, 2019,2020, 2021, 2022, 2023), 
                    programme_lab = "The Americas") 
 ```
 
@@ -352,7 +372,7 @@ show_contributions(year = 2018,
   
 
 ```{r example-show_transaction_flow}
-show_transaction_flow(year = 2020, 
+show_transaction_flow(year = c(2020, 2021, 2022, 2023), 
                    ctr_name = "Brazil")
 
 show_transaction_flow(year = 2023, 

@@ -21,7 +21,7 @@ show_expenditure(
 
 \item{ctr_name}{A character vector corresponding to the name of the country.}
 
-\item{weight_by}{list of population group to weight the budget - 
+\item{weight_by}{list of population group to weight the budget - "all" or any of
 "refugees", "asylum_seekers",
  "returned_refugees" "idps",
  "returned_idps", "stateless", 
@@ -35,11 +35,16 @@ a graph
 How much expenditures compare to the initial budget (potentially weighted by #)?
 }
 \examples{
-show_expenditure(year = 2018, 
+show_expenditure(year = c(2018, 2019,2020, 2021, 2022, 2023), 
              ctr_name = "Brazil")
 
-show_expenditure(year = 2018, 
+show_expenditure(year = c(2018, 2019,2020, 2021, 2022, 2023), 
              ctr_name = "Brazil",
              weight_by = c("refugees", "oip"))
+
+
+show_expenditure(year = c(2018, 2019,2020, 2021, 2022, 2023),
+             ctr_name = "Argentina",
+             weight_by =  "all" )
 
 }

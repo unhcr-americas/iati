@@ -26,13 +26,13 @@
 #' show_donors(year = 2022,
 #'            programme_lab = "The Americas",
 #'            transaction_type_name = "Incoming Commitment" )
-#' show_donors(year = 2018,
+#' show_donors(year = c(2018, 2019,2020, 2021, 2022, 2023),
 #'            ctr_name = "Brazil",
 #'            transaction_type_name = "Incoming Commitment" )
-#' show_donors(year = 2018,
+#' show_donors(year = c(2018, 2019,2020, 2021, 2022, 2023),
 #'            programme_lab = "Brazil",
 #'            transaction_type_name = "Disbursement" )
-#' show_donors(year = 2018,
+#' show_donors(year = c(2018, 2019,2020, 2021, 2022, 2023),
 #'            programme_lab = "Brazil",
 #'            transaction_type_name = "Expenditure" )
 show_donors <- function(year, 
@@ -64,7 +64,7 @@ show_donors <- function(year,
     df <- df |> 
       # levels(as.factor(df$programmme_lab))
       dplyr::filter( programmme_lab == thisprogramme_lab &
-            year >= thisyear & 
+            year %in% thisyear & 
              transaction_type_name ==  thistransaction_type_name)
   } else if (!is.null(iati_identifier_ops)) {
     thisiati_identifier_ops <- iati_identifier_ops
@@ -72,7 +72,7 @@ show_donors <- function(year,
     thistransaction_type_name <-  transaction_type_name
     df <- df |> 
       dplyr::filter(iati_identifier_ops == thisiati_identifier_ops &
-            year >= thisyear & 
+            year %in% thisyear & 
              transaction_type_name ==  thistransaction_type_name)
   } else if (!is.null(ctr_name)) {
     thisctr_name <- ctr_name
@@ -80,7 +80,7 @@ show_donors <- function(year,
     thistransaction_type_name <-  transaction_type_name
     df <- df |> 
       dplyr::filter( ctr_name == thisctr_name &
-            year >= thisyear & 
+            year %in% thisyear & 
              transaction_type_name ==  thistransaction_type_name)
   }
    
@@ -96,7 +96,7 @@ show_donors <- function(year,
     ## case there's no data at all
     if( nrow(df1) == 0) {
       info <-  paste0("No ", transaction_type_name, "\n  recorded   in ", 
-                              programme_lab, ctr_name,iati_identifier_ops, " for year: ", year)
+                              programme_lab, ctr_name,iati_identifier_ops, "")
       p <- ggplot2::ggplot() +  
                      ggplot2::annotate("text",  x = 1, y = 1, size = 12,
                                           label = info ) +  
@@ -120,7 +120,7 @@ show_donors <- function(year,
       unhcrthemes::theme_unhcr(grid = "Y", axis = "X", axis_title = "X", font_size = 18)+
       ggplot2::labs(
         title = paste0(transaction_type_name," (in USD)"),
-        subtitle = paste0("Recorded in ", programme_lab, ctr_name,iati_identifier_ops, " since ", year,""),
+        subtitle = paste0("Recorded in ", programme_lab, ctr_name,iati_identifier_ops, " "),
         x = "",
         y = "",
         caption = "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI)" ) 

@@ -1,7 +1,7 @@
 ---
 params:
   year: 2022
-  ctr_name: "Brazil"
+  ctr_name: "El Salvador"
 title: "UNHCR Programme in  \ `r params$ctr_name` "
 subtitle:  "Strategic Moment of Reflection using publicly released open data"
 output:
@@ -30,7 +30,7 @@ showtext::showtext_auto(FALSE)
 
 #  A "Strategic Moment of Reflection" ... 
 
- _is  a dedicated moment for relevant stakeholders to review progress and identify challenges, opportunities and possible strategic shifts or re-orientations_.
+ _"is  a dedicated moment for relevant stakeholders to review progress and identify challenges, opportunities and possible strategic shifts or re-orientations"_.
 
 This presentation conveniently includes key visualization based on [publicly released data]( `r paste0("https://reporting.unhcr.org/operational/operations/",params$ctr_name)`) on:
 
@@ -44,6 +44,45 @@ This presentation conveniently includes key visualization based on [publicly rel
 
 > ## “__Numbers have an important story to tell. They rely on YOU to give them a voice!__”
 > -- Stephen Few
+
+
+---
+
+# How to use this slide deck?
+
+This slide deck is long exhaustive data exploration provided as is and per default based on existing public data - in order to use it in a collective brainstorming setting, __cut it down__ - only select and retain slides that are showing elements relevant to contextualized discussion - for instance maybe no need to show each of the 16 outcomes slides...
+
+When presenting the content, explain some important __concept for indicators__:  
+
+ - Reported value: _what happened..._
+ - Baseline value: _how it was before..._
+ - Targeted value: _how it was planned to become..._
+ - Green Acceptable Threshold: _how it should be..._
+
+---
+
+# How to facilitate discusssions?
+
+ * Think around __value for money__: how much resource allocation is consistent with the needs that described through the indicators? 
+ 
+ * What would likely happen in case of different level of resource? Try to also think of a potential __counterfactual__ (_what could have had happened without intervention_).
+ 
+ * Use the session to confront __perceptions, opinions and facts__. 
+ 
+ * Reflect on potential __missing programmatic evidences__ that could justify evaluative investigations.
+ 
+
+---
+
+# How to read the "results" charts?
+
+In order to present jointly and compare indicators that have different unit of measurement, __relative distances__ are computed in order to provide a ways to cross-analyse indicators across different outcomes:  
+
+   - __Gap__: (Standard Acceptable Green Threshold Value - Actual Value) / Threshold
+   - __Progress__: Actual Value vs Baseline Value) / Baseline Value
+   - __Deviation__: (Actual Value - Targeted Value) / Targeted Value
+
+Negative "__distance values__" indicate that the actual values is either below the standard, below the target or below the baseline. The interpretation of a negative value depends on the context and should be interpreted in relation with resources allocation. Consistent, recurrent resource allocation in one area should treat negative distance value unless we can prove it would be a lot worth without such investment...
 
 ---
 
@@ -61,14 +100,14 @@ __Framing questions for strategic reflections:__
 ---
 
 
-```{r ph=officer::ph_location_fullsize()} 
+```{r popstat, ph=officer::ph_location_fullsize()} 
 
 ## Need to account for MCO... - if MCO - then mutliple country to aggregate...
 
 # Piping from previous steps
 fd_last_ten_years <- refugees::population |>
   dplyr::filter(year >= 2013 & year <= 2023 & 
-                coa ==   countrycode::countrycode(params$ctr_name, origin = 'country.name', destination = 'iso3c')) |>
+                coa_iso ==   countrycode::countrycode(params$ctr_name, origin = 'country.name', destination = 'iso3c')) |>
   dplyr::summarise(refugees = sum(refugees, na.rm = TRUE),
                    asylum_seekers = sum(asylum_seekers, na.rm = TRUE), 
                    oip = sum(oip, na.rm = TRUE),
@@ -235,7 +274,7 @@ __Framing questions for strategic reflections:__
 ---
 
 
-```{r show_indicators, ph=officer::ph_location_fullsize()}
+```{r show_indicators_outcome_gap, ph=officer::ph_location_fullsize()}
 
 show_indicators(year = 2022,  
             ctr_name = params$ctr_name,
@@ -246,8 +285,8 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
-show_indicators_time(year = 2019, 
+```{r show_indicators_time_outcome_gap, ph=officer::ph_location_fullsize()}
+show_indicators_time(year = c(2019,2020, 2021, 2022, 2023), 
             ctr_name = params$ctr_name,
               result_type_name = "Outcome",
              type = "gap"
@@ -258,7 +297,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_indicators_outcome_deviation, ph=officer::ph_location_fullsize()}
 
 show_indicators(year = 2022,  
             ctr_name = params$ctr_name,
@@ -269,8 +308,8 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
-show_indicators_time(year = 2019, 
+```{r show_indicators_time_outcome_deviation, ph=officer::ph_location_fullsize()}
+show_indicators_time(year = c(2019,2020, 2021, 2022, 2023), 
             ctr_name = params$ctr_name,
               result_type_name = "Outcome",
              type = "deviation"
@@ -281,8 +320,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
-
+```{r show_indicators_outcome_progress, ph=officer::ph_location_fullsize()}
 show_indicators(year = 2022,  
             ctr_name = params$ctr_name,
               result_type_name = "Outcome",
@@ -292,8 +330,8 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
-show_indicators_time(year = 2019, 
+```{r show_indicators_time_outcome_progress, ph=officer::ph_location_fullsize()}
+show_indicators_time(year = c(2019,2020, 2021, 2022, 2023), 
             ctr_name = params$ctr_name,
               result_type_name = "Outcome",
              type = "progress"
@@ -313,15 +351,14 @@ __Framing questions for strategic reflections:__
  * What are the main changes in regional, political, legal, security, humanitarian space/access, social and economic factors and implications?
 
  * What are the strategy’s planning assumptions? Shall they be revised? 
-
- * How much the main achievements and results align with Resource Allocation?  Can causal links be made between these changes and our interventions?
-
----
-
+ 
 
 ---
 
-```{r show_sectors, ph=officer::ph_location_fullsize()}
+
+---
+
+```{r show_sectors_oecd, ph=officer::ph_location_fullsize()}
 show_sectors(
   year =  c(2020, 2021, 2022), 
   ctr_name = params$ctr_name,
@@ -331,7 +368,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_sectors_cluster, ph=officer::ph_location_fullsize()}
 show_sectors(
   year =  c(2020, 2021, 2022), 
   ctr_name = params$ctr_name,
@@ -339,31 +376,43 @@ show_sectors(
 dml(ggobj = p, fonts = list(serif = 'Lato'))
 ```
 
-
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_sectors_sdg, ph=officer::ph_location_fullsize()}
 
 show_goal_sdg( year =  c( 2020, 2021, 2022),  
   ctr_name = params$ctr_name ) -> p
 dml(ggobj = p, fonts = list(serif = 'Lato'))
 ```
 
-
-
 ---
 
-```{r ph=officer::ph_location_fullsize()}
-
+```{r show_sectors_rbm, ph=officer::ph_location_fullsize()}
 show_outcome_rbm( year =  c( 2020, 2021, 2022),  
   ctr_name = params$ctr_name ) -> p
 dml(ggobj = p, fonts = list(serif = 'Lato'))
 ```
 
+
+
 ---
 
-```{r show_outcome_result, ph=officer::ph_location_fullsize()}
 
+# Resources & Results  
+
+__Framing questions for strategic reflections:__
+
+ * How much the main achievements and results align with Resource Allocation? 
+ 
+ * Can causal links be made between these changes and our interventions?
+ 
+ * Do we need to build counterfactual to justify results?
+
+---
+
+---
+
+```{r show_outcome_result1, ph=officer::ph_location_fullsize()}
 show_outcome_result(year =  c(  2020, 2021, 2022), 
              ctr_name = params$ctr_name ,
              outcome = "OA1: Access to Territory, Reg. and Documentation") -> p
@@ -372,8 +421,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
-
+```{r show_outcome_result2, ph=officer::ph_location_fullsize()}
 show_outcome_result(year =  c(  2020, 2021, 2022), 
              ctr_name = params$ctr_name ,
              outcome = "OA2: Status Determination") -> p
@@ -382,8 +430,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
-
+```{r show_outcome_result3, ph=officer::ph_location_fullsize()}
 show_outcome_result(year =  c(  2020, 2021, 2022), 
              ctr_name = params$ctr_name ,
              outcome = "OA3: Protection Policy and Law") -> p
@@ -392,8 +439,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
-
+```{r show_outcome_result4, ph=officer::ph_location_fullsize()}
 show_outcome_result(year =  c(  2020, 2021, 2022), 
              ctr_name = params$ctr_name ,
              outcome = "OA4: Sexual and Gender-based Violence") -> p
@@ -402,8 +448,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
-
+```{r show_outcome_result5, ph=officer::ph_location_fullsize()}
 show_outcome_result(year =  c(  2020, 2021, 2022), 
              ctr_name = params$ctr_name ,
              outcome = "OA5: Child Protection") -> p
@@ -412,7 +457,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_outcome_result6, ph=officer::ph_location_fullsize()}
 
 show_outcome_result(year =  c(  2020, 2021, 2022), 
              ctr_name = params$ctr_name ,
@@ -422,7 +467,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_outcome_result7, ph=officer::ph_location_fullsize()}
 
 show_outcome_result(year =  c(  2020, 2021, 2022), 
              ctr_name = params$ctr_name ,
@@ -432,7 +477,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_outcome_result8, ph=officer::ph_location_fullsize()}
 
 show_outcome_result(year =  c(  2020, 2021, 2022), 
              ctr_name = params$ctr_name ,
@@ -442,7 +487,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_outcome_result9, ph=officer::ph_location_fullsize()}
 
 show_outcome_result(year =  c(  2020, 2021, 2022), 
              ctr_name = params$ctr_name ,
@@ -452,7 +497,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_outcome_result10, ph=officer::ph_location_fullsize()}
 
 show_outcome_result(year =  c(  2020, 2021, 2022), 
              ctr_name = params$ctr_name ,
@@ -462,7 +507,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_outcome_result11, ph=officer::ph_location_fullsize()}
 
 show_outcome_result(year =  c(  2020, 2021, 2022), 
              ctr_name = params$ctr_name ,
@@ -472,7 +517,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_outcome_result12,  ph=officer::ph_location_fullsize()}
 
 show_outcome_result(year =  c(  2020, 2021, 2022), 
              ctr_name = params$ctr_name ,
@@ -482,7 +527,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_outcome_result13, ph=officer::ph_location_fullsize()}
 
 show_outcome_result(year =  c(  2020, 2021, 2022), 
              ctr_name = params$ctr_name ,
@@ -492,7 +537,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_outcome_result14,  ph=officer::ph_location_fullsize()}
 
 show_outcome_result(year =  c(  2020, 2021, 2022), 
              ctr_name = params$ctr_name ,
@@ -502,7 +547,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_outcome_result15, ph=officer::ph_location_fullsize()}
 
 show_outcome_result(year =  c(  2020, 2021, 2022), 
              ctr_name = params$ctr_name ,
@@ -512,7 +557,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_outcome_result16, ph=officer::ph_location_fullsize()}
 
 show_outcome_result(year =  c(  2020, 2021, 2022), 
              ctr_name = params$ctr_name ,
@@ -540,31 +585,31 @@ __Framing questions for strategic reflections:__
 ---
 
 ```{r show_expenditure, ph=officer::ph_location_fullsize()}
-show_expenditure(year = 2018,
+show_expenditure(year = c(2018, 2019,2020, 2021, 2022, 2023),
            ctr_name = params$ctr_name ) -> p
 dml(ggobj = p, fonts = list(serif = 'Lato'))
 ```
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
-show_expenditure(year = 2018,
+```{r show_expenditure_weight, ph=officer::ph_location_fullsize()}
+show_expenditure(year = c(2018, 2019,2020, 2021, 2022, 2023),
            ctr_name = params$ctr_name,
-             weight_by = c("refugees", "oip")) -> p
+             weight_by = c("all")) -> p
 dml(ggobj = p, fonts = list(serif = 'Lato'))
 ```
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
-show_budget_gap(year = 2018,
+```{r show_budget_gap, ph=officer::ph_location_fullsize()}
+show_budget_gap(year = c(2018, 2019,2020, 2021, 2022, 2023),
            ctr_name = params$ctr_name) -> p
 dml(ggobj = p, fonts = list(serif = 'Lato'))
 ```
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_transaction_flow1, ph=officer::ph_location_fullsize()}
 show_transaction_flow(year = 2023, 
                    ctr_name = params$ctr_name) -> p
 dml(ggobj = p, fonts = list(serif = 'Lato'))
@@ -572,8 +617,8 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
-show_transaction_flow(year = 2020, 
+```{r show_transaction_flow2, ph=officer::ph_location_fullsize()}
+show_transaction_flow(year = c(2020, 2021, 2022, 2023), 
                    ctr_name = params$ctr_name) -> p
 dml(ggobj = p, fonts = list(serif = 'Lato'))
 ```
@@ -581,8 +626,8 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
-show_earmarking(year = 2018,
+```{r show_earmarking, ph=officer::ph_location_fullsize()}
+show_earmarking(year = c(2018, 2019,2020, 2021, 2022, 2023),
            ctr_name = params$ctr_name) -> p
 dml(ggobj = p, fonts = list(serif = 'Lato'))
 ```
@@ -590,9 +635,9 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_donors, ph=officer::ph_location_fullsize()}
  
-show_donors(year = 2018,
+show_donors(year = c(2018, 2019,2020, 2021, 2022, 2023),
            ctr_name = params$ctr_nam,
            transaction_type_name = "Incoming Commitment" )-> p
 dml(ggobj = p, fonts = list(serif = 'Lato'))
@@ -600,7 +645,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_top_donors1, ph=officer::ph_location_fullsize()}
 show_top_donors(year = "2022",
            ctr_name = params$ctr_name,
            top_n = 10) -> p
@@ -609,7 +654,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_top_donors2, ph=officer::ph_location_fullsize()}
 show_top_donors(year = "2021",
            ctr_name = params$ctr_name,
            top_n = 10) -> p
@@ -618,7 +663,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_top_donors3, ph=officer::ph_location_fullsize()}
 show_top_donors(year = "2020",
            ctr_name = params$ctr_name,
            top_n = 10) -> p
@@ -627,7 +672,7 @@ dml(ggobj = p, fonts = list(serif = 'Lato'))
 
 ---
 
-```{r ph=officer::ph_location_fullsize()}
+```{r show_top_donors4, ph=officer::ph_location_fullsize()}
 show_top_donors(year = "2019",
            ctr_name = params$ctr_name,
            top_n = 10) -> p

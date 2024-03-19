@@ -8,7 +8,7 @@
 #' @param programme_lab A character vector corresponding to the name of the programme.
 #' @param iati_identifier_ops A character vector corresponding to the name of the operation.
 #' @param ctr_name A character vector corresponding to the name of the country.
-#' @param weight_by list of population group to weight the budget - 
+#' @param weight_by list of population group to weight the budget - "all" or any of
 #'                   "refugees", "asylum_seekers",
 #'                    "returned_refugees" "idps",
 #'                    "returned_idps", "stateless", 
@@ -25,12 +25,17 @@
 #' @export 
 #' @return  a graph
 #' @examples
-#' show_expenditure(year = 2018, 
+#' show_expenditure(year = c(2018, 2019,2020, 2021, 2022, 2023), 
 #'              ctr_name = "Brazil")
 #'
-#' show_expenditure(year = 2018, 
+#' show_expenditure(year = c(2018, 2019,2020, 2021, 2022, 2023), 
 #'              ctr_name = "Brazil",
 #'              weight_by = c("refugees", "oip"))
+#'
+#'
+#' show_expenditure(year = c(2018, 2019,2020, 2021, 2022, 2023),
+#'              ctr_name = "Argentina",
+#'              weight_by =  "all" )
 #'
 show_expenditure <- function(year, 
                         programme_lab = NULL, 
@@ -48,56 +53,106 @@ show_expenditure <- function(year,
     stop("Please pass only one of the arguments iati_identifier_ops or ctr_name.")
   }
   
-  df <-  iati::dataTransaction |> 
+  df0 <-  iati::dataTransaction |> 
+         dplyr::left_join(iati::dataActivity, by= c("iati_identifier"))  
+  
+  dfB <- iati::dataBudget |> 
          dplyr::left_join(iati::dataActivity, by= c("iati_identifier"))  
   
   if (!is.null(programme_lab)) {
     thisprogramme_lab <- programme_lab
     thisyear <-  year 
-    df <- df |> 
-      # levels(as.factor(df$programmme_lab))
+    df <- df0 |>  
       dplyr::filter( programmme_lab == thisprogramme_lab &
-            year >= thisyear & 
-             transaction_type_name ==  "Expenditure")
+            year %in% thisyear & 
+             transaction_type_name ==  "Expenditure")|> 
+        dplyr::group_by(iati_identifier, year) |>
+        dplyr::summarise(expenditure= sum(transaction_value, na.rm = TRUE))
+    df1 <- df0 |>  
+      dplyr::filter( programmme_lab == thisprogramme_lab &
+            year %in% thisyear & 
+             transaction_type_name ==  "Incoming Commitment")|> 
+        dplyr::group_by(iati_identifier, year ) |>
+        dplyr::summarise(commitment = sum(transaction_value_USD, na.rm = TRUE))
+   dfB <- dfB |> 
+      dplyr::filter( programmme_lab == thisprogramme_lab &
+            year %in% thisyear  ) |> 
+                          dplyr::mutate(budget_value= as.numeric(budget_value)) |>
+                          dplyr::group_by(iati_identifier) |>
+                          dplyr::summarise(budget_value= sum(budget_value, na.rm = TRUE))
   } else if (!is.null(iati_identifier_ops)) {
     thisiati_identifier_ops <- iati_identifier_ops
     thisyear <-  year 
-    df <- df |> 
+    df <- df0 |> 
       dplyr::filter(iati_identifier_ops == thisiati_identifier_ops &
-            year >= thisyear & 
-             transaction_type_name ==  "Expenditure")
+            year %in% thisyear & 
+             transaction_type_name ==  "Expenditure")|> 
+        dplyr::group_by(iati_identifier, year) |>
+        dplyr::summarise(expenditure= sum(transaction_value, na.rm = TRUE))
+    df1 <- df0 |> 
+      dplyr::filter(iati_identifier_ops == thisiati_identifier_ops &
+            year %in% thisyear & 
+             transaction_type_name ==  "Incoming Commitment")|> 
+        dplyr::group_by(iati_identifier, year ) |>
+        dplyr::summarise(commitment = sum(transaction_value_USD, na.rm = TRUE))
+   dfB <- dfB |> 
+      dplyr::filter( iati_identifier_ops == thisiati_identifier_ops  &
+            year %in% thisyear  ) |> 
+                          dplyr::mutate(budget_value= as.numeric(budget_value)) |>
+                          dplyr::group_by(iati_identifier) |>
+                          dplyr::summarise(budget_value= sum(budget_value, na.rm = TRUE))
   } else if (!is.null(ctr_name)) {
     thisctr_name <- ctr_name
     thisyear <-  year 
-    df <- df |> 
+    df <- df0 |> 
       dplyr::filter( ctr_name == thisctr_name &
-            year >= thisyear & 
-             transaction_type_name ==  "Expenditure")
-  }
-  
-   df2 <-  df  |> 
+            year %in% thisyear & 
+             transaction_type_name ==  "Expenditure")|> 
+        dplyr::select(iati_identifier, year, transaction_value, transaction_value_USD) |>
         dplyr::group_by(iati_identifier, year) |>
-        dplyr::summarise(transaction_value= sum(transaction_value, na.rm = TRUE)) |>
-        dplyr::left_join(iati::dataBudget |> 
+        dplyr::summarise(expenditure= sum(transaction_value , na.rm = TRUE))
+    df1 <- df0 |> 
+      dplyr::filter( ctr_name == thisctr_name &
+            year %in% thisyear & 
+             transaction_type_name ==  "Incoming Commitment") |> 
+        dplyr::group_by(iati_identifier, year) |>
+        dplyr::summarise(commitment = sum(transaction_value_USD, na.rm = TRUE))
+   dfB <- dfB |> 
+      dplyr::filter( ctr_name == thisctr_name &
+            year %in% thisyear  ) |> 
                           dplyr::mutate(budget_value= as.numeric(budget_value)) |>
                           dplyr::group_by(iati_identifier) |>
-                          dplyr::summarise(budget_value= sum(budget_value, na.rm = TRUE))  
-                            , by= c("iati_identifier"))  |>
-     dplyr::select(iati_identifier, year,budget_value,   transaction_value )  
+                          dplyr::summarise(budget_value= sum(budget_value, na.rm = TRUE))
+  }
+    
+  
+   df2 <-  df1   |>  
+        dplyr::left_join(df |> dplyr::select(- year), by = c("iati_identifier")) |>
+        dplyr::left_join( dfB , by= c("iati_identifier"))  |>
+     dplyr::select(iati_identifier, year,  budget_value,   expenditure, commitment ) 
    
     # Error catching -- Check if we weight
     #weight_by <-  c("refugees", "oip") 
     #weight_by <-  c("refugees", "oidp")
    
-    if (  !is.null(weight_by) &&  !all(weight_by %in% c("refugees", "asylum_seekers",
+    if (  !is.null(weight_by) &&  !all(weight_by %in% c("all",
+                                                        "refugees", "asylum_seekers",
                                                    "returned_refugees", "idps",
                                                    "returned_idps", "stateless", 
                                                    "ooc", "oip"  ))  ) {
      stop("weight_by is used but the population filter is not correctly set up...\n
-          it should be among: refugees, asylum_seekers, returned_refugees, idps,
+          it should be among: all or a combination of  refugees, asylum_seekers, 
+          returned_refugees, idps,
           returned_idps, stateless,  ooc, oip")
     } 
    
+   ## if "all"  
+   if (  !is.null(weight_by) &&  "all" %in% weight_by ) { 
+     weight_by <- c("refugees", "asylum_seekers",
+                    "returned_refugees", "idps",
+                    "returned_idps", "stateless", 
+                    "ooc", "oip"  )} else {  weight_by <- weight_by }
+                                                        
    ## Calculate weight
    if (!is.null(weight_by) && !is.null(ctr_name) ) {
      ctrstat <- refugees::population |>
@@ -117,33 +172,40 @@ show_expenditure <- function(year,
             dplyr::mutate( weight = rowSums(
                                    dplyr::across(tidyselect::where(is.numeric))))
      
+     ## Refresh the value of weight_by
+     
       df2 <-  df2 |>
         dplyr::left_join(ctrstat |> 
                          dplyr::select(year, weight)   , by = c("year")) |>
         dplyr::mutate(budget_value = round(budget_value / weight,1),   
-                      transaction_value = round(transaction_value  / weight,1))
+                      expenditure = round(expenditure  / weight,1),   
+                      commitment = round(commitment  / weight,1))
      
     } 
    
  subtitt <- if( is.null(weight_by)) {
-   paste0("In ", programme_lab, ctr_name,iati_identifier_ops, " recorded since ", year,"")
+   paste0("In ", programme_lab, ctr_name,iati_identifier_ops, "  ")
    } else {
    paste0("Weighted by total number of individual ", 
           paste(weight_by, collapse = ', '),
           " in ", 
-          programme_lab, ctr_name,iati_identifier_ops, " as recorded since ", year,"")
+          programme_lab, ctr_name,iati_identifier_ops, " ")
      }
  
  
  p <- df2 |> 
-#  dplyr::filter(transaction_value_USD  <= 1000000 & transaction_value_USD  > 1000) |> 
+  #  dplyr::filter(expenditure_USD  <= 1000000 & expenditure_USD  > 1000) |> 
   ggplot2::ggplot(ggplot2::aes(x =  year, group = 1)) +
   ggplot2::geom_line(ggplot2::aes(y = budget_value,
                          color = "Budget"), linewidth = 1.5) +
-  ggplot2::geom_line(ggplot2::aes(y =  transaction_value, 
+  ggplot2::geom_line(ggplot2::aes(y =  commitment, 
+                         color = "Commitment"), linewidth = 1.5) +
+  ggplot2::geom_line(ggplot2::aes(y =  expenditure, 
                          color = "Expenditure"), linewidth = 1.5) +
   ggplot2::scale_color_manual(name = " ", 
-                               values = c("Expenditure" = "#F592A0", "Budget" = "#00568D")) +
+                               values = c("Expenditure" = "#F592A0", 
+                                          "Commitment" = "#4B4320",
+                                          "Budget" = "#00568D")) +
   ggplot2::scale_y_continuous(
    # expand = ggplot2::expansion(mult = c(0, .1)),
     labels = scales::label_number(scale_cut = scales::cut_short_scale())  ) +
@@ -151,10 +213,10 @@ show_expenditure <- function(year,
  # ggplot2::facet_wrap(~ trans_year) +
   unhcrthemes::theme_unhcr(grid = "Y", axis = "X", 
                            axis_title = "X", font_size = 18,
-                           legend = FALSE)+
+                           legend = FALSE) +
   ggplot2::labs(
-    title = paste0("<span style='color:\"#00568D\"'>Budget</span>  vs <span style='color:\"#F592A0\"'>Expenditure</span>  (in USD)"),
-    subtitle = subtitt,
+    title = paste0("<span style='color:\"#00568D\"'>Budget</span>  vs <span style='color:\"#F592A0\"'>Expenditure</span> & <span style='color:\"#4B4320\"'>Incoming Commitment</span>  (in USD)"),
+     subtitle = subtitt,
     x = "",
     y = "",
     caption = "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI). UNHCR budget is needs-based. It represents the total amount of money that would be required were UNHCR to meet all of the needs that it is seeking to address." ) 

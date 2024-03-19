@@ -34,7 +34,7 @@
 #'                 dplyr::select(earmarking_name, earmarking_description)  |>
 #'                 dplyr::distinct() |>
 #'                 dplyr::filter(!(is.na(earmarking_name))))
-#' show_earmarking(year = 2018,  
+#' show_earmarking(year = c(2018, 2019,2020, 2021, 2022, 2023),  
 #'              ctr_name = "Brazil")
 show_earmarking <- function(year, 
                         programme_lab = NULL, 
@@ -60,21 +60,21 @@ show_earmarking <- function(year,
     df <- df |> 
       # levels(as.factor(df$programmme_lab))
       dplyr::filter( programmme_lab == thisprogramme_lab &
-            year >= thisyear & 
+            year %in% thisyear & 
              transaction_type_name ==  "Incoming Commitment")
   } else if (!is.null(iati_identifier_ops)) {
     thisiati_identifier_ops <- iati_identifier_ops
     thisyear <-  year 
     df <- df |> 
       dplyr::filter(iati_identifier_ops == thisiati_identifier_ops &
-            year >= thisyear & 
+            year %in% thisyear & 
              transaction_type_name ==  "Incoming Commitment")
   } else if (!is.null(ctr_name)) {
     thisctr_name <- ctr_name
     thisyear <-  year 
     df <- df |> 
       dplyr::filter( ctr_name == thisctr_name &
-            year >= thisyear & 
+            year %in% thisyear & 
              transaction_type_name ==  "Incoming Commitment")
   }
   # levels(as.factor(df$earmarking_name)) 
@@ -109,8 +109,8 @@ show_earmarking <- function(year,
  # ggplot2::facet_wrap(~ trans_year) +
   unhcrthemes::theme_unhcr(grid = "Y", axis = "X", axis_title = "X", font_size = 18)+
   ggplot2::labs(
-    title = paste0("Commitment vs Earmarking (in USD)"),
-    subtitle = paste0("Recorded in ", programme_lab, ctr_name,iati_identifier_ops, " since ", year,""),
+    title = paste0("Earmarking in Commitment (in USD)"),
+    subtitle = paste0("Recorded in ", programme_lab, ctr_name,iati_identifier_ops, ""),
     x = "",
     y = "",
     caption = "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI)" ) 

@@ -90,6 +90,17 @@ show_sectors <- function(year,
             sector_vocabulary_name ==  thissector_vocabulary_name)
   }
   
+  if( nrow(df) == 0) {
+      info <-  paste0("No resource allocation data available for \n",  
+                              programme_lab, ctr_name,iati_identifier_ops, 
+                      "\n for vocabulary: ", sector_vocabulary_name)
+    p <- ggplot2::ggplot() +  
+         ggplot2::annotate("text",  x = 1, y = 1, size = 4,
+                            label = info ) +  
+        ggplot2::theme_void()
+    
+  } else {
+  
   df <- df |> 
     dplyr::group_by(sector_desc, year) |> 
     dplyr::summarise(sector_pct = mean( as.numeric(sector_pct)) ) |> 
@@ -116,6 +127,8 @@ show_sectors <- function(year,
          x = "Sectors", y = "% of Total Funding", 
          caption = "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI)") 
 
+    
+  }
     
  
   return(p)

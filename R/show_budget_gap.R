@@ -25,9 +25,9 @@
 #' @export 
 #' @return  a graph
 #' @examples
-#' show_budget_gap(year = 2018, 
+#' show_budget_gap(year = c(2018, 2019,2020, 2021, 2022, 2023), 
 #'              ctr_name = "Brazil")
-#' show_budget_gap(year = 2018, 
+#' show_budget_gap(year = c(2018, 2019,2020, 2021, 2022, 2023), 
 #'              ctr_name = "Brazil",
 #'              weight_by = c("refugees", "oip"))
 show_budget_gap <- function(year, 
@@ -55,38 +55,38 @@ show_budget_gap <- function(year,
     df <- df |> 
       # levels(as.factor(df$programmme_lab))
       dplyr::filter( programmme_lab == thisprogramme_lab &
-            year >= thisyear & 
+            year %in% thisyear & 
              transaction_type_name ==  "Expenditure")
   } else if (!is.null(iati_identifier_ops)) {
     thisiati_identifier_ops <- iati_identifier_ops
     thisyear <-  year 
     df <- df |> 
       dplyr::filter(iati_identifier_ops == thisiati_identifier_ops &
-            year >= thisyear & 
+            year %in% thisyear & 
              transaction_type_name ==  "Expenditure")
   } else if (!is.null(ctr_name)) {
     thisctr_name <- ctr_name
     thisyear <-  year 
     df <- df |> 
       dplyr::filter( ctr_name == thisctr_name &
-            year >= thisyear & 
+            year %in% thisyear & 
              transaction_type_name ==  "Expenditure")
   }
   
    df2 <-  df  |> 
         dplyr::group_by(iati_identifier, year) |>
-        dplyr::summarise(transaction_value= sum(transaction_value, na.rm = TRUE)) |>
+        dplyr::summarise(transaction_value_USD= sum(transaction_value, na.rm = TRUE)) |>
         dplyr::left_join(iati::dataBudget |> 
                           dplyr::mutate(budget_value= as.numeric(budget_value)) |>
                           dplyr::group_by(iati_identifier) |>
                           dplyr::summarise(budget_value= sum(budget_value, na.rm = TRUE))  
                             , by= c("iati_identifier"))  |>
-     dplyr::select(iati_identifier, year,budget_value,   transaction_value )  |>
-     dplyr::mutate(budget_gap = (budget_value - transaction_value) / budget_value *100) 
+     dplyr::select(iati_identifier, year,budget_value,   transaction_value_USD )  |>
+     dplyr::mutate(budget_gap = (budget_value - transaction_value_USD) / budget_value *100) 
    
  
    
-    if (  !is.null(weight_by) &&  !all(weight_by %in% c("refugees", "asylum_seekers",
+    if (  !is.null(weight_by) &&  !all(weight_by %in% c("all",  "refugees", "asylum_seekers",
                                                    "returned_refugees", "idps",
                                                    "returned_idps", "stateless", 
                                                    "ooc", "oip"  ))  ) {
@@ -94,6 +94,12 @@ show_budget_gap <- function(year,
           it should be among: refugees, asylum_seekers, returned_refugees, idps,
           returned_idps, stateless,  ooc, oip")
     } 
+    ## if "all"  
+   if (  !is.null(weight_by) && "all" %in% weight_by) { 
+     weight_by <- c("refugees", "asylum_seekers",
+                    "returned_refugees", "idps",
+                    "returned_idps", "stateless", 
+                    "ooc", "oip"  )} else {  weight_by <- weight_by }
    
    ## Calculate weight
    if (!is.null(weight_by) && !is.null(ctr_name) ) {
@@ -118,26 +124,23 @@ show_budget_gap <- function(year,
         dplyr::left_join(ctrstat |> 
                          dplyr::select(year, weight)   , by = c("year")) |>
         dplyr::mutate(budget_value = round(budget_value / weight,1),   
-                      transaction_value = round(transaction_value  / weight,1))
+                      transaction_value_USD = round(transaction_value_USD  / weight,1))
       df2 <-  df2 |>
-       dplyr::mutate(budget_gap2 = (budget_value - transaction_value) / budget_value *100) 
+       dplyr::mutate(budget_gap2 = (budget_value - transaction_value_USD) / budget_value *100) 
      
     } 
    
  subtitt <- if( is.null(weight_by)) {
-   paste0("In ", programme_lab, ctr_name,iati_identifier_ops, " recorded since ", year,"")
+   paste0("In ", programme_lab, ctr_name,iati_identifier_ops, "")
    } else {
    paste0("Weighted by total number of individual ", 
           paste(weight_by, collapse = ', '),
           " in ", 
-          programme_lab, ctr_name,iati_identifier_ops, " as recorded since ", year,"")
+          programme_lab, ctr_name,iati_identifier_ops, "")
      }
  
-   
-   
- 
  p <- df2 |> 
-#  dplyr::filter(transaction_value_USD  <= 1000000 & transaction_value_USD  > 1000) |> 
+#  dplyr::filter(transaction_value_USD   <= 1000000 & transaction_value_USD  > 1000) |> 
   ggplot2::ggplot(ggplot2::aes(x =  year, group = 1)) +
   ggplot2::geom_line(ggplot2::aes(y = budget_gap,
                          color = "Budget"),

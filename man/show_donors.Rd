@@ -37,13 +37,13 @@ knitr::kable(iati::dataTransaction |>
 show_donors(year = 2022,
            programme_lab = "The Americas",
            transaction_type_name = "Incoming Commitment" )
-show_donors(year = 2018,
+show_donors(year = c(2018, 2019,2020, 2021, 2022, 2023),
            ctr_name = "Brazil",
            transaction_type_name = "Incoming Commitment" )
-show_donors(year = 2018,
+show_donors(year = c(2018, 2019,2020, 2021, 2022, 2023),
            programme_lab = "Brazil",
            transaction_type_name = "Disbursement" )
-show_donors(year = 2018,
+show_donors(year = c(2018, 2019,2020, 2021, 2022, 2023),
            programme_lab = "Brazil",
            transaction_type_name = "Expenditure" )
 }

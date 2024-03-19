@@ -36,9 +36,9 @@ UNHCR budgets are needs-based: it represents the total amount
 of money that would be required were UNHCR to meet all of the needs that it is seeking to address.
 }
 \examples{
-show_budget_gap(year = 2018, 
+show_budget_gap(year = c(2018, 2019,2020, 2021, 2022, 2023), 
              ctr_name = "Brazil")
-show_budget_gap(year = 2018, 
+show_budget_gap(year = c(2018, 2019,2020, 2021, 2022, 2023), 
              ctr_name = "Brazil",
              weight_by = c("refugees", "oip"))
 }

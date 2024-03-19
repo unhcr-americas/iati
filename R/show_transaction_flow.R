@@ -9,6 +9,7 @@
 #' @param programme_lab A character vector corresponding to the name of the programme.
 #' @param iati_identifier_ops A character vector corresponding to the name of the operation.
 #' @param ctr_name A character vector corresponding to the name of the country.
+#' @param top_n top n donors to show - the rest being lumped together default is 10
 #' 
 #' @import ggplot2
 #' @import dplyr
@@ -19,7 +20,7 @@
 #' @export 
 #' @return  a graph
 #' @examples
-#' show_transaction_flow(year = 2020, 
+#' show_transaction_flow(year = c(2020, 2021, 2022, 2023), 
 #'                    ctr_name = "Brazil")
 #'
 #' show_transaction_flow(year = 2023, 
@@ -27,7 +28,8 @@
 show_transaction_flow <- function(year, 
                         programme_lab = NULL, 
                         iati_identifier_ops = NULL, 
-                        ctr_name = NULL  ) {
+                        ctr_name = NULL,
+                        top_n = 10) {
   
   
   # Check if only one argument is passed 
@@ -48,30 +50,86 @@ show_transaction_flow <- function(year,
     df <- df |> 
       # levels(as.factor(df$programmme_lab))
       dplyr::filter( programmme_lab == thisprogramme_lab &
-            year >= thisyear & 
+            year %in% thisyear & 
              transaction_type_name ==  "Incoming Commitment")
   } else if (!is.null(iati_identifier_ops)) {
     thisiati_identifier_ops <- iati_identifier_ops
     thisyear <-  year 
     df <- df |> 
       dplyr::filter(iati_identifier_ops == thisiati_identifier_ops &
-            year >= thisyear & 
+            year %in% thisyear & 
              transaction_type_name ==  "Incoming Commitment")
   } else if (!is.null(ctr_name)) {
     thisctr_name <- ctr_name
     thisyear <-  year 
     df <- df |> 
       dplyr::filter( ctr_name == thisctr_name &
-            year >= thisyear & 
+            year %in% thisyear & 
              transaction_type_name ==  "Incoming Commitment")
   }
  
-  df1 <- df |>
-         ggsankey::make_long(earmarking_name, 
-                      year, 
-                      transaction_provider_org, 
-                      provider_org_type_name,
+  df11 <- df |>
+        dplyr::mutate( transaction_provider_org = as.character(transaction_provider_org) )  |>
+        dplyr::mutate( transaction_provider_org = as.factor(transaction_provider_org) )  |>
+        dplyr::mutate( transaction_provider_org = forcats::fct_lump_n(
+            f = transaction_provider_org,
+            n = top_n,  #### Parameter
+            w = transaction_value_USD,
+            other_level = 'Other Partners',
+            ties.method = "last")    ) |>
+        dplyr::group_by(year, transaction_provider_org, earmarking_name,provider_org_type_name ) |>
+        dplyr::summarise( transaction_value_USD = sum(transaction_value_USD , na.rm = TRUE)) |>
+        dplyr::mutate(transaction_provider_org = as.character(transaction_provider_org) )  |>
+        dplyr::mutate(transaction_provider_org = as.factor(transaction_provider_org) ) |>
+        dplyr::ungroup() 
+  
+  ## Add summary total for each node to make the diagram
+
+   
+   
+  year <-  df11 |>
+     dplyr::group_by(year) |>
+     dplyr::summarise( transaction_value_USD = sum(transaction_value_USD , na.rm = TRUE)) |>
+     dplyr::mutate(Year = glue::glue('{year}: {scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(transaction_value_USD)}$') ) |>
+    dplyr::select( - transaction_value_USD )
+    
+  
+  
+   transaction_provider_org <-  df11 |>
+     dplyr::group_by( transaction_provider_org) |>
+     dplyr::summarise( transaction_value_USD = sum(transaction_value_USD , na.rm = TRUE)) |>
+     dplyr::mutate( Provider = glue::glue('{transaction_provider_org}: {scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(transaction_value_USD)}$') )|>
+    dplyr::select( - transaction_value_USD )
+  
+  
+  earmarking_name <-  df11 |>
+     dplyr::group_by(earmarking_name) |>
+     dplyr::summarise( transaction_value_USD = sum(transaction_value_USD , na.rm = TRUE)) |>
+     dplyr::mutate(Earmarking = glue::glue('{earmarking_name}: {scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(transaction_value_USD)}$') )|>
+    dplyr::select( - transaction_value_USD )
+  
+  
+  provider_org_type_name <-  df11 |>
+     dplyr::group_by(provider_org_type_name) |>
+     dplyr::summarise( transaction_value_USD = sum(transaction_value_USD , na.rm = TRUE)) |>
+     dplyr::mutate(Type = glue::glue('{provider_org_type_name}: {scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(transaction_value_USD)}$') )|>
+    dplyr::select( - transaction_value_USD )
+     
+    df12 <- df11 |>
+          dplyr::left_join( year, by = c("year") ) |> 
+          dplyr::left_join(  transaction_provider_org, by = c("transaction_provider_org") ) |> 
+          dplyr::left_join( earmarking_name, by = c("earmarking_name") ) |> 
+          dplyr::left_join( provider_org_type_name, by = c("provider_org_type_name") ) 
+               
+  
+   df1 <- df12 |>
+         ggsankey::make_long(Earmarking, 
+                      Year, 
+                      Provider, 
+                      Type,
                       value = transaction_value_USD)
+  
+  
 
   p <- ggplot2::ggplot(df1, 
               ggplot2::aes(x = x,
@@ -79,13 +137,14 @@ show_transaction_flow <- function(year,
                  node = node,
                  next_node = next_node,
                  fill = factor(node),
+                 value = value,
                  label = node)) +
         ggsankey::geom_sankey(flow.alpha = 0.5, node.color = 1) +
         ggsankey::geom_sankey_label(size = 3.5, color = 1, fill = "white") +
         ggplot2::scale_fill_viridis_d() +
         ggsankey::theme_sankey(base_size = 12) +
         unhcrthemes::theme_unhcr(font_size = 18, grid = FALSE, axis = FALSE,  legend = FALSE)   +
-        ggplot2::theme(axis.text.y = element_blank()) + 
+        ggplot2::theme(axis.text.y = ggplot2::element_blank()) + 
         ggplot2::labs(
               x = "",
               y = "",

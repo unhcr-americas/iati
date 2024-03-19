@@ -40,5 +40,9 @@ globalVariables(unique(c(
   # show_outcome_result: 
   "gap_green", "gap_orange", "gap_red", "result_type_name", "threshold_green", "threshold_orange", "threshold_red", 
   # show_transaction_flow: 
-  "next_node", "next_x", "node", "x"
+  "next_node", "next_x", "node", "x",
+  # show_expenditure: 
+  "commitment", "expenditure", 
+  # show_outcome_result: 
+  "transaction_value2"
 ))) 

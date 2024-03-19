@@ -69,6 +69,17 @@ show_outcome_rbm <- function(year,
       dplyr::left_join(iati::mapping_sector, by= c("sector_desc"))
   }
   
+    if( nrow(df) == 0) {
+      info <-  paste0("No resource allocation data available for \n",  
+                              programme_lab, ctr_name,iati_identifier_ops, 
+                      "\n by Outcome")
+    p <- ggplot2::ggplot() +  
+         ggplot2::annotate("text",  x = 1, y = 1, size = 4,
+                            label = info ) +  
+        ggplot2::theme_void()
+    
+  } else {
+  
   df <- df |> 
     dplyr::group_by(sector_desc, sector_rbm, year) |> 
     dplyr::summarise(sector_pct = mean( as.numeric(sector_pct)) ) |> 
@@ -109,14 +120,14 @@ show_outcome_rbm <- function(year,
   
    df_bud2 <-  df_bud  |> 
         dplyr::group_by(iati_identifier, year) |>
-        dplyr::summarise(transaction_value= sum(transaction_value, na.rm = TRUE)) |>
+        dplyr::summarise(transaction_value_USD = sum(transaction_value, na.rm = TRUE)) |>
         dplyr::left_join(iati::dataBudget |> 
                           dplyr::mutate(budget_value= as.numeric(budget_value)) |>
                           dplyr::group_by(iati_identifier) |>
                           dplyr::summarise(budget_value= sum(budget_value, na.rm = TRUE))  
                             , by= c("iati_identifier"))  |>
-     dplyr::select(iati_identifier, year,budget_value,   transaction_value ) |>
-     dplyr::mutate( year2 = glue::glue('{year}  Bud:{scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(budget_value)}$  Exp:{scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(transaction_value)}$  '))
+     dplyr::select(iati_identifier, year,budget_value,   transaction_value_USD ) |>
+     dplyr::mutate( year2 = glue::glue('{year}  Bud:{scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(budget_value)}$  Exp:{scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(transaction_value_USD)}$  '))
    
    df <- df |>
          dplyr::left_join(df_bud2, by = c("year"))
@@ -134,15 +145,18 @@ palette_outcome <- c("OA1: Access to Territory, Reg. and Documentation" ="#F0A3F
                      "OA6: Safety and Access to Justice" = "#00689D", # "#003380", 
                      "OA7: Community Engagement and Women's Empowerment"= "#94FFB5", 
                      "OA8: Well-Being and Basic Needs" =   "#e5243b",  # "#005C31", 
-                     "OA9: Sustainable Housing and Settlements" = "#FD9D24", #  "#8F7C00", 
-                     "OA10: Healthy Lives" = "#4C9F38", #  "#FFA8BB", 
-                     "OA11: Education"= "#C5192D", # "#808080",  
+                     "OA9: Sustainable Housing and Settlements" = "#FD9D24", #  , 
+                     "OA10: Healthy Lives" = "#4C9F38",  
+                     "OA11: Education"= "#C5192D", #  ,  
                      "OA12: Clean Water, Sanitation and Hygiene"= "#26BDE2", # "#0075DC",
                      "OA13: Self Reliance, Economic Inclusion and Livelihoods" =  "#A21942", #  "#19A405",
                      "OA14: Voluntary Repatriation and Sustainable Reintegration"= "#9DCC00",
                      "OA15: Resettlement and Complementary Pathways" = "#191919", 
                      "OA16: Local Integration and other Local Solutions" =  "#2BCE48",
-                     "EA18: Operational Support and Supply Chain" = "#808080",             
+                     ## the enabling areas...
+                     "EA17: Systems and Processes" ="#8F7C00",
+                     "EA18: Operational Support and Supply Chain" = "#808080", 
+                     "EA19: People and Culture" = "#FFA8BB",
                      "EA20: External Engagement and Resource Mobilization"= "#003380" )
    
    
@@ -173,6 +187,7 @@ palette_outcome <- c("OA1: Access to Territory, Reg. and Documentation" ="#F0A3F
                           " based on UNHCR Results Framework "),          
          x = "Sectors", y = "% of Total Funding", 
          caption = "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI). UNHCR budget is needs-based. It represents the total amount of money that would be required were UNHCR to meet all of the needs that it is seeking to address.") 
-
+  }
+  
   return(p)
 }

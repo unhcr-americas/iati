@@ -21,9 +21,9 @@
 #'                 dplyr::select(aid_type1_name, aid_type1_description)  |>
 #'                 dplyr::distinct() |>
 #'                 dplyr::filter(!(is.na(aid_type1_name))))
-#' show_contributions(year = 2018, 
+#' show_contributions(year = c(2018, 2019,2020, 2021, 2022, 2023), 
 #'                    ctr_name = "Brazil") 
-#' show_contributions(year = 2018, 
+#' show_contributions(year = c(2018, 2019,2020, 2021, 2022, 2023), 
 #'                    programme_lab = "The Americas") 
 show_contributions <- function(year, 
                         programme_lab = NULL, 
@@ -49,21 +49,21 @@ show_contributions <- function(year,
     df <- df |> 
       # levels(as.factor(df$programmme_lab))
       dplyr::filter( programmme_lab == thisprogramme_lab &
-            year >= thisyear & 
+            year %in% thisyear & 
              transaction_type_name ==  "Incoming Commitment")
   } else if (!is.null(iati_identifier_ops)) {
     thisiati_identifier_ops <- iati_identifier_ops
     thisyear <-  year 
     df <- df |> 
       dplyr::filter(iati_identifier_ops == thisiati_identifier_ops &
-            year >= thisyear & 
+            year %in% thisyear & 
              transaction_type_name ==  "Incoming Commitment")
   } else if (!is.null(ctr_name)) {
     thisctr_name <- ctr_name
     thisyear <-  year 
     df <- df |> 
       dplyr::filter( ctr_name == thisctr_name &
-            year >= thisyear & 
+            year %in% thisyear & 
              transaction_type_name ==  "Incoming Commitment")
   }
    
@@ -88,7 +88,7 @@ show_contributions <- function(year,
   unhcrthemes::theme_unhcr(grid = "Y", axis = "X", axis_title = "X", font_size = 18)+
   ggplot2::labs(
     title = paste0("Commitment vs Contribution type (in USD)"),
-    subtitle = paste0("Recorded in ", programme_lab, ctr_name,iati_identifier_ops, " since ", year,""),
+    subtitle = paste0("Recorded in ", programme_lab, ctr_name,iati_identifier_ops, ""),
     x = "",
     y = "",
     caption = "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI)" ) 

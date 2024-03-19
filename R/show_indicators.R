@@ -10,9 +10,9 @@
 #' @param ctr_name A character vector corresponding to the name of the country.
 #' @param  result_type_name either  "Impact"  "Outcome" "Output" - default is  "Outcome" 
 #' @param  type  either "deviation" ,  "progress"  or "gap"
-#'   "deviation" showing difference between target and actual - or 
-#'   "progress"  showing difference between baseline and actual  - or
-#'   "gap" showing difference between green acceptable threshold and actual. 
+#'   "deviation" showing Relative distances between target and actual - or 
+#'   "progress"  showing Relative distances between baseline and actual  - or
+#'   "gap" showing Relative distances between green acceptable threshold and actual. 
 #'   gap analysis is only displayed for outcome indicators published after 2022
 #' 
 #' @import ggplot2
@@ -163,7 +163,7 @@ show_indicators <- function(year,
                       baseline = as.numeric(result_indicator_baseline_value),
                       target = as.numeric(result_indicator_target_value), 
                       ## Reshape the indicator label... 
-                      operation = as.character(glue::glue("{result_indicator_title}") ), 
+                      operation = as.character(glue::glue("{result_indicator_title} ({actual})") ), 
                      # operation = as.character(glue::glue("{result_indicator_title} / {result_indicator_target_value_1}") ), 
                       # operation = as.character(glue::glue("{result_indicator_title} / {result_title} -
                       #                                        {result_indicator_target_value_1}") ),  
@@ -321,11 +321,11 @@ show_indicators <- function(year,
                         legend.position = "none")+
                 ggplot2::labs( x = "", y = "" ,
                       title = stringr::str_wrap( 
-                        paste0("Deviation Review | ", result_type_name, " Indicators, ",result_type_name, " Indicators in  ", 
+                        paste0("Deviation Review | ",  result_type_name, " Indicators in  ", 
                               programme_lab, ctr_name,iati_identifier_ops, " as of " , thisyear ) ,
                         100),
                       subtitle = stringr::str_wrap( paste0( 
-                        "Between reported \"Actual\" value and programmatic \"Target\" (in %)" ) ,
+                        "Between reported \"Actual\" value and programmatic \"Target\" (in %, colors represents outcomes)" ) ,
                         110),
                       caption = stringr::str_wrap( 
                         "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI)" ,
@@ -435,7 +435,7 @@ show_indicators <- function(year,
         if( nrow(df1) == 0) {
               info <- paste0("No gap - actual to green acceptable threshold - \n comparative analysis \n  could be produced for \n",
                                   result_type_name, " indicator values \n in ", 
-                                programme_lab, ctr_name,iati_identifier_ops, " for year: ", year)
+                                programme_lab, ctr_name,iati_identifier_ops, "\n  for year: ", paste(year, collapse = ', '))
               p <- ggplot2::ggplot() +  
                    ggplot2::annotate("text",  x = 1, y = 1, size = 12,
                                         label = info ) +  

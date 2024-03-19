@@ -85,7 +85,7 @@ show_indicators_time <- function(year,
     df <- df |> 
       # levels(as.factor(df$result_type_name ))
       dplyr::filter( programmme_lab == thisprogramme_lab &
-            year >= thisyear & 
+            year %in% thisyear & 
              result_type_name ==  thisresult_type_name)  |>
       dplyr::left_join(iati::mapping_result, by= c("result_title")) |> 
       dplyr::left_join( iati::mapping_indicator, by= c("result_indicator_title" = "Indicator" ) ) |> 
@@ -97,7 +97,7 @@ show_indicators_time <- function(year,
     thisresult_type_name <-  result_type_name
     df <- df |> 
       dplyr::filter(iati_identifier_ops == thisiati_identifier_ops &
-            year >= thisyear & 
+            year %in% thisyear & 
              result_type_name ==  thisresult_type_name)  |>
       dplyr::left_join(iati::mapping_result, by= c("result_title")) |> 
       dplyr::left_join( iati::mapping_indicator, by= c("result_indicator_title" = "Indicator" ) ) |> 
@@ -109,7 +109,7 @@ show_indicators_time <- function(year,
     thisresult_type_name <-  result_type_name
     df <- df |> 
       dplyr::filter( ctr_name == thisctr_name &
-            year >= thisyear & 
+            year %in% thisyear & 
             result_type_name ==  thisresult_type_name)  |>
       dplyr::left_join(iati::mapping_result, by= c("result_title")) |> 
       dplyr::left_join( iati::mapping_indicator, by= c("result_indicator_title" = "Indicator" ) ) |> 
@@ -298,10 +298,12 @@ show_indicators_time <- function(year,
                                                                          scale_cut = scales::cut_short_scale(),
                                                                          suffix = "%") ) +
                     ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 120)) +
-                    unhcrthemes::theme_unhcr(font_size = 22, 
+                    unhcrthemes::theme_unhcr(font_size = 20, 
                                        axis_text_size = 9,
                                        grid = "Y", 
-                                       axis = "y") +
+                                       axis = "y",
+                                       strip_text_size = rel(0.5),
+                                       strip_text_face = "italic") +
                     ggplot2::theme( legend.direction = "vertical",
                                 legend.box = "horizontal",
                                 legend.position = "right") +
@@ -311,7 +313,7 @@ show_indicators_time <- function(year,
                                        programme_lab, ctr_name,iati_identifier_ops ) ,
                                100), 
                              subtitle = stringr::str_wrap( paste0( 
-                                     "Between reported \"Actual\" value and programmatic \"Target\" (in %)" ) ,
+                                     "Relative distances between reported \"Actual\" value and programmatic \"Target\" (in %)" ) ,
                                   110),
                              caption = stringr::str_wrap( 
                                "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI)" ,
@@ -369,10 +371,12 @@ show_indicators_time <- function(year,
                                                                            scale_cut = scales::cut_short_scale(),
                                                                            suffix = "%") )+
                  ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 120)) +
-                 unhcrthemes::theme_unhcr(font_size = 22, 
-                                         axis_text_size = 9,
-                                         grid = "Y", 
-                                         axis = "y") +
+                    unhcrthemes::theme_unhcr(font_size = 20, 
+                                       axis_text_size = 9,
+                                       grid = "Y", 
+                                       axis = "y",
+                                       strip_text_size = rel(0.5),
+                                       strip_text_face = "italic") +
                   ggplot2::theme( legend.direction = "vertical",
                                   legend.box = "horizontal",
                                   legend.position = "right")+
@@ -383,7 +387,7 @@ show_indicators_time <- function(year,
                                          programme_lab, ctr_name,iati_identifier_ops ) ,
                                  100),
                         subtitle = stringr::str_wrap( paste0( 
-                              "Between \"Actual\" reported value and their \"baseline\" (in %)" ) ,
+                              "Relative distances between \"Actual\" reported value and their \"baseline\" (in %)" ) ,
                                  110),
                                caption = stringr::str_wrap( 
                                  "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI)" ,
@@ -437,10 +441,12 @@ show_indicators_time <- function(year,
                                                                            scale_cut = scales::cut_short_scale(),
                                                                            suffix = "%") )+
                  ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 120)) +
-                 unhcrthemes::theme_unhcr(font_size = 22, 
-                                         axis_text_size = 9,
-                                         grid = "Y", 
-                                         axis = "y") +
+                    unhcrthemes::theme_unhcr(font_size = 20, 
+                                       axis_text_size = 9,
+                                       grid = "Y", 
+                                       axis = "y",
+                                       strip_text_size = rel(0.5),
+                                       strip_text_face = "italic") +
                  ggplot2::theme( legend.direction = "vertical",
                                   legend.box = "horizontal",
                                   legend.position = "right")+
@@ -450,7 +456,7 @@ show_indicators_time <- function(year,
                                          programme_lab, ctr_name,iati_identifier_ops ) ,
                                  100),
                                subtitle = stringr::str_wrap( paste0( 
-                               "Between \"Actual\" reported value and  \"Acceptable\" global standard for \"green\"  threshold  (in %)" ) ,
+                               "Relative distances between \"Actual\" reported value and  \"Acceptable\" global standard for \"green\"  threshold  (in %)" ) ,
                                  110),
                                caption = stringr::str_wrap( 
                                  "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI)" ,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/show_outcome_result.R
 \name{show_outcome_result}
 \alias{show_outcome_result}
-\title{Title}
+\title{show_outcome_result}
 \usage{
 show_outcome_result(
   year,
@@ -43,7 +43,7 @@ show_outcome_result(
 a graph
 }
 \description{
-Title
+show_outcome_result
 }
 \examples{
 show_outcome_result(year =  c(  2020, 2021, 2022), 

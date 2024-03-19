@@ -69,6 +69,19 @@ show_goal_sdg <- function(year,
       dplyr::left_join(iati::mapping_sdg, by= c("sector_rbm" = "area")) 
   }
   
+    if( nrow(df) == 0) {
+      info <-  paste0("No resource allocation data available for \n",  
+                              programme_lab, ctr_name,iati_identifier_ops, 
+                      "\n for SDG vocabulary")
+    p <- ggplot2::ggplot() +  
+         ggplot2::annotate("text",  x = 1, y = 1, size = 4,
+                            label = info ) +  
+        ggplot2::theme_void()
+    
+  } else {
+  
+  
+  
   df <- df |> 
     dplyr::group_by(sector_desc, sector_rbm,sdg, year) |> 
     dplyr::summarise(sector_pct = mean( as.numeric(sector_pct)) ) |> 
@@ -109,14 +122,14 @@ show_goal_sdg <- function(year,
   
    df_bud2 <-  df_bud  |> 
         dplyr::group_by(iati_identifier, year) |>
-        dplyr::summarise(transaction_value= sum(transaction_value, na.rm = TRUE)) |>
+        dplyr::summarise(transaction_value_USD= sum(transaction_value, na.rm = TRUE)) |>
         dplyr::left_join(iati::dataBudget |> 
                           dplyr::mutate(budget_value= as.numeric(budget_value)) |>
                           dplyr::group_by(iati_identifier) |>
                           dplyr::summarise(budget_value= sum(budget_value, na.rm = TRUE))  
                             , by= c("iati_identifier"))  |>
-     dplyr::select(iati_identifier, year,budget_value,   transaction_value ) |>
-     dplyr::mutate( year2 = glue::glue('{year}   Bud:{scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(budget_value)}$  Exp:{scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(transaction_value)}$  '))
+     dplyr::select(iati_identifier, year,budget_value,   transaction_value_USD ) |>
+     dplyr::mutate( year2 = glue::glue('{year}   Bud:{scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(budget_value)}$  Exp:{scales::label_number(accuracy = .2, scale_cut = scales::cut_short_scale())(transaction_value_USD)}$  '))
    
    df <- df |>
          dplyr::left_join(df_bud2, by = c("year"))
@@ -162,6 +175,6 @@ show_goal_sdg <- function(year,
                           "  "),          
          x = "Sectors", y = "% of Total Funding", 
          caption = "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI). UNHCR budget is needs-based. It represents the total amount of money that would be required were UNHCR to meet all of the needs that it is seeking to address.") 
-
+  }
   return(p)
 }

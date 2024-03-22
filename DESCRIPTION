@@ -14,6 +14,7 @@ License: CC BY 4.0
 URL: https://unhcr-americas.github.io/iati/docs/
 BugReports: https://github.com/unhcr-americas/iati/issues
 Imports: 
+    countrycode,
     cowplot,
     dplyr,
     forcats,
@@ -40,6 +41,7 @@ Imports:
     unhcrdown,
     unhcrthemes
 Suggests: 
+    janitor,
     testthat
 VignetteBuilder: 
     knitr

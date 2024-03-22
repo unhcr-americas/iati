@@ -220,8 +220,19 @@ show_outcome_result(year =  c(  2020, 2021, 2022),
 
   
 
-```{r example-compare_resource_result, message = FALSE, warning = FALSE, fig.retina = 2, fig.width = 8, fig.asp = 0.618, fig.align = "center", out.width = "90%"}
+```{r example-compare_resource_result, message = FALSE, warning = FALSE, fig.retina = 2, fig.width = 12, fig.asp = 0.618, fig.align = "center", out.width = "90%"}
+# See a list of indicators per area of work
+knitr::kable(iati::mapping_indicator |> 
+               janitor::clean_names() |>
+               dplyr::filter( results_level =="Outcome") |>
+               dplyr::select(area_of_work,  indicator) )
+
 compare_resource_result(year =   2022, 
+                    indicator = "13.2. Proportion of PoC who self-report positive changes in their income compared to previous year.",
+                    outcome = "OA8: Well-Being and Basic Needs")
+
+compare_resource_result(year =   2022, 
+                        ctr_name = "Costa Rica",
                     indicator = "13.2. Proportion of PoC who self-report positive changes in their income compared to previous year.",
                     outcome = "OA8: Well-Being and Basic Needs")
 ```

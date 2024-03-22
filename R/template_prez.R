@@ -11,7 +11,7 @@
 
 #' Generate a summary powerpoint
 #' 
-#' @param year A numeric value corresponding to the first year of focus until the most recent year within the dataset.
+#' @param year A numeric value or a vector of numeric value to filter on year. Note that data pre-2022 are using a different set of indicators
 #' @param ctr_name A character vector corresponding to the name of the country.
 #' @param folder folder within your project where to put the generated report. 
 #'              Folder will be created if it does not exist
@@ -20,6 +20,8 @@
 #' @importFrom dplyr filter select pull
 #' @importFrom rmarkdown render
 #' @importFrom here here
+#' @importFrom countrycode countrycode
+#' @importFrom stringr str_replace_all
 #' 
 #' @return nothing the file for the report is generated
 #' 
@@ -56,7 +58,14 @@ template_prez <- function(year = 2022,
   
   rmarkdown::render(
     system.file("rmarkdown/templates/iati_prez/skeleton/skeleton.Rmd", package = "iati"),
-    output_file = here::here(folder, paste0('Strategic_Moment_of_Reflection-', ctr_name, '-', year, '.pptx') ),
+    output_file = here::here(folder, paste0('Strategic_Moment_of_Reflection-',
+                                            stringr::str_replace_all( 
+                           countrycode::countrycode(ctr_name,
+                                               origin = "country.name",
+                                               destination = "unhcr.region"), " ", "_"),
+                                            "__",
+                                            stringr::str_replace_all( ctr_name, " ", "_"),
+                        '-', year, '.pptx') ),
     params = list(ctr_name = ctr_name, 
                   year = year)  )
 }

@@ -7,7 +7,7 @@
 template_prez(year = 2022, ctr_name, folder = "Prez")
 }
 \arguments{
-\item{year}{A numeric value corresponding to the first year of focus until the most recent year within the dataset.}
+\item{year}{A numeric value or a vector of numeric value to filter on year. Note that data pre-2022 are using a different set of indicators}
 
 \item{ctr_name}{A character vector corresponding to the name of the country.}
 

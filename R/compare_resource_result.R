@@ -2,8 +2,9 @@
 
 #' compare_resource_result
 #' 
-#' @param year A numeric value corresponding to the first year of focus until the most recent year within the dataset.
-#' @param indicator one or multiple indicators
+#' @param year A numeric value or a vector of numeric value to filter on year. Note that data pre-2022 are using a different set of indicators
+#' @param ctr_name A character vector corresponding to the name of the country.
+#' @param indicator one specific indicators - label
 #' @param  outcome any of:
 #'   "OA1: Access to Territory, Reg. and Documentation", 
 #'   "OA2: Status Determination",
@@ -37,12 +38,24 @@
 #' 
 #' @return  a graph
 #' @examples
+#' # See a list of indicators per area of work
+#' knitr::kable(iati::mapping_indicator |> 
+#'                janitor::clean_names() |>
+#'                dplyr::filter( results_level =="Outcome") |>
+#'                dplyr::select(area_of_work,  indicator) )
+#'
 #' compare_resource_result(year =   2022, 
 #'                     indicator = "13.2. Proportion of PoC who self-report positive changes in their income compared to previous year.",
 #'                     outcome = "OA8: Well-Being and Basic Needs")
-compare_resource_result <- function(year, 
-                                indicator,
-                                outcome) {
+#'
+#' compare_resource_result(year =   2022, 
+#'                         ctr_name = "Costa Rica",
+#'                     indicator = "13.2. Proportion of PoC who self-report positive changes in their income compared to previous year.",
+#'                     outcome = "OA8: Well-Being and Basic Needs")
+compare_resource_result <- function(year = 2022, 
+                                    ctr_name = NULL,
+                                    indicator,
+                                    outcome) {
   
    
   df <-  iati::dataResult |> 
@@ -52,12 +65,12 @@ compare_resource_result <- function(year,
   thisoutcome <-  outcome
   thisindicator <-  indicator
    df <- df |> 
-      # levels(as.factor(df$result_type_name ))
+   # levels(as.factor(df$result_type_name ))
       dplyr::filter(   year %in% thisyear )  |>
       dplyr::left_join(iati::mapping_result, by= c("result_title")) |> 
-   #   dplyr::filter( sector_rbm == thisoutcome) |>
+   #  dplyr::filter( sector_rbm == thisoutcome) |>
       dplyr::left_join( iati::mapping_indicator, by= c("result_indicator_title" = "Indicator" ) ) |> 
-     dplyr::filter(result_indicator_title %in% thisindicator) |>
+      dplyr::filter(result_indicator_title %in% thisindicator) |>
       dplyr::distinct()
     
   
@@ -75,13 +88,13 @@ compare_resource_result <- function(year,
                   result_indicator_baseline_value, 
                   result_indicator_actual_value,
                   result_indicator_target_value,
-                  result_indicator_target_value_1,
+                  result_indicator_actual_value_1,
                   
-                  result_indicator_baseline_location_ref, 
-                  result_indicator_baseline_dimension_1,
-                  result_indicator_baseline_dimension_value_1, 
-                  result_indicator_baseline_dimension_2,
-                  result_indicator_baseline_dimension_value_2,
+                  result_indicator_actual_location_ref, 
+                  result_indicator_actual_dimension_1,
+                 
+                  result_indicator_actual_dimension_2,
+                  result_indicator_actual_value_2,
                   result_indicator_ascending,  
                   sector_rbm,
                   threshold_red, threshold_orange, threshold_green) |>
@@ -94,9 +107,9 @@ compare_resource_result <- function(year,
                     baseline = as.numeric(result_indicator_baseline_value),
                     target = as.numeric(result_indicator_target_value), 
                     ## Reshape the indicator label... 
-                    operation = as.character(glue::glue("{result_indicator_title} / {result_indicator_target_value_1}") ), 
+                    operation = as.character(glue::glue("{result_indicator_title} / {result_indicator_actual_value_1}") ), 
                     # operation = as.character(glue::glue("{result_indicator_title} / {result_title} -
-                    #                                        {result_indicator_target_value_1}") ),  
+                    #                                        {result_indicator_actual_value_1}") ),  
                     
                     
                     ## Calculating deviation to target        
@@ -189,11 +202,7 @@ compare_resource_result <- function(year,
       ggplot2::theme_void()
     
   } else if(nrow(dfall)> 0) {
-    ## and now the plot
-    p  <-  ggplot2::ggplot( dfall, 
-                                    ggplot2::aes( x = sector_pct#,
-                                               #  shape = result_indicator_baseline_dimension_value_1
-                                               ))  
+    
     
     ## Background with color band for beter interpreation in line with standards! 
     maxgreen <- max(dfall$threshold_green)
@@ -223,44 +232,44 @@ compare_resource_result <- function(year,
       )
     }
     
+    ## now do some check in case, we need to focus on a specific country
+    if (is.null(ctr_name) ){
     
-    p  <- p +
-      #ggplot2::ggplot() +  
-      ggplot2::geom_rect( data=  threshold, 
-                          ggplot2::aes(xmin = xmin, xmax = xmax, 
+    ## and now the plot without country focus 
+    p  <-  ggplot2::ggplot( dfall, ggplot2::aes( x = sector_pct))  +
+       ggplot2::geom_rect( data=  threshold, 
+                        ggplot2::aes(xmin = xmin, xmax = xmax, 
                                        ymin = ymin, ymax = ymax, 
                                        fill = indlevel), 
                           inherit.aes = FALSE,
                           alpha = 0.4)  +
-      ggplot2::guides(fill = "none") +
-      ggplot2::scale_fill_manual(values = palette_level,
+       ggplot2::guides(fill = "none") +
+       ggplot2::scale_fill_manual(values = palette_level,
                                  drop = TRUE,
                                  limits = force,
                                  na.value = "grey50") +
-      
-      ggplot2::facet_wrap( ggplot2::vars(result_indicator_target_value_1), 
-                           labeller = ggplot2::labeller(result_indicator_target_value_1 = ggplot2::label_wrap_gen(20))) +
-      ggplot2::geom_segment(ggplot2::aes(x = sector_pct, 
+       ggplot2::facet_wrap( ggplot2::vars(result_indicator_actual_value_1), 
+             labeller = ggplot2::labeller(result_indicator_actual_value_1 = ggplot2::label_wrap_gen(20))) +
+       ggplot2::geom_segment(ggplot2::aes(x = sector_pct, 
                                          y = baseline, 
                                          xend = sector_pct, 
                                          yend = target), 
                             color = "black") +
-      ggplot2::geom_smooth(ggplot2::aes(y = actual), method = "loess", span = 0.05, alpha =0.25) +
+     # ggplot2::geom_smooth(ggplot2::aes(y = actual), method = "loess", span = 0.05, alpha =0.25) +
+      #ggplot2::geom_smooth(method="auto", se=TRUE, fullrange=FALSE, level=0.95) +
       ggplot2::geom_point( ggplot2::aes(y = baseline), size = 1.5, shape = 22, fill = "black") +
       ggplot2::geom_point( ggplot2::aes(y = actual), 
                            size = 3.5, shape =  21, fill = "blue", alpha =0.5) +
       ggplot2::geom_point( ggplot2::aes(y = target), size = 1.5 , shape = 24, fill = "black") +
-      #ggplot2::geom_smooth(method="auto", se=TRUE, fullrange=FALSE, level=0.95) +
       ggrepel::geom_label_repel(ggplot2::aes(y = actual,
                                             label = iso3c),
                                             size = 3  ) +
-      ggplot2::guides(#shape = "none",
-             color = "none")  + 
+      ggplot2::guides(color = "none")  + 
       ggplot2::scale_x_continuous( label =  scales::label_number(accuracy = 1, 
-                                                                 scale_cut = scales::cut_short_scale(),
-                                                                 suffix = "%") ) +
+                                      scale_cut = scales::cut_short_scale(),
+                                      suffix = "%") ) +
       ggplot2::scale_y_continuous( label =  scales::label_number(accuracy = 1, 
-                                                                 scale_cut = scales::cut_short_scale() ) ) +
+                                      scale_cut = scales::cut_short_scale())) +
       unhcrthemes::theme_unhcr(font_size = 14, 
                                axis_text_size = 9,
                                grid = "XY", 
@@ -273,13 +282,104 @@ compare_resource_result <- function(year,
                      title = "Results by Indicator vs Resources by Outcome",
                      subtitle = stringr::str_wrap( 
                        paste0(  "\n Indicators: ", indicator,
-                                "-/- Outcome: ", outcome
-                                
-                              ) ,
+                                "-/- Outcome: ", outcome ) ,
                        100) ,
                      caption = stringr::str_wrap(
                        "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI))" ,
                        110) )
-  }
+    } else {
+      ## Treat the case where we would light to highlight a specific country...
+     if( ctr_name %in% dfall$ctr_name) {
+  
+      ## keep on the same group
+      thisctr_name <- ctr_name
+      thisgroup <- dfall |>
+                 dplyr::filter( ctr_name == thisctr_name) |>
+                 dplyr::pull(result_indicator_actual_value_1 )
+      dfall2 <- dfall |>
+                dplyr::filter( result_indicator_actual_value_1 %in% thisgroup  ) 
+        
+    
+      p  <-  ggplot2::ggplot( dfall2, ggplot2::aes( x = sector_pct))  +
+        ggplot2::geom_rect( data=  threshold, 
+                            ggplot2::aes(xmin = xmin, xmax = xmax, 
+                                         ymin = ymin, ymax = ymax, 
+                                         fill = indlevel), 
+                            inherit.aes = FALSE,
+                            alpha = 0.4)  +
+        ggplot2::guides(fill = "none") +
+        ggplot2::scale_fill_manual(values = palette_level,
+                                   drop = TRUE,
+                                   limits = force,
+                                   na.value = "grey50") +
+        ggplot2::facet_wrap( ggplot2::vars(result_indicator_actual_value_1), 
+                             labeller = ggplot2::labeller(result_indicator_actual_value_1 = ggplot2::label_wrap_gen(20))) +
+        ggplot2::geom_segment(ggplot2::aes(x = sector_pct, 
+                                           y = baseline, 
+                                           xend = sector_pct, 
+                                           yend = target), 
+                              color = "black") +
+        # ggplot2::geom_smooth(ggplot2::aes(y = actual), method = "loess", span = 0.05, alpha =0.25) +
+        #ggplot2::geom_smooth(method="auto", se=TRUE, fullrange=FALSE, level=0.95) +
+        ggplot2::geom_point( ggplot2::aes(y = baseline), size = 1.5, shape = 22, fill = "black") +
+        ggplot2::geom_point( ggplot2::aes(y = actual), 
+                             size = 3.5, shape =  21, fill = "blue", alpha =0.5) +
+        ggplot2::geom_point( ggplot2::aes(y = target), size = 1.5 , shape = 24, fill = "black") +
+        ggrepel::geom_label_repel( data = dfall2 |>
+                                   dplyr::filter( !(ctr_name == thisctr_name)),
+                                   ggplot2::aes(y = actual,
+                                               label = iso3c),
+                                  size = 2  ) +
+        ggrepel::geom_label_repel(data = dfall2 |>
+                                    dplyr::filter( ctr_name == thisctr_name),
+                                  ggplot2::aes(y = actual,
+                                               label = thisctr_name),
+                                  fill = "yellow",
+                                  size = 4  ) +
+        ggplot2::guides(color = "none")  + 
+        ggplot2::scale_x_continuous( label =  scales::label_number(accuracy = 1, 
+                                                                   scale_cut = scales::cut_short_scale(),
+                                                                   suffix = "%") ) +
+        ggplot2::scale_y_continuous( label =  scales::label_number(accuracy = 1, 
+                                                                   scale_cut = scales::cut_short_scale())) +
+        unhcrthemes::theme_unhcr(font_size = 14, 
+                                 axis_text_size = 9,
+                                 grid = "XY", 
+                                 axis = "y", legend = TRUE) +
+        ggplot2::theme( legend.direction = "horizontal",
+                        legend.box = "horizontal",
+                        legend.position = "bottom") +
+        ggplot2::labs( y = "Value: square=baseline, circle=Actual, triangle=Target, color=Standard Acceptability Threshold ",
+                       x = "% of resource allocation (expenditure) spent on this outcome" ,
+                       title = "Results by Indicator vs Resources by Outcome",
+                       subtitle = stringr::str_wrap( 
+                         paste0(  "\n Indicators: ", indicator,
+                                  "-/- Outcome: ", outcome ) ,
+                         100) ,
+                       caption = stringr::str_wrap(
+                         "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI))" ,
+                         110) )  
+      
+      
+    } else {
+      
+      info <- paste0("Missing value for either Actual, Baseline or target \n",
+                     "\n  for indicator: \n  ", 
+                     indicator, 
+                     "\n in  \n ", 
+                       ctr_name,  "  " )
+      p  <- ggplot2::ggplot() +  
+        ggplot2::annotate("text",  x = 1, y = 1, size = 4,
+                          label = info ) +  
+        ggplot2::theme_void()
+      
+    }
+      
+    }
+    
+    
+  } 
+    
+    
   return(p)
 } 

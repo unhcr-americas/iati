@@ -4,7 +4,7 @@
 #' 
 #' How much indicators evolve over time?
 #' 
-#' @param year A numeric value corresponding to the first year of focus until the most recent year within the dataset.
+#' @param year A numeric value or a vector of numeric value to filter on year. Note that data pre-2022 are using a different set of indicators
 #' @param ctr_name A character vector corresponding to the name of the country.
 #' @param programme_lab A character vector corresponding to the name of the programme.
 #' @param iati_identifier_ops A character vector corresponding to the name of the operation.
@@ -129,13 +129,13 @@ show_indicators_time <- function(year,
                   result_indicator_baseline_value, 
                   result_indicator_actual_value,
                   result_indicator_target_value,
-                  result_indicator_target_value_1,
+                  result_indicator_actual_value_1,
                   
-                  result_indicator_baseline_location_ref, 
-                  result_indicator_baseline_dimension_1,
-                  result_indicator_baseline_dimension_value_1, 
-                  result_indicator_baseline_dimension_2,
-                  result_indicator_baseline_dimension_value_2,
+                  result_indicator_actual_location_ref, 
+                  result_indicator_actual_dimension_1,
+                 
+                  result_indicator_actual_dimension_2,
+                  result_indicator_actual_value_2,
                   result_indicator_ascending,  
                   sector_rbm,
                   threshold_red, threshold_orange, threshold_green)  |>
@@ -169,9 +169,9 @@ show_indicators_time <- function(year,
                       target = as.numeric(result_indicator_target_value), 
                       ## Reshape the indicator label... 
                       operation = as.character(glue::glue("{result_indicator_title}"  ) ), 
-                      #operation = as.character(glue::glue("{result_indicator_title} / {result_indicator_target_value_1}") ), 
+                      #operation = as.character(glue::glue("{result_indicator_title} / {result_indicator_actual_value_1}") ), 
                       # operation = as.character(glue::glue("{result_indicator_title} / {result_title} -
-                      #                                        {result_indicator_target_value_1}") ),  
+                      #                                        {result_indicator_actual_value_1}") ),  
                       
                       
               ## Calculating deviation to target        
@@ -292,8 +292,8 @@ show_indicators_time <- function(year,
                       limits = force,
                       na.value = "grey50")  +
                    ## facet the chart by population group... 
-                   ggplot2::facet_wrap( ggplot2::vars(result_indicator_target_value_1), 
-                         labeller = ggplot2::labeller(result_indicator_target_value_1 = ggplot2::label_wrap_gen(20))) +
+                   ggplot2::facet_wrap( ggplot2::vars(result_indicator_actual_value_1), 
+                         labeller = ggplot2::labeller(result_indicator_actual_value_1 = ggplot2::label_wrap_gen(20))) +
                    ggplot2::scale_y_continuous( label =  scales::label_number(accuracy = 1, 
                                                                          scale_cut = scales::cut_short_scale(),
                                                                          suffix = "%") ) +
@@ -365,8 +365,8 @@ show_indicators_time <- function(year,
                       limits = force,
                       na.value = "grey50")  +
                 ## facet the chart by population group... 
-                ggplot2::facet_wrap( ggplot2::vars(result_indicator_target_value_1), 
-                         labeller = ggplot2::labeller(result_indicator_target_value_1 = ggplot2::label_wrap_gen(20))) +
+                ggplot2::facet_wrap( ggplot2::vars(result_indicator_actual_value_1), 
+                         labeller = ggplot2::labeller(result_indicator_actual_value_1 = ggplot2::label_wrap_gen(20))) +
                  ggplot2::scale_y_continuous( label =  scales::label_number(accuracy = 1, 
                                                                            scale_cut = scales::cut_short_scale(),
                                                                            suffix = "%") )+
@@ -435,8 +435,8 @@ show_indicators_time <- function(year,
                       limits = force,
                       na.value = "grey50")  +
                 ## facet the chart by population group... 
-                ggplot2::facet_wrap( ggplot2::vars(result_indicator_target_value_1), 
-                         labeller = ggplot2::labeller(result_indicator_target_value_1 = ggplot2::label_wrap_gen(20))) +
+                ggplot2::facet_wrap( ggplot2::vars(result_indicator_actual_value_1), 
+                         labeller = ggplot2::labeller(result_indicator_actual_value_1 = ggplot2::label_wrap_gen(20))) +
                  ggplot2::scale_y_continuous( label =  scales::label_number(accuracy = 1, 
                                                                            scale_cut = scales::cut_short_scale(),
                                                                            suffix = "%") )+

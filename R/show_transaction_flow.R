@@ -5,7 +5,7 @@
 #' Flow diagramme of transations
 #' 
 #' 
-#' @param year A numeric value corresponding to the first year of focus until the most recent year within the dataset.
+#' @param year A numeric value or a vector of numeric value to filter on year. Note that data pre-2022 are using a different set of indicators
 #' @param programme_lab A character vector corresponding to the name of the programme.
 #' @param iati_identifier_ops A character vector corresponding to the name of the operation.
 #' @param ctr_name A character vector corresponding to the name of the country.

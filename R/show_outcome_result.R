@@ -2,7 +2,7 @@
 
 #' show_outcome_result
 #' 
-#' @param year A numeric value corresponding to the first year of focus until the most recent year within the dataset.
+#' @param year A numeric value or a vector of numeric value to filter on year. Note that data pre-2022 are using a different set of indicators
 #' @param ctr_name A character vector corresponding to the name of the country.
 #' @param programme_lab A character vector corresponding to the name of the programme.
 #' @param iati_identifier_ops A character vector corresponding to the name of the operation.
@@ -127,13 +127,13 @@ show_outcome_result <- function(year,
                   result_indicator_baseline_value, 
                   result_indicator_actual_value,
                   result_indicator_target_value,
-                  result_indicator_target_value_1,
+                  result_indicator_actual_value_1,
                   
-                  result_indicator_baseline_location_ref, 
-                  result_indicator_baseline_dimension_1,
-                  result_indicator_baseline_dimension_value_1, 
-                  result_indicator_baseline_dimension_2,
-                  result_indicator_baseline_dimension_value_2,
+                  result_indicator_actual_location_ref, 
+                  result_indicator_actual_dimension_1,
+                 
+                  result_indicator_actual_dimension_2,
+                  result_indicator_actual_value_2,
                   result_indicator_ascending,  
                   sector_rbm,
                   threshold_red, threshold_orange, threshold_green) |>
@@ -146,9 +146,9 @@ show_outcome_result <- function(year,
                       baseline = as.numeric(result_indicator_baseline_value),
                       target = as.numeric(result_indicator_target_value), 
                       ## Reshape the indicator label... 
-                      operation = as.character(glue::glue("{result_indicator_title} / {result_indicator_target_value_1}") ), 
+                      operation = as.character(glue::glue("{result_indicator_title} / {result_indicator_actual_value_1}") ), 
                       # operation = as.character(glue::glue("{result_indicator_title} / {result_title} -
-                      #                                        {result_indicator_target_value_1}") ),  
+                      #                                        {result_indicator_actual_value_1}") ),  
                       
                       
               ## Calculating deviation to target        

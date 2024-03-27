@@ -91,19 +91,31 @@ Folder will be created if it does not exist</p></dd>
 <span class="r-in"><span><span class="co">#                     folder = "dev/Prez")</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># ## Generate for all operation specific region</span></span></span>
-<span class="r-in"><span><span class="co"># region &lt;- "The Americas"</span></span></span>
+<span class="r-in"><span><span class="co"># reg &lt;- iati::dataActivity |&gt;</span></span></span>
+<span class="r-in"><span><span class="co">#   dplyr::select( unhcr_region) |&gt;</span></span></span>
+<span class="r-in"><span><span class="co">#   dplyr::filter(! is.na(unhcr_region)) |&gt;</span></span></span>
+<span class="r-in"><span><span class="co">#   dplyr::distinct() |&gt;</span></span></span>
+<span class="r-in"><span><span class="co">#   dplyr::pull() </span></span></span>
 <span class="r-in"><span><span class="co"># </span></span></span>
-<span class="r-in"><span><span class="co"># countries &lt;- iati::dataActivity |&gt; </span></span></span>
-<span class="r-in"><span><span class="co">#        dplyr::filter( unhcr_region ==  region) |&gt;</span></span></span>
-<span class="r-in"><span><span class="co">#        dplyr::select(ctr_name) |&gt;</span></span></span>
-<span class="r-in"><span><span class="co">#        dplyr::distinct() |&gt;</span></span></span>
-<span class="r-in"><span><span class="co">#        dplyr::pull()</span></span></span>
+<span class="r-in"><span><span class="co"># thisfolder &lt;- "dev/SMR" </span></span></span>
 <span class="r-in"><span><span class="co"># </span></span></span>
-<span class="r-in"><span><span class="co"># for ( ctr in countries) {</span></span></span>
-<span class="r-in"><span><span class="co">#     cat(paste0(ctr, "\n"))</span></span></span>
-<span class="r-in"><span><span class="co">#     iati::template_prez(year = 2022, </span></span></span>
-<span class="r-in"><span><span class="co">#                     ctr_name = ctr,</span></span></span>
-<span class="r-in"><span><span class="co">#                     folder = "dev/Prez")  }</span></span></span>
+<span class="r-in"><span><span class="co"># for (region in reg) { </span></span></span>
+<span class="r-in"><span><span class="co">#       cat(paste0( region,   "\n"))</span></span></span>
+<span class="r-in"><span><span class="co">#</span></span></span>
+<span class="r-in"><span><span class="co">#       # region &lt;- "The Americas"   </span></span></span>
+<span class="r-in"><span><span class="co">#       countries &lt;- iati::dataActivity |&gt;</span></span></span>
+<span class="r-in"><span><span class="co">#         dplyr::filter( unhcr_region ==  region) |&gt;</span></span></span>
+<span class="r-in"><span><span class="co">#         dplyr::select(ctr_name) |&gt;</span></span></span>
+<span class="r-in"><span><span class="co">#         dplyr::distinct() |&gt;</span></span></span>
+<span class="r-in"><span><span class="co">#         dplyr::pull() </span></span></span>
+<span class="r-in"><span><span class="co">#       </span></span></span>
+<span class="r-in"><span><span class="co">#       for ( ctr in countries) {</span></span></span>
+<span class="r-in"><span><span class="co">#         cat(paste0("Generating for ", ctr, "\n"))</span></span></span>
+<span class="r-in"><span><span class="co">#         iati::template_prez(year = 2022,</span></span></span>
+<span class="r-in"><span><span class="co">#                             ctr_name = ctr,</span></span></span>
+<span class="r-in"><span><span class="co">#                             folder =  thisfolder)  </span></span></span>
+<span class="r-in"><span><span class="co">#         }</span></span></span>
+<span class="r-in"><span><span class="co">#     }</span></span></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

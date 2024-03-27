@@ -44,5 +44,14 @@ globalVariables(unique(c(
   # show_expenditure: 
   "commitment", "expenditure", 
   # show_outcome_result: 
-  "transaction_value2"
-))) 
+  "transaction_value2",# compare_resource_result: 
+  "indlevel", "iso3c", "result_indicator_actual_dimension_1", "result_indicator_actual_dimension_2", "result_indicator_actual_location_ref", "result_indicator_actual_value_1", "result_indicator_actual_value_2", "sector_code", "unhcr_region", "xmax", "xmin", "ymax", "ymin", 
+  # show_indicators: 
+  "result_indicator_actual_dimension_1", "result_indicator_actual_dimension_2", "result_indicator_actual_location_ref", "result_indicator_actual_value_1", "result_indicator_actual_value_2", 
+  # show_indicators_time: 
+  "result_indicator_actual_dimension_1", "result_indicator_actual_dimension_2", "result_indicator_actual_location_ref", "result_indicator_actual_value_1", "result_indicator_actual_value_2", 
+  # show_outcome_result: 
+  "result_indicator_actual_dimension_1", "result_indicator_actual_dimension_2", "result_indicator_actual_location_ref", "result_indicator_actual_value_1", "result_indicator_actual_value_2", 
+  # show_transaction_flow: 
+  "Earmarking", "Provider", "Type", "value", "Year"
+)))

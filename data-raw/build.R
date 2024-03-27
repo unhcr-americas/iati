@@ -509,6 +509,47 @@ save(dataTransaction, file =  "data/dataTransaction.RData")
 #by using R CMD build --resave-data
 tools::resaveRdaFiles(here::here("data","dataTransaction.RData"),compress="xz")
 
+
+
+### Mapping ####
+# mapping_result <- readxl::read_excel("data-raw/mapping/mapping.xlsx", 
+#                                      sheet = "result_list") |>
+#   dplyr::mutate( sector_rbm = result_map2) |>
+#   dplyr::select( result_title,  sector_rbm, area_id  )
+# 
+# sinew::makeOxygen(mapping_result, add_fields = "source")
+# 
+# save(mapping_result, file =  "data/mapping_result.RData")
+# dput(names(mapping_result))
+# 
+# 
+# 
+# mapping_sector <- readxl::read_excel("data-raw/mapping/mapping.xlsx", 
+#                                      sheet = "result_sector")  |>
+#   dplyr::mutate( sector_rbm = result_map2...7,
+#                  sector_vocabulary_name = sector_vocabulary_name...2) |>
+#   dplyr::select( sector_desc,sector_vocabulary_name,  sector_rbm, area_id  )
+# 
+# sinew::makeOxygen(mapping_sector , add_fields = "source")
+# 
+# save(mapping_sector , file =  "data/mapping_sector.RData")
+# dput(names(mapping_result))
+# 
+# dput(names(mapping_sector))
+# 
+# mapping_sdg <- readxl::read_excel("data-raw/mapping/mapping.xlsx", 
+#                                   sheet = "area_sdg")  
+# sinew::makeOxygen(mapping_sdg , add_fields = "source")
+# 
+# save(mapping_sdg , file =  "data/mapping_sdg.RData")
+# 
+# 
+# mapping_indicator <- readxl::read_excel("data-raw/mapping/mapping.xlsx", 
+#                                         sheet = "mapping_indicator")
+# sinew::makeOxygen(mapping_indicator, add_fields = "source")
+# 
+# save(mapping_indicator , file =  "data/mapping_indicator.RData")
+
 ## code table need to change name... 
 
 # 

@@ -57,7 +57,9 @@ show_expenditure <- function(year,
          dplyr::left_join(iati::dataActivity, by= c("iati_identifier"))  
   
   dfB <- iati::dataBudget |> 
-         dplyr::left_join(iati::dataActivity, by= c("iati_identifier"))  
+         dplyr::left_join(iati::dataActivity, by= c("iati_identifier")) |>
+         dplyr::rename("year_iati" = "year")|>
+         dplyr::mutate(year = lubridate::year(lubridate::as_date(budget_period_start)))
   
   if (!is.null(programme_lab)) {
     thisprogramme_lab <- programme_lab
@@ -129,7 +131,7 @@ show_expenditure <- function(year,
    df2 <-  df1   |>  
         dplyr::left_join(df |> dplyr::select(- year), by = c("iati_identifier")) |>
         dplyr::left_join( dfB , by= c("iati_identifier"))  |>
-     dplyr::select(iati_identifier, year,  budget_value,   expenditure, commitment ) 
+        dplyr::select(iati_identifier, year,  budget_value,   expenditure, commitment ) 
    
     # Error catching -- Check if we weight
     #weight_by <-  c("refugees", "oip") 

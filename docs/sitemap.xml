@@ -4,9 +4,6 @@
     <loc>/404.html</loc>
   </url>
   <url>
-    <loc>/articles/get-started.html</loc>
-  </url>
-  <url>
     <loc>/articles/index.html</loc>
   </url>
   <url>
@@ -20,12 +17,6 @@
   </url>
   <url>
     <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/activity.html</loc>
-  </url>
-  <url>
-    <loc>/reference/budget.html</loc>
   </url>
   <url>
     <loc>/reference/codeActivityDateType.html</loc>
@@ -175,22 +166,10 @@
     <loc>/reference/dataTransaction.html</loc>
   </url>
   <url>
-    <loc>/reference/default_aid_type.html</loc>
-  </url>
-  <url>
-    <loc>/reference/document_link.html</loc>
-  </url>
-  <url>
-    <loc>/reference/humanitarian_scope.html</loc>
-  </url>
-  <url>
     <loc>/reference/iati-package.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/location.html</loc>
   </url>
   <url>
     <loc>/reference/mapping_indicator.html</loc>
@@ -205,22 +184,7 @@
     <loc>/reference/mapping_sector.html</loc>
   </url>
   <url>
-    <loc>/reference/participating_org.html</loc>
-  </url>
-  <url>
     <loc>/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>/reference/reference.html</loc>
-  </url>
-  <url>
-    <loc>/reference/related_activity.html</loc>
-  </url>
-  <url>
-    <loc>/reference/result.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sector.html</loc>
   </url>
   <url>
     <loc>/reference/show_budget_gap.html</loc>
@@ -239,9 +203,6 @@
   </url>
   <url>
     <loc>/reference/show_goal_sdg.html</loc>
-  </url>
-  <url>
-    <loc>/reference/show_implementers.html</loc>
   </url>
   <url>
     <loc>/reference/show_indicators.html</loc>
@@ -271,9 +232,9 @@
     <loc>/reference/show_transaction_flow.html</loc>
   </url>
   <url>
-    <loc>/reference/template_prez.html</loc>
+    <loc>/reference/template_compare.html</loc>
   </url>
   <url>
-    <loc>/reference/transaction.html</loc>
+    <loc>/reference/template_prez.html</loc>
   </url>
 </urlset>

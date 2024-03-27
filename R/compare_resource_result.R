@@ -2,9 +2,23 @@
 
 #' compare_resource_result
 #' 
-#' @param year A numeric value or a vector of numeric value to filter on year. Note that data pre-2022 are using a different set of indicators
+#' @param year A numeric value or a vector of numeric value to filter on year. 
+#'             Note that data pre-2022 are using a different set of indicators
 #' @param ctr_name A character vector corresponding to the name of the country.
 #' @param indicator one specific indicators - label
+#' 
+#' @param show_baseline TRUE / FALSE boolean to indicate whether to filter and 
+#'                      display records that have a baseline value. 
+#'                      This will likely impact the number of clean records 
+#'                      that can be plotted...
+#' @param show_target TRUE / FALSE boolean to indicate whether to filter and
+#'                     display records that have a target value
+#'                      This will likely impact the number of clean records 
+#'                      that can be plotted...
+#'                      
+#' @param pop_type default is null - but can be used to filter on population type:
+#'     "Refugees and Asylum-seekers","IDPs" ,"Stateless Persons" 
+#'     "Others of Concern" ,"Returnees"   , "Host Community"             
 #' @param  outcome any of:
 #'   "OA1: Access to Territory, Reg. and Documentation", 
 #'   "OA2: Status Determination",
@@ -39,21 +53,36 @@
 #' @return  a graph
 #' @examples
 #' # See a list of indicators per area of work
-#' knitr::kable(iati::mapping_indicator |> 
-#'                janitor::clean_names() |>
-#'                dplyr::filter( results_level =="Outcome") |>
-#'                dplyr::select(area_of_work,  indicator) )
+#' list_indic <- iati::mapping_indicator |> 
+#'                  janitor::clean_names() |>
+#'                  dplyr::filter( results_level =="Outcome") |>
+#'                  dplyr::left_join(iati::mapping_result |> 
+#'                                     dplyr::select(sector_rbm, area_id) |>
+#'                                     dplyr::distinct(), by = c("area_id")) |>
+#'                  dplyr::select(area_id, sector_rbm, indicator)
+#' knitr::kable(list_indic)  
 #'
 #' compare_resource_result(year =   2022, 
-#'                     indicator = "13.2. Proportion of PoC who self-report positive changes in their income compared to previous year.",
-#'                     outcome = "OA8: Well-Being and Basic Needs")
+#'                         show_baseline = TRUE,
+#'                         show_target = TRUE,
+#'       indicator = "13.2. Proportion of PoC who self-report positive changes in their income compared to previous year.",
+#'       outcome = "OA8: Well-Being and Basic Needs")
 #'
 #' compare_resource_result(year =   2022, 
-#'                         ctr_name = "Costa Rica",
-#'                     indicator = "13.2. Proportion of PoC who self-report positive changes in their income compared to previous year.",
-#'                     outcome = "OA8: Well-Being and Basic Needs")
+#'        ctr_name = "Costa Rica",
+#'        indicator = "13.2. Proportion of PoC who self-report positive changes in their income compared to previous year.",
+#'        outcome = "OA8: Well-Being and Basic Needs")
+#'
+#'
+#' compare_resource_result(year =   2022, 
+#'        pop_type = "Refugees and Asylum-seekers",
+#'        indicator = "13.2. Proportion of PoC who self-report positive changes in their income compared to previous year.",
+#'        outcome = "OA8: Well-Being and Basic Needs")
 compare_resource_result <- function(year = 2022, 
                                     ctr_name = NULL,
+                                    pop_type = NULL,
+                                    show_baseline = FALSE,
+                                    show_target = FALSE,
                                     indicator,
                                     outcome) {
   
@@ -64,7 +93,7 @@ compare_resource_result <- function(year = 2022,
   thisyear <-  year  
   thisoutcome <-  outcome
   thisindicator <-  indicator
-   df <- df |> 
+  df <- df |> 
    # levels(as.factor(df$result_type_name ))
       dplyr::filter(   year %in% thisyear )  |>
       dplyr::left_join(iati::mapping_result, by= c("result_title")) |> 
@@ -81,18 +110,16 @@ compare_resource_result <- function(year = 2022,
   
   #table(df$result_indicator_ascending, useNA = "ifany")
   df1 <- df  |> 
-    dplyr::select(ctr_name, result_type_name ,  result_title, sector_rbm,
+    dplyr::select(unhcr_region, iso3c, ctr_name,
+                  result_type_name ,  result_title, sector_rbm,
                   indicator_measure_name, result_indicator_title,
                   year,
-                  
                   result_indicator_baseline_value, 
                   result_indicator_actual_value,
                   result_indicator_target_value,
                   result_indicator_actual_value_1,
-                  
                   result_indicator_actual_location_ref, 
                   result_indicator_actual_dimension_1,
-                 
                   result_indicator_actual_dimension_2,
                   result_indicator_actual_value_2,
                   result_indicator_ascending,  
@@ -141,21 +168,21 @@ compare_resource_result <- function(year = 2022,
                       progress_baseline < -15     ~ "red",  
                       TRUE ~ ""),
                     
-                    gap_green =  round( ( threshold_green - actual ) / 
+                    gap_green =  round( (  actual - threshold_green ) / 
                                           dplyr::if_else(threshold_green == 0, 1, threshold_green) * 
                                           dplyr::if_else(threshold_green == 0, 1, 100)  ,2 ),
                     gap_green = dplyr::if_else(result_indicator_ascending == 0, 
                                                gap_green * -1, 
                                                gap_green), 
                     
-                    gap_orange =  round( ( threshold_orange - actual ) / 
+                    gap_orange =  round( ( actual - threshold_orange  ) / 
                                            dplyr::if_else(threshold_orange == 0, 1, threshold_orange) * 
                                            dplyr::if_else(threshold_orange == 0, 1, 100)  ,2 ), 
                     gap_orange = dplyr::if_else(result_indicator_ascending == 0, 
                                                 gap_orange * -1, 
                                                 gap_orange), 
                     
-                    gap_red =  round( ( threshold_red - actual ) / 
+                    gap_red =  round( ( actual  -  threshold_red ) / 
                                         dplyr::if_else(threshold_red == 0, 1, threshold_red) * 
                                         dplyr::if_else(threshold_red == 0, 1, 100)  ,2 ),
                     gap_red = dplyr::if_else(result_indicator_ascending == 0, 
@@ -172,9 +199,10 @@ compare_resource_result <- function(year = 2022,
       dplyr::filter(year %in% thisyear & 
                       sector_vocabulary_name ==  "Reporting Organisation 2") |>
     dplyr::left_join(iati::mapping_sector, by= c("sector_desc")) |> 
-    dplyr::group_by(unhcr_region, iso3c, ctr_name, sector_desc, sector_rbm, year) |> 
+    dplyr::select(ctr_name, sector_code, sector_desc, sector_rbm, year, sector_pct   ) |>
+    dplyr::group_by( ctr_name, sector_desc, sector_rbm, year) |> 
     dplyr::summarise(sector_pct = mean( as.numeric(sector_pct)) ) |> 
-    dplyr::group_by(unhcr_region, iso3c, ctr_name, sector_rbm, year) |> 
+    dplyr::group_by( ctr_name, sector_rbm, year) |> 
     dplyr::summarise(sector_pct = sum(sector_pct, rm.na = TRUE))  |> 
     # dplyr::summarise(sector_pct = sum(sector_pct, na.rm = TRUE)/sum(df$sector_pct, na.rm = TRUE)*100) |> 
     #  top_n(5, wt = sector_pct) |> 
@@ -183,13 +211,28 @@ compare_resource_result <- function(year = 2022,
   
   
   ## Results vs Resource  #####
-  dfall <- df1 |> 
+  dfall1 <- df1 |> 
     ## Filter out - when no data...
     dplyr::filter (! (is.na(actual)))  |>  
-    dplyr::filter (! (is.na(baseline)))  |>  
-    dplyr::filter (! (is.na(target)))  |>  
-    dplyr::left_join(dfRes, by = c("ctr_name")) |>
-    dplyr::filter (! (is.na(sector_pct)))   
+    dplyr::left_join(dfRes, by = c("ctr_name")) 
+  
+  ## Filters....
+  if (! (is.null(pop_type)) ){
+    dfall1 <-   dfall1 |>
+    dplyr::filter (result_indicator_actual_value_1 %in% c(pop_type)) } 
+
+  if(   show_baseline == TRUE){
+    dfall1 <-   dfall1 |>
+    dplyr::filter (! (is.na(baseline))) }
+    
+  if( show_target  == TRUE){
+    dfall1 <-   dfall1 |>
+    dplyr::filter (! (is.na(target))) }
+
+   ## Treat case when no corresponding resource allocation
+   dfall <-   dfall1 |>
+              dplyr::filter (! (is.na(sector_pct)))  
+
   
   ## case there's no data at all
   if( nrow(dfall) == 0) {
@@ -214,9 +257,9 @@ compare_resource_result <- function(year = 2022,
     if( unique(dfall$result_indicator_ascending) == "0") {
       threshold = data.frame( 
         indlevel = c("crtical","notcool", "Acceptable"), 
-        #xmin = c(0, 0, 0 ), 
+        xmin = c(0, 0, 0 ), 
        # xmax = c(100, 100, 100 ), 
-        xmin = c(min(dfall$sector_pct)-5, min(dfall$sector_pct)-5, min(dfall$sector_pct)-5 ), 
+       # xmin = c(min(dfall$sector_pct), min(dfall$sector_pct), min(dfall$sector_pct) ), 
         xmax = c(max(dfall$sector_pct)+5, max(dfall$sector_pct)+5, max(dfall$sector_pct)+5 ), 
         ymin = c( 0,  maxgreen , maxorange ), # 
         ymax = c( maxgreen ,  maxorange, maxred )  #   
@@ -225,7 +268,8 @@ compare_resource_result <- function(year = 2022,
     }  else if ( unique(dfall$result_indicator_ascending) == "1") { 
       threshold = data.frame( 
         indlevel = c("crtical","notcool", "Acceptable"), 
-        xmin = c(min(dfall$sector_pct)-5, min(dfall$sector_pct)-5, min(dfall$sector_pct)-5 ), 
+        xmin = c(0, 0, 0 ), 
+       # xmin = c(min(dfall$sector_pct), min(dfall$sector_pct), min(dfall$sector_pct) ), 
         xmax = c(max(dfall$sector_pct)+5, max(dfall$sector_pct)+5, max(dfall$sector_pct)+5 ), 
         ymin = c( 0,  maxred, maxorange ),   
         ymax = c( maxred,  maxorange, maxgreen )  
@@ -234,6 +278,16 @@ compare_resource_result <- function(year = 2022,
     
     ## now do some check in case, we need to focus on a specific country
     if (is.null(ctr_name) ){
+      # https://dataviz.unhcr.org/assets/download/UNHCR_Data_Visualization_Guidelines.pdf
+    palette_unhcr_region <-   c( "Asia and the Pacific"= "#00B398",
+                                 "East and Horn of Africa"   = "#0072BC",
+                                 "Europe"="#E1CC0D",
+                                 "Middle East and North Africa"="#EF4A60",
+                                 "Southern Africa"  = "#589BE5" ,
+                                 "The Americas" = "#18375F",    
+                                 "West and Central Africa"="#8EBEFF" )
+      
+    interpretation <- "Indicator Value Interpretation: circle=Actual Reported Value, color=Standard Acceptability Threshold"
     
     ## and now the plot without country focus 
     p  <-  ggplot2::ggplot( dfall, ggplot2::aes( x = sector_pct))  +
@@ -249,25 +303,48 @@ compare_resource_result <- function(year = 2022,
                                  limits = force,
                                  na.value = "grey50") +
        ggplot2::facet_wrap( ggplot2::vars(result_indicator_actual_value_1), 
-             labeller = ggplot2::labeller(result_indicator_actual_value_1 = ggplot2::label_wrap_gen(20))) +
+             labeller = ggplot2::labeller(result_indicator_actual_value_1 = ggplot2::label_wrap_gen(20)))  
+     # ggplot2::geom_smooth(ggplot2::aes(y = actual), method = "loess", span = 0.05, alpha =0.25) +
+      #ggplot2::geom_smooth(method="auto", se=TRUE, fullrange=FALSE, level=0.95) +
+    
+    if( show_target  == TRUE & show_baseline == TRUE){
+      p <- p +
        ggplot2::geom_segment(ggplot2::aes(x = sector_pct, 
                                          y = baseline, 
                                          xend = sector_pct, 
                                          yend = target), 
-                            color = "black") +
-     # ggplot2::geom_smooth(ggplot2::aes(y = actual), method = "loess", span = 0.05, alpha =0.25) +
-      #ggplot2::geom_smooth(method="auto", se=TRUE, fullrange=FALSE, level=0.95) +
-      ggplot2::geom_point( ggplot2::aes(y = baseline), size = 1.5, shape = 22, fill = "black") +
-      ggplot2::geom_point( ggplot2::aes(y = actual), 
-                           size = 3.5, shape =  21, fill = "blue", alpha =0.5) +
-      ggplot2::geom_point( ggplot2::aes(y = target), size = 1.5 , shape = 24, fill = "black") +
+                            color = "black") 
+       interpretation <- "Indicator Value Interpretation: circle=Actual Reported Value, square=baseline, triangle=Target, color=Standard Acceptability Threshold"
+      }
+    
+      if(   show_baseline == TRUE){
+        p <- p +
+          ggplot2::geom_point( ggplot2::aes(y = baseline), size = 1.5, shape = 22, fill = "black")
+         interpretation <- "Indicator Value Interpretation: circle=Actual Reported Value, square=baseline,  color=Standard Acceptability Threshold"
+          }
+    if( show_target  == TRUE){
+      p <- p +
+        ggplot2::geom_point( ggplot2::aes(y = target), size = 1.5 , shape = 24, fill = "black")
+       interpretation <- "Indicator Value Interpretation: circle=Actual Reported Value,triangle=Target, color=Standard Acceptability Threshold"}
+    
+    
+    
+    p <- p +   
+      ggplot2::geom_point( ggplot2::aes(y = actual ), 
+                         size = 3.5, shape =  21, fill = "blue", alpha =0.7) + 
+     # ggplot2::geom_point( ggplot2::aes(y = actual, color = unhcr_region), 
+     #                      size = 3.5, shape =  21,  alpha =0.5) + 
       ggrepel::geom_label_repel(ggplot2::aes(y = actual,
-                                            label = iso3c),
+                                            label = iso3c,
+                                             color = unhcr_region),
                                             size = 3  ) +
-      ggplot2::guides(color = "none")  + 
+      ggplot2::scale_color_manual(values = palette_unhcr_region,
+                                 drop = TRUE,
+                                 limits = force,
+                                 na.value = "grey50") +
+      ggplot2::guides(color = "none", fill = "none")  + 
       ggplot2::scale_x_continuous( label =  scales::label_number(accuracy = 1, 
-                                      scale_cut = scales::cut_short_scale(),
-                                      suffix = "%") ) +
+                                      scale_cut = scales::cut_short_scale()) ) +
       ggplot2::scale_y_continuous( label =  scales::label_number(accuracy = 1, 
                                       scale_cut = scales::cut_short_scale())) +
       unhcrthemes::theme_unhcr(font_size = 14, 
@@ -277,15 +354,29 @@ compare_resource_result <- function(year = 2022,
       ggplot2::theme( legend.direction = "horizontal",
                       legend.box = "horizontal",
                       legend.position = "bottom") +
-      ggplot2::labs( y = "Value: square=baseline, circle=Actual, triangle=Target, color=Standard Acceptability Threshold ",
+      ## Add  correlation 
+      # ggplot2::annotate("text", 
+      #                   x = max(dfall$sector_pct), 
+      #                   y = max(dfall$actual), 
+      #                   label = paste("Correlation [-1, 1] = ",
+      #                                 round(cor(dfall$sector_pct, dfall$actual, method = "pearson"),2)), 
+      #                   color = "gray95", 
+      #                   hjust = 0, 
+      #                   vjust = 1) +
+      ggplot2::labs( y = "Indicator Value ",
                      x = "% of resource allocation (expenditure) spent on this outcome" ,
-                     title = "Results by Indicator vs Resources by Outcome",
+                     title = paste0("Results by Indicator vs Resources by Outcome |", year) ,
                      subtitle = stringr::str_wrap( 
                        paste0(  "\n Indicators: ", indicator,
-                                "-/- Outcome: ", outcome ) ,
+                                " -/- Outcome: ", outcome,
+                                " ---> Correlation [-1, 1] = ",
+                                      round(cor(dfall$sector_pct, dfall$actual, method = "pearson"),2)
+                                ) ,
                        100) ,
-                     caption = stringr::str_wrap(
+                     caption = stringr::str_wrap( paste0(
                        "Source: Data published by UNHCR as part of the International Aid Transparency Initiative (IATI))" ,
+                       ". ---> ", 
+                       interpretation),
                        110) )
     } else {
       ## Treat the case where we would light to highlight a specific country...
@@ -351,7 +442,7 @@ compare_resource_result <- function(year = 2022,
                         legend.position = "bottom") +
         ggplot2::labs( y = "Value: square=baseline, circle=Actual, triangle=Target, color=Standard Acceptability Threshold ",
                        x = "% of resource allocation (expenditure) spent on this outcome" ,
-                       title = "Results by Indicator vs Resources by Outcome",
+                       title = paste0("Results by Indicator vs Resources by Outcome |", year) ,
                        subtitle = stringr::str_wrap( 
                          paste0(  "\n Indicators: ", indicator,
                                   "-/- Outcome: ", outcome ) ,

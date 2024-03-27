@@ -28,17 +28,29 @@ Generate a summary powerpoint
 #                     folder = "dev/Prez")
 
 # ## Generate for all operation specific region
-# region <- "The Americas"
+# reg <- iati::dataActivity |>
+#   dplyr::select( unhcr_region) |>
+#   dplyr::filter(! is.na(unhcr_region)) |>
+#   dplyr::distinct() |>
+#   dplyr::pull() 
 # 
-# countries <- iati::dataActivity |> 
-#        dplyr::filter( unhcr_region ==  region) |>
-#        dplyr::select(ctr_name) |>
-#        dplyr::distinct() |>
-#        dplyr::pull()
+# thisfolder <- "dev/SMR" 
 # 
-# for ( ctr in countries) {
-#     cat(paste0(ctr, "\n"))
-#     iati::template_prez(year = 2022, 
-#                     ctr_name = ctr,
-#                     folder = "dev/Prez")  }
+# for (region in reg) { 
+#       cat(paste0( region,   "\n"))
+#
+#       # region <- "The Americas"   
+#       countries <- iati::dataActivity |>
+#         dplyr::filter( unhcr_region ==  region) |>
+#         dplyr::select(ctr_name) |>
+#         dplyr::distinct() |>
+#         dplyr::pull() 
+#       
+#       for ( ctr in countries) {
+#         cat(paste0("Generating for ", ctr, "\n"))
+#         iati::template_prez(year = 2022,
+#                             ctr_name = ctr,
+#                             folder =  thisfolder)  
+#         }
+#     }
 }

@@ -222,19 +222,31 @@ show_outcome_result(year =  c(  2020, 2021, 2022),
 
 ```{r example-compare_resource_result, message = FALSE, warning = FALSE, fig.retina = 2, fig.width = 12, fig.asp = 0.618, fig.align = "center", out.width = "90%"}
 # See a list of indicators per area of work
-knitr::kable(iati::mapping_indicator |> 
-               janitor::clean_names() |>
-               dplyr::filter( results_level =="Outcome") |>
-               dplyr::select(area_of_work,  indicator) )
+list_indic <- iati::mapping_indicator |> 
+                 janitor::clean_names() |>
+                 dplyr::filter( results_level =="Outcome") |>
+                 dplyr::left_join(iati::mapping_result |> 
+                                    dplyr::select(sector_rbm, area_id) |>
+                                    dplyr::distinct(), by = c("area_id")) |>
+                 dplyr::select(area_id, sector_rbm, indicator)
+knitr::kable(list_indic)  
 
 compare_resource_result(year =   2022, 
-                    indicator = "13.2. Proportion of PoC who self-report positive changes in their income compared to previous year.",
-                    outcome = "OA8: Well-Being and Basic Needs")
+                        show_baseline = TRUE,
+                        show_target = TRUE,
+      indicator = "13.2. Proportion of PoC who self-report positive changes in their income compared to previous year.",
+      outcome = "OA8: Well-Being and Basic Needs")
 
 compare_resource_result(year =   2022, 
-                        ctr_name = "Costa Rica",
-                    indicator = "13.2. Proportion of PoC who self-report positive changes in their income compared to previous year.",
-                    outcome = "OA8: Well-Being and Basic Needs")
+       ctr_name = "Costa Rica",
+       indicator = "13.2. Proportion of PoC who self-report positive changes in their income compared to previous year.",
+       outcome = "OA8: Well-Being and Basic Needs")
+
+
+compare_resource_result(year =   2022, 
+       pop_type = "Refugees and Asylum-seekers",
+       indicator = "13.2. Proportion of PoC who self-report positive changes in their income compared to previous year.",
+       outcome = "OA8: Well-Being and Basic Needs")
 ```
 
   
@@ -432,24 +444,48 @@ show_partnership(year = 2022,
 #                     folder = "dev/Prez")
 
 # ## Generate for all operation specific region
-# region <- "The Americas"
+# reg <- iati::dataActivity |>
+#   dplyr::select( unhcr_region) |>
+#   dplyr::filter(! is.na(unhcr_region)) |>
+#   dplyr::distinct() |>
+#   dplyr::pull() 
 # 
-# countries <- iati::dataActivity |> 
-#        dplyr::filter( unhcr_region ==  region) |>
-#        dplyr::select(ctr_name) |>
-#        dplyr::distinct() |>
-#        dplyr::pull()
+# thisfolder <- "dev/SMR" 
 # 
-# for ( ctr in countries) {
-#     cat(paste0(ctr, "\n"))
-#     iati::template_prez(year = 2022, 
-#                     ctr_name = ctr,
-#                     folder = "dev/Prez")  }
+# for (region in reg) { 
+#       cat(paste0( region,   "\n"))
+#
+#       # region <- "The Americas"   
+#       countries <- iati::dataActivity |>
+#         dplyr::filter( unhcr_region ==  region) |>
+#         dplyr::select(ctr_name) |>
+#         dplyr::distinct() |>
+#         dplyr::pull() 
+#       
+#       for ( ctr in countries) {
+#         cat(paste0("Generating for ", ctr, "\n"))
+#         iati::template_prez(year = 2022,
+#                             ctr_name = ctr,
+#                             folder =  thisfolder)  
+#         }
+#     }
 ```
 
   
 
+## template_compare
+
+    
+
   
+
+```{r example-template_compare}
+# iati::template_compare(year = 2022, folder = "dev/Result")
+```
+
+  
+
+    
 
 
 

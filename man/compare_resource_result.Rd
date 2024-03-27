@@ -4,12 +4,35 @@
 \alias{compare_resource_result}
 \title{compare_resource_result}
 \usage{
-compare_resource_result(year = 2022, ctr_name = NULL, indicator, outcome)
+compare_resource_result(
+  year = 2022,
+  ctr_name = NULL,
+  pop_type = NULL,
+  show_baseline = FALSE,
+  show_target = FALSE,
+  indicator,
+  outcome
+)
 }
 \arguments{
-\item{year}{A numeric value or a vector of numeric value to filter on year. Note that data pre-2022 are using a different set of indicators}
+\item{year}{A numeric value or a vector of numeric value to filter on year. 
+Note that data pre-2022 are using a different set of indicators}
 
 \item{ctr_name}{A character vector corresponding to the name of the country.}
+
+\item{pop_type}{default is null - but can be used to filter on population type:
+"Refugees and Asylum-seekers","IDPs" ,"Stateless Persons" 
+"Others of Concern" ,"Returnees"   , "Host Community"}
+
+\item{show_baseline}{TRUE / FALSE boolean to indicate whether to filter and 
+display records that have a baseline value. 
+This will likely impact the number of clean records 
+that can be plotted...}
+
+\item{show_target}{TRUE / FALSE boolean to indicate whether to filter and
+display records that have a target value
+ This will likely impact the number of clean records 
+ that can be plotted...}
 
 \item{indicator}{one specific indicators - label}
 
@@ -39,17 +62,29 @@ compare_resource_result
 }
 \examples{
 # See a list of indicators per area of work
-knitr::kable(iati::mapping_indicator |> 
-               janitor::clean_names() |>
-               dplyr::filter( results_level =="Outcome") |>
-               dplyr::select(area_of_work,  indicator) )
+list_indic <- iati::mapping_indicator |> 
+                 janitor::clean_names() |>
+                 dplyr::filter( results_level =="Outcome") |>
+                 dplyr::left_join(iati::mapping_result |> 
+                                    dplyr::select(sector_rbm, area_id) |>
+                                    dplyr::distinct(), by = c("area_id")) |>
+                 dplyr::select(area_id, sector_rbm, indicator)
+knitr::kable(list_indic)  
 
 compare_resource_result(year =   2022, 
-                    indicator = "13.2. Proportion of PoC who self-report positive changes in their income compared to previous year.",
-                    outcome = "OA8: Well-Being and Basic Needs")
+                        show_baseline = TRUE,
+                        show_target = TRUE,
+      indicator = "13.2. Proportion of PoC who self-report positive changes in their income compared to previous year.",
+      outcome = "OA8: Well-Being and Basic Needs")
 
 compare_resource_result(year =   2022, 
-                        ctr_name = "Costa Rica",
-                    indicator = "13.2. Proportion of PoC who self-report positive changes in their income compared to previous year.",
-                    outcome = "OA8: Well-Being and Basic Needs")
+       ctr_name = "Costa Rica",
+       indicator = "13.2. Proportion of PoC who self-report positive changes in their income compared to previous year.",
+       outcome = "OA8: Well-Being and Basic Needs")
+
+
+compare_resource_result(year =   2022, 
+       pop_type = "Refugees and Asylum-seekers",
+       indicator = "13.2. Proportion of PoC who self-report positive changes in their income compared to previous year.",
+       outcome = "OA8: Well-Being and Basic Needs")
 }

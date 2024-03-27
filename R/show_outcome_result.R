@@ -180,21 +180,21 @@ show_outcome_result <- function(year,
                         progress_baseline < -15     ~ "red",  
                                                    TRUE ~ ""),
               
-                      gap_green =  round( ( threshold_green - actual ) / 
+                      gap_green =  round( (  actual - threshold_green ) / 
                                            dplyr::if_else(threshold_green == 0, 1, threshold_green) * 
                                            dplyr::if_else(threshold_green == 0, 1, 100)  ,2 ),
                       gap_green = dplyr::if_else(result_indicator_ascending == 0, 
                                                          gap_green * -1, 
                                                          gap_green), 
               
-                      gap_orange =  round( ( threshold_orange - actual ) / 
+                      gap_orange =  round( ( actual - threshold_orange  ) / 
                                            dplyr::if_else(threshold_orange == 0, 1, threshold_orange) * 
                                            dplyr::if_else(threshold_orange == 0, 1, 100)  ,2 ), 
                       gap_orange = dplyr::if_else(result_indicator_ascending == 0, 
                                                          gap_orange * -1, 
                                                          gap_orange), 
                       
-                      gap_red =  round( ( threshold_red - actual ) / 
+                      gap_red =  round( ( actual  -  threshold_red ) / 
                                            dplyr::if_else(threshold_red == 0, 1, threshold_red) * 
                                            dplyr::if_else(threshold_red == 0, 1, 100)  ,2 ),
                       gap_red = dplyr::if_else(result_indicator_ascending == 0, 

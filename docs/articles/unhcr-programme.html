@@ -335,181 +335,223 @@ referencing more than one)</td>
 </h3>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># See a list of indicators per area of work</span></span>
-<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu">iati</span><span class="fu">::</span><span class="va"><a href="../reference/mapping_indicator.html">mapping_indicator</a></span> <span class="op">|&gt;</span> </span>
-<span>               <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html" class="external-link">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>               <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span> <span class="va">results_level</span> <span class="op">==</span><span class="st">"Outcome"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>               <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">area_of_work</span>,  <span class="va">indicator</span><span class="op">)</span> <span class="op">)</span></span></code></pre></div>
+<span><span class="va">list_indic</span> <span class="op">&lt;-</span> <span class="fu">iati</span><span class="fu">::</span><span class="va"><a href="../reference/mapping_indicator.html">mapping_indicator</a></span> <span class="op">|&gt;</span> </span>
+<span>                 <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html" class="external-link">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>                 <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span> <span class="va">results_level</span> <span class="op">==</span><span class="st">"Outcome"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>                 <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="fu">iati</span><span class="fu">::</span><span class="va"><a href="../reference/mapping_result.html">mapping_result</a></span> <span class="op">|&gt;</span> </span>
+<span>                                    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">sector_rbm</span>, <span class="va">area_id</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>                                    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"area_id"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>                 <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">area_id</span>, <span class="va">sector_rbm</span>, <span class="va">indicator</span><span class="op">)</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">list_indic</span><span class="op">)</span>  </span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="22%">
-<col width="77%">
+<col width="3%">
+<col width="26%">
+<col width="69%">
 </colgroup>
 <thead><tr class="header">
-<th align="left">area_of_work</th>
+<th align="left">area_id</th>
+<th align="left">sector_rbm</th>
 <th align="left">indicator</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Registration</td>
+<td align="left">OA1</td>
+<td align="left">OA1: Access to Territory, Reg. and Documentation</td>
 <td align="left">1.1 Proportion of refugees and asylum seekers
 registered on an individual basis.</td>
 </tr>
 <tr class="even">
-<td align="left">Statelessness</td>
+<td align="left">OA1</td>
+<td align="left">OA1: Access to Territory, Reg. and Documentation</td>
 <td align="left">1.2 Proportion of children under 5 years of age whose
 births have been registered with a civil authority. [SDG 16.9.1 - Tier
 1]</td>
 </tr>
 <tr class="odd">
-<td align="left">Documentation</td>
+<td align="left">OA1</td>
+<td align="left">OA1: Access to Territory, Reg. and Documentation</td>
 <td align="left">1.3 Proportion of PoC with legally recognized identity
 documents or credentials [GCR 4.2.2].</td>
 </tr>
 <tr class="even">
-<td align="left">Refugee Status Determination</td>
+<td align="left">OA2</td>
+<td align="left">OA2: Status Determination</td>
 <td align="left">2.1 Average processing time (in days) from registration
 to first instance asylum decision (disaggregated by individual and group
 procedures).</td>
 </tr>
 <tr class="odd">
-<td align="left">Refugee Status Determination</td>
+<td align="left">OA2</td>
+<td align="left">OA2: Status Determination</td>
 <td align="left">2.2 Proportion of individuals undergoing asylum
 procedures who have access to legal advice or representation.</td>
 </tr>
 <tr class="even">
-<td align="left">Refugee Status Determination</td>
+<td align="left">OA2</td>
+<td align="left">OA2: Status Determination</td>
 <td align="left">2.3 Proportion of individuals undergoing asylum
 procedures who have access to an effective appeal mechanism after first
 instance rejection of their claim.</td>
 </tr>
 <tr class="odd">
-<td align="left">Law &amp; Policy</td>
+<td align="left">OA3</td>
+<td align="left">OA3: Protection Policy and Law</td>
 <td align="left">3.1 Extent national legal framework is in line with the
 1951 Convention and/or its 1967 Protocol.</td>
 </tr>
 <tr class="even">
-<td align="left">Statelessness</td>
+<td align="left">OA3</td>
+<td align="left">OA3: Protection Policy and Law</td>
 <td align="left">3.2 Extent national legal framework is in line with the
 1961 Convention on the Reduction of Statelessness.</td>
 </tr>
 <tr class="odd">
-<td align="left">Gender-Based Violence</td>
+<td align="left">OA4</td>
+<td align="left">OA4: Sexual and Gender-based Violence</td>
 <td align="left">4.1 Proportion of PoC who know where to access
 available GBV services</td>
 </tr>
 <tr class="even">
-<td align="left">Gender-Based Violence</td>
+<td align="left">OA4</td>
+<td align="left">OA4: Sexual and Gender-based Violence</td>
 <td align="left">4.2 Proportion of POCs who do not accept violence
 against women.</td>
 </tr>
 <tr class="odd">
-<td align="left">Gender-Based Violence</td>
+<td align="left">OA4</td>
+<td align="left">OA4: Sexual and Gender-based Violence</td>
 <td align="left">4.3 Proportion of survivors who are satisfied with SGBV
 case management services.</td>
 </tr>
 <tr class="even">
-<td align="left">Child Protection</td>
+<td align="left">OA5</td>
+<td align="left">OA5: Child Protection</td>
 <td align="left">5.1 Proportion of children at heightened risk who are
 supported by a Best Interests Procedure.</td>
 </tr>
 <tr class="odd">
-<td align="left">Child Protection, Community-Based Protection</td>
+<td align="left">OA5</td>
+<td align="left">OA5: Child Protection</td>
 <td align="left">5.2 Proportion of children who participate in
 community-based child protection programmes</td>
 </tr>
 <tr class="even">
-<td align="left">Child Protection</td>
+<td align="left">OA5</td>
+<td align="left">OA5: Child Protection</td>
 <td align="left">5.3 Proportion of unaccompanied and separated children
 who are in an appropriate alternative care arrangement</td>
 </tr>
 <tr class="odd">
-<td align="left">Freedom of Movement</td>
+<td align="left">OA6</td>
+<td align="left">OA6: Safety and Access to Justice</td>
 <td align="left">6.1 Number of PoC arrested or detained related to
 immigration control or legal status</td>
 </tr>
 <tr class="even">
-<td align="left">Accountability to Affected Populations</td>
+<td align="left">OA7</td>
+<td align="left">OA7: Community Engagement and Women’s Empowerment</td>
 <td align="left">7.1 Proportion of PoC who participate meaningfully
 across all phases of the OMC.</td>
 </tr>
 <tr class="odd">
-<td align="left">Accountability to Affected Populations</td>
+<td align="left">OA7</td>
+<td align="left">OA7: Community Engagement and Women’s Empowerment</td>
 <td align="left">7.2 Proportion of PoC who have access to effective
 feedback and response mechanisms.</td>
 </tr>
 <tr class="even">
-<td align="left">Community Structures</td>
+<td align="left">OA7</td>
+<td align="left">OA7: Community Engagement and Women’s Empowerment</td>
 <td align="left">7.3 Proportion (and number) of active female
 participants on leadership/management structures.</td>
 </tr>
 <tr class="odd">
-<td align="left">Basic Needs</td>
+<td align="left">OA8</td>
+<td align="left">OA8: Well-Being and Basic Needs</td>
 <td align="left">8.1 Proportion of PoC in need that receive cash
 transfers or in-kind assistance.</td>
 </tr>
 <tr class="even">
-<td align="left">Energy</td>
+<td align="left">OA8</td>
+<td align="left">OA8: Well-Being and Basic Needs</td>
 <td align="left">8.2 Proportion of PoC with primary reliance on clean
 (cooking) fuels and technology [SDG 7.1.2 Tier 1]</td>
 </tr>
 <tr class="odd">
-<td align="left">Shelter</td>
+<td align="left">OA9</td>
+<td align="left">OA9: Sustainable Housing and Settlements</td>
 <td align="left">9.1 Proportion of PoCs living in habitable and
 affordable housing.</td>
 </tr>
 <tr class="even">
-<td align="left">Energy</td>
+<td align="left">OA9</td>
+<td align="left">OA9: Sustainable Housing and Settlements</td>
 <td align="left">9.2 Proportion of PoC that have energy to ensure
 lighting (close to Sphere).</td>
 </tr>
 <tr class="odd">
-<td align="left">Health</td>
+<td align="left">OA10</td>
+<td align="left">OA10: Healthy Lives</td>
 <td align="left">10.1 Proportion of children aged 9 months to five years
 who have received measles vaccination.</td>
 </tr>
 <tr class="even">
-<td align="left">Health</td>
+<td align="left">OA10</td>
+<td align="left">OA10: Healthy Lives</td>
 <td align="left">10.2. Proportion of births attended by skilled health
 personnel. [SDG 3.1.2 Tier 1]</td>
 </tr>
 <tr class="odd">
-<td align="left">Education</td>
+<td align="left">OA11</td>
+<td align="left">OA11: Education</td>
 <td align="left">11.1 Proportion of PoC enrolled in tertiary and higher
 education.</td>
 </tr>
 <tr class="even">
-<td align="left">Education</td>
+<td align="left">OA11</td>
+<td align="left">OA11: Education</td>
 <td align="left">11.2 Proportion of PoC enrolled in the national
 education system. [GCR 2.2.1]</td>
 </tr>
 <tr class="odd">
-<td align="left">Water, Sanitation &amp; Hygiene</td>
+<td align="left">OA12</td>
+<td align="left">OA12: Clean Water, Sanitation and Hygiene</td>
 <td align="left">12.1 Proportion of PoC using at least basic drinking
 water services [linked to SDG 6.1.1].</td>
 </tr>
 <tr class="even">
-<td align="left">Water, Sanitation &amp; Hygiene</td>
+<td align="left">OA12</td>
+<td align="left">OA12: Clean Water, Sanitation and Hygiene</td>
 <td align="left">12.2 Proportion of PoC with access to a safe household
 toilet [linked to SDG 6.2.1].</td>
 </tr>
 <tr class="odd">
-<td align="left">Livelihoods &amp; Economic Inclusion</td>
+<td align="left">OA13</td>
+<td align="left">OA13: Self Reliance, Economic Inclusion and
+Livelihoods</td>
 <td align="left">13.1. Proportion of PoC with an account at a bank or
 other financial institution or with a mobile-money-service provider [SDG
 8.10.2 Tier 1].</td>
 </tr>
 <tr class="even">
-<td align="left">Livelihoods &amp; Economic Inclusion</td>
+<td align="left">OA13</td>
+<td align="left">OA13: Self Reliance, Economic Inclusion and
+Livelihoods</td>
 <td align="left">13.2. Proportion of PoC who self-report positive
 changes in their income compared to previous year.</td>
 </tr>
 <tr class="odd">
-<td align="left">Livelihoods &amp; Economic Inclusion</td>
+<td align="left">OA13</td>
+<td align="left">OA13: Self Reliance, Economic Inclusion and
+Livelihoods</td>
 <td align="left">13.3 Proportion of PoC (working age) who are
 unemployed.</td>
 </tr>
 <tr class="even">
-<td align="left">Voluntary Repatriation</td>
+<td align="left">OA14</td>
+<td align="left">OA14: Voluntary Repatriation and Sustainable
+Reintegration</td>
 <td align="left">14.1 Proportion of returnees with legally recognized
 identity documents or credentials [GCR 4.2.2].</td>
 </tr>
@@ -518,16 +560,26 @@ identity documents or credentials [GCR 4.2.2].</td>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="../reference/compare_resource_result.html">compare_resource_result</a></span><span class="op">(</span>year <span class="op">=</span>   <span class="fl">2022</span>, </span>
-<span>                    indicator <span class="op">=</span> <span class="st">"13.2. Proportion of PoC who self-report positive changes in their income compared to previous year."</span>,</span>
-<span>                    outcome <span class="op">=</span> <span class="st">"OA8: Well-Being and Basic Needs"</span><span class="op">)</span></span></code></pre></div>
+<span>                        show_baseline <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                        show_target <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>      indicator <span class="op">=</span> <span class="st">"13.2. Proportion of PoC who self-report positive changes in their income compared to previous year."</span>,</span>
+<span>      outcome <span class="op">=</span> <span class="st">"OA8: Well-Being and Basic Needs"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="unhcr-programme_files/figure-html/example-compare_resource_result-1.png" width="90%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="../reference/compare_resource_result.html">compare_resource_result</a></span><span class="op">(</span>year <span class="op">=</span>   <span class="fl">2022</span>, </span>
-<span>                        ctr_name <span class="op">=</span> <span class="st">"Costa Rica"</span>,</span>
-<span>                    indicator <span class="op">=</span> <span class="st">"13.2. Proportion of PoC who self-report positive changes in their income compared to previous year."</span>,</span>
-<span>                    outcome <span class="op">=</span> <span class="st">"OA8: Well-Being and Basic Needs"</span><span class="op">)</span></span></code></pre></div>
+<span>       ctr_name <span class="op">=</span> <span class="st">"Costa Rica"</span>,</span>
+<span>       indicator <span class="op">=</span> <span class="st">"13.2. Proportion of PoC who self-report positive changes in their income compared to previous year."</span>,</span>
+<span>       outcome <span class="op">=</span> <span class="st">"OA8: Well-Being and Basic Needs"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="unhcr-programme_files/figure-html/example-compare_resource_result-2.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/compare_resource_result.html">compare_resource_result</a></span><span class="op">(</span>year <span class="op">=</span>   <span class="fl">2022</span>, </span>
+<span>       pop_type <span class="op">=</span> <span class="st">"Refugees and Asylum-seekers"</span>,</span>
+<span>       indicator <span class="op">=</span> <span class="st">"13.2. Proportion of PoC who self-report positive changes in their income compared to previous year."</span>,</span>
+<span>       outcome <span class="op">=</span> <span class="st">"OA8: Well-Being and Basic Needs"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="unhcr-programme_files/figure-html/example-compare_resource_result-3.png" width="90%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
@@ -540,17 +592,17 @@ identity documents or credentials [GCR 4.2.2].</td>
 <li>How much <strong>expenditures compare to the initial budget</strong>
 (potentially weighted by # )?</li>
 </ul>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/show_expenditure.html">show_expenditure</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2018</span>, <span class="fl">2019</span>,<span class="fl">2020</span>, <span class="fl">2021</span>, <span class="fl">2022</span>, <span class="fl">2023</span><span class="op">)</span>, </span>
 <span>             ctr_name <span class="op">=</span> <span class="st">"Brazil"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="unhcr-programme_files/figure-html/example-show_expenditure-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="../reference/show_expenditure.html">show_expenditure</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2018</span>, <span class="fl">2019</span>,<span class="fl">2020</span>, <span class="fl">2021</span>, <span class="fl">2022</span>, <span class="fl">2023</span><span class="op">)</span>, </span>
 <span>             ctr_name <span class="op">=</span> <span class="st">"Brazil"</span>,</span>
 <span>             weight_by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"refugees"</span>, <span class="st">"oip"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="unhcr-programme_files/figure-html/example-show_expenditure-2.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/show_expenditure.html">show_expenditure</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2018</span>, <span class="fl">2019</span>,<span class="fl">2020</span>, <span class="fl">2021</span>, <span class="fl">2022</span>, <span class="fl">2023</span><span class="op">)</span>,</span>
@@ -561,11 +613,11 @@ identity documents or credentials [GCR 4.2.2].</td>
 <div class="section level3">
 <h3 id="show_budget_gap">show_budget_gap<a class="anchor" aria-label="anchor" href="#show_budget_gap"></a>
 </h3>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/show_budget_gap.html">show_budget_gap</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2018</span>, <span class="fl">2019</span>,<span class="fl">2020</span>, <span class="fl">2021</span>, <span class="fl">2022</span>, <span class="fl">2023</span><span class="op">)</span>, </span>
 <span>             ctr_name <span class="op">=</span> <span class="st">"Brazil"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="unhcr-programme_files/figure-html/example-show_budget_gap-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/show_budget_gap.html">show_budget_gap</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2018</span>, <span class="fl">2019</span>,<span class="fl">2020</span>, <span class="fl">2021</span>, <span class="fl">2022</span>, <span class="fl">2023</span><span class="op">)</span>, </span>
 <span>             ctr_name <span class="op">=</span> <span class="st">"Brazil"</span>,</span>
 <span>             weight_by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"refugees"</span>, <span class="st">"oip"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -582,7 +634,7 @@ identity documents or credentials [GCR 4.2.2].</td>
 <li>Who are the <strong>main donors by country</strong> in terms of
 transaction?</li>
 </ul>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu">iati</span><span class="fu">::</span><span class="va"><a href="../reference/dataTransaction.html">dataTransaction</a></span> <span class="op">|&gt;</span></span>
 <span>                <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span> <span class="va">transaction_type_name</span>, <span class="va">transaction_type_description</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>                <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op">)</span></span></code></pre></div>
@@ -615,22 +667,22 @@ separately reported activities.</td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/show_donors.html">show_donors</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2022</span>,</span>
 <span>           programme_lab <span class="op">=</span> <span class="st">"The Americas"</span>,</span>
 <span>           transaction_type_name <span class="op">=</span> <span class="st">"Incoming Commitment"</span> <span class="op">)</span></span></code></pre></div>
 <p><img src="unhcr-programme_files/figure-html/examples-show_donors-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/show_donors.html">show_donors</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2018</span>, <span class="fl">2019</span>,<span class="fl">2020</span>, <span class="fl">2021</span>, <span class="fl">2022</span>, <span class="fl">2023</span><span class="op">)</span>,</span>
 <span>           ctr_name <span class="op">=</span> <span class="st">"Brazil"</span>,</span>
 <span>           transaction_type_name <span class="op">=</span> <span class="st">"Incoming Commitment"</span> <span class="op">)</span></span></code></pre></div>
 <p><img src="unhcr-programme_files/figure-html/examples-show_donors-2.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/show_donors.html">show_donors</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2018</span>, <span class="fl">2019</span>,<span class="fl">2020</span>, <span class="fl">2021</span>, <span class="fl">2022</span>, <span class="fl">2023</span><span class="op">)</span>,</span>
 <span>           programme_lab <span class="op">=</span> <span class="st">"Brazil"</span>,</span>
 <span>           transaction_type_name <span class="op">=</span> <span class="st">"Disbursement"</span> <span class="op">)</span></span></code></pre></div>
 <p><img src="unhcr-programme_files/figure-html/examples-show_donors-3.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/show_donors.html">show_donors</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2018</span>, <span class="fl">2019</span>,<span class="fl">2020</span>, <span class="fl">2021</span>, <span class="fl">2022</span>, <span class="fl">2023</span><span class="op">)</span>,</span>
 <span>           programme_lab <span class="op">=</span> <span class="st">"Brazil"</span>,</span>
 <span>           transaction_type_name <span class="op">=</span> <span class="st">"Expenditure"</span> <span class="op">)</span></span></code></pre></div>
@@ -639,12 +691,12 @@ separately reported activities.</td>
 <div class="section level3">
 <h3 id="show_top_donors">show_top_donors<a class="anchor" aria-label="anchor" href="#show_top_donors"></a>
 </h3>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/show_top_donors.html">show_top_donors</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2022</span>,</span>
 <span>           ctr_name <span class="op">=</span> <span class="st">"Brazil"</span>, </span>
 <span>           top_n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <p><img src="unhcr-programme_files/figure-html/example-show_top_donors-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/show_top_donors.html">show_top_donors</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2020</span>,</span>
 <span>           ctr_name <span class="op">=</span> <span class="st">"Brazil"</span>, </span>
 <span>           top_n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
@@ -657,7 +709,7 @@ separately reported activities.</td>
 <li>What’s the breakdown of <strong>Earmarking Type</strong>
 (Un-earmarked, Tightly earmarked, etc.) from Donor Funds by Year?</li>
 </ul>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu">iati</span><span class="fu">::</span><span class="va"><a href="../reference/dataTransaction.html">dataTransaction</a></span> <span class="op">|&gt;</span></span>
 <span>                <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">earmarking_name</span>, <span class="va">earmarking_description</span><span class="op">)</span>  <span class="op">|&gt;</span></span>
 <span>                <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -694,7 +746,7 @@ H.</td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/show_earmarking.html">show_earmarking</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2018</span>, <span class="fl">2019</span>,<span class="fl">2020</span>, <span class="fl">2021</span>, <span class="fl">2022</span>, <span class="fl">2023</span><span class="op">)</span>,  </span>
 <span>             ctr_name <span class="op">=</span> <span class="st">"Brazil"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="unhcr-programme_files/figure-html/example-show_earmarking-1.png" width="90%" style="display: block; margin: auto;"></p>
@@ -702,7 +754,7 @@ H.</td>
 <div class="section level3">
 <h3 id="show_contributions">show_contributions<a class="anchor" aria-label="anchor" href="#show_contributions"></a>
 </h3>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu">iati</span><span class="fu">::</span><span class="va"><a href="../reference/dataTransaction.html">dataTransaction</a></span> <span class="op">|&gt;</span></span>
 <span>                <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">aid_type1_name</span>, <span class="va">aid_type1_description</span><span class="op">)</span>  <span class="op">|&gt;</span></span>
 <span>                <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -764,11 +816,11 @@ agreement between the donor and the partner country.</td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/show_contributions.html">show_contributions</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2018</span>, <span class="fl">2019</span>,<span class="fl">2020</span>, <span class="fl">2021</span>, <span class="fl">2022</span>, <span class="fl">2023</span><span class="op">)</span>, </span>
 <span>                   ctr_name <span class="op">=</span> <span class="st">"Brazil"</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="unhcr-programme_files/figure-html/example-show_contributions-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/show_contributions.html">show_contributions</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2018</span>, <span class="fl">2019</span>,<span class="fl">2020</span>, <span class="fl">2021</span>, <span class="fl">2022</span>, <span class="fl">2023</span><span class="op">)</span>, </span>
 <span>                   programme_lab <span class="op">=</span> <span class="st">"The Americas"</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="unhcr-programme_files/figure-html/example-show_contributions-2.png" width="90%" style="display: block; margin: auto;"></p>
@@ -776,11 +828,11 @@ agreement between the donor and the partner country.</td>
 <div class="section level3">
 <h3 id="show_transaction_flow">show_transaction_flow<a class="anchor" aria-label="anchor" href="#show_transaction_flow"></a>
 </h3>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/show_transaction_flow.html">show_transaction_flow</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2020</span>, <span class="fl">2021</span>, <span class="fl">2022</span>, <span class="fl">2023</span><span class="op">)</span>, </span>
 <span>                   ctr_name <span class="op">=</span> <span class="st">"Brazil"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="unhcr-programme_files/figure-html/example-show_transaction_flow-1.png" width="700"></p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="../reference/show_transaction_flow.html">show_transaction_flow</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2023</span>, </span>
 <span>                   ctr_name <span class="op">=</span> <span class="st">"Brazil"</span><span class="op">)</span></span></code></pre></div>
@@ -796,7 +848,7 @@ agreement between the donor and the partner country.</td>
 <ul>
 <li>How <strong>organisations partner together</strong>?</li>
 </ul>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/show_partnership.html">show_partnership</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2022</span>,</span>
 <span>           ctr_name <span class="op">=</span> <span class="st">"Brazil"</span> <span class="op">)</span> </span></code></pre></div>
 <table class="table">
@@ -873,7 +925,7 @@ Development Foundation</td>
 <div class="section level3">
 <h3 id="template_prez">template_prez<a class="anchor" aria-label="anchor" href="#template_prez"></a>
 </h3>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co">## generate for one country</span></span>
 <span><span class="co"># iati::template_prez(year = 2022, </span></span>
@@ -881,19 +933,37 @@ Development Foundation</td>
 <span><span class="co">#                     folder = "dev/Prez")</span></span>
 <span></span>
 <span><span class="co"># ## Generate for all operation specific region</span></span>
-<span><span class="co"># region &lt;- "The Americas"</span></span>
+<span><span class="co"># reg &lt;- iati::dataActivity |&gt;</span></span>
+<span><span class="co">#   dplyr::select( unhcr_region) |&gt;</span></span>
+<span><span class="co">#   dplyr::filter(! is.na(unhcr_region)) |&gt;</span></span>
+<span><span class="co">#   dplyr::distinct() |&gt;</span></span>
+<span><span class="co">#   dplyr::pull() </span></span>
 <span><span class="co"># </span></span>
-<span><span class="co"># countries &lt;- iati::dataActivity |&gt; </span></span>
-<span><span class="co">#        dplyr::filter( unhcr_region ==  region) |&gt;</span></span>
-<span><span class="co">#        dplyr::select(ctr_name) |&gt;</span></span>
-<span><span class="co">#        dplyr::distinct() |&gt;</span></span>
-<span><span class="co">#        dplyr::pull()</span></span>
+<span><span class="co"># thisfolder &lt;- "dev/SMR" </span></span>
 <span><span class="co"># </span></span>
-<span><span class="co"># for ( ctr in countries) {</span></span>
-<span><span class="co">#     cat(paste0(ctr, "\n"))</span></span>
-<span><span class="co">#     iati::template_prez(year = 2022, </span></span>
-<span><span class="co">#                     ctr_name = ctr,</span></span>
-<span><span class="co">#                     folder = "dev/Prez")  }</span></span></code></pre></div>
+<span><span class="co"># for (region in reg) { </span></span>
+<span><span class="co">#       cat(paste0( region,   "\n"))</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co">#       # region &lt;- "The Americas"   </span></span>
+<span><span class="co">#       countries &lt;- iati::dataActivity |&gt;</span></span>
+<span><span class="co">#         dplyr::filter( unhcr_region ==  region) |&gt;</span></span>
+<span><span class="co">#         dplyr::select(ctr_name) |&gt;</span></span>
+<span><span class="co">#         dplyr::distinct() |&gt;</span></span>
+<span><span class="co">#         dplyr::pull() </span></span>
+<span><span class="co">#       </span></span>
+<span><span class="co">#       for ( ctr in countries) {</span></span>
+<span><span class="co">#         cat(paste0("Generating for ", ctr, "\n"))</span></span>
+<span><span class="co">#         iati::template_prez(year = 2022,</span></span>
+<span><span class="co">#                             ctr_name = ctr,</span></span>
+<span><span class="co">#                             folder =  thisfolder)  </span></span>
+<span><span class="co">#         }</span></span>
+<span><span class="co">#     }</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="template_compare">template_compare<a class="anchor" aria-label="anchor" href="#template_compare"></a>
+</h3>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># iati::template_compare(year = 2022, folder = "dev/Result")</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

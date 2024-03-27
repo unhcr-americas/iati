@@ -25,6 +25,7 @@ Imports:
     grid,
     here,
     knitr,
+    lubridate,
     magrittr,
     patchwork,
     purrr,
